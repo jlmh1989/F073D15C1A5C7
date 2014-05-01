@@ -1,0 +1,18 @@
+<?php
+/* @var $this CatRatesController */
+/* @var $model CatRates */
+
+$this->breadcrumbs=array(
+	'Cat Rates'=>array('index'),
+	'Create',
+);
+
+$this->menu=array(
+	array('label'=>'List CatRates', 'url'=>array('index')),
+	array('label'=>'Manage CatRates', 'url'=>array('admin')),
+);
+?>
+
+<h1>Create CatRates</h1>
+
+<?php $this->renderPartial('_form', array('model'=>$model)); ?>
