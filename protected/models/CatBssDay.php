@@ -61,12 +61,12 @@ class CatBssDay extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_bss_day' => 'Pk Bss Day',
-			'desc_day' => 'Desc Day',
-			'initial_hour' => 'Initial Hour',
-			'final_hour' => 'Final Hour',
-			'range_time' => 'Range Time',
-			'status' => 'Status',
+			'pk_bss_day' => 'Id',
+			'desc_day' => 'Descripci&oacute;n',
+			'initial_hour' => 'Hora Inicio',
+			'final_hour' => 'Hora Fin',
+			'range_time' => 'Rango Tiempo',
+			'status' => 'Estatus',
 		);
 	}
 

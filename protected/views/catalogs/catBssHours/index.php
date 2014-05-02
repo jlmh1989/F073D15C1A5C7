@@ -12,9 +12,21 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat Bss Hours</h1>
+<h1>Horas Laborales</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'columns'=> array(
+            'initial_hour',
+            'final_hour',
+            'range_time',
+            array('name'=>'status',
+                'header'=>'Estatus',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_status[$data->status]'),
+            array(
+                'class'=>'CButtonColumn',
+                'template'=>'{view}',
+		),
+        ),
 )); ?>

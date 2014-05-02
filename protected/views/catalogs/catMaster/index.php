@@ -12,21 +12,18 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat Masters</h1>
+<h1>Cat&aacute;logo Maestro</h1>
 
 <?php 
-/*
-$this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-)); 
-*/
 $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
         'columns'=> array(
             'pk_cat_master',
             'desc_cat_master',
-            'status',
+            array('name'=>'status',
+                'header'=>'Estatus',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
                 'template'=>'{view}',

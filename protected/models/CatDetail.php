@@ -80,11 +80,11 @@ class CatDetail extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_cat_detail' => 'Pk Cat Detail',
-			'desc_cat_detail_es' => 'Desc Cat Detail Es',
-			'desc_cat_detail_en' => 'Desc Cat Detail En',
-			'status' => 'Status',
-			'fk_cat_master' => 'Fk Cat Master',
+			'pk_cat_detail' => 'Id',
+			'desc_cat_detail_es' => 'Descripci&oacute;n Es',
+			'desc_cat_detail_en' => 'Descripci&oacute;n En',
+			'status' => 'Estatus',
+			'fk_cat_master' => 'Cat&aacute;logo Maestro',
 		);
 	}
 

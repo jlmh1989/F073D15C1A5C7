@@ -12,9 +12,20 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat Materials</h1>
+<h1>Cat&aacute;logo Materiales</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'columns'=> array(
+            'pk_material',
+            'desc_material',
+            array('name'=>'fk_type_material',
+                'header'=>'Tipo Material',
+                'type'=>'raw',
+                'value'=>'$data->fkTypeMaterial->desc_cat_detail_es'),
+            array(
+                'class'=>'CButtonColumn',
+                'template'=>'{view}',
+		),
+        ),
 )); ?>

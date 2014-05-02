@@ -56,9 +56,9 @@ class CatDocuments extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_document' => 'Pk Document',
-			'desc_document' => 'Desc Document',
-			'status' => 'Status',
+			'pk_document' => 'Id',
+			'desc_document' => 'Descripci&oacute;n',
+			'status' => 'Estatus',
 		);
 	}
 

@@ -12,7 +12,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat Details</h1>
+<h1>Cat&aacute;logo Detalle</h1>
 
 <?php 
 /*
@@ -27,8 +27,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'pk_cat_detail',
             'desc_cat_detail_es',
             'desc_cat_detail_en',
-            'status',
-            'fk_cat_master',
+            array('name'=>'fk_cat_master',
+                'header'=>'Cat&aacute;logo Maestro',
+                'type'=>'raw',
+                'value'=>'$data->fkCatMaster->desc_cat_master'),
+            array('name'=>'status',
+                'header'=>'Estatus',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
                 'template'=>'{view}',

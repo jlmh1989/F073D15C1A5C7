@@ -53,11 +53,11 @@ class CatBssHours extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_bss_hour' => 'Pk Bss Hour',
-			'initial_hour' => 'Initial Hour',
-			'final_hour' => 'Final Hour',
-			'range_time' => 'Range Time',
-			'status' => 'Status',
+			'pk_bss_hour' => 'Id',
+			'initial_hour' => 'Hora Inicio',
+			'final_hour' => 'Hora Fin',
+			'range_time' => 'Rango Tiempo',
+			'status' => 'Estatus',
 		);
 	}
 

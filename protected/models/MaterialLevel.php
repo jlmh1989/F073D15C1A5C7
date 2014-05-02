@@ -51,9 +51,9 @@ class MaterialLevel extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'fk_level' => 'Fk Level',
-			'fk_material' => 'Fk Material',
-			'status' => 'Status',
+			'fk_level' => 'Nivel',
+			'fk_material' => 'Material',
+			'status' => 'Estatus',
 		);
 	}
 

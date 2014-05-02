@@ -12,9 +12,30 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat Level Details</h1>
+<h1>Cat&aacute;logo Niveles Detalle</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'columns'=> array(
+            array('name'=>'fk_level',
+                'header'=>'Nivel',
+                'type'=>'raw',
+                'value'=>'$data->fkLevel->desc_level'),
+            'topics',
+            'duration',
+            'unit',
+            'pages',
+            array('name'=>'is_exam',
+                'header'=>'Es examen',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_si_no[$data->is_exam]'),
+            array('name'=>'status',
+                'header'=>'Estatus',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_status[$data->status]'),
+            array(
+                'class'=>'CButtonColumn',
+                'template'=>'{view}',
+		),
+        ),
 )); ?>

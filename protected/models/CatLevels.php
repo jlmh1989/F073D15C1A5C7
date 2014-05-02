@@ -62,11 +62,11 @@ class CatLevels extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_level' => 'Pk Level',
-			'desc_level' => 'Desc Level',
+			'pk_level' => 'Id',
+			'desc_level' => 'Descripci&oacute;n',
 			'fk_associated_book' => 'Fk Associated Book',
-			'total_hours' => 'Total Hours',
-			'status' => 'Status',
+			'total_hours' => 'Total Horas',
+			'status' => 'Estatus',
 		);
 	}
 

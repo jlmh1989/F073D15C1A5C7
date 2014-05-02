@@ -58,9 +58,9 @@ class CatMaterial extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_material' => 'Pk Material',
-			'desc_material' => 'Desc Material',
-			'fk_type_material' => 'Fk Type Material',
+			'pk_material' => 'Id',
+			'desc_material' => 'Descripci&oacute;n',
+			'fk_type_material' => 'Tipo Material',
 		);
 	}
 

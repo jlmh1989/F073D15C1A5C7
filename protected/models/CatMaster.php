@@ -56,9 +56,9 @@ class CatMaster extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_cat_master' => 'Pk Cat Master',
-			'desc_cat_master' => 'Desc Cat Master',
-			'status' => 'Status',
+			'pk_cat_master' => 'Id',
+			'desc_cat_master' => 'Descripci&oacute;n',
+			'status' => 'Estatus',
 		);
 	}
 

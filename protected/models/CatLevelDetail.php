@@ -61,14 +61,14 @@ class CatLevelDetail extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_level_detail' => 'Pk Level Detail',
-			'fk_level' => 'Fk Level',
-			'topics' => 'Topics',
-			'duration' => 'Duration',
-			'unit' => 'Unit',
-			'pages' => 'Pages',
-			'is_exam' => 'Is Exam',
-			'status' => 'Status',
+			'pk_level_detail' => 'Id',
+			'fk_level' => 'Nivel',
+			'topics' => 'Tema',
+			'duration' => 'Duraci&oacute;n',
+			'unit' => 'Unidad',
+			'pages' => 'p&aacute;ginas',
+			'is_exam' => 'Es examen',
+			'status' => 'Estatus',
 		);
 	}
 
