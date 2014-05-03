@@ -23,6 +23,6 @@ $this->menu=array(
  */
 ?>
 
-<h1>Update Courses <?php echo $model->pk_course; ?></h1>
+<h3>Actualizar Datos del Curso</h3>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

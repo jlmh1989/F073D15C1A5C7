@@ -64,12 +64,12 @@ class CatStatusClass extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_status_class' => 'Pk Status Class',
-			'desc_status_class' => 'Desc Status Class',
-			'long_desc' => 'Long Desc',
+			'pk_status_class' => 'Id',
+			'desc_status_class' => 'Descripci&oacute;n',
+			'long_desc' => 'Descripci&oacute;n Larga',
 			'is_reschedule_motive' => 'Is Reschedule Motive',
-			'fk_type_class' => 'Fk Type Class',
-			'fk_role_class' => 'Fk Role Class',
+			'fk_type_class' => 'Tipo Clase',
+			'fk_role_class' => 'Rol en Clase',
 		);
 	}
 

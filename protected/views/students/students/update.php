@@ -16,4 +16,6 @@ $this->menu=array(
 );
 ?>
 
+<h3>Actualizar datos del Estudiante</h3>
+
 <?php $this->renderPartial('_form', array('model'=>$model, 'modelUser'=>$modelUser,)); ?>

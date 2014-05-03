@@ -24,6 +24,6 @@ $this->menu=array(
  */
 ?>
 
-<h1>Update Teachers <?php echo $model->pk_teacher; ?></h1>
+<h3>Actualizar datos del Maestro.</h3>
 
 <?php $this->renderPartial('_form', array('model'=>$model,'modelCD'=>$modelCD,'modelUser'=>$modelUser,)); ?>

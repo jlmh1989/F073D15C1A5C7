@@ -56,9 +56,9 @@ class CatRates extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_rate' => 'Pk Rate',
-			'desc_tarifa' => 'Desc Tarifa',
-			'rate' => 'Rate',
+			'pk_rate' => 'Id',
+			'desc_tarifa' => 'Descripci&oacute;n',
+			'rate' => 'Tarifa',
 		);
 	}
 

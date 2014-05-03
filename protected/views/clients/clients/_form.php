@@ -98,7 +98,7 @@ $idFacturarCombo = "Clients_billing_data";
 	'enableAjaxValidation'=>true,
 )); ?>
         <?php
-        if($model->pk_client == null){
+        if($model->pk_client === null || Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR){
         ?>
         <tr>
             <th id="user_th" colspan="4" class="zebra_th"><div style="text-align: center">DATOS DE USUARIO</div></th>

@@ -15,7 +15,7 @@ $this->menu=array(
 );
 ?>
 <center><strong>Clientes Activos</strong></center>
-<div class="search-form">
+<div class="search-form" style="height: 63px">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>

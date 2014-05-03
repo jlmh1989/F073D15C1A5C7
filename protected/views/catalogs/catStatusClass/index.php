@@ -12,9 +12,29 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat Status Classes</h1>
+<h1>Cat&aacute;logo Estatus Clases</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'columns'=> array(
+            'pk_status_class',
+            'desc_status_class',
+            'long_desc',
+            array('name'=>'is_reschedule_motive',
+                'header'=>'Reprogramado',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_si_no[$data->is_reschedule_motive]'),
+            array('name'=>'fkTypeClass',
+                'header'=>'Tipo Clase',
+                'type'=>'raw',
+                'value'=>'$data->fkTypeClass->desc_cat_detail_es'),
+            array('name'=>'fkRoleClass',
+                'header'=>'Rol en Clase',
+                'type'=>'raw',
+                'value'=>'$data->fkRoleClass->desc_cat_detail_es'),
+            array(
+                'class'=>'CButtonColumn',
+                'template'=>'{view}',
+		),
+        ),
 )); ?>

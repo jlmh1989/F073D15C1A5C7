@@ -12,7 +12,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Students</h1>
+<h1>Estudiantes</h1>
 
 <?php 
 /*
@@ -24,8 +24,10 @@ $this->widget('zii.widgets.CListView', array(
 $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
         'columns'=> array(
-            'pk_student',
-            'fk_client',
+            array('name'=>'fk_client',
+                'header'=>'Cliente',
+                'type'=>'raw',
+                'value'=>'$data->fkClient->client_name'),
             'name',
             'email',
             'neigborhod',

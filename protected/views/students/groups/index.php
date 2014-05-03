@@ -12,7 +12,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Groups</h1>
+<h1>Grupos</h1>
 
 <?php 
 /*
@@ -26,7 +26,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'columns'=> array(
             'pk_group',
             'desc_group',
-            'status',
+            array('name'=>'status',
+                'header'=>'Estatus',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
                 'template'=>'{view}',

@@ -58,9 +58,9 @@ class Groups extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_group' => 'Pk Group',
-			'desc_group' => 'Desc Group',
-			'status' => 'Status',
+			'pk_group' => 'Id',
+			'desc_group' => 'Descripci&oacute;n',
+			'status' => 'Estatus',
 		);
 	}
 

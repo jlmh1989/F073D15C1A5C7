@@ -12,9 +12,20 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat Rates</h1>
+<h1>Cat&aacute;logo Tarifa</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'columns'=> array(
+            'pk_rate',
+            'desc_tarifa',
+            array('name'=>'rate',
+                'header'=>'Tarifa',
+                'type'=>'raw',
+                'value'=>'$data->rate'),
+            array(
+                'class'=>'CButtonColumn',
+                'template'=>'{view}',
+		),
+        ),
 )); ?>

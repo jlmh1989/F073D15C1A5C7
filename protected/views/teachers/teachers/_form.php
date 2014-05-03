@@ -116,7 +116,7 @@ if($model->pk_teacher == null){
     
     -->
         <?php
-        if($model->pk_teacher == null){
+        if($model->pk_teacher == null || Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR){
         ?>
         <tr>
             <th id="user_th" colspan="4" class="zebra_th" style="text-align: center">DATOS DE USUARIO</th>

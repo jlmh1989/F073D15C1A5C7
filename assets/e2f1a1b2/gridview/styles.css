@@ -25,14 +25,22 @@
 
 .grid-view table.items th
 {
-	color: white;
-	background: url("bg.gif") repeat-x scroll left top white;
-	text-align: center;
+    text-align: center;
+    color: black;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5); 
+    border-bottom: 1px solid #609099;
+    background-color: #609099;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#609099), to(#7ca8b3));
+    background-image: -webkit-linear-gradient(top, #609099, #7ca8b3);
+    background-image:    -moz-linear-gradient(top, #609099, #7ca8b3);
+    background-image:     -ms-linear-gradient(top, #609099, #7ca8b3);
+    background-image:      -o-linear-gradient(top, #609099, #7ca8b3); 
+    background-image:         linear-gradient(top, #609099, #7ca8b3);
 }
 
 .grid-view table.items th a
 {
-	color: #EEE;
+	color: black;
 	font-weight: bold;
 	text-decoration: none;
 }
