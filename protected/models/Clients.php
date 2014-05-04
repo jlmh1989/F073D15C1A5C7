@@ -27,7 +27,9 @@
  */
 class Clients extends CActiveRecord
 {
-	/**
+    public $image;
+
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -48,6 +50,7 @@ class Clients extends CActiveRecord
 			array('client_name, contact_name, contact_mail, client_web', 'length', 'max'=>100),
 			array('contact_phone, contact_phone_ext, contact_cellphone', 'length', 'max'=>15),
                         array('contact_mail','email'),
+                        array('image', 'file', 'allowEmpty'=>true, 'types'=>'jpg, gif, png'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('fk_type_client', 'safe', 'on'=>'search'),
@@ -88,6 +91,7 @@ class Clients extends CActiveRecord
 			'status' => 'Status',
 			'billing_data' => 'Datos de Faturaci&oacute;n',
 			'contact_cellphone' => 'Celular',
+                        'image' => 'Seleccionar foto',
 		);
 	}
 

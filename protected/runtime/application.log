@@ -8172,3 +8172,214 @@ Stack trace:
 REQUEST_URI=/e24sys/index.php?r=students/students/admin
 HTTP_REFERER=http://localhost/e24sys/index.php?r=students/students/index
 ---
+2014/05/03 18:01:34 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (139)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:01:59 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (139)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:02:31 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (139)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:08:56 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:09:08 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:16:09 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (80)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:23:46 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (80)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:25:20 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (80)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:31:07 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (80)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:37:34 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:37:35 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "clientesActivos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('clientesActivos')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('clientesActivos')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('clients/clients...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=clients/clients/clientesActivos&id=1
+HTTP_REFERER=http://localhost/e24sys/index.php?r=clients/clients/update&id=1
+---
+2014/05/03 18:38:03 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:38:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "clientesActivos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('clientesActivos')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('clientesActivos')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('clients/clients...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=clients/clients/clientesActivos&id=1
+HTTP_REFERER=http://localhost/e24sys/index.php?r=clients/clients/update&id=1
+---
+2014/05/03 18:38:43 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:41:07 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:42:18 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:43:02 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:43:20 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:43:20 [error] [php] move_uploaded_file(): The second argument to copy() function cannot be a directory (/Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CUploadedFile.php:198)
+Stack trace:
+#0 unknown(0): ClientsController->actionUpdate()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): ClientsController->runAction()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): ClientsController->filterAccessControl()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): ClientsController->runActionWithFilters()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): ClientsController->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=clients/clients/update&id=1
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (160)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:47:57 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:47:57 [error] [php] move_uploaded_file(/Applications/XAMPP/xamppfiles/htdocs/e24sys/protected../images): failed to open stream: No such file or directory (/Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CUploadedFile.php:198)
+Stack trace:
+#0 unknown(0): ClientsController->actionUpdate()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): ClientsController->runAction()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): ClientsController->filterAccessControl()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): ClientsController->runActionWithFilters()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): ClientsController->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=clients/clients/update&id=1
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (160)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:48:19 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:48:19 [error] [php] move_uploaded_file(): The second argument to copy() function cannot be a directory (/Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CUploadedFile.php:198)
+Stack trace:
+#0 unknown(0): ClientsController->actionUpdate()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): ClientsController->runAction()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): ClientsController->filterAccessControl()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): ClientsController->runActionWithFilters()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): ClientsController->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=clients/clients/update&id=1
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (160)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:49:09 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:49:09 [error] [php] move_uploaded_file(/Applications/XAMPP/xamppfiles/htdocs/e24sys/protected../images): failed to open stream: No such file or directory (/Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CUploadedFile.php:198)
+Stack trace:
+#0 unknown(0): ClientsController->actionUpdate()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): ClientsController->runAction()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): ClientsController->filterAccessControl()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): ClientsController->runActionWithFilters()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): ClientsController->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=clients/clients/update&id=1
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (160)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:49:25 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:49:25 [error] [php] move_uploaded_file(): The second argument to copy() function cannot be a directory (/Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CUploadedFile.php:198)
+Stack trace:
+#0 unknown(0): ClientsController->actionUpdate()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): ClientsController->runAction()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): ClientsController->filterAccessControl()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): ClientsController->runActionWithFilters()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): ClientsController->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=clients/clients/update&id=1
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (160)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:49:53 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:49:53 [error] [php] move_uploaded_file(/Applications/XAMPP/xamppfiles/htdocs/e24sys/protected../images): failed to open stream: No such file or directory (/Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CUploadedFile.php:198)
+Stack trace:
+#0 unknown(0): ClientsController->actionUpdate()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): ClientsController->runAction()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): ClientsController->filterAccessControl()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): ClientsController->runActionWithFilters()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): ClientsController->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=clients/clients/update&id=1
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (160)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 18:53:20 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (140)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/05/03 23:24:30 [warning] [application] Failed to set unsafe attribute "image" of "Clients".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (144)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)

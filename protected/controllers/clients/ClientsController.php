@@ -77,7 +77,7 @@ class ClientsController extends Controller
                 
                 if(isset($_POST['Clients']))
                 {   
-                    $model->attributes=$_POST['Clients'];  
+                    $model->attributes=$_POST['Clients'];
                     $modelTECA->attributes=$_POST['ClassroomAddress'];
                     $modelUser->attributes=$_POST['Users'];
                     $valUser = $modelUser->validate();
@@ -96,6 +96,11 @@ class ClientsController extends Controller
                         if($modelUser->save()){
                             $model->status=1;
                             $model->fk_user=$modelUser->pk_user;
+                            $model->image = CUploadedFile::getInstance($model,'image');
+                            if($model->image !== null){
+                                $path = realpath(Yii::app()->basePath.'/../images');
+                                $model->image->saveAs($path . '/' . $model->image);
+                            } 
                             if($model->save()){
                                 $modelTECA->fk_client=$model->pk_client;
                                 $modelTECA->status=1;
@@ -136,7 +141,7 @@ class ClientsController extends Controller
 
                 if(isset($_POST['Clients']))
                 {   
-                    $model->attributes=$_POST['Clients'];  
+                    $model->attributes=$_POST['Clients'];
                     $modelTECA->attributes=$_POST['ClassroomAddress'];
                     $modelUser->attributes=$_POST['Users'];
                     $valUser = $modelUser->validate();
@@ -152,18 +157,23 @@ class ClientsController extends Controller
                     $modelUser->fk_role=(int)constantes::ROL_CLIENTE;
                     if($validar){
                         if($modelUser->save()){
-                            $model->status=1;
-                            $model->fk_user=$modelUser->pk_user;
+                            //$model->status=1;
+                            //$model->fk_user=$modelUser->pk_user;
+                            $model->image = CUploadedFile::getInstance($model,'image');
+                            if($model->image !== null){
+                                $path = realpath(Yii::app()->basePath.'/../images');
+                                $model->image->saveAs($path . '/' . $model->image);
+                            }   
                             if($model->save()){
-                                $modelTECA->fk_client=$model->pk_client;
-                                $modelTECA->status=1;
+                                //$modelTECA->fk_client=$model->pk_client;
+                                //$modelTECA->status=1;
                                 if($modelTECA->save()){
                                     if($model->billing_data === "1"){
-                                        $modelTEBD->fk_client=$model->pk_client;
-                                        $modelTEBD->status=1;
+                                        //$modelTEBD->fk_client=$model->pk_client;
+                                        //$modelTEBD->status=1;
                                         $modelTEBD->save();
                                     }
-                                    $this->redirect(array('clientesActivos','id'=>$model->pk_client));
+                                    $this->redirect(array('view','id'=>$model->pk_client));
                                 }
                             }
                         }

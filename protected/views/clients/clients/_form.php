@@ -96,6 +96,7 @@ $idFacturarCombo = "Clients_billing_data";
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>true,
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); ?>
         <?php
         if($model->pk_client === null || Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR){
@@ -124,6 +125,7 @@ $idFacturarCombo = "Clients_billing_data";
         </tr>
         <tr>
 	<div class="row">
+            
             <td class="datos_cliente_td"><?php echo $form->labelEx($model,'fk_type_client'); ?></td>
             <td class="datos_cliente_td" width="270px"><?php echo $form->dropDownList($model,'fk_type_client',  CatDetail::model()->getCatDetailsOptions(constantesCatalogos::TIPO_CLIENTE,  constantes::LANG), 
                     array(
@@ -139,6 +141,12 @@ $idFacturarCombo = "Clients_billing_data";
 		<td class="datos_cliente_td"><?php echo $form->textField($model,'client_name',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'client_name'); ?></td>
 	</div>
+        </tr>
+        
+        <tr>
+            <td class="datos_cliente_td"><?php echo $form->labelEx($model, 'image');?></td>
+            <td class="datos_cliente_td" width="270px"><?php echo $form->fileField($model, 'image');
+            echo $form->error($model, 'image');?></td>
         </tr>
         
         <tr>
