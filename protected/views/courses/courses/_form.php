@@ -3,6 +3,10 @@
 /* @var $model Courses */
 /* @var $form CActiveForm */
 
+if($model->pk_course == null){
+    unset($_SESSION['horarioCurso']);
+}
+
 Yii::app()->clientScript->registerScript('script',
         '
         $(".mapa_div").hide();
@@ -78,8 +82,67 @@ Yii::app()->clientScript->registerScript('script',
         }
     }
     
+    function eliminarHorario(bssDay, id){
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('courses/courses/eliminarHorario');?>",
+            data: { bssDay: bssDay, id : id},
+            dataType: "text"
+        }).done(function( msg ) {
+            $.ajax({
+                url: "<?= Yii::app()->createUrl('courses/courses/getHorarioHtml');?>", 
+                dataType: "text"
+             }).done(function( msg ) {
+                 if(msg === ""){
+                     $("#tr_horario").css("visibility","hidden");
+                 }
+                 $("#tablaHorario tbody").html(msg);
+             });
+        });
+    }
+    
     function agregarHorario(){
-        alert($("#bssDay").val()+ "<?php $array = CatBssDay::model()->getCatBssDayListData(constantes::ACTIVO); echo $array['5'] ?>");
+        $("#labelErrorHorario").html("");
+        $("#horaInicio").val("00:00");
+        $("#horaFin").val("00:00");
+        $("#labelAgregarHorario").html("Agregar horario para el d&iacute;a <b>" + $("#bssDay option:selected").text()+"</b>");
+        $("#dialog").dialog({
+            dialogClass: "no-close",
+            resizable: false,
+            draggable: false,
+            modal: true,
+            create: function( event, ui ) {
+                $("#dialog").css("visibility","");
+            },
+            buttons:{
+                "Agregar": function(){
+                    $.ajax({
+                    type: "POST",
+                    url: "<?= Yii::app()->createUrl('courses/courses/agregarHorario');?>",
+                    data: { bssDay: $("#bssDay").val(), inicio : $("#horaInicio").val(), fin : $("#horaFin").val()},
+                    dataType: "text"
+                    })
+                    .done(function( msg ) {
+                        var json = $.parseJSON(msg);
+                        if(json.estatus){
+                            $.ajax({
+                               url: "<?= Yii::app()->createUrl('courses/courses/getHorarioHtml');?>", 
+                               dataType: "text"
+                            }).done(function( msg ) {
+                                $("#tr_horario").css("visibility","");
+                                $( "#tablaHorario tbody" ).html(msg);
+                                $("#dialog").dialog("close"); 
+                            });
+                        }else{
+                            $("#labelErrorHorario").html(json.mensaje);
+                        }
+                    });
+                },
+                "Cancelar": function() {
+                    $(this).dialog("close");
+                }
+            }
+        }).css("font-size", "14px");
     }
     
     function cargaDomicilioCliente(fkClient){
@@ -142,7 +205,7 @@ Yii::app()->clientScript->registerScript('script',
         <tr>
             <th id="datos_th" colspan="4" class="zebra_th" style="text-align: center">DATOS DEL CURSO</th>
         </tr>
-
+        
        <tr>
            <div class="row">
                <td class="datos_td"><?php echo $form->labelEx($model,'fk_client'); ?></td>
@@ -220,45 +283,35 @@ Yii::app()->clientScript->registerScript('script',
                 DEFINIR HORARIO
             </th>
          </tr>
-         <tr>
-             <td class="horario_td"><?php echo CHtml::label('Dia','diaH'); ?></td>
+         <?php
+         $visible = "";
+         if(!isset($_SESSION["horarioCurso"])){
+             $visible = "hidden";
+         }
+         ?>
+         <tr id="tr_horario" style="visibility: <?= $visible ?>">
+            <td colspan="4">
+                <table class="zebra" align="center" class="horario_td" id="tablaHorario">
+                    <thead>
+                        <tr>
+                            <td width="100px" align="center" style="font-weight: bold; font-size: 12px">Dia</td>
+                            <td width="100px" align="center" style="font-weight: bold; font-size: 12px">Hora Inicio</td>
+                            <td width="100px" align="center" style="font-weight: bold; font-size: 12px">Hora Fin</td>
+                            <td width="100px" align="center" style="font-weight: bold; font-size: 12px"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+             <td class="horario_td" style="text-align: right"><?php echo CHtml::label('Dia','diaH'); ?></td>
              <td class="horario_td"><?php echo CHtml::dropDownList('bssDay', '', CatBssDay::model()->getCatBssDayListData(constantes::ACTIVO)); ?></td>
              <td class="horario_td"><?php echo CHtml::button('Agregar', array('onClick'=>'agregarHorario()')); ?></td>
              <td class="horario_td"></td>
          </tr>
-        <tr>
-            <td colspan="4">
-                <table class="horario_td">
-                    <?php
-                        foreach(CatBssDay::model()->getCatBssDay(constantes::ACTIVO) as $bssDay){
-                            echo '<tr>';
-                            echo '<td style="width: 120px">'.CHtml::label($bssDay->desc_day,'day_'.$bssDay->pk_bss_day).'</td>';
-                            echo '<td>Inicio ';
-                            $this->widget('CMaskedTextField', array(
-                                'name'=>'inicio_'.$bssDay->pk_bss_day,
-                                'value' => '00:00',
-                                'mask' => '99:99',
-                                'htmlOptions' => array('size' => 5)
-                                )
-                            );
-                            echo '</td>';
-                            echo '<td>Fin ';
-                            $this->widget('CMaskedTextField', array(
-                                'name'=>'fin_'.$bssDay->pk_bss_day,
-                                'value' => '00:00',
-                                'mask' => '99:99',
-                                'htmlOptions' => array('size' => 5)
-                                )
-                            );
-                            echo '</td>';
-                            echo '<td></td>';
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
-            </td>
-        </tr>
-        
         <tr>
             <th id="direccion_th" colspan="4" style="text-align: center">
                 DIRECCION DONDE SE IMPARTIRAN LAS CLASES
@@ -367,3 +420,32 @@ Yii::app()->clientScript->registerScript('script',
 <?php $this->endWidget(); ?>
 </table>
 </div><!-- form -->
+
+<div id="dialog" title="Agregar horario" style="visibility: hidden">
+    <span id="labelAgregarHorario" style="text-align: center"></span>
+    <form>
+        <table class="zebra">
+            <tr>
+                <td width="50px">Inicio</td>
+                <td><?php $this->widget('CMaskedTextField', array(
+                                'name'=>'horaInicio',
+                                'value' => '00:00',
+                                'mask' => '99:99',
+                                'htmlOptions' => array('size' => 5)
+                                )
+                            ); ?></td>
+            </tr>
+            <tr>
+                <td>Fin</td>
+                <td><?php $this->widget('CMaskedTextField', array(
+                                'name'=>'horaFin',
+                                'value' => '00:00',
+                                'mask' => '99:99',
+                                'htmlOptions' => array('size' => 5)
+                                )
+                            ); ?></td>
+            </tr>
+        </table>
+        <span id="labelErrorHorario" style="text-align: center; color: red; font-weight: bold"></span>
+    </form>
+</div>

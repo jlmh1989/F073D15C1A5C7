@@ -34,7 +34,9 @@ class CoursesController extends Controller
 			),
                     */
 			array('allow', // allow authenticated user to perform
-				'actions'=>array('index','view','create','update','admin','delete','crearPdf','domicilioCliente','inactivos','mapa','datosMapa'),
+				'actions'=>array('index','view','create','update','admin','delete',
+                                    'crearPdf','domicilioCliente','inactivos','mapa','datosMapa',
+                                    'agregarHorario','eliminarHorario','getHorarioHtml'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
 				//'users'=>array('@'),
 			),
@@ -84,8 +86,97 @@ class CoursesController extends Controller
 			'model'=>$model,
 		));
 	}
+        
+        public function actionAgregarHorario(){
+            $inicio = Yii::app()->getRequest()->getParam('inicio');
+            $fin = Yii::app()->getRequest()->getParam("fin");
+            $bssDay = Yii::app()->getRequest()->getParam("bssDay");
+            if($this->validarHorario($bssDay, $inicio, $fin)){
+                $_SESSION['horarioCurso'][$bssDay][$inicio.$fin]["inicio"] = $inicio;
+                $_SESSION['horarioCurso'][$bssDay][$inicio.$fin]["fin"] = $fin;
+                echo '{"estatus":true, "id": "'.$inicio.$fin.'", "mensaje":"Agregado correctamente."}';
+            }else{
+                echo '{"estatus":false, "id": "0", "mensaje":"Horario no v&aacute;lido."}';
+            }         
+        }
+        
+        public function actionEliminarHorario(){
+            unset($_SESSION['horarioCurso'][Yii::app()->getRequest()->getParam("bssDay")][Yii::app()->getRequest()->getParam("id")]);
+        }
+        
+        private function validarHorario($bssDay, $inicio, $fin){
+            if($inicio === "" || $fin === ""){
+                return FALSE;
+            }
+            if($inicio === "00:00" || $fin === "00:00"){
+                return FALSE;
+            }
+            
+            $inicioEx = explode(":", $inicio);
+            $finEx = explode(":", $fin);
+            
+            $horaI = $inicioEx[0];
+            $minI = $inicioEx[1];
+            $horaF = $finEx[0];
+            $minF = $finEx[1];
+            
+            if(((int)$horaI > 23)){
+                return FALSE;
+            }
+            
+            if(((int)$horaF > 23)){
+                return FALSE;
+            }
+            
+            if(((int)$minI > 59)){
+                return FALSE;
+            }
+            
+            if(((int)$minF > 59)){
+                return FALSE;
+            }
+            
+            if(((int)$horaI > (int)$horaF)){
+                return FALSE;
+            }
+            
+            if(((int)$minI >= (int)$minF)){
+                return FALSE;
+            }
+            
+            foreach ($_SESSION['horarioCurso'][$bssDay] as $key => $array) {
+                //validar hora
+                $finTmpEx = explode(":", $array['fin']);
+                $horaTmpF = $finTmpEx[0];
+                $minTmpF = $finTmpEx[1];
+                if(((int)$horaI === (int)$horaTmpF)){
+                    return FALSE;
+                }
+                if(((int)$minI >= (int)$minTmpF)){
+                    return FALSE;
+                }
+            }
+            
+            return TRUE;
+        }
+        
+        public function actionGetHorarioHtml(){
+            $html = '';
+            $dias = CatBssDay::model()->getCatBssDayListData(constantes::ACTIVO);
+            foreach ($_SESSION['horarioCurso'] as $keyBssDay => $arrayBssDay) {
+                foreach ($arrayBssDay as $keyHorario => $arrayHorario) {
+                    $html .= '<tr>';
+                    $html .= '<td align="center" >'.$dias[$keyBssDay].'</td>';
+                    $html .= '<td align="center" >'.$arrayHorario['inicio'].'</td>';
+                    $html .= '<td align="center" >'.$arrayHorario['fin'].'</td>';
+                    $html .= '<td align="center" ><span id="'.$keyHorario.'" style="cursor: pointer" onclick="eliminarHorario('.$keyBssDay.','.'\''.$keyHorario.'\''.')"><img src="images/delete.png"/></span></td>';
+                    $html .= '</tr>';
+                }
+            }
+            echo $html;
+        }
 
-	/**
+        /**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
@@ -141,8 +232,8 @@ class CoursesController extends Controller
                 }
             }
         }
-
-	/**
+        
+        /**
 	 * Lists all models.
 	 */
 	public function actionIndex()
