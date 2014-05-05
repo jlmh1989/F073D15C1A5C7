@@ -2,9 +2,17 @@
 /* @var $this CoursesController */
 /* @var $model Courses */
 /* @var $form CActiveForm */
-
+$scriptGetHorarioHtml = '
+        $.ajax({
+            url: "'.Yii::app()->createUrl("courses/courses/getHorarioHtml").'", 
+            dataType: "text"
+         }).done(function( msg ) {
+             $("#tr_horario").css("visibility","");
+             $( "#tablaHorario tbody" ).html(msg);
+         });';
 if($model->pk_course == null){
     unset($_SESSION['horarioCurso']);
+    $scriptGetHorarioHtml = '';
 }
 
 Yii::app()->clientScript->registerScript('script',
@@ -41,7 +49,7 @@ Yii::app()->clientScript->registerScript('script',
                 $(".datos_mapa_td").show();                
             }
         });
-        ',
+        '.$scriptGetHorarioHtml,
         CClientScript::POS_READY);
 ?>
 <script type="text/javascript" src="//www.google.com/jsapi"></script>
@@ -72,8 +80,11 @@ Yii::app()->clientScript->registerScript('script',
     /*]]>*/
 
     function cargaMapa(){   
-        var latitud = $("#Courses_latitud").val();
-        var longitud = $("#Courses_longitud").val();
+        var datoMapa = $("#Courses_dato_mapa").val();
+        var arrayDM = datoMapa.split(",");
+        var latitud = $.trim(arrayDM[0]);
+        var longitud = $.trim(arrayDM[1]);
+        console.log(arrayDM);
         if((latitud.trim() !== "") && (longitud.trim() !== "")){
             pintarMapa(latitud.trim(), longitud.trim());
             $(".mapa_div").show();
@@ -392,15 +403,9 @@ Yii::app()->clientScript->registerScript('script',
         </tr>
         <tr>
 	<div class="row">
-            <div class="row">
-                <td class="datos_mapa_td"><?php echo $form->labelEx($model,'latitud'); ?></td>
-		<td class="datos_mapa_td"><?php echo $form->textField($model,'latitud',array('size'=>12,'maxlength'=>12,'onblur'=>'cargaMapa()')); ?>
-		<?php echo $form->error($model,'latitud'); ?></td>
-	</div>
-            
-            <td class="datos_mapa_td"><?php echo $form->labelEx($model,'longitud'); ?></td>
-		<td class="datos_mapa_td"><?php echo $form->textField($model,'longitud',array('size'=>12,'maxlength'=>12,'onblur'=>'cargaMapa()')); ?>
-		<?php echo $form->error($model,'longitud'); ?></td>
+                <td class="datos_mapa_td"><?php echo $form->labelEx($model,'dato_mapa'); ?></td>
+		<td class="datos_mapa_td"><?php echo $form->textField($model,'dato_mapa',array('size'=>25,'maxlength'=>25,'onblur'=>'cargaMapa()')); ?>
+		<?php echo $form->error($model,'dato_mapa'); ?></td>
 	</div>
         
         <tr>

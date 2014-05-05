@@ -331,7 +331,7 @@ if($model->pk_teacher == null){
             <td></td>
             <?php
              foreach (CatBssDay::model()->getCatBssDay(constantes::ACTIVO) as $bssDay) {
-                 echo '<td style="text-align: center">'.$bssDay->desc_day.'</td>';
+                 echo '<td style="text-align: center"><b>'.$bssDay->desc_day.'</b></td>';
                 }
             ?>
             </tr>

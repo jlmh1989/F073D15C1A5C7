@@ -77,6 +77,7 @@ class CoursesController extends Controller
 		if(isset($_POST['Courses']))
 		{
 			$model->attributes=$_POST['Courses'];
+                        $model->status = constantes::ACTIVO;
 			if($model->save()){
                             $this->guardarHorario($model->pk_course);
                             $this->redirect(array('view','id'=>$model->pk_course));
@@ -139,23 +140,31 @@ class CoursesController extends Controller
             if(((int)$horaI > (int)$horaF)){
                 return FALSE;
             }
-            
-            if(((int)$minI >= (int)$minF)){
-                return FALSE;
+            if(((int)$horaI === (int)$horaF)){
+                if(((int)$minI >= (int)$minF)){
+                    return FALSE;
+                } 
             }
             
-            foreach ($_SESSION['horarioCurso'][$bssDay] as $key => $array) {
+            /*
+            if(isset($_SESSION["horarioCurso"])){
+                foreach ($_SESSION['horarioCurso'][$bssDay] as $key => $array) {
                 //validar hora
-                $finTmpEx = explode(":", $array['fin']);
-                $horaTmpF = $finTmpEx[0];
-                $minTmpF = $finTmpEx[1];
-                if(((int)$horaI === (int)$horaTmpF)){
-                    return FALSE;
-                }
-                if(((int)$minI >= (int)$minTmpF)){
-                    return FALSE;
+                    $inicioTmpEx = explode(":", $array['fin']);
+                    $horaTmpI = $inicioTmpEx[0];
+                    $minTmpI = $inicioTmpEx[1];
+                    $finTmpEx = explode(":", $array['fin']);
+                    $horaTmpF = $finTmpEx[0];
+                    $minTmpF = $finTmpEx[1];
+                    if(((int)$horaI == (int)$horaTmpF)){
+                        if(((int)$minI >= (int)$minTmpI) && ((int)$minI <= $minTmpF)){
+                            return FALSE;
+                        }
+                    }
                 }
             }
+             * 
+             */
             
             return TRUE;
         }
@@ -175,6 +184,39 @@ class CoursesController extends Controller
             }
             echo $html;
         }
+        
+        private function guardarHorario($fkCourse){
+            foreach ($_SESSION['horarioCurso'] as $keyBssDay => $arrayBssDay) {
+                foreach ($arrayBssDay as $keyHorario => $arrayHorario) {
+                    $modelCS = new CourseSchedule();
+                    $modelCS->status = constantes::ACTIVO;
+                    $modelCS->fk_course = (int)$fkCourse;
+                    $modelCS->fk_bss_day = (int)$keyBssDay;
+                    $modelCS->initial_hour = $arrayHorario['inicio'];
+                    $modelCS->final_hour = $arrayHorario['fin'];
+                    $modelCS->save();
+                }
+            }
+        }
+        
+        private function getHorarioBD($fkCourse){
+            $modelCS = CourseSchedule::model()->getCourseSchedule(constantes::ACTIVO, $fkCourse);
+            $_SESSION['horarioCurso'] = array();
+            $_SESSION['horarioCursoCargado'] = true;
+            foreach ($modelCS as $array) {
+                $inicio = $array->initial_hour;
+                $fin = $array->final_hour;
+                $_SESSION['horarioCurso'][$array->fk_bss_day][$inicio.$fin]["inicio"] = $inicio;
+                $_SESSION['horarioCurso'][$array->fk_bss_day][$inicio.$fin]["fin"] = $fin;
+            }
+        }
+        
+        private function deleteHorarioBD($fkCourse){
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('fk_course='.$fkCourse);
+            $criteria->addCondition('status='.constantes::ACTIVO);
+            CourseSchedule::model()->deleteAll($criteria);
+        }
 
         /**
 	 * Updates a particular model.
@@ -184,7 +226,9 @@ class CoursesController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+                if(!isset($_SESSION['horarioCursoCargado'])){
+                    $this->getHorarioBD($id);
+                }
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -192,6 +236,8 @@ class CoursesController extends Controller
 		{
 			$model->attributes=$_POST['Courses'];
 			if($model->save()){
+                            $this->deleteHorarioBD($id);
+                            $this->guardarHorario($id);
                             $this->redirect(array('view','id'=>$model->pk_course));
                         }
 		}
@@ -216,22 +262,6 @@ class CoursesController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 	}
-        
-        private function guardarHorario($fkCourse){
-            foreach(CatBssDay::model()->getCatBssDay(constantes::ACTIVO) as $bssDay){
-                $inicio = Yii::app()->getRequest()->getParam("inicio_".$bssDay->pk_bss_day);
-                $fin = Yii::app()->getRequest()->getParam("fin_".$bssDay->pk_bss_day);
-                if(($inicio != "00:00") && ($fin != "00:00")){
-                    $modelCS = new CourseSchedule();
-                    $modelCS->status = constantes::ACTIVO;
-                    $modelCS->fk_course = (int)$fkCourse;
-                    $modelCS->fk_bss_day = (int)$bssDay->pk_bss_day;
-                    $modelCS->initial_hour = $inicio;
-                    $modelCS->final_hour = $fin;
-                    $modelCS->save();
-                }
-            }
-        }
         
         /**
 	 * Lists all models.

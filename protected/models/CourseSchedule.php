@@ -110,4 +110,12 @@ class CourseSchedule extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function getCourseSchedule($status = constantes::INACTIVO, $fkCurso = 0){
+            $criteria=new CDbCriteria;
+            $criteria-> select='pk_course_schedule,fk_course,fk_bss_day,initial_hour,final_hour';
+            $criteria->addCondition('status='.$status);
+            $criteria->addCondition('fk_course='.$fkCurso);
+            return CourseSchedule::model()->findAll($criteria);
+        }
 }

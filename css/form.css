@@ -296,3 +296,7 @@ table {
 .no-close .ui-dialog-titlebar-close {
   display: none;
 }
+
+.horario_td td{
+    padding: 0px 0px 0px 4px;
+}

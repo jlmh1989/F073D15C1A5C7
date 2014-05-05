@@ -13,8 +13,7 @@
  * @property string $initial_date
  * @property string $desc_curse
  * @property string $other_level
- * @property string $latitud
- * @property string $longitud
+ * @property string $dato_mapa
  * @property integer $status
  *
  * The followings are the available model relations:
@@ -46,7 +45,7 @@ class Courses extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fk_level, fk_client, fk_teacher, fk_type_course, initial_date, desc_curse, latitud, longitud', 'required'),
+			array('fk_level, fk_client, fk_teacher, fk_type_course, initial_date, desc_curse', 'required'),
 			array('fk_level, fk_teacher, fk_type_course', 'numerical', 'integerOnly'=>true),
 			array('fk_client, fk_group', 'length', 'max'=>10),
 			array('desc_curse, other_level', 'length', 'max'=>50),
@@ -91,8 +90,7 @@ class Courses extends CActiveRecord
 			'initial_date' => 'Fecha de Inicio',
 			'desc_curse' => 'Descripci&oacute;n Curso',
 			'other_level' => 'Otro Nivel',
-                        'latitud' => 'Latitud',
-                        'longitud' => 'Longitud',
+                        'dato_mapa' => 'Dato para el mapa',
 		);
 	}
 
