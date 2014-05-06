@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-05-2014 a las 18:41:34
+-- Tiempo de generación: 05-05-2014 a las 23:59:20
 -- Versión del servidor: 5.6.12
 -- Versión de PHP: 5.5.3
 
@@ -901,7 +901,6 @@ INSERT INTO `tbl_e24_students_group` (`fk_group`, `fk_student`, `status`, `fk_cl
 
 CREATE TABLE IF NOT EXISTS `tbl_e24_teachers` (
   `pk_teacher` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_rate` tinyint(3) unsigned NOT NULL,
   `fk_user` int(10) unsigned NOT NULL,
   `name` varchar(100) NOT NULL,
   `street` varchar(100) NOT NULL,
@@ -921,6 +920,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_teachers` (
   `cellphone` varchar(15) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `entrance_score` tinyint(4) NOT NULL,
+  `rate` double NOT NULL,
   `spesification` varchar(100) DEFAULT NULL,
   `comments` varchar(300) DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
@@ -929,7 +929,6 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_teachers` (
   KEY `fk_state_pk_cat_detail` (`fk_state_dir`),
   KEY `fk_nationality_pk_cat_detail` (`fk_nationality`),
   KEY `fk_status_documents_pk_cat_detail` (`fk_status_document`),
-  KEY `fk_teachers_pk_catrates` (`fk_rate`),
   KEY `fk_state_birth_pk_cat_detail` (`fk_state_birth`),
   KEY `fk_user` (`fk_user`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
@@ -938,17 +937,17 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_teachers` (
 -- Volcado de datos para la tabla `tbl_e24_teachers`
 --
 
-INSERT INTO `tbl_e24_teachers` (`pk_teacher`, `fk_rate`, `fk_user`, `name`, `street`, `street_numer`, `street_number_int`, `neighborhood`, `fk_nationality`, `fk_state_dir`, `county`, `zipcode`, `birthdate`, `fk_state_birth`, `fk_education`, `nationality_other`, `fk_status_document`, `phone`, `cellphone`, `email`, `entrance_score`, `spesification`, `comments`, `status`) VALUES
-(3, 1, 2, 'Maestro Demo 1', 'Calle demo 1', 1111, 'A-1', 'colonia demo 1', 11, 31, 'municipio demo 1', '06730', '1984-02-21', 31, 51, NULL, 54, '8111111111', '0441111111111', 'demo2@demo.com', 80, 'espesificacion demo 1', 'comentario demo 1', 1),
-(4, 2, 2, 'Maestro Demo 2', 'Calle demo 2', 2222, 'B-2', 'colonia demo 2', 12, 31, 'municipio demo 2', '66730', '1982-03-19', NULL, 52, 'Americana', 55, '8222222222', '0442222222222', 'demo2@demo.com', 90, 'espesificacion demo 2', 'comentario demo 2', 1),
-(5, 1, 2, 'maestro prueba', 'ejemplo calle', 123, '', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-02', 31, 50, NULL, 55, '1234567890', '1234567890', '', 9, '', '', 1),
-(6, 1, 2, 'maestro prueba update', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-15', 31, 50, NULL, 55, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 'esopecificaciones', 'comentarios', 1),
-(7, 1, 14, 'maestro prueba', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-04-04', 31, 50, NULL, 56, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 'ejemplo', 'ejemplo', 0),
-(8, 1, 15, 'Maestro', 'calle', 123, '1', 'colonia', 12, 31, 'Monterrey', '68000', '2011-12-01', 31, 50, '', 55, '012121212', '1212121212', 'ejemplo@ejemplo.com', 9, '', '', 1),
-(9, 1, 16, 'Maestro 1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2013-11-06', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, '', '', 1),
-(10, 1, 17, 'Mestro1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2014-03-05', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, '', '', 1),
-(11, 2, 18, 'Maestro 2', 'calle', 123, '1', 'colonia', 11, 31, 'Monterrey', '68000', '2013-12-03', 31, 50, NULL, 55, '1212121212', '1212121212', 'ejemplo@ejemplo.com', 8, '', '', 1),
-(12, 1, 19, 'nombre maestro 4', 'calle', 123, '1', 'coloni', 11, 31, 'Mty', '64000', '2014-04-07', 31, 50, NULL, 55, '12121212', '1212121212', '', 8, '', '', 1);
+INSERT INTO `tbl_e24_teachers` (`pk_teacher`, `fk_user`, `name`, `street`, `street_numer`, `street_number_int`, `neighborhood`, `fk_nationality`, `fk_state_dir`, `county`, `zipcode`, `birthdate`, `fk_state_birth`, `fk_education`, `nationality_other`, `fk_status_document`, `phone`, `cellphone`, `email`, `entrance_score`, `rate`, `spesification`, `comments`, `status`) VALUES
+(3, 2, 'Maestro Demo 1', 'Calle demo 1', 1111, 'A-1', 'colonia demo 1', 11, 31, 'municipio demo 1', '06730', '1984-02-20', 31, 51, NULL, 54, '8111111111', '0441111111111', 'demo2@demo.com', 80, 135.5, 'espesificacion demo 1', 'comentario demo 1', 1),
+(4, 2, 'Maestro Demo 2', 'Calle demo 2', 2222, 'B-2', 'colonia demo 2', 12, 31, 'municipio demo 2', '66730', '1982-03-19', NULL, 52, 'Americana', 55, '8222222222', '0442222222222', 'demo2@demo.com', 90, 0, 'espesificacion demo 2', 'comentario demo 2', 1),
+(5, 2, 'maestro prueba', 'ejemplo calle', 123, '', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-02', 31, 50, NULL, 55, '1234567890', '1234567890', '', 9, 0, '', '', 1),
+(6, 2, 'maestro prueba update', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-15', 31, 50, NULL, 55, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 0, 'esopecificaciones', 'comentarios', 1),
+(7, 14, 'maestro prueba', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-04-04', 31, 50, NULL, 56, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 0, 'ejemplo', 'ejemplo', 0),
+(8, 15, 'Maestro', 'calle', 123, '1', 'colonia', 12, 31, 'Monterrey', '68000', '2011-12-01', 31, 50, '', 55, '012121212', '1212121212', 'ejemplo@ejemplo.com', 9, 0, '', '', 1),
+(9, 16, 'Maestro 1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2013-11-06', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
+(10, 17, 'Mestro1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2014-03-05', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
+(11, 18, 'Maestro 2', 'calle', 123, '1', 'colonia', 11, 31, 'Monterrey', '68000', '2013-12-03', 31, 50, NULL, 55, '1212121212', '1212121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
+(12, 19, 'nombre maestro 4', 'calle', 123, '1', 'coloni', 11, 31, 'Mty', '64000', '2014-04-07', 31, 50, NULL, 55, '12121212', '1212121212', '', 8, 0, '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -995,21 +994,13 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_unavailable_schedule` (
   UNIQUE KEY `XPKtbl_e24_unavailable_schedule` (`fk_bss_day`,`fk_teacher`,`pk_unavailable_schedule`),
   KEY `fk_bss_day` (`fk_bss_day`),
   KEY `XIF2tbl_e24_unavailable_schedule` (`fk_teacher`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=137 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=153 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_unavailable_schedule`
 --
 
 INSERT INTO `tbl_e24_unavailable_schedule` (`pk_unavailable_schedule`, `fk_bss_day`, `fk_teacher`, `initial_hour`, `final_hour`, `status`) VALUES
-(1, 4, 3, '11:00:00', '13:00:00', 1),
-(2, 5, 3, '11:00:00', '13:00:00', 1),
-(3, 5, 3, '16:00:00', '17:00:00', 1),
-(4, 6, 3, '11:00:00', '13:00:00', 1),
-(5, 7, 3, '11:00:00', '13:00:00', 1),
-(6, 7, 3, '17:00:00', '18:00:00', 1),
-(7, 8, 3, '11:00:00', '13:00:00', 1),
-(8, 9, 3, '07:00:00', '13:00:00', 1),
 (9, 4, 4, '10:00:00', '11:00:00', 1),
 (10, 5, 4, '11:00:00', '13:00:00', 1),
 (11, 5, 4, '16:00:00', '17:00:00', 1),
@@ -1030,7 +1021,15 @@ INSERT INTO `tbl_e24_unavailable_schedule` (`pk_unavailable_schedule`, `fk_bss_d
 (133, 4, 12, '06:30:00', '07:30:00', 1),
 (134, 5, 12, '06:30:00', '07:30:00', 1),
 (135, 5, 12, '08:30:00', '10:00:00', 1),
-(136, 9, 12, '06:30:00', '09:00:00', 1);
+(136, 9, 12, '06:30:00', '09:00:00', 1),
+(145, 4, 3, '11:00:00', '13:00:00', 1),
+(146, 5, 3, '11:00:00', '13:00:00', 1),
+(147, 5, 3, '16:00:00', '17:00:00', 1),
+(148, 6, 3, '11:00:00', '13:00:00', 1),
+(149, 7, 3, '11:00:00', '13:00:00', 1),
+(150, 7, 3, '17:00:00', '18:00:00', 1),
+(151, 8, 3, '11:00:00', '13:00:00', 1),
+(152, 9, 3, '07:00:00', '13:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -1170,7 +1169,6 @@ ALTER TABLE `tbl_e24_teachers`
   ADD CONSTRAINT `fk_state_birth_pk_cat_detail` FOREIGN KEY (`fk_state_birth`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
   ADD CONSTRAINT `fk_state_pk_cat_detail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
   ADD CONSTRAINT `fk_status_documents_pk_cat_detail` FOREIGN KEY (`fk_status_document`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
-  ADD CONSTRAINT `fk_teachers_pk_catrates` FOREIGN KEY (`fk_rate`) REFERENCES `tbl_e24_cat_rates` (`pk_rate`),
   ADD CONSTRAINT `fk_user_pk_catrates` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`);
 
 --

@@ -143,14 +143,21 @@ if($model->pk_teacher == null){
     <tr>
     <div class="row">
         
-        <td class="maestro_td"><?php echo $form->labelEx($model, 'fk_rate'); ?></td>
-        <td class="maestro_td" width="270px"><?php echo $form->dropDownList($model,'fk_rate', CatRates::model()->getCatRates(), constantes::getOpcionCombo()); ?>
-        <?php echo $form->error($model, 'fk_rate'); ?></td>
-        
-      
         <td class="maestro_td"><?php echo $form->labelEx($model, 'name'); ?></td>
-        <td class="maestro_td"><?php echo $form->textField($model, 'name', array('size' => 60, 'maxlength' => 100)); ?>
+        <td class="maestro_td" width="270px"><?php echo $form->textField($model, 'name', array('size' => 60, 'maxlength' => 100)); ?>
         <?php echo $form->error($model, 'name'); ?></td>
+        
+        <td class="maestro_td"><?php echo $form->labelEx($model, 'birthdate'); ?></td>
+        <td class="maestro_td"><?php $this->widget('CMaskedTextField', array(
+                                'attribute'=>'birthdate',
+                                'name'=>'birthdate',
+                                'model'=>$model,
+                                'placeholder'=>' ',
+                                'mask' => '9999-99-99',
+                                'htmlOptions' => array('size' => 10, 'placeholder' => 'AAAA-MM-DD')
+                                )
+                            ); ?>
+        <?php echo $form->error($model, 'birthdate'); ?></td>
         
     </div>
     </tr>
@@ -172,23 +179,9 @@ if($model->pk_teacher == null){
     </tr>
     
     <tr>
-        <td class="maestro_td"><?php echo $form->labelEx($model, 'birthdate'); ?></td>
-        <td class="maestro_td"><?php
-                    $this->widget('zii.widgets.jui.CJuiDatePicker',
-                            array('attribute'=>'birthdate',
-                                  'name'=>'birthdate',
-                                  'model'=>$model,
-                                  'language' => 'es',
-                                  'options' => array(
-                                                'mode'=>'focus',
-                                                'dateFormat'=>  constantes::FORMATO_FECHA,
-                                                'showAnim' => 'slideDown',
-                                  ),
-                                  'htmlOptions'=>array('class'=>'date', //'value'=>date("d F, Y")
-                                  ),
-                            )); 
-                ?>
-        <?php echo $form->error($model, 'birthdate'); ?></td>
+        <td class="maestro_td"><?php echo $form->labelEx($model, 'email'); ?></td>
+        <td class="maestro_td"><?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 100)); ?>
+        <?php echo $form->error($model, 'email'); ?></td>
         
          <td class="maestro_td"><?php echo $form->labelEx($model, 'fk_state_birth'); ?></td>
         <td class="maestro_td"><?php echo $form->dropDownList($model,'fk_state_birth',  CatDetail::model()->getCatDetailsOptions(constantesCatalogos::ESTADO,  constantes::LANG), constantes::getOpcionCombo()); ?>
@@ -222,13 +215,14 @@ if($model->pk_teacher == null){
     
     <tr>
     <div class="row">
-        <td class="maestro_td"><?php echo $form->labelEx($model, 'email'); ?></td>
-        <td class="maestro_td"><?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 100)); ?>
-        <?php echo $form->error($model, 'email'); ?></td>
         
         <td class="maestro_td"><?php echo $form->labelEx($model, 'entrance_score'); ?></td>
         <td class="maestro_td"><?php echo $form->textField($model, 'entrance_score'); ?>
         <?php echo $form->error($model, 'entrance_score'); ?></td>
+        
+        <td class="maestro_td"><?php echo $form->labelEx($model, 'rate'); ?></td>
+        <td class="maestro_td"><?php echo $form->textField($model, 'rate'); ?>
+        <?php echo $form->error($model, 'rate'); ?></td>
     </div>
     </tr>
     

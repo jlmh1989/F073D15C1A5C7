@@ -17,8 +17,14 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
 	'columns'=> array(
-            'fk_level',
-            'fk_material',
+            array('name'=>'fkCatLevels',
+                'header'=>'Nivel',
+                'type'=>'raw',
+                'value'=>'$data->fkCatLevels->desc_level'),
+            array('name'=>'fkCatMaterial',
+                'header'=>'Material',
+                'type'=>'raw',
+                'value'=>'$data->fkCatMaterial->desc_material'),
             array('name'=>'status',
                 'header'=>'Estatus',
                 'type'=>'raw',

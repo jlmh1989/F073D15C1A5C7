@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table 'tbl_e24_teachers':
  * @property integer $pk_teacher
- * @property integer $fk_rate
  * @property integer $fk_user
  * @property string $name
  * @property string $street
@@ -25,6 +24,7 @@
  * @property string $cellphone
  * @property string $email
  * @property integer $entrance_score
+ * @property double $rate
  * @property string $spesification
  * @property string $comments
  * @property integer $status
@@ -36,7 +36,6 @@
  * @property CatDetail $fkStateBirth
  * @property CatDetail $fkStateDir
  * @property CatDetail $fkStatusDocument
- * @property CatRates $fkRate
  * @property UnavailableSchedule[] $unavailableSchedules
  * @property Users $fkUser
  */
@@ -58,12 +57,13 @@ class Teachers extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fk_rate, name, street, street_numer, neighborhood, fk_nationality, fk_state_dir, county, zipcode, birthdate, fk_education, fk_status_document, phone, cellphone, entrance_score', 'required'),
-			array('fk_rate, street_numer, fk_nationality, fk_state_dir, fk_state_birth, fk_education, fk_status_document, entrance_score, status', 'numerical', 'integerOnly'=>true),
+			array('rate, name, street, street_numer, neighborhood, fk_nationality, fk_state_dir, county, zipcode, birthdate, fk_education, fk_status_document, phone, cellphone, entrance_score', 'required'),
+			array('street_numer, fk_nationality, fk_state_dir, fk_state_birth, fk_education, fk_status_document, entrance_score, status', 'numerical', 'integerOnly'=>true),
 			array('name, street, neighborhood, county, nationality_other, email, spesification', 'length', 'max'=>100),
 			array('street_number_int, zipcode', 'length', 'max'=>5),
 			array('phone, cellphone', 'length', 'max'=>15),
 			array('comments', 'length', 'max'=>300),
+                        array('rate', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('status', 'safe', 'on'=>'search'),
@@ -84,7 +84,6 @@ class Teachers extends CActiveRecord
 			'fkStateBirth' => array(self::BELONGS_TO, 'CatDetail', 'fk_state_birth'),
 			'fkStateDir' => array(self::BELONGS_TO, 'CatDetail', 'fk_state_dir'),
 			'fkStatusDocument' => array(self::BELONGS_TO, 'CatDetail', 'fk_status_document'),
-			'fkRate' => array(self::BELONGS_TO, 'CatRates', 'fk_rate'),
 			'unavailableSchedules' => array(self::HAS_MANY, 'UnavailableSchedule', 'fk_teacher'),
                         'fkUser'=> array(self::BELONGS_TO, 'Users', 'fk_user'),
 		);
@@ -97,7 +96,6 @@ class Teachers extends CActiveRecord
 	{
 		return array(
 			'pk_teacher' => 'Pk Teacher',
-			'fk_rate' => 'Clasificaci&oacute;n',
 			'name' => 'Nombre',
 			'street' => 'Calle',
 			'street_numer' => 'N&uacute;mero',
@@ -116,6 +114,7 @@ class Teachers extends CActiveRecord
 			'cellphone' => 'Celular',
 			'email' => 'Correo',
 			'entrance_score' => 'Calificaci&oacute;n en Examen de Ingreso',
+                        'rate' => 'Tarifa',
 			'spesification' => 'Especificaciones',
 			'comments' => 'Comentarios',
 			'status' => 'Status',

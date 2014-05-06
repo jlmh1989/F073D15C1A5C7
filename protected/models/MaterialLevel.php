@@ -7,6 +7,9 @@
  * @property integer $fk_level
  * @property integer $fk_material
  * @property integer $status
+ * 
+ * @property CatLevels $fkCatLevels
+ * @property CatMaterial $fkCatMaterial
  */
 class MaterialLevel extends CActiveRecord
 {
@@ -42,6 +45,8 @@ class MaterialLevel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'fkCatLevels' => array(self::BELONGS_TO, 'CatLevels', 'fk_level'),
+                    'fkCatMaterial' => array(self::BELONGS_TO, 'CatMaterial', 'fk_material'),
 		);
 	}
 
