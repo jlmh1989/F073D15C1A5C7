@@ -1,7 +1,7 @@
 <?php
 /* @var $this GroupsController */
 /* @var $dataProvider CActiveDataProvider */
-$model->status = constantes::ACTIVO;
+$model->status = constantes::INACTIVO;
 $this->breadcrumbs=array(
 	'Groups',
 );
@@ -13,7 +13,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Grupos Activos</h1>
+<h1>Grupos Inactivos</h1>
 
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(

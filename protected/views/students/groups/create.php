@@ -8,11 +8,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Groups', 'url'=>array('index')),
-	array('label'=>'Manage Groups', 'url'=>array('admin')),
+	array('label'=>'Crear Grupo', 'url'=>array('create')),
+	array('label'=>'Grupos Activos', 'url'=>array('index')),
+        array('label'=>'Grupos Inactivos', 'url'=>array('inactivo')),
 );
 ?>
 
-<h1>Create Groups</h1>
+<h1>Crear Grupo</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

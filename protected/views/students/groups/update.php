@@ -9,13 +9,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Groups', 'url'=>array('index')),
-	array('label'=>'Create Groups', 'url'=>array('create')),
-	array('label'=>'View Groups', 'url'=>array('view', 'id'=>$model->pk_group)),
-	array('label'=>'Manage Groups', 'url'=>array('admin')),
+	array('label'=>'Crear Grupo', 'url'=>array('create')),
+	array('label'=>'Grupos Activos', 'url'=>array('index')),
+        array('label'=>'Grupos Inactivos', 'url'=>array('inactivo')),
 );
 ?>
 
-<h1>Update Groups <?php echo $model->pk_group; ?></h1>
+<h1>Actualizar Grupo <?php echo $model->pk_group; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

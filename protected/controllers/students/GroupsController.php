@@ -27,18 +27,24 @@ class GroupsController extends Controller
 	public function accessRules()
 	{
 		return array(
+			/*
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
+                    */
+			array('allow', // allow authenticated user to perform
+				'actions'=>array('index','view','create','update','admin','delete',
+                                    'inactivo'),
+                                'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
+				//'users'=>array('@'),
 			),
+                    /*
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
+                     */
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -110,11 +116,12 @@ class GroupsController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
+		$model = $this->loadModel($id);
+                $model->status = constantes::INACTIVO;
+                $model->save();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 	}
 
 	/**
@@ -122,9 +129,25 @@ class GroupsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Groups');
+                $model=new Groups('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Groups']))
+			$model->attributes=$_GET['Groups'];
+
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'model'=>$model,
+		));
+	}
+        
+        public function actionInactivo()
+	{
+                $model=new Groups('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Groups']))
+			$model->attributes=$_GET['Groups'];
+
+		$this->render('inactivo',array(
+			'model'=>$model,
 		));
 	}
 

@@ -53,7 +53,7 @@ class Clients extends CActiveRecord
                         array('image', 'file', 'allowEmpty'=>true, 'types'=>'jpg, gif, png'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('fk_type_client', 'safe', 'on'=>'search'),
+			array('fk_type_client, client_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -114,6 +114,7 @@ class Clients extends CActiveRecord
 		$criteria=new CDbCriteria;
                 $criteria->compare('fk_type_client',$this->fk_type_client);
 		$criteria->compare('status', $this->status);
+                //$criteria->compare('client_name', $this->client_name);
                 $sort = new CSort();
                 $sort->attributes = array(
                     'client_name'=>array(

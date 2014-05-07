@@ -26,6 +26,7 @@ $this->menu=array(
 $this->widget('zii.widgets.grid.CGridView', array(
         'id'=>'clients-grid',
 	'dataProvider'=>$model->search(),
+        'filter'=>$model,
         'ajaxUpdate' => true,
         'columns'=> array(
             'client_name',
