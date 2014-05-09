@@ -63,7 +63,7 @@ Yii::app()->clientScript->registerScript('script',
         <tr>
 	<div class="row">
             <td class="estudiante_td"><?php echo $form->labelEx($model,'fk_client'); ?></td>
-		<td class="estudiante_td" width="240px"><?php echo $form->dropDownList($model,'fk_client', Clients::model()->getClients(), constantes::getOpcionCombo()); ?>
+            <td class="estudiante_td" width="240px"><?php echo $form->dropDownList($model,'fk_client', Clients::model()->getClientsActivos(), constantes::getOpcionCombo()); ?>
 		<?php echo $form->error($model,'fk_client'); ?></td>
 	</div>
 
@@ -118,7 +118,7 @@ Yii::app()->clientScript->registerScript('script',
                                   'model'=>$model,
                                   'options' => array(
                                                 'mode'=>'focus',
-                                                'dateFormat'=>'d MM, yy',
+                                                'dateFormat'=>  constantes::FORMATO_FECHA,
                                                 'showAnim' => 'slideDown',
                                   ),
                                   'htmlOptions'=>array('size'=>20,'class'=>'date', //'value'=>date("d F, Y")

@@ -114,9 +114,18 @@ class StudentsController extends Controller
 
 		if(isset($_POST['Students']))
 		{
-			$model->attributes=$_POST['Students'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_student));
+                    $model->attributes=$_POST['Students'];
+                    $modelUser->attributes=$_POST['Users'];
+                    $validUser = $modelUser->validate();
+                    $validate = $model->validate() && $validUser;
+                    if($validate)
+                    {
+                        if($modelUser->save())
+                        {
+                            $model->save();
+                            $this->redirect(array('view','id'=>$model->pk_student));
+                        }
+                    }
 		}
 
 		$this->render('update',array(
@@ -133,7 +142,7 @@ class StudentsController extends Controller
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
-
+                
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -144,9 +153,13 @@ class StudentsController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Students');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+		$model=new Students('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Students']))
+			$model->attributes=$_GET['Students'];
+
+		$this->render('admin',array(
+			'model'=>$model,
 		));
 	}
 

@@ -15,6 +15,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Actualizar Grupo <?php echo $model->pk_group; ?></h1>
+<h3>Actualizar Grupo <?php echo $model->pk_group; ?></h3>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

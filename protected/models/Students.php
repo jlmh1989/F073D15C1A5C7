@@ -76,7 +76,7 @@ class Students extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_student' => 'Pk Student',
+			'pk_student' => 'Id',
 			'fk_client' => 'Cliente',
 			'name' => 'Nombre',
 			'email' => 'Email',
@@ -113,6 +113,7 @@ class Students extends CActiveRecord
 		$criteria->compare('pk_student',$this->pk_student,true);
 		$criteria->compare('fk_client',$this->fk_client,true);
 		$criteria->compare('name',$this->name,true);
+                /*
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('neigborhod',$this->neigborhod,true);
 		$criteria->compare('county',$this->county,true);
@@ -123,9 +124,19 @@ class Students extends CActiveRecord
 		$criteria->compare('street_number',$this->street_number);
 		$criteria->compare('street_number_int',$this->street_number_int,true);
 		$criteria->compare('fk_state_dir',$this->fk_state_dir);
+                 * 
+                 */
+                $sort = new CSort();
+                $sort->attributes = array(
+                    'name'=>array(
+                        'asc'=>'name',
+                        'desc'=>'name desc',
+                    ),
+                );
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+                        'sort'=>$sort,
 		));
 	}
 

@@ -9,10 +9,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Students', 'url'=>array('index')),
-	array('label'=>'Create Students', 'url'=>array('create')),
-	array('label'=>'View Students', 'url'=>array('view', 'id'=>$model->pk_student)),
-	array('label'=>'Manage Students', 'url'=>array('admin')),
+	array('label'=>'Estudiantes', 'url'=>array('index')),
+	array('label'=>'Alta estudiante', 'url'=>array('create')),
 );
 ?>
 

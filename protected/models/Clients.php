@@ -114,19 +114,13 @@ class Clients extends CActiveRecord
 		$criteria=new CDbCriteria;
                 $criteria->compare('fk_type_client',$this->fk_type_client);
 		$criteria->compare('status', $this->status);
-                //$criteria->compare('client_name', $this->client_name);
+                $criteria->compare('client_name', $this->client_name, true);
                 $sort = new CSort();
                 $sort->attributes = array(
                     'client_name'=>array(
                         'asc'=>'client_name',
                         'desc'=>'client_name desc',
                     ),
-                    /*
-                    'contact_phone'=>array(
-                        'asc'=>'contact_phone',
-                        'desc'=>'contact_phone desc',
-                    ),
-                    */
                     'contact_name'=>array(
                         'asc'=>'contact_name',
                         'desc'=>'contact_name desc',

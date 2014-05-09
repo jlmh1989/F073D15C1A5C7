@@ -7,12 +7,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Students', 'url'=>array('create')),
-	array('label'=>'Manage Students', 'url'=>array('admin')),
+	array('label'=>'Estudiantes', 'url'=>array('index')),
+	array('label'=>'Alta estudiante', 'url'=>array('create')),
 );
 ?>
-
-<h1>Estudiantes</h1>
+<center><strong>Estudiantes</strong></center>
 
 <?php 
 /*

@@ -31,6 +31,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'header'=>'Tipo Curso',
                 'type'=>'raw',
                 'value'=>'$data->fkTypeCourse->desc_cat_detail_es'),
+            /*
+            array('name'=>'fk_group',
+                'header'=>'Grupo',
+                'type'=>'raw',
+                'value'=>'$data->fkGroup->desc_group'),
+             * 
+             */
             'fkGroup.desc_group',
             'initial_date',
             'desc_curse',

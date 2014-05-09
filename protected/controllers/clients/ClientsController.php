@@ -153,7 +153,7 @@ class ClientsController extends Controller
                         $validar = $modelTEBD->validate() && $validar;
                     }
                     
-                    $modelUser->status=1;
+                    $modelUser->status=  constantes::ACTIVO;
                     $modelUser->fk_role=(int)constantes::ROL_CLIENTE;
                     if($validar){
                         if($modelUser->save()){

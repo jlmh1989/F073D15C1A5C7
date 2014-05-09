@@ -12,8 +12,7 @@ $this->menu=array(
         array('label'=>'Grupos Inactivos', 'url'=>array('inactivo')),
 );
 ?>
-
-<h1>Grupos Activos</h1>
+<center><strong>Grupos Activos</strong></center>
 
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
