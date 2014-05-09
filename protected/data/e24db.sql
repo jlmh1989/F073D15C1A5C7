@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-05-2014 a las 23:59:20
+-- Tiempo de generación: 09-05-2014 a las 13:28:42
 -- Versión del servidor: 5.6.12
 -- Versión de PHP: 5.5.3
 
@@ -15,14 +15,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
---
--- Base de datos: `e24db`
---
-CREATE DATABASE IF NOT EXISTS `e24db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `e24db`;
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tbl_e24_assistance_record`
@@ -704,7 +696,7 @@ INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher
 (2, 3, 1, 4, 5, 2, '2013-12-22', 'Curso basico cemez 2', NULL, '', 1),
 (3, 3, 3, 3, 5, 3, '2013-12-23', 'Curso vitro  1', NULL, '', 1),
 (4, 3, 3, 4, 5, 4, '2013-12-24', 'Curso vitro  2', NULL, '', 1),
-(5, 3, 2, 3, 4, NULL, '2013-12-25', 'Curso particular  1', NULL, '', 1),
+(5, 3, 2, 3, 4, NULL, '2013-12-25', 'Curso particular  1', NULL, '', 0),
 (6, 3, 4, 4, 4, NULL, '2013-12-25', 'Curso particular  2', NULL, '', 1),
 (7, 3, 3, 11, 4, 2, '2014-04-24', 'Ejemplo Curso 08:00', '', ' 25.659038', 1),
 (8, 3, 1, 3, 4, 2, '2014-04-16', 'Ejemplo curso con horario', '', '12.121212', 0),
@@ -845,12 +837,12 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_students` (
 --
 
 INSERT INTO `tbl_e24_students` (`pk_student`, `fk_client`, `fk_user`, `name`, `email`, `neigborhod`, `county`, `phone`, `zipcode`, `birthdate`, `street`, `street_number`, `street_number_int`, `fk_state_dir`) VALUES
-(1, 1, 1, 'estudiante cemex uno', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
+(1, 1, 1, 'estudiante cemex uno update', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
 (2, 1, 1, 'estudiante cemex 2', 'est.2.cemex@demo.com', 'centro 2', 'monterrey', '8180887254', '66579', '1984-06-21', 'del paseo 2', 2212, 'b2', 31),
 (3, 1, 1, 'estudiante cemex 3', 'est.3.cemex@demo.com', 'centro 3', 'monterrey', '8180887245', '66579', '1984-04-21', 'del paseo 3', 2212, 'b2', 31),
 (4, 1, 1, 'estudiante cemex 4', 'est.4.cemex@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),
 (5, 1, 1, 'estudiante cemex 5', 'est.5.cemex@demo.com', 'centro 5', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
-(6, 3, 1, 'estudiante vitro 1', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
+(6, 3, 1, 'estudiante vitro 1 update', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
 (7, 3, 1, 'estudiante vitro 2', 'est.2.vitro@demo.com', 'centro 2', 'monterrey', '8180887254', '66579', '1984-06-21', 'del paseo 2', 2212, 'b2', 31),
 (8, 3, 1, 'estudiante vitro 3', 'est.3.vitro@demo.com', 'centro 3', 'monterrey', '8180887245', '66579', '1984-04-21', 'del paseo 3', 2212, 'b2', 31),
 (9, 3, 1, 'estudiante vitro 4', 'est.4.vitro@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),

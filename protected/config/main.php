@@ -102,6 +102,7 @@ return array(
 			'charset' => 'utf8',
 		),
 		*/
+            
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=e24db',
 			'emulatePrepare' => true,
@@ -109,6 +110,7 @@ return array(
 			'password' => '',
 			'charset' => 'utf8',
 		),
+             
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
