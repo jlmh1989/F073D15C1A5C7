@@ -16,6 +16,7 @@
  * @property string $zipcode
  * @property integer $status
  * @property string $phone
+ * @property string $datos_mapa
  *
  * The followings are the available model relations:
  * @property Clients $fkClient
@@ -45,6 +46,7 @@ class ClassroomAddress extends CActiveRecord
 			array('street, neighborhood, county, country', 'length', 'max'=>100),
 			array('street_number_int, zipcode', 'length', 'max'=>5),
 			array('phone', 'length', 'max'=>15),
+                        array('datos_mapa', 'length', 'max'=>25),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('pk_classroom_direction, fk_client, street, street_number, street_number_int, neighborhood, county, fk_state_dir, country, zipcode, status, phone', 'safe', 'on'=>'search'),
@@ -82,6 +84,7 @@ class ClassroomAddress extends CActiveRecord
 			'zipcode' => 'C&oacute;digo Postal',
 			'status' => 'Status',
 			'phone' => 'Tel&eacute;fono',
+                        'datos_mapa' => 'Datos para el mapa',
 		);
 	}
 
@@ -132,10 +135,16 @@ class ClassroomAddress extends CActiveRecord
 		return parent::model($className);
 	}
         
-        public function getClassroomAddress($fkCliente = 0){
+        
+        public function getClassroomAddress($fkCliente = 0, $status = constantes::ACTIVO, $todos = true){
             $criteria=new CDbCriteria;
-            $criteria->select = 'street,street_number,street_number_int,neighborhood,county,fk_state_dir,country,zipcode,phone';
+            $criteria->select = 'pk_classroom_direction,fk_client,street,street_number,street_number_int,neighborhood,county,fk_state_dir,country,zipcode,status,phone,datos_mapa';
             $criteria->addCondition('fk_client='.$fkCliente);
-            return ClassroomAddress::model()->find($criteria);
+            $criteria->addCondition('status='.$status);
+            if($todos){
+                return ClassroomAddress::model()->findAll($criteria);
+            }else{
+                return ClassroomAddress::model()->find($criteria);
+            }
         }
 }

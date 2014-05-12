@@ -9,7 +9,7 @@
 	<div id="sidebar">
 	<?php
 		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>'Operations',
+			'title'=>'Operaciones',
 		));
 		$this->widget('zii.widgets.CMenu', array(
 			'items'=>$this->menu,
@@ -18,5 +18,14 @@
 		$this->endWidget();
 	?>
 	</div><!-- sidebar -->
+        <div id="broadcast">
+            <?php
+            $this->beginWidget('zii.widgets.CPortlet', array(
+			'title'=>'Noticias',
+		));
+                echo 'Hola :)';
+            $this->endWidget();
+            ?>
+        </div>
 </div>
 <?php $this->endContent(); ?>

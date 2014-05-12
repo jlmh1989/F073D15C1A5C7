@@ -10,8 +10,6 @@ $this->menu=array(
 	array('label'=>'Dar de Alta Cliente', 'url'=>array('create')),
         array('label'=>'Clientes Activos', 'url'=>array('index')),
         array('label'=>'Clientes Inactivos', 'url'=>array('clientesInactivos')),
-    
-	//array('label'=>'Manage Clients', 'url'=>array('admin')),
 );
 ?>
 <center><strong>Clientes Activos</strong></center>

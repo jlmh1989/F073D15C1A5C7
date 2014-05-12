@@ -1,10 +1,10 @@
 <?php
 /* @var $this CoursesController */
-/* @var $model Courses */
 
 $this->breadcrumbs=array(
 	'Courses'=>array('index'),
 	'Create[Datos]',
+        'Create[Horario]',
 );
 $this->menu=array(
 	array('label'=>'Dar de Alta Curso', 'url'=>array('create')),
@@ -13,4 +13,4 @@ $this->menu=array(
 );
 ?>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_formHorario'); ?>

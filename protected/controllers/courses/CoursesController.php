@@ -36,7 +36,9 @@ class CoursesController extends Controller
 			array('allow', // allow authenticated user to perform
 				'actions'=>array('index','view','create','update','admin','delete',
                                     'crearPdf','domicilioCliente','inactivos','mapa','datosMapa',
-                                    'agregarHorario','eliminarHorario','getHorarioHtml'),
+                                    'agregarHorario','eliminarHorario','getHorarioHtml',
+                                    'createHorario','createDatos','asignarMaestro','asignarDireccion',
+                                    'getDomicilioHtml','getDomicilioJson'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
 				//'users'=>array('@'),
 			),
@@ -69,25 +71,99 @@ class CoursesController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Courses;
+            unset($_SESSION['curso']);
+            unset($_SESSION['horarioCurso']);
+            $this->actionCreateDatos();
+            /*
+            $model=new Courses;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            // Uncomment the following line if AJAX validation is needed
+            // $this->performAjaxValidation($model);
 
-		if(isset($_POST['Courses']))
-		{
-			$model->attributes=$_POST['Courses'];
-                        $model->status = constantes::ACTIVO;
-			if($model->save()){
-                            $this->guardarHorario($model->pk_course);
-                            $this->redirect(array('view','id'=>$model->pk_course));
-                        }
-		}
-		$this->render('create',array(
-			'model'=>$model,
-		));
+            if(isset($_POST['Courses']))
+            {
+                $model->attributes=$_POST['Courses'];
+                $model->status = constantes::ACTIVO;
+                if($model->save()){
+                    $this->guardarHorario($model->pk_course);
+                }
+            }else{
+                $this->render('create',array(
+                    'model'=>$model,
+                ));
+            }
+            */
 	}
         
+        public function actionCreateDatos(){
+            $model=new CursoDatos;
+            if(isset($_SESSION['curso'])){
+                $model->attributes=$_SESSION['curso']['datos'];
+            }
+            // Uncomment the following line if AJAX validation is needed
+            // $this->performAjaxValidation($model);
+            
+            if(isset($_POST['CursoDatos']))
+            {
+                $model->attributes=$_POST['CursoDatos'];
+                if($model->validate()){
+                    $_SESSION['curso']['datos'] = $_POST['CursoDatos'];
+                    $this->actionCreateHorario();
+                }else{
+                    $this->render('createDatos',array(
+                    'model'=>$model,
+                ));
+                }
+            }else{
+                $this->render('createDatos',array(
+                    'model'=>$model,
+                ));
+            }
+        }
+        
+        
+        public function actionCreateHorario(){                    
+            if(isset($_POST['bssDay']))
+            {
+                $this->actionAsignarMaestro();
+            }else{
+                $this->render('createHorario');
+            }
+        }
+        
+        public function actionAsignarMaestro(){
+            $model=new CursoMaestro;
+            if(isset($_SESSION['curso']['maestro'])){
+                $model->attributes=$_SESSION['curso']['maestro'];
+            }
+            if(isset($_POST['CursoMaestro']))
+            {
+                $model->attributes=$_POST['CursoMaestro'];
+                if($model->validate()){
+                    $_SESSION['curso']['maestro'] = $_POST['CursoMaestro'];
+                    if(!isset($_SESSION['curso']['direccion'])){
+                        $_SESSION['curso']['direccion'] = ClassroomAddress::model()->getClassroomAddress($_SESSION['curso']['datos']['fk_client'], constantes::ACTIVO, false);
+                    }
+                    $this->actionAsignarDireccion();
+                }else{
+                    $this->render('createMaestro',array(
+                    'model'=>$model,
+                ));
+                }    
+            }else{
+                $this->render('createMaestro',array(
+                        'model'=>$model,
+                ));
+            }
+        }
+        
+        public function actionAsignarDireccion(){
+            $model = $_SESSION['curso']['direccion'];
+            //$model = ClassroomAddress::model()->getClassroomAddress($_SESSION['curso']['datos']['fk_client'], constantes::ACTIVO, false);
+            
+            $this->render('createDireccion', array('model'=>$model));
+        }
+
         public function actionAgregarHorario(){
             $inicio = Yii::app()->getRequest()->getParam('inicio');
             $fin = Yii::app()->getRequest()->getParam("fin");
@@ -146,26 +222,6 @@ class CoursesController extends Controller
                 } 
             }
             
-            /*
-            if(isset($_SESSION["horarioCurso"])){
-                foreach ($_SESSION['horarioCurso'][$bssDay] as $key => $array) {
-                //validar hora
-                    $inicioTmpEx = explode(":", $array['fin']);
-                    $horaTmpI = $inicioTmpEx[0];
-                    $minTmpI = $inicioTmpEx[1];
-                    $finTmpEx = explode(":", $array['fin']);
-                    $horaTmpF = $finTmpEx[0];
-                    $minTmpF = $finTmpEx[1];
-                    if(((int)$horaI == (int)$horaTmpF)){
-                        if(((int)$minI >= (int)$minTmpI) && ((int)$minI <= $minTmpF)){
-                            return FALSE;
-                        }
-                    }
-                }
-            }
-             * 
-             */
-            
             return TRUE;
         }
         
@@ -181,6 +237,58 @@ class CoursesController extends Controller
                     $html .= '<td align="center" ><span id="'.$keyHorario.'" style="cursor: pointer" onclick="eliminarHorario('.$keyBssDay.','.'\''.$keyHorario.'\''.')"><img src="images/delete.png"/></span></td>';
                     $html .= '</tr>';
                 }
+            }
+            echo $html;
+        }
+        
+        public function actionGetDomicilioJson(){
+            $pkDomicilio = Yii::app()->getRequest()->getParam("pk");
+            $model = ClassroomAddress::model()->findByPk($pkDomicilio);
+            $_SESSION['curso']['direccion'] = $model;
+            echo '{"pk_classroom_direction":"'.$model->pk_classroom_direction.'",
+                   "fk_client":"'.$model->fk_client.'",
+                   "street":"'.$model->street.'",
+                   "street_number":"'.$model->street_number.'",
+                   "street_number_int":"'.$model->street_number_int.'",
+                   "neighborhood":"'.$model->neighborhood.'",
+                   "county":"'.$model->county.'",
+                   "fk_state_dir":"'.$model->fk_state_dir.'",
+                   "country":"'.$model->country.'",
+                   "zipcode":"'.$model->zipcode.'",
+                   "status":"'.$model->status.'",
+                   "phone":"'.$model->phone.'",
+                   "datos_mapa":"'.$model->datos_mapa.'"
+                   }';
+        }
+        
+        public function actionGetDomicilioHtml(){
+            $modelAddress = ClassroomAddress::model()->getClassroomAddress($_SESSION['curso']['datos']['fk_client']);
+            $html = '';
+            $i = 0;
+            foreach ($modelAddress as $value) {
+                $html .= '<tr class="even_">';
+                if(($i % 2) === 0){
+                    $html .= '<tr class="odd_">';
+                }
+                if(isset($_SESSION['curso']['direccion'])){
+                    if($_SESSION['curso']['direccion']['pk_classroom_direction'] === $value->pk_classroom_direction){
+                        $html .= '<td><input name="RadioGroupDom" type="radio" value="'.$value->pk_classroom_direction.'" onchange="cargarDomicilio('.$value->pk_classroom_direction.')" checked="checked"></td>';
+                    }else {
+                        $html .= '<td><input name="RadioGroupDom" type="radio" value="'.$value->pk_classroom_direction.'" onchange="cargarDomicilio('.$value->pk_classroom_direction.')"></td>';
+                    }
+                }else{
+                    if($i === 0){
+                        $html .= '<td><input name="RadioGroupDom" type="radio" value="'.$value->pk_classroom_direction.'" onchange="cargarDomicilio('.$value->pk_classroom_direction.')" checked="checked"></td>';
+                        //$_SESSION['curso']['direccion'] = $value;
+                    }else{
+                        $html .= '<td><input name="RadioGroupDom" type="radio" value="'.$value->pk_classroom_direction.'" onchange="cargarDomicilio('.$value->pk_classroom_direction.')"></td>';
+                    }
+                }
+                $html .= '<td>'.$value->street.' '.$value->street_number.'</td>';
+                $html .= '<td>'.$value->county.'</td>';
+                $html .= '<td>'.$value->fkStateDir->desc_cat_detail_es.'</td>';
+                $html .= '</tr>';
+                $i++;
             }
             echo $html;
         }
@@ -301,6 +409,7 @@ class CoursesController extends Controller
 		));
         }
         
+        //eliminar metodo si la captura es por fase
         public function actionDomicilioCliente(){
             $fkCliente = Yii::app()->getRequest()->getParam("fkClient");
             $modelAddress = ClassroomAddress::model()->getClassroomAddress($fkCliente);

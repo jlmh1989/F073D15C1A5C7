@@ -68,6 +68,26 @@ div.form select
         width: 219px;
 }
 
+.boton{
+    margin: 0.2em 0 0.5em 0;
+    border-radius: 7px;
+    font-size: 12px;
+    border:1px solid #bbb;
+    padding: 3px; 
+    height: 25px;
+    width: 120px;
+    cursor: default;
+    text-align: center;
+    text-shadow: 1px 1px 1px #fff;
+    margin-right: 9px;
+    background-color: rgba(144, 188, 201, 0.53);
+    border:1px solid #898989;
+    color: #4e4e4e;
+    margin-right: 6px;
+    box-sizing: border-box;
+    white-space: pre;
+}
+
 div.form input[type=submit]
 {
     font-size: 12px;
@@ -75,7 +95,6 @@ div.form input[type=submit]
     margin-right: 9px;
     height: 25px;
     background-color: rgba(144, 188, 201, 0.53);
-    //background: url(submit.png) ;
     border:1px solid #898989;
     color: #4e4e4e;
     width: 120px;
@@ -90,6 +109,11 @@ div.form input[type=checkbox]
 {
     color: #4e4e4e;
     width: 20px;
+}
+
+div.form input[type=radio]
+{
+    width: 50px;
 }
 
 div.form input[type=button]

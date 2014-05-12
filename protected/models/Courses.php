@@ -13,7 +13,6 @@
  * @property string $initial_date
  * @property string $desc_curse
  * @property string $other_level
- * @property string $dato_mapa
  * @property integer $status
  *
  * The followings are the available model relations:
@@ -90,7 +89,6 @@ class Courses extends CActiveRecord
 			'initial_date' => 'Fecha de Inicio',
 			'desc_curse' => 'Descripci&oacute;n Curso',
 			'other_level' => 'Otro Nivel',
-                        'dato_mapa' => 'Dato para el mapa',
 		);
 	}
 

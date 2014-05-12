@@ -403,9 +403,9 @@ Yii::app()->clientScript->registerScript('script',
         </tr>
         <tr>
 	<div class="row">
-                <td class="datos_mapa_td"><?php echo $form->labelEx($model,'dato_mapa'); ?></td>
-		<td class="datos_mapa_td"><?php echo $form->textField($model,'dato_mapa',array('size'=>25,'maxlength'=>25,'onblur'=>'cargaMapa()')); ?>
-		<?php echo $form->error($model,'dato_mapa'); ?></td>
+                <td class="datos_mapa_td"><?php //echo $form->labelEx($model,'dato_mapa'); ?></td>
+		<td class="datos_mapa_td"><?php //echo $form->textField($model,'dato_mapa',array('size'=>25,'maxlength'=>25,'onblur'=>'cargaMapa()')); ?>
+		<?php //echo $form->error($model,'dato_mapa'); ?></td>
 	</div>
         
         <tr>
