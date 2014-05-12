@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-05-2014 a las 13:28:42
+-- Tiempo de generación: 12-05-2014 a las 14:55:39
 -- Versión del servidor: 5.6.12
 -- Versión de PHP: 5.5.3
 
@@ -15,6 +15,14 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+
+--
+-- Base de datos: `e24db`
+--
+CREATE DATABASE IF NOT EXISTS `e24db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `e24db`;
+
+-- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tbl_e24_assistance_record`
@@ -551,6 +559,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_classroom_address` (
   `zipcode` varchar(5) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `phone` varchar(15) NOT NULL,
+  `datos_mapa` varchar(25) NOT NULL,
   PRIMARY KEY (`pk_classroom_direction`),
   UNIQUE KEY `XPKe24_classroom_direction` (`pk_classroom_direction`,`fk_client`),
   KEY `fk_client` (`fk_client`),
@@ -561,15 +570,15 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_classroom_address` (
 -- Volcado de datos para la tabla `tbl_e24_classroom_address`
 --
 
-INSERT INTO `tbl_e24_classroom_address` (`pk_classroom_direction`, `fk_client`, `street`, `street_number`, `street_number_int`, `neighborhood`, `county`, `fk_state_dir`, `country`, `zipcode`, `status`, `phone`) VALUES
-(1, 1, 'calse demo 1', 6666, '66', 'doctores', 'monterrey', 31, 'mexico', '06613', 1, '8166666666'),
-(2, 2, 'calse demo 2', 6666, '66', 'doctores', 'monterrey', 31, 'mexico', '06613', 1, '8166666666'),
-(3, 3, 'calse demo 3', 7777, '77', 'fundadores', 'san pedro', 31, 'mexico', '06613', 1, '8177777777'),
-(4, 4, 'calse demo 4', 8888, '88', 'del poniente', 'santa catarina', 31, 'mexico', '66713', 1, '8188888888'),
-(5, 6, 'ejemplo calle', 123, '1', 'ejemplo colonia', 'Municipio', 31, 'Mexico', '68000', 0, '0123456789'),
-(6, 7, 'ejemplo calle', 1234, '2', 'colonia', 'Monterrey', 31, 'México', '64830', 1, '12344444444'),
-(7, 8, 'ejemplo calle', 1234, '2', 'ejemplo colonia', 'Monterrey', 31, 'Mexico', '68000', 1, '0101010101'),
-(8, 9, 'ejemplo calle modif', 1234, '2', 'ejemplo colonia', 'Monterrey', 31, 'Mexico', '68000', 1, '0101010101');
+INSERT INTO `tbl_e24_classroom_address` (`pk_classroom_direction`, `fk_client`, `street`, `street_number`, `street_number_int`, `neighborhood`, `county`, `fk_state_dir`, `country`, `zipcode`, `status`, `phone`, `datos_mapa`) VALUES
+(1, 1, 'calse demo 1', 6666, '66', 'doctores', 'monterrey', 31, 'mexico', '06613', 1, '8166666666', '25.656047, -100.279583'),
+(2, 2, 'calse demo 2', 6666, '66', 'doctores', 'monterrey', 31, 'mexico', '06613', 1, '8166666666', '25.661535, -100.282713'),
+(3, 3, 'calse demo 3', 7777, '77', 'fundadores', 'san pedro', 31, 'mexico', '06613', 1, '8177777777', '25.656047, -100.279583'),
+(4, 4, 'calse demo 4', 8888, '88', 'del poniente', 'santa catarina', 31, 'mexico', '66713', 1, '8188888888', '25.656047, -100.279583'),
+(5, 6, 'ejemplo calle', 123, '1', 'ejemplo colonia', 'Municipio', 31, 'Mexico', '68000', 0, '0123456789', '25.656047, -100.279583'),
+(6, 7, 'ejemplo calle', 1234, '2', 'colonia', 'Monterrey', 31, 'México', '64830', 1, '12344444444', ''),
+(7, 8, 'ejemplo calle', 1234, '2', 'ejemplo colonia', 'Monterrey', 31, 'Mexico', '68000', 1, '0101010101', '25.656047, -100.279583'),
+(8, 9, 'ejemplo calle modif', 1234, '2', 'ejemplo colonia', 'Monterrey', 31, 'Mexico', '68000', 1, '0101010101', '');
 
 -- --------------------------------------------------------
 
@@ -676,7 +685,6 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
   `initial_date` date NOT NULL,
   `desc_curse` varchar(50) NOT NULL,
   `other_level` varchar(50) DEFAULT NULL,
-  `dato_mapa` varchar(25) DEFAULT NULL,
   `status` smallint(1) NOT NULL,
   PRIMARY KEY (`pk_course`),
   UNIQUE KEY `XPKe24_courses` (`pk_course`,`fk_client`),
@@ -691,16 +699,16 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
 -- Volcado de datos para la tabla `tbl_e24_courses`
 --
 
-INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `initial_date`, `desc_curse`, `other_level`, `dato_mapa`, `status`) VALUES
-(1, 3, 1, 3, 5, 1, '2013-12-20', 'Curso basico cemez 1', NULL, '', 1),
-(2, 3, 1, 4, 5, 2, '2013-12-22', 'Curso basico cemez 2', NULL, '', 1),
-(3, 3, 3, 3, 5, 3, '2013-12-23', 'Curso vitro  1', NULL, '', 1),
-(4, 3, 3, 4, 5, 4, '2013-12-24', 'Curso vitro  2', NULL, '', 1),
-(5, 3, 2, 3, 4, NULL, '2013-12-25', 'Curso particular  1', NULL, '', 0),
-(6, 3, 4, 4, 4, NULL, '2013-12-25', 'Curso particular  2', NULL, '', 1),
-(7, 3, 3, 11, 4, 2, '2014-04-24', 'Ejemplo Curso 08:00', '', ' 25.659038', 1),
-(8, 3, 1, 3, 4, 2, '2014-04-16', 'Ejemplo curso con horario', '', '12.121212', 0),
-(9, 3, 4, 7, 4, 2, '2014-05-08', 'Curso con horario', '', '25.691128', 1);
+INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `initial_date`, `desc_curse`, `other_level`, `status`) VALUES
+(1, 3, 1, 3, 5, 1, '2013-12-20', 'Curso basico cemez 1', NULL, 1),
+(2, 3, 1, 4, 5, 2, '2013-12-22', 'Curso basico cemez 2', NULL, 1),
+(3, 3, 3, 3, 5, 3, '2013-12-23', 'Curso vitro  1', NULL, 1),
+(4, 3, 3, 4, 5, 4, '2013-12-24', 'Curso vitro  2', NULL, 1),
+(5, 3, 2, 3, 4, NULL, '2013-12-25', 'Curso particular  1', NULL, 0),
+(6, 3, 4, 4, 4, NULL, '2013-12-25', 'Curso particular  2', NULL, 1),
+(7, 3, 3, 11, 4, 2, '2014-04-24', 'Ejemplo Curso 08:00', '', 1),
+(8, 3, 1, 3, 4, 2, '2014-04-16', 'Ejemplo curso con horario', '', 0),
+(9, 3, 4, 7, 4, 2, '2014-05-08', 'Curso con horario', '', 1);
 
 -- --------------------------------------------------------
 
