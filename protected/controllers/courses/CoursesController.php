@@ -38,7 +38,8 @@ class CoursesController extends Controller
                                     'crearPdf','domicilioCliente','inactivos','mapa','datosMapa',
                                     'agregarHorario','eliminarHorario','getHorarioHtml',
                                     'createHorario','createDatos','asignarMaestro','asignarDireccion',
-                                    'getDomicilioHtml','getDomicilioJson'),
+                                    'getDomicilioHtml','getDomicilioJson','guardarDireccion',
+                                    'cancelarDireccion'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
 				//'users'=>array('@'),
 			),
@@ -141,6 +142,7 @@ class CoursesController extends Controller
                 $model->attributes=$_POST['CursoMaestro'];
                 if($model->validate()){
                     $_SESSION['curso']['maestro'] = $_POST['CursoMaestro'];
+                    $_SESSION['curso']['nuevo'] = 0;
                     if(!isset($_SESSION['curso']['direccion'])){
                         $_SESSION['curso']['direccion'] = ClassroomAddress::model()->getClassroomAddress($_SESSION['curso']['datos']['fk_client'], constantes::ACTIVO, false);
                     }
@@ -158,10 +160,33 @@ class CoursesController extends Controller
         }
         
         public function actionAsignarDireccion(){
-            $model = $_SESSION['curso']['direccion'];
-            //$model = ClassroomAddress::model()->getClassroomAddress($_SESSION['curso']['datos']['fk_client'], constantes::ACTIVO, false);
+            if($_SESSION['curso']['nuevo'] === 1){
+                $model = new ClassroomAddress;
+                $model->attributes = $_POST['ClassroomAddress'];
+                if($model->validate()){
+                    $model->save();
+                    $_SESSION['curso']['nuevo'] = 0;
+                    $model = $_SESSION['curso']['direccion'];
+                    $this->render('createDireccion', array('model'=>$model));
+                }else{
+                    $this->render('createDireccion', array('model'=>$model));
+                }
+            }else{
+                $model = $_SESSION['curso']['direccion'];
+                $this->render('createDireccion', array('model'=>$model));
+            }
+        }
+        
+        public function actionGuardarDireccionBD(){
             
-            $this->render('createDireccion', array('model'=>$model));
+        }
+        
+        public function actionGuardarDireccion(){
+            $_SESSION['curso']['nuevo'] = 1;
+        }
+        
+        public function actionCancelarDireccion(){
+            $_SESSION['curso']['nuevo'] = 0;
         }
 
         public function actionAgregarHorario(){

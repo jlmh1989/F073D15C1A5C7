@@ -107,7 +107,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=e24db',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'huichojojo',
+			'password' => '',
 			'charset' => 'utf8',
 		),
              

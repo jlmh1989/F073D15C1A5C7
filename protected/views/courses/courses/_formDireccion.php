@@ -2,15 +2,55 @@
 /* @var $this CoursesController */
 /* @var $model ClassroomAddress */
 /* @var $form CActiveForm */
-
+$ajaxDom = '
+        $("#cancelarDomicilio").hide();
+        $("#guardarDomicilio").hide();
+        $("#irAtras").show();
+        $("#guardar").show();
+        $("#ClassroomAddress_street").prop("disabled", true);
+        $("#ClassroomAddress_street_number").prop("disabled", true);
+        $("#ClassroomAddress_street_number_int").prop("disabled", true);
+        $("#ClassroomAddress_neighborhood").prop("disabled", true);
+        $("#ClassroomAddress_county").prop("disabled", true);
+        $("#ClassroomAddress_fk_state_dir").prop("disabled", true);
+        $("#ClassroomAddress_country").prop("disabled", true);
+        $("#ClassroomAddress_zipcode").prop("disabled", true);
+        $("#ClassroomAddress_phone").prop("disabled", true);
+        $("#ClassroomAddress_datos_mapa").prop("disabled", true);
+        $.ajax({
+            url: "'.Yii::app()->createUrl("courses/courses/getDomicilioHtml").'", 
+            dataType: "text"
+         }).done(function( msg ) {
+            if(msg !== ""){
+                $( "#tablaDmicilios tbody" ).html(msg);
+            }
+         }); '; 
+if($_SESSION['curso']['nuevo'] === 1){
+    $ajaxDom = '$("#cancelarDomicilio").show();
+                $("#guardarDomicilio").show();
+                $("#irAtras").hide();
+                $("#guardar").hide();
+                $("#ClassroomAddress_street").prop("disabled", false);
+                $("#ClassroomAddress_street_number").prop("disabled", false);
+                $("#ClassroomAddress_street_number_int").prop("disabled", false);
+                $("#ClassroomAddress_neighborhood").prop("disabled", false);
+                $("#ClassroomAddress_county").prop("disabled", false);
+                $("#ClassroomAddress_fk_state_dir").prop("disabled", false);
+                $("#ClassroomAddress_country").prop("disabled", false);
+                $("#ClassroomAddress_zipcode").prop("disabled", false);
+                $("#ClassroomAddress_phone").prop("disabled", false);
+                $("#ClassroomAddress_datos_mapa").prop("disabled", false);';
+}
 Yii::app()->clientScript->registerScript('script',
         '
         $(".mapa_div").hide();
-               
+        
         $("#irAtras").click(function(){
             $(location).attr("href","'.Yii::app()->createUrl('courses/courses/asignarMaestro').'");
         });
         
+        '.$ajaxDom.
+        '
         $.ajax({
             url: "'.Yii::app()->createUrl("courses/courses/getDomicilioHtml").'", 
             dataType: "text"
@@ -87,11 +127,55 @@ Yii::app()->clientScript->registerScript('script',
             $("#ClassroomAddress_datos_mapa").blur();
         });
     }
+    
+    function nuevoDomicilio(){
+        $.ajax("<?= Yii::app()->createUrl('courses/courses/guardarDireccion')?>");
+        $("#dir_clase_th").html("CREAR NUEVA DIRECCI&Oacute;N");
+        $("#cancelarDomicilio").show();
+        $("#guardarDomicilio").show();
+        $(".mapa_div").hide();
+        $("#irAtras").hide();
+        $("#guardar").hide();
+        $("#ClassroomAddress_street").val("");
+        $("#ClassroomAddress_street_number").val("");
+        $("#ClassroomAddress_street_number_int").val("");
+        $("#ClassroomAddress_neighborhood").val("");
+        $("#ClassroomAddress_county").val("");
+        $("#ClassroomAddress_fk_state_dir").val("");
+        $("#ClassroomAddress_country").val("");
+        $("#ClassroomAddress_zipcode").val("");
+        $("#ClassroomAddress_phone").val("");
+        $("#ClassroomAddress_datos_mapa").val("");
+        $("#ClassroomAddress_pk_classroom_direction").val("");
+        $("#ClassroomAddress_street").prop("disabled", false);
+        $("#ClassroomAddress_street_number").prop("disabled", false);
+        $("#ClassroomAddress_street_number_int").prop("disabled", false);
+        $("#ClassroomAddress_neighborhood").prop("disabled", false);
+        $("#ClassroomAddress_county").prop("disabled", false);
+        $("#ClassroomAddress_fk_state_dir").prop("disabled", false);
+        $("#ClassroomAddress_country").prop("disabled", false);
+        $("#ClassroomAddress_zipcode").prop("disabled", false);
+        $("#ClassroomAddress_phone").prop("disabled", false);
+        $("#ClassroomAddress_datos_mapa").prop("disabled", false);
+    }
+    
+    function cancelarDomicilio(){
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('courses/courses/cancelarDireccion');?>"
+        }).done(function( msg ) {
+            $(location).attr("href","<?= Yii::app()->createUrl('courses/courses/asignarDireccion');?>");
+        });
+    }
+    
+    function guardarDomicilio(){
+        $("#direccion_courses-form").submit();
+    }
 </script>
 <div class="form">
     <table class="zebra">
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'courses-form',
+	'id'=>'direccion_courses-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -118,7 +202,19 @@ Yii::app()->clientScript->registerScript('script',
             
         </tbody>
     </table>
-    <div class="boton" id="nuevoDomicilio">Nuevo</div>
+    <table class="zebra">
+        <tr>
+            <td width="130px">
+                <div class="boton" id="nuevoDomicilio" onclick="nuevoDomicilio()">Nuevo</div>
+            </td>
+            <td width="130px">
+                <div class="boton" id="cancelarDomicilio" onclick="cancelarDomicilio()">Cancelar</div>
+            </td>
+            <td>
+                <div class="boton" id="guardarDomicilio" onclick="guardarDomicilio()">Guardar</div>
+            </td>
+        </tr>
+    </table>
     <table class="zebra">
         <tr>
             <th id="dir_clase_th" colspan="4" style="text-align: center">DIRECCI&Oacute;N SELECCIONADO</th>
@@ -126,33 +222,33 @@ Yii::app()->clientScript->registerScript('script',
         <tr>
             <div class="row">
                 <td class="dir_clase_td"><?php echo $form->labelEx($model,'street'); ?></td>
-		<td class="dir_clase_td"><?php echo $form->textField($model,'street',array('disabled'=>true, 'size'=>60,'maxlength'=>100)); ?>
+		<td class="dir_clase_td"><?php echo $form->textField($model,'street',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'street'); ?></td>
             </div>
 
             <div class="row">
                 <td class="dir_clase_td"><?php echo $form->labelEx($model,'street_number'); ?></td>
-		<td class="dir_clase_td"><?php echo $form->textField($model,'street_number', array('disabled'=>true, )); ?>
+		<td class="dir_clase_td"><?php echo $form->textField($model,'street_number'); ?>
 		<?php echo $form->error($model,'street_number'); ?></td>
             </div>
         </tr>
         <tr>
             <div class="row">
                 <td class="dir_clase_td"><?php echo $form->labelEx($model,'street_number_int'); ?></td>
-		<td class="dir_clase_td"><?php echo $form->textField($model,'street_number_int',array('disabled'=>true, 'size'=>5,'maxlength'=>5)); ?>
+		<td class="dir_clase_td"><?php echo $form->textField($model,'street_number_int',array('size'=>5,'maxlength'=>5)); ?>
 		<?php echo $form->error($model,'street_number_int'); ?></td>
             </div>
 
             <div class="row">
                 <td class="dir_clase_td"><?php echo $form->labelEx($model,'neighborhood'); ?></td>
-		<td class="dir_clase_td"><?php echo $form->textField($model,'neighborhood',array('disabled'=>true, 'size'=>60,'maxlength'=>100)); ?>
+		<td class="dir_clase_td"><?php echo $form->textField($model,'neighborhood',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'neighborhood'); ?></td>
             </div>
         </tr>
         <tr>
             <div class="row">
                 <td class="dir_clase_td"><?php echo $form->labelEx($model,'county'); ?></td>
-		<td class="dir_clase_td"><?php echo $form->textField($model,'county',array('disabled'=>true, 'size'=>60,'maxlength'=>100)); ?>
+		<td class="dir_clase_td"><?php echo $form->textField($model,'county',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'county'); ?></td>
 	</div>
 
@@ -161,8 +257,7 @@ Yii::app()->clientScript->registerScript('script',
 		<td class="dir_clase_td"><?php echo $form->dropDownList($model,'fk_state_dir', CatDetail::model()->getCatDetailsOptions(constantesCatalogos::ESTADO,  constantes::LANG), 
                         array(
                         "tabindex" => "0",
-                        "empty" => constantes::OPCION_COMBO,
-                        'disabled' => true)
+                        "empty" => constantes::OPCION_COMBO)
                     );?>
 		<?php echo $form->error($model,'fk_state_dir'); ?></td>
 	</div>
@@ -170,25 +265,25 @@ Yii::app()->clientScript->registerScript('script',
         <tr>
             <div class="row">
                 <td class="dir_clase_td"><?php echo $form->labelEx($model,'country'); ?></td>
-		<td class="dir_clase_td"><?php echo $form->textField($model,'country',array('disabled'=>true, 'size'=>60,'maxlength'=>100)); ?>
+		<td class="dir_clase_td"><?php echo $form->textField($model,'country',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'country'); ?></td>
             </div>
 
             <div class="row">
                 <td class="dir_clase_td"><?php echo $form->labelEx($model,'zipcode'); ?></td>
-		<td class="dir_clase_td"><?php echo $form->textField($model,'zipcode',array('disabled'=>true, 'size'=>5,'maxlength'=>5)); ?>
+		<td class="dir_clase_td"><?php echo $form->textField($model,'zipcode',array('size'=>5,'maxlength'=>5)); ?>
 		<?php echo $form->error($model,'zipcode'); ?></td>
             </div>
         </tr>
         <tr>
             <div class="row">
                 <td class="dir_clase_td"><?php echo $form->labelEx($model,'phone'); ?></td>
-		<td class="dir_clase_td"><?php echo $form->textField($model,'phone',array('disabled'=>true, 'size'=>15,'maxlength'=>15)); ?>
+		<td class="dir_clase_td"><?php echo $form->textField($model,'phone',array('size'=>15,'maxlength'=>15)); ?>
 		<?php echo $form->error($model,'phone'); ?></td>
             </div>
             <div class="row">
                 <td class="datos_mapa_td"><?php echo $form->labelEx($model,'datos_mapa'); ?></td>
-		<td class="datos_mapa_td"><?php echo $form->textField($model,'datos_mapa',array('disabled'=>true,'size'=>25,'maxlength'=>25,'onblur'=>'cargaMapa()')); ?>
+		<td class="datos_mapa_td"><?php echo $form->textField($model,'datos_mapa',array('size'=>25,'maxlength'=>25,'onblur'=>'cargaMapa()')); ?>
 		<?php echo $form->error($model,'datos_mapa'); ?></td>
                 <?php echo $form->hiddenField($model,'pk_classroom_direction');
                     echo $form->hiddenField($model,'status');
@@ -206,7 +301,7 @@ Yii::app()->clientScript->registerScript('script',
             <td width="240px"></td>
             <td width="240px"></td>
             <div class="row buttons">
-            <td><?php echo CHtml::submitButton('Guardar >>'); ?></td>
+            <td><div class="boton" id="guardar">Guardar >></div></td>
         </div>
         </tr>
         <?php $this->endWidget(); ?>
