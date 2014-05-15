@@ -39,7 +39,7 @@ class CoursesController extends Controller
                                     'agregarHorario','eliminarHorario','getHorarioHtml',
                                     'createHorario','createDatos','asignarMaestro','asignarDireccion',
                                     'getDomicilioHtml','getDomicilioJson','guardarDireccion',
-                                    'cancelarDireccion'),
+                                    'cancelarDireccion','guardarDireccionBD'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
 				//'users'=>array('@'),
 			),
@@ -178,7 +178,9 @@ class CoursesController extends Controller
         }
         
         public function actionGuardarDireccionBD(){
-            
+            echo '<pre>';
+            print_r($_SESSION['curso']);
+            echo '</pre>';
         }
         
         public function actionGuardarDireccion(){

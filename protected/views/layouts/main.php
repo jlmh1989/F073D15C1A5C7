@@ -26,25 +26,54 @@
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
 
-	<div id="mainmenu">
-            
-            <?php
-            /*
-            $this->widget('ext.cssmenu.CssMenu',array(
-                    'items'=>array(
-                            array('label'=>'Home', 'url'=>array('site/index')),
-                            array('label'=>'Products', 'url'=>array('product/index'), 'items'=>array(
-                            array('label'=>'New Arrivals', 'url'=>array('product/new')),
-                            array('label'=>'Most Popular', 'url'=>array('product/index')),
-                    )),
-                    array('label'=>'Login', 'url'=>array('site/login'), 'visible'=>Yii::app()->user->isGuest),
-                    ),
-                )); 
-            */
-            ?>
-            
+	<div id="cssmenu">
+
             <?php 
                     if (Yii::app()->user->isGuest) {
+                        /*
+                        $this->widget('zii.widgets.CMenu',array(
+                        'activeCssClass'=>'active',
+                        'activateParents'=>true,
+                        'items'=>array(
+                          array(
+                            'label'=>'Company',
+                            'url'=>array('/company/index'),
+                            'linkOptions'=>array('id'=>'menuCompany'),
+                            'itemOptions'=>array('id'=>'itemCompany'),
+                            'items'=>array(
+                              array('label'=>'Our Mission', 'url'=>array('/company/index')),
+                              array('label'=>'About Us', 'url'=>array('/company/aboutUs')),
+                              array('label'=>'Careers', 'url'=>array('/company/careers')),
+                              array('label'=>'Contact Us', 'url'=>array('/company/contactUs')),
+                              array('label'=>'Store Locator', 'url'=>array('/company/storeLocator')),
+                            ),
+                          ),
+                          array(
+                            'label'=>'Blog',
+                            'url'=>array('/blog/post/index'),
+                            'linkOptions'=>array('id'=>'menuBlog')
+                          ),
+                          array(
+                            'label'=>'Change',
+                            'url'=>array('/change/index'),
+                            'linkOptions'=>array('id'=>'menuChange'),
+                            'itemOptions'=>array('id'=>'itemChange'),
+                            'items'=>array(
+                              array('label'=>'Community Involvement', 'url'=>array('/change/index')),
+                              array('label'=>'Eco Responsibility', 'url'=>array('/change/ecoPolicy')),
+                              array('label'=>'Responsibility', 'url'=>array('/change/responsibility')),
+                            ),
+                          ),
+                          array(
+                            'label'=>'Shop',
+                            'url'=>array('/shop'),
+                            'linkOptions'=>array('id'=>'menuBuy')
+                          ),
+                        ),
+                      ));
+                        
+             * 
+             */
                         $this->widget('zii.widgets.CMenu',array(
                             'activeCssClass' => 'active',
                             'activateParents' => true,
@@ -74,6 +103,9 @@
                                 array('label'=>'Estatus de Clase', 'url'=>array('/catalogs/catStatusClass')),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'))
                             ),
+                            'submenuHtmlOptions' => array(
+                                'class' => 'dropdown-menu',
+                            )
                         ));
                     } elseif (Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR) {
                         $this->widget('zii.widgets.CMenu',array(
