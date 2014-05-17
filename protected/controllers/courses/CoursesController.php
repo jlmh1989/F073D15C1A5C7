@@ -39,7 +39,7 @@ class CoursesController extends Controller
                                     'agregarHorario','eliminarHorario','getHorarioHtml',
                                     'createHorario','createDatos','asignarMaestro','asignarDireccion',
                                     'getDomicilioHtml','getDomicilioJson','guardarDireccion',
-                                    'cancelarDireccion','guardarDireccionBD'),
+                                    'cancelarDireccion','guardarCursoBD','validarHorario'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
 				//'users'=>array('@'),
 			),
@@ -75,25 +75,6 @@ class CoursesController extends Controller
             unset($_SESSION['curso']);
             unset($_SESSION['horarioCurso']);
             $this->actionCreateDatos();
-            /*
-            $model=new Courses;
-
-            // Uncomment the following line if AJAX validation is needed
-            // $this->performAjaxValidation($model);
-
-            if(isset($_POST['Courses']))
-            {
-                $model->attributes=$_POST['Courses'];
-                $model->status = constantes::ACTIVO;
-                if($model->save()){
-                    $this->guardarHorario($model->pk_course);
-                }
-            }else{
-                $this->render('create',array(
-                    'model'=>$model,
-                ));
-            }
-            */
 	}
         
         public function actionCreateDatos(){
@@ -177,10 +158,17 @@ class CoursesController extends Controller
             }
         }
         
-        public function actionGuardarDireccionBD(){
-            echo '<pre>';
-            print_r($_SESSION['curso']);
-            echo '</pre>';
+        public function actionGuardarCursoBD(){
+            $model = new Courses;
+            $model->attributes = $_SESSION['curso']['datos'];
+            $model->fk_teacher = $_SESSION['curso']['maestro']['fk_teacher'];
+            $model->fk_classrom_address = $_SESSION['curso']['direccion']['pk_classroom_direction'];
+            $model->status = constantes::ACTIVO;
+            if($model->save()){
+                $this->guardarHorario($model->pk_course);
+            }
+            unset($_SESSION['curso']);
+            unset($_SESSION['horarioCurso']);
         }
         
         public function actionGuardarDireccion(){
@@ -206,6 +194,14 @@ class CoursesController extends Controller
         
         public function actionEliminarHorario(){
             unset($_SESSION['horarioCurso'][Yii::app()->getRequest()->getParam("bssDay")][Yii::app()->getRequest()->getParam("id")]);
+        }
+        
+        public function actionValidarHorario(){
+            if(isset($_SESSION['horarioCurso'])){
+                echo '{"existe":true}';
+            }else{
+                echo '{"existe":false}';
+            }
         }
         
         private function validarHorario($bssDay, $inicio, $fin){
@@ -306,7 +302,6 @@ class CoursesController extends Controller
                 }else{
                     if($i === 0){
                         $html .= '<td><input name="RadioGroupDom" type="radio" value="'.$value->pk_classroom_direction.'" onchange="cargarDomicilio('.$value->pk_classroom_direction.')" checked="checked"></td>';
-                        //$_SESSION['curso']['direccion'] = $value;
                     }else{
                         $html .= '<td><input name="RadioGroupDom" type="radio" value="'.$value->pk_classroom_direction.'" onchange="cargarDomicilio('.$value->pk_classroom_direction.')"></td>';
                     }
@@ -412,18 +407,6 @@ class CoursesController extends Controller
 			'model'=>$model,
 		));
 	}
-        
-        public function actionMapa(){
-            $model = array();
-            //$model['latitud'] = $_SESSION['latitud']; 
-            //$model['longitud'] = $_SESSION['longitud']; 
-            $this->renderPartial('mapa', $model, false, true);
-        }
-        
-        public function actionDatosMapa(){
-            $_SESSION['latitud'] = Yii::app()->getRequest()->getParam("latitud");
-            $_SESSION['longitud'] = Yii::app()->getRequest()->getParam("longitud");
-        }
         
         public function actionInactivos(){
             $model=new Courses('search');

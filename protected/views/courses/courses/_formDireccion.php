@@ -171,6 +171,15 @@ Yii::app()->clientScript->registerScript('script',
     function guardarDomicilio(){
         $("#direccion_courses-form").submit();
     }
+    
+    function guardarCurso(){
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('courses/courses/guardarCursoBD');?>"
+        }).done(function( msg ) {
+            $(location).attr("href","<?= Yii::app()->createUrl('courses/courses/index');?>");
+        });
+    }
 </script>
 <div class="form">
     <table class="zebra">
@@ -301,7 +310,7 @@ Yii::app()->clientScript->registerScript('script',
             <td width="240px"></td>
             <td width="240px"></td>
             <div class="row buttons">
-            <td><div class="boton" id="guardar">Guardar >></div></td>
+                <td><div class="boton" id="guardar" onclick="guardarCurso()">Guardar >></div></td>
         </div>
         </tr>
         <?php $this->endWidget(); ?>

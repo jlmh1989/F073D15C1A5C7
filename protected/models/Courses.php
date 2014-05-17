@@ -4,12 +4,13 @@
  * This is the model class for table "tbl_e24_courses".
  *
  * The followings are the available columns in table 'tbl_e24_courses':
- * @property string $pk_course
+ * @property integer $pk_course
  * @property integer $fk_level
- * @property string $fk_client
+ * @property integer $fk_client
  * @property integer $fk_teacher
  * @property integer $fk_type_course
- * @property string $fk_group
+ * @property integer $fk_group
+ * @property integer $fk_classrom_address
  * @property string $initial_date
  * @property string $desc_curse
  * @property string $other_level
@@ -21,6 +22,7 @@
  * @property CourseSchedule[] $courseSchedules
  * @property CatLevels $fkLevel
  * @property Clients $fkClient
+ * @property ClassroomAddress $fkClassromAddress
  * @property Groups $fkGroup
  * @property Teachers $fkTeacher
  * @property CatDetail $fkTypeCourse
@@ -45,7 +47,7 @@ class Courses extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fk_level, fk_client, fk_teacher, fk_type_course, initial_date, desc_curse', 'required'),
-			array('fk_level, fk_teacher, fk_type_course', 'numerical', 'integerOnly'=>true),
+			array('fk_level, fk_teacher, fk_classrom_address, fk_type_course', 'numerical', 'integerOnly'=>true),
 			array('fk_client, fk_group', 'length', 'max'=>10),
 			array('desc_curse, other_level', 'length', 'max'=>50),
 			// The following rule is used by search().
@@ -71,6 +73,7 @@ class Courses extends CActiveRecord
 			'fkTeacher' => array(self::BELONGS_TO, 'Teachers', 'fk_teacher'),
 			'fkTypeCourse' => array(self::BELONGS_TO, 'CatDetail', 'fk_type_course'),
 			'unavailableDates' => array(self::HAS_MANY, 'UnavailableDates', 'fk_course'),
+                        'fkClassromAddress' => array(self::BELONGS_TO, 'ClassroomAddress', 'fk_classrom_address'),
 		);
 	}
 
@@ -89,6 +92,7 @@ class Courses extends CActiveRecord
 			'initial_date' => 'Fecha de Inicio',
 			'desc_curse' => 'Descripci&oacute;n Curso',
 			'other_level' => 'Otro Nivel',
+                        'fk_classrom_address' => 'Direcci&oacute;n'
 		);
 	}
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-05-2014 a las 14:55:39
+-- Tiempo de generación: 17-05-2014 a las 18:10:10
 -- Versión del servidor: 5.6.12
 -- Versión de PHP: 5.5.3
 
@@ -564,7 +564,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_classroom_address` (
   UNIQUE KEY `XPKe24_classroom_direction` (`pk_classroom_direction`,`fk_client`),
   KEY `fk_client` (`fk_client`),
   KEY `fk_state_dir_pk_cat_detail` (`fk_state_dir`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_classroom_address`
@@ -578,7 +578,8 @@ INSERT INTO `tbl_e24_classroom_address` (`pk_classroom_direction`, `fk_client`, 
 (5, 6, 'ejemplo calle', 123, '1', 'ejemplo colonia', 'Municipio', 31, 'Mexico', '68000', 0, '0123456789', '25.656047, -100.279583'),
 (6, 7, 'ejemplo calle', 1234, '2', 'colonia', 'Monterrey', 31, 'México', '64830', 1, '12344444444', ''),
 (7, 8, 'ejemplo calle', 1234, '2', 'ejemplo colonia', 'Monterrey', 31, 'Mexico', '68000', 1, '0101010101', '25.656047, -100.279583'),
-(8, 9, 'ejemplo calle modif', 1234, '2', 'ejemplo colonia', 'Monterrey', 31, 'Mexico', '68000', 1, '0101010101', '');
+(8, 9, 'ejemplo calle modif', 1234, '2', 'ejemplo colonia', 'Monterrey', 31, 'Mexico', '68000', 1, '0101010101', ''),
+(9, 2, 'Calle aeropuerto', 4958, '5', 'colonia Aero', 'Escobedo', 31, 'México', '64800', 1, '845783939', '25.778579, -100.106994');
 
 -- --------------------------------------------------------
 
@@ -638,7 +639,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_course_schedule` (
   KEY `fk_curse` (`fk_course`),
   KEY `fk_bss_day` (`fk_bss_day`),
   KEY `XIF2e24_curse_schedule` (`fk_course`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_course_schedule`
@@ -667,7 +668,10 @@ INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bs
 (20, 8, 6, '09:00:00', '09:00:00', 1),
 (21, 8, 7, '09:00:00', '09:00:00', 1),
 (22, 8, 8, '08:00:00', '08:00:00', 1),
-(35, 9, 5, '11:00:00', '12:00:00', 1);
+(35, 9, 5, '11:00:00', '12:00:00', 1),
+(36, 14, 4, '10:00:00', '10:30:00', 1),
+(37, 14, 5, '10:00:00', '10:30:00', 1),
+(38, 15, 4, '10:00:00', '10:30:00', 1);
 
 -- --------------------------------------------------------
 
@@ -682,6 +686,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
   `fk_teacher` mediumint(8) unsigned NOT NULL,
   `fk_type_course` mediumint(8) unsigned NOT NULL,
   `fk_group` int(10) unsigned DEFAULT NULL,
+  `fk_classrom_address` int(11) unsigned NOT NULL,
   `initial_date` date NOT NULL,
   `desc_curse` varchar(50) NOT NULL,
   `other_level` varchar(50) DEFAULT NULL,
@@ -692,23 +697,30 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
   KEY `XIF2e24_courses` (`fk_group`),
   KEY `XIF3e24_courses` (`fk_level`),
   KEY `XIF4e24_courses` (`fk_teacher`),
-  KEY `XIF5e24_courses` (`fk_type_course`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+  KEY `XIF5e24_courses` (`fk_type_course`),
+  KEY `fk_classrom_address` (`fk_classrom_address`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_courses`
 --
 
-INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `initial_date`, `desc_curse`, `other_level`, `status`) VALUES
-(1, 3, 1, 3, 5, 1, '2013-12-20', 'Curso basico cemez 1', NULL, 1),
-(2, 3, 1, 4, 5, 2, '2013-12-22', 'Curso basico cemez 2', NULL, 1),
-(3, 3, 3, 3, 5, 3, '2013-12-23', 'Curso vitro  1', NULL, 1),
-(4, 3, 3, 4, 5, 4, '2013-12-24', 'Curso vitro  2', NULL, 1),
-(5, 3, 2, 3, 4, NULL, '2013-12-25', 'Curso particular  1', NULL, 0),
-(6, 3, 4, 4, 4, NULL, '2013-12-25', 'Curso particular  2', NULL, 1),
-(7, 3, 3, 11, 4, 2, '2014-04-24', 'Ejemplo Curso 08:00', '', 1),
-(8, 3, 1, 3, 4, 2, '2014-04-16', 'Ejemplo curso con horario', '', 0),
-(9, 3, 4, 7, 4, 2, '2014-05-08', 'Curso con horario', '', 1);
+INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `fk_classrom_address`, `initial_date`, `desc_curse`, `other_level`, `status`) VALUES
+(1, 3, 1, 3, 5, 1, 1, '2013-12-20', 'Curso basico cemez 1', NULL, 1),
+(2, 3, 1, 4, 5, 2, 1, '2013-12-22', 'Curso basico cemez 2', NULL, 1),
+(3, 3, 3, 3, 5, 3, 3, '2013-12-23', 'Curso vitro  1', NULL, 1),
+(4, 3, 3, 4, 5, 4, 3, '2013-12-24', 'Curso vitro  2', NULL, 1),
+(5, 3, 2, 3, 4, NULL, 2, '2013-12-25', 'Curso particular  1', NULL, 0),
+(6, 3, 4, 4, 4, NULL, 4, '2013-12-25', 'Curso particular  2', NULL, 0),
+(7, 3, 3, 11, 4, 2, 3, '2014-04-24', 'Ejemplo Curso 08:00', '', 1),
+(8, 3, 1, 3, 4, 2, 1, '2014-04-16', 'Ejemplo curso con horario', '', 0),
+(9, 3, 4, 7, 4, 2, 4, '2014-05-08', 'Curso con horario', '', 1),
+(10, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(11, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(12, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(13, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(14, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(15, 3, 1, 6, 4, 2, 1, '2014-05-23', 'Ejemplo curso cemex', '', 1);
 
 -- --------------------------------------------------------
 
@@ -1134,6 +1146,7 @@ ALTER TABLE `tbl_e24_course_schedule`
 -- Filtros para la tabla `tbl_e24_courses`
 --
 ALTER TABLE `tbl_e24_courses`
+  ADD CONSTRAINT `fk_curses_pk_classrrom_address` FOREIGN KEY (`fk_classrom_address`) REFERENCES `tbl_e24_classroom_address` (`pk_classroom_direction`),
   ADD CONSTRAINT `fk_curses_pk_catlevels` FOREIGN KEY (`fk_level`) REFERENCES `tbl_e24_cat_levels` (`pk_level`),
   ADD CONSTRAINT `fk_curses_pk_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`),
   ADD CONSTRAINT `fk_curses_pk_groups` FOREIGN KEY (`fk_group`) REFERENCES `tbl_e24_groups` (`pk_group`),

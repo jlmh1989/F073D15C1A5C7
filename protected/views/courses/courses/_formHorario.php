@@ -25,6 +25,8 @@ Yii::app()->clientScript->registerScript('script',
             $(location).attr("href","'.Yii::app()->createUrl('courses/courses/createDatos').'");
         });
         
+        $("#error").hide();
+        
         '.$scriptGetHorarioHtml
         ,CClientScript::POS_READY);
 ?>
@@ -91,6 +93,23 @@ Yii::app()->clientScript->registerScript('script',
             }
         }).css("font-size", "14px");
     }
+    
+    function siguiente(){
+        $.ajax({
+            url: "<?= Yii::app()->createUrl('courses/courses/validarHorario');?>", 
+            dataType: "text"
+         }).done(function( msg ) {
+             var json = $.parseJSON(msg);
+             if(json.existe){
+                 $("#courses-formHorario").submit();
+             }else{
+                 $('#error')
+                    .show({duration: 0, queue: true})
+                    .delay(3000)
+                    .hide({duration: 0, queue: true});
+             }
+         });
+    }
 </script>
 <div class="form">
     <table class="zebra">
@@ -135,11 +154,10 @@ Yii::app()->clientScript->registerScript('script',
     <hr>
     <table>
         <tr>
-            <td width="240px"><div class="boton" id="irAtras"><< Atr&aacute;s</div></td>
-            <td width="240px"><span></span></td>
-            <td width="240px"></td>
+            <td width="130px"><div class="boton" id="irAtras"><< Atr&aacute;s</div></td>
+            <td width="480px" colspan="2" style="text-align: center"><span id="error" style="color: red; font-weight: bold">Debe capturar al menos un horario.</span></td>
             <div class="row buttons">
-            <td><?php echo CHtml::submitButton('Siguiente >>'); ?></td>
+                <td><div class="boton" id="irAtras" onclick="siguiente()">Siguiente >></div></td>
         </div>
         </tr>
     </table>
