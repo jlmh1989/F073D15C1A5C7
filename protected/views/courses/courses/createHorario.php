@@ -1,10 +1,13 @@
 <?php
 /* @var $this CoursesController */
-
+$msj = 'Crear';
+if($_SESSION['curso']['curso']['operacion'] === 'update'){
+    $msj = 'Modificar';
+}
 $this->breadcrumbs=array(
 	'Courses'=>array('index'),
-	'Create[Datos]',
-        'Create[Horario]',
+	$msj.'[Datos]',
+        $msj.'[Horario]',
 );
 $this->menu=array(
 	array('label'=>'Dar de Alta Curso', 'url'=>array('create')),
