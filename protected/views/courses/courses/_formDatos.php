@@ -1,6 +1,6 @@
 <?php
 /* @var $this CoursesController */
-/* @var $model Courses */
+/* @var $model CursoDatos */
 /* @var $form CActiveForm */
 ?>
 <div class="form">

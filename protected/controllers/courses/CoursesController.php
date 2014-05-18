@@ -74,16 +74,42 @@ class CoursesController extends Controller
 	{
             unset($_SESSION['curso']);
             unset($_SESSION['horarioCurso']);
+            $_SESSION['curso']['curso']['operacion'] = 'insert';
             $this->actionCreateDatos();
+	}
+        
+        /**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($id)
+	{
+                unset($_SESSION['curso']);
+                unset($_SESSION['horarioCurso']);
+		$modelC=$this->loadModel($id);
+                $this->getHorarioBD($id);
+                $model = new CursoDatos;
+                $model->desc_curse = $modelC->desc_curse;
+                $model->fk_client = $modelC->fk_client;
+                $model->fk_group = $modelC->fk_group;
+                $model->fk_level = $modelC->fk_level;
+                $model->fk_type_course = $modelC->fk_type_course;
+                $model->initial_date = $modelC->initial_date;
+                $model->other_level = $modelC->other_level;
+                $_SESSION['curso']['curso']['pk_course'] = $modelC->pk_course;
+                $_SESSION['curso']['curso']['operacion'] = 'update';
+                $_SESSION['curso']['datos'] = $model->attributes;
+                $_SESSION['curso']['maestro']['fk_teacher'] = $modelC->fk_teacher;
+                $_SESSION['curso']['direccion'] = ClassroomAddress::model()->findByPk($modelC->fk_classrom_address);
+                $this->actionCreateDatos();
 	}
         
         public function actionCreateDatos(){
             $model=new CursoDatos;
-            if(isset($_SESSION['curso'])){
+            if(isset($_SESSION['curso']['datos'])){
                 $model->attributes=$_SESSION['curso']['datos'];
             }
-            // Uncomment the following line if AJAX validation is needed
-            // $this->performAjaxValidation($model);
             
             if(isset($_POST['CursoDatos']))
             {
@@ -159,13 +185,25 @@ class CoursesController extends Controller
         }
         
         public function actionGuardarCursoBD(){
-            $model = new Courses;
-            $model->attributes = $_SESSION['curso']['datos'];
-            $model->fk_teacher = $_SESSION['curso']['maestro']['fk_teacher'];
-            $model->fk_classrom_address = $_SESSION['curso']['direccion']['pk_classroom_direction'];
-            $model->status = constantes::ACTIVO;
-            if($model->save()){
-                $this->guardarHorario($model->pk_course);
+            if($_SESSION['curso']['curso']['operacion'] === 'insert'){
+                $model = new Courses;
+                $model->attributes = $_SESSION['curso']['datos'];
+                $model->fk_teacher = $_SESSION['curso']['maestro']['fk_teacher'];
+                $model->fk_classrom_address = $_SESSION['curso']['direccion']['pk_classroom_direction'];
+                $model->status = constantes::ACTIVO;
+                if($model->save()){
+                    $this->guardarHorario($model->pk_course);
+                }
+            }elseif($_SESSION['curso']['curso']['operacion'] === 'update') {
+                $model = $this->loadModel($_SESSION['curso']['curso']['pk_course']);
+                $model->attributes = $_SESSION['curso']['datos'];
+                $model->fk_teacher = $_SESSION['curso']['maestro']['fk_teacher'];
+                $model->fk_classrom_address = $_SESSION['curso']['direccion']['pk_classroom_direction'];
+                $model->status = constantes::ACTIVO;
+                if($model->save()){
+                    $this->deleteHorarioBD($model->pk_course);
+                    $this->guardarHorario($model->pk_course);
+                }
             }
             unset($_SESSION['curso']);
             unset($_SESSION['horarioCurso']);
@@ -315,6 +353,10 @@ class CoursesController extends Controller
             echo $html;
         }
         
+        /**
+         * Guardar horario del curso en base de datos
+         * @param type $fkCourse
+         */
         private function guardarHorario($fkCourse){
             foreach ($_SESSION['horarioCurso'] as $keyBssDay => $arrayBssDay) {
                 foreach ($arrayBssDay as $keyHorario => $arrayHorario) {
@@ -329,10 +371,13 @@ class CoursesController extends Controller
             }
         }
         
+        /**
+         * Leer horario desde la base de datos
+         * @param type $fkCourse
+         */
         private function getHorarioBD($fkCourse){
             $modelCS = CourseSchedule::model()->getCourseSchedule(constantes::ACTIVO, $fkCourse);
             $_SESSION['horarioCurso'] = array();
-            $_SESSION['horarioCursoCargado'] = true;
             foreach ($modelCS as $array) {
                 $inicio = $array->initial_hour;
                 $fin = $array->final_hour;
@@ -341,41 +386,16 @@ class CoursesController extends Controller
             }
         }
         
+        /**
+         * Eliminar horario del curso en base de datos
+         * @param type $fkCourse
+         */
         private function deleteHorarioBD($fkCourse){
             $criteria = new CDbCriteria;
             $criteria->addCondition('fk_course='.$fkCourse);
             $criteria->addCondition('status='.constantes::ACTIVO);
             CourseSchedule::model()->deleteAll($criteria);
         }
-
-        /**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-                if(!isset($_SESSION['horarioCursoCargado'])){
-                    $this->getHorarioBD($id);
-                }
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Courses']))
-		{
-			$model->attributes=$_POST['Courses'];
-			if($model->save()){
-                            $this->deleteHorarioBD($id);
-                            $this->guardarHorario($id);
-                            $this->redirect(array('view','id'=>$model->pk_course));
-                        }
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
 
 	/**
 	 * Deletes a particular model.
