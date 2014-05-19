@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-05-2014 a las 18:10:10
+-- Tiempo de generación: 19-05-2014 a las 01:00:19
 -- Versión del servidor: 5.6.12
 -- Versión de PHP: 5.5.3
 
@@ -592,6 +592,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_clients` (
   `fk_type_client` mediumint(8) unsigned NOT NULL,
   `fk_user` int(10) unsigned NOT NULL,
   `client_name` varchar(100) NOT NULL,
+  `client_photo` varchar(100) NOT NULL,
   `contact_name` varchar(100) NOT NULL,
   `contact_mail` varchar(100) NOT NULL,
   `contact_phone` varchar(15) NOT NULL,
@@ -610,16 +611,16 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_clients` (
 -- Volcado de datos para la tabla `tbl_e24_clients`
 --
 
-INSERT INTO `tbl_e24_clients` (`pk_client`, `fk_type_client`, `fk_user`, `client_name`, `contact_name`, `contact_mail`, `contact_phone`, `contact_phone_ext`, `client_web`, `status`, `billing_data`, `contact_cellphone`) VALUES
-(1, 2, 3, 'Cemex', 'demo cliente 1', 'cliente.demo.1@cemex.com', '813333333333', '333', 'www.cemex.com', 1, 1, '0443333333333'),
-(2, 3, 3, 'particular demo 1', 'particular demo 1', 'particular.demo.2@demo.com', '8144444444', '4444', NULL, 1, 0, '0444444444444'),
-(3, 2, 3, 'vitro', 'demo cliente 2', 'cliente.demo.2@vitro.com', '8155555555', '555', 'www.vitro.com', 1, 1, '0445555555555'),
-(4, 3, 3, 'particular demo 2', 'particular demo 2', 'particular.demo.2@demo.com', '8155555555', '555', NULL, 1, 1, '0445555555555'),
-(5, 2, 3, 'mi empresa', 'nombre persona empresa', 'correo', '951228384', '', '', 1, 0, '8110818911'),
-(6, 2, 3, 'ejemplo empresa 1', 'nombre persona empresa', 'ejemplo@ejemplo', '1234567890', '1234', 'www.ejemplo.es', 0, 0, '8100000000'),
-(7, 2, 3, 'AAEE', 'Jose Hernandez', 'ejemplo@ejemplo', '528110818911', '1234', 'ejemplo.pagina.web', 1, 0, '528110818911'),
-(8, 2, 11, 'EEEEE', 'nombre e', 'correoe@correoe.com', '1234567890', '1234', 'ejemplo.pagina.web', 1, 0, '8100000000'),
-(9, 2, 12, 'AAAAAAMODIF', 'nombre aaa', 'aaaa@aa.aa', '1234567890', '1234', 'ejemplo.pagina.web', 0, 1, '8100000000');
+INSERT INTO `tbl_e24_clients` (`pk_client`, `fk_type_client`, `fk_user`, `client_name`, `client_photo`, `contact_name`, `contact_mail`, `contact_phone`, `contact_phone_ext`, `client_web`, `status`, `billing_data`, `contact_cellphone`) VALUES
+(1, 2, 3, 'Cemex', '973972.jpg', 'demo cliente 1', 'cliente.demo.1@cemex.com', '813333333333', '333', 'www.cemex.com', 1, 1, '0443333333333'),
+(2, 3, 3, 'particular demo 1', '', 'particular demo 1', 'particular.demo.2@demo.com', '8144444444', '4444', NULL, 1, 0, '0444444444444'),
+(3, 2, 3, 'vitro', '', 'demo cliente 2', 'cliente.demo.2@vitro.com', '8155555555', '555', 'www.vitro.com', 1, 1, '0445555555555'),
+(4, 3, 3, 'particular demo 2', '', 'particular demo 2', 'particular.demo.2@demo.com', '8155555555', '555', NULL, 1, 1, '0445555555555'),
+(5, 2, 3, 'mi empresa', '', 'nombre persona empresa', 'correo', '951228384', '', '', 1, 0, '8110818911'),
+(6, 2, 3, 'ejemplo empresa 1', '', 'nombre persona empresa', 'ejemplo@ejemplo', '1234567890', '1234', 'www.ejemplo.es', 0, 0, '8100000000'),
+(7, 2, 3, 'AAEE', '', 'Jose Hernandez', 'ejemplo@ejemplo', '528110818911', '1234', 'ejemplo.pagina.web', 1, 0, '528110818911'),
+(8, 2, 11, 'EEEEE', '', 'nombre e', 'correoe@correoe.com', '1234567890', '1234', 'ejemplo.pagina.web', 1, 0, '8100000000'),
+(9, 2, 12, 'AAAAAAMODIF', '', 'nombre aaa', 'aaaa@aa.aa', '1234567890', '1234', 'ejemplo.pagina.web', 0, 1, '8100000000');
 
 -- --------------------------------------------------------
 
@@ -639,7 +640,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_course_schedule` (
   KEY `fk_curse` (`fk_course`),
   KEY `fk_bss_day` (`fk_bss_day`),
   KEY `XIF2e24_curse_schedule` (`fk_course`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_course_schedule`
@@ -652,9 +653,6 @@ INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bs
 (4, 2, 6, '08:00:00', '09:30:00', 1),
 (5, 2, 7, '08:00:00', '09:30:00', 1),
 (6, 2, 8, '08:00:00', '09:30:00', 1),
-(7, 3, 4, '08:00:00', '09:30:00', 1),
-(8, 3, 5, '08:00:00', '09:30:00', 1),
-(9, 3, 6, '08:00:00', '09:30:00', 1),
 (10, 4, 5, '08:00:00', '09:30:00', 1),
 (11, 4, 6, '08:00:00', '09:30:00', 1),
 (12, 4, 7, '08:00:00', '09:30:00', 1),
@@ -671,7 +669,10 @@ INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bs
 (35, 9, 5, '11:00:00', '12:00:00', 1),
 (36, 14, 4, '10:00:00', '10:30:00', 1),
 (37, 14, 5, '10:00:00', '10:30:00', 1),
-(38, 15, 4, '10:00:00', '10:30:00', 1);
+(39, 15, 4, '10:00:00', '10:30:00', 1),
+(40, 3, 4, '08:00:00', '09:30:00', 1),
+(41, 3, 5, '08:00:00', '09:30:00', 1),
+(42, 3, 6, '08:00:00', '09:30:00', 1);
 
 -- --------------------------------------------------------
 
@@ -708,7 +709,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
 INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `fk_classrom_address`, `initial_date`, `desc_curse`, `other_level`, `status`) VALUES
 (1, 3, 1, 3, 5, 1, 1, '2013-12-20', 'Curso basico cemez 1', NULL, 1),
 (2, 3, 1, 4, 5, 2, 1, '2013-12-22', 'Curso basico cemez 2', NULL, 1),
-(3, 3, 3, 3, 5, 3, 3, '2013-12-23', 'Curso vitro  1', NULL, 1),
+(3, 3, 3, 3, 5, 3, 3, '2013-12-23', 'Curso vitro  1', '', 1),
 (4, 3, 3, 4, 5, 4, 3, '2013-12-24', 'Curso vitro  2', NULL, 1),
 (5, 3, 2, 3, 4, NULL, 2, '2013-12-25', 'Curso particular  1', NULL, 0),
 (6, 3, 4, 4, 4, NULL, 4, '2013-12-25', 'Curso particular  2', NULL, 0),
@@ -720,7 +721,7 @@ INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher
 (12, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
 (13, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
 (14, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(15, 3, 1, 6, 4, 2, 1, '2014-05-23', 'Ejemplo curso cemex', '', 1);
+(15, 3, 1, 12, 4, 2, 1, '2014-05-23', 'Ejemplo curso cemex', '', 1);
 
 -- --------------------------------------------------------
 
@@ -1146,8 +1147,8 @@ ALTER TABLE `tbl_e24_course_schedule`
 -- Filtros para la tabla `tbl_e24_courses`
 --
 ALTER TABLE `tbl_e24_courses`
-  ADD CONSTRAINT `fk_curses_pk_classrrom_address` FOREIGN KEY (`fk_classrom_address`) REFERENCES `tbl_e24_classroom_address` (`pk_classroom_direction`),
   ADD CONSTRAINT `fk_curses_pk_catlevels` FOREIGN KEY (`fk_level`) REFERENCES `tbl_e24_cat_levels` (`pk_level`),
+  ADD CONSTRAINT `fk_curses_pk_classrrom_address` FOREIGN KEY (`fk_classrom_address`) REFERENCES `tbl_e24_classroom_address` (`pk_classroom_direction`),
   ADD CONSTRAINT `fk_curses_pk_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`),
   ADD CONSTRAINT `fk_curses_pk_groups` FOREIGN KEY (`fk_group`) REFERENCES `tbl_e24_groups` (`pk_group`),
   ADD CONSTRAINT `fk_curses_pk_teachers` FOREIGN KEY (`fk_teacher`) REFERENCES `tbl_e24_teachers` (`pk_teacher`),
