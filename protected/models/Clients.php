@@ -8,6 +8,7 @@
  * @property integer $fk_type_client
  * @property integer $fk_user
  * @property string $client_name
+ * @property string $client_photo
  * @property string $contact_name
  * @property string $contact_mail
  * @property string $contact_phone
@@ -28,7 +29,6 @@
 class Clients extends CActiveRecord
 {
     public $image;
-
     /**
 	 * @return string the associated database table name
 	 */
@@ -50,7 +50,7 @@ class Clients extends CActiveRecord
 			array('client_name, contact_name, contact_mail, client_web', 'length', 'max'=>100),
 			array('contact_phone, contact_phone_ext, contact_cellphone', 'length', 'max'=>15),
                         array('contact_mail','email'),
-                        array('image', 'file', 'allowEmpty'=>true, 'types'=>'jpg, gif, png'),
+                        array('client_photo', 'file', 'allowEmpty'=>true, 'types'=>'jpg, gif, png'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('fk_type_client, client_name', 'safe', 'on'=>'search'),
@@ -91,7 +91,7 @@ class Clients extends CActiveRecord
 			'status' => 'Status',
 			'billing_data' => 'Datos de Faturaci&oacute;n',
 			'contact_cellphone' => 'Celular',
-                        'image' => 'Seleccionar foto',
+                        'client_photo' => 'Seleccionar foto',
 		);
 	}
 

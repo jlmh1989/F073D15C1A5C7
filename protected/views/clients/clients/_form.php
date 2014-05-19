@@ -144,9 +144,9 @@ $idFacturarCombo = "Clients_billing_data";
         </tr>
         
         <tr>
-            <td class="datos_cliente_td"><?php echo $form->labelEx($model, 'image');?></td>
-            <td class="datos_cliente_td" width="270px"><?php echo $form->fileField($model, 'image');
-            echo $form->error($model, 'image');?></td>
+            <td class="datos_cliente_td"><?php echo $form->labelEx($model, 'client_photo');?></td>
+            <td class="datos_cliente_td" width="270px"><?php echo $form->fileField($model, 'client_photo');
+            echo $form->error($model, 'client_photo');?></td>
         </tr>
         
         <tr>

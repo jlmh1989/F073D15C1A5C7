@@ -89,25 +89,29 @@ class ClientsController extends Controller
                         $validar = $modelTEBD->validate() && $validar;
                     }
                     
-                    $modelUser->status=1;
+                    $modelUser->status=  constantes::ACTIVO;
                     $modelUser->fk_role=(int)constantes::ROL_CLIENTE;
                     $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
                     if($validar){
                         if($modelUser->save()){
-                            $model->status=1;
+                            $model->status=  constantes::ACTIVO;
                             $model->fk_user=$modelUser->pk_user;
-                            $model->image = CUploadedFile::getInstance($model,'image');
+                            $model->image = CUploadedFile::getInstance($model,'client_photo');
                             if($model->image !== null){
-                                $path = realpath(Yii::app()->basePath.'/../images');
-                                $model->image->saveAs($path . '/' . $model->image);
-                            } 
+                                $rnd = rand(0,999999);
+                                $extensionImg = explode(".", $model->image);
+                                $filename = $rnd.'.'.$extensionImg[1];
+                                $path = realpath(Yii::app()->basePath.'/../images/client_photo');
+                                $model->image->saveAs($path . '/' .$filename);
+                                $model->client_photo = $filename;
+                            }
                             if($model->save()){
                                 $modelTECA->fk_client=$model->pk_client;
-                                $modelTECA->status=1;
+                                $modelTECA->status=constantes::ACTIVO;
                                 if($modelTECA->save()){
                                     if($model->billing_data === "1"){
                                         $modelTEBD->fk_client=$model->pk_client;
-                                        $modelTEBD->status=1;
+                                        $modelTEBD->status=constantes::ACTIVO;
                                         $modelTEBD->save();
                                     }
                                     $this->redirect(array('view','id'=>$model->pk_client));
@@ -157,20 +161,18 @@ class ClientsController extends Controller
                     $modelUser->fk_role=(int)constantes::ROL_CLIENTE;
                     if($validar){
                         if($modelUser->save()){
-                            //$model->status=1;
-                            //$model->fk_user=$modelUser->pk_user;
-                            $model->image = CUploadedFile::getInstance($model,'image');
+                            $model->image = CUploadedFile::getInstance($model,'client_photo');
                             if($model->image !== null){
-                                $path = realpath(Yii::app()->basePath.'/../images');
-                                $model->image->saveAs($path . '/' . $model->image);
-                            }   
+                                $rnd = rand(0,999999);
+                                $extensionImg = explode(".", $model->image);
+                                $filename = $rnd.'.'.$extensionImg[1];
+                                $path = realpath(Yii::app()->basePath.'/../images/client_photo');
+                                $model->image->saveAs($path . '/' .$filename);
+                                $model->client_photo = $filename;
+                            }
                             if($model->save()){
-                                //$modelTECA->fk_client=$model->pk_client;
-                                //$modelTECA->status=1;
                                 if($modelTECA->save()){
                                     if($model->billing_data === "1"){
-                                        //$modelTEBD->fk_client=$model->pk_client;
-                                        //$modelTEBD->status=1;
                                         $modelTEBD->save();
                                     }
                                     $this->redirect(array('view','id'=>$model->pk_client));
