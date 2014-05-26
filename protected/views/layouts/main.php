@@ -90,23 +90,32 @@
                             'activateParents' => true,
                             'items'=>array(
                             	array('label'=>'Home', 'url'=>array('/site/index')),
-                            	array('label'=>'Dias Labores', 'url'=>array('/catalogs/catBssDay')),
-                                array('label'=>'Horas Labores', 'url'=>array('/catalogs/catBssHours')),
-                                array('label'=>'Catalogo General', 'url'=>array('/catalogs/catMaster')),
-                                array('label'=>'Catalogo Detalle', 'url'=>array('/catalogs/catDetail')),
-                                array('label'=>'Documentos', 'url'=>array('/catalogs/catDocuments')),
-                                array('label'=>'Niveles', 'url'=>array('/catalogs/catLevels')),
-                                array('label'=>'Detalle de Niveles', 'url'=>array('/catalogs/catLevelDetail')),
-                                array('label'=>'Materiales', 'url'=>array('/catalogs/catMaterial')),
-                                array('label'=>'Material por Nivel', 'url'=>array('/catalogs/materialLevel')),
-                                array('label'=>'Tarifas', 'url'=>array('/catalogs/catRates')),
-                                array('label'=>'Estatus de Clase', 'url'=>array('/catalogs/catStatusClass')),
+                                array('label'=>'Clientes','url'=>array('/clients/clients')),
+                                array('label'=>'Cursos','url'=>array('/courses/courses')),
+                                array('label'=>'Grupos','url'=>array('/students/groups')),
+                                array('label'=>'Alumnos','url'=>array('/students/students')),
+                                array( 'label'=>'Maestros', 'url'=>array('/teachers/teachers')),
+                                array('label'=>'Material', 'url'=>array('/catalogs/catMaterial')),
+                                array(
+                                'label'=>'Catálogos',
+                                'url'=>array('#'),
+                                'items'=>array(
+                                    array('label'=>'Dias Labores', 'url'=>array('/catalogs/catBssDay')),
+                                    array('label'=>'Horas Labores', 'url'=>array('/catalogs/catBssHours')),
+                                    array('label'=>'Catalogo General', 'url'=>array('/catalogs/catMaster')),
+                                    array('label'=>'Catalogo Detalle', 'url'=>array('/catalogs/catDetail')),
+                                    array('label'=>'Documentos Maestro', 'url'=>array('/catalogs/catDocuments')),
+                                    array('label'=>'Niveles', 'url'=>array('/catalogs/catLevels')),
+                                    array('label'=>'Detalle de Niveles', 'url'=>array('/catalogs/catLevelDetail')),
+                                    array('label'=>'Materiales', 'url'=>array('#')),
+                                    array('label'=>'Material por Nivel', 'url'=>array('/catalogs/materialLevel')),
+                                    array('label'=>'Tarifas', 'url'=>array('/catalogs/catRates')),
+                                    array('label'=>'Estatus de Clase', 'url'=>array('/catalogs/catStatusClass')),
+                                    ),
+                                ),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'))
                             ),
-                            'submenuHtmlOptions' => array(
-                                'class' => 'dropdown-menu',
-                            )
-                        ));
+                        ));   
                     } elseif (Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR) {
                         $this->widget('zii.widgets.CMenu',array(
                             'activeCssClass' => 'active',
@@ -117,7 +126,8 @@
                                 array('label'=>'Cursos','url'=>array('/courses/courses')),
                                 array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
-                                array( 'label'=>'Maestros', 'url'=>array('/teachers/teachers')),
+                                array('label'=>'Maestros', 'url'=>array('/teachers/teachers')),
+                                array('label'=>'Material', 'url'=>array('#')),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'))
                             ),
                         ));                     
@@ -128,6 +138,7 @@
                             'items'=>array(
                                 array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Cursos','url'=>array('/courses/courses')),
+                                array('label'=>'Perfil', 'url'=>array('#')),
                                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout')),
                                 ),
                             ));
@@ -136,15 +147,14 @@
                             'activeCssClass' => 'active',
                             'activateParents' => true,
                             'items'=>array(
-                            	array('label'=>'Home', 'url'=>array('/site/index')),
-                                array('label'=>'Clientes','url'=>array('/clients/clients')),
+                                array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Cursos','url'=>array('/courses/courses')),
-                                array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
-                                array( 'label'=>'Maestros', 'url'=>array('/teachers/teachers')),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'))
-                            ),
-                        ));  
+                                array('label'=>'Materiales', 'url'=>array('#')),
+                                array('label'=>'Perfil', 'url'=>array('#')),
+                                array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout')),
+                                ),
+                            ));
                     }elseif(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
                         $this->widget('zii.widgets.CMenu',array(
                             'activeCssClass' => 'active',
@@ -152,8 +162,8 @@
                             'items'=>array(
                                 array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Cursos','url'=>array('/courses/courses')),
-                                array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
+                                array('label'=>'Perfil', 'url'=>array('#')),
                                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout')),
                                 ),
                             ));

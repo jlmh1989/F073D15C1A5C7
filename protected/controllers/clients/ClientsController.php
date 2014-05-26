@@ -156,9 +156,7 @@ class ClientsController extends Controller
                         $modelTEBD->attributes=$_POST['BillingData'];
                         $validar = $modelTEBD->validate() && $validar;
                     }
-                    
-                    $modelUser->status=  constantes::ACTIVO;
-                    $modelUser->fk_role=(int)constantes::ROL_CLIENTE;
+                    $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
                     if($validar){
                         if($modelUser->save()){
                             $model->image = CUploadedFile::getInstance($model,'client_photo');
