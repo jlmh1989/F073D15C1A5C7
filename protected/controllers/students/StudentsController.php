@@ -27,23 +27,14 @@ class StudentsController extends Controller
 	public function accessRules()
 	{
 		return array(
-			/*
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-                    */
 			array('allow', // allow authenticated user to perform
 				'actions'=>array('index','view','create','update','admin','delete','crearPdf'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
-				//'users'=>array('@'),
 			),
-                    /*
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+                        array('allow', // allow authenticated user to perform
+				'actions'=>array('perfil','updateProfile'),
+                                'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ESTUDIANTE',
 			),
-                     */
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -85,7 +76,6 @@ class StudentsController extends Controller
                         $modelUser->fk_role=(int)constantes::ROL_ESTUDIANTE;
                         $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
                         if($modelUser->save()){
-                            $model->status=  constantes::ACTIVO;
                             $model->fk_user=$modelUser->pk_user;
                             if($model->save())
                                 $this->redirect(array('view','id'=>$model->pk_student));
@@ -106,32 +96,46 @@ class StudentsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+                $profile = FALSE;
+                if(isset($_SESSION['updateProfile'])){
+                    $profile = $_SESSION['updateProfile'];
+                }
 		$model=$this->loadModel($id);
                 $modelUser = $this->loadModelUser($model->fk_user);
                 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Students']))
 		{
                     $model->attributes=$_POST['Students'];
-                    $modelUser->attributes=$_POST['Users'];
-                    $validUser = $modelUser->validate();
-                    $validate = $model->validate() && $validUser;
+                    if($profile === FALSE){
+                        $modelUser->attributes=$_POST['Users'];
+                        $validUser = $modelUser->validate();
+                        $validate = $model->validate() && $validUser;
+                    }else{
+                        $validate = $model->validate();
+                    }
+                    
                     if($validate)
                     {
-                        if($modelUser->save())
-                        {
+                        if($profile === FALSE){
+                            $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
+                            if($modelUser->save())
+                            {
+                                $model->save();
+                                $this->redirect(array('view','id'=>$model->pk_student));
+                            }
+                        }else{
                             $model->save();
-                            $this->redirect(array('view','id'=>$model->pk_student));
+                            unset($_SESSION['updateProfile']);
+                            $this->redirect(array('perfil'));
                         }
+                        
                     }
 		}
 
-		$this->render('update',array(
+                $this->render('update',array(
 			'model'=>$model,
                         'modelUser'=>$modelUser,
-		));
+		));		
 	}
 
 	/**
@@ -177,6 +181,22 @@ class StudentsController extends Controller
 			'model'=>$model,
 		));
 	}
+        
+        public function actionPerfil(){
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $model = Students::model()->find('fk_user='.$pk_usuario);
+            
+            $this->render('perfil',array(
+			'model'=>$model,
+            ));
+        }
+        
+        public function actionUpdateProfile(){
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $model = Students::model()->find('fk_user='.$pk_usuario);
+            $_SESSION['updateProfile'] = TRUE;
+            $this->actionUpdate($model->pk_student);
+        }
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

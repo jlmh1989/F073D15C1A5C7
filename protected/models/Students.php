@@ -24,6 +24,7 @@
  * @property StudentsGroup[] $studentsGroups
  * @property Users $fkUser
  * @property Clients $fkClient
+ * @property CatDetail $fkStateDir
  */
 class Students extends CActiveRecord
 {
@@ -67,6 +68,7 @@ class Students extends CActiveRecord
 			'studentsGroups' => array(self::HAS_MANY, 'StudentsGroup', 'fk_student'),
                         'fkUser'=> array(self::BELONGS_TO, 'Users', 'fk_user'),
                         'fkClient'=> array(self::BELONGS_TO, 'Clients', 'fk_client'),
+                        'fkStateDir' => array(self::BELONGS_TO, 'CatDetail', 'fk_state_dir'),
 		);
 	}
 
