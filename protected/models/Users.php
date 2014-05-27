@@ -35,6 +35,7 @@ class Users extends CActiveRecord
 			array('fk_role, status', 'numerical', 'integerOnly'=>true),
 			array('pk_user', 'length', 'max'=>10),
 			array('username, password', 'length', 'max'=>100),
+                        array('username', 'usernameDisponible'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('pk_user, fk_role, username, password, status', 'safe', 'on'=>'search'),
@@ -95,6 +96,22 @@ class Users extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public static function cambiarPassword($pkUser ,$password){
+            $modelUser = Users::model()->findByPk($pkUser);
+            if(strcmp( $modelUser->password, $password) === 0){
+                return FALSE;
+            }else{
+                return TRUE;
+            }
+        }
+        
+        public function usernameDisponible($attribute,$params){
+            $user = Users::model()->find("username=?", array($this->username));
+            if(isset($user)){
+                $this->addError($attribute,'Nombre de Usuario no disponible.');
+            }
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.

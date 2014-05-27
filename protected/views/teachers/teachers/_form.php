@@ -2,8 +2,10 @@
 /* @var $this TeachersController */
 /* @var $model Teachers */
 /* @var $form CActiveForm */
+$readOnly = 'readonly';
 if($model->pk_teacher == null){
     unset($_SESSION['inactivoUS']);
+    $readOnly = '';
 }
 ?>
 
@@ -124,7 +126,7 @@ if($model->pk_teacher == null){
         <tr>
             <div class="row">
                 <td class="user"><?php echo $form->labelEx($modelUser,'username'); ?></td>
-		<td class="user"><?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>100)); ?>
+		<td class="user"><?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>100, 'readonly'=>$readOnly)); ?>
 		<?php echo $form->error($modelUser,'username'); ?></td>
 	</div>
 

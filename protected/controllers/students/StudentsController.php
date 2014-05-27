@@ -29,7 +29,8 @@ class StudentsController extends Controller
 		return array(
 			array('allow', // allow authenticated user to perform
 				'actions'=>array('index','view','create','update','admin','delete','crearPdf'),
-                                'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
+                                'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR'
+                                             .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 			),
                         array('allow', // allow authenticated user to perform
 				'actions'=>array('perfil','updateProfile'),
@@ -117,7 +118,9 @@ class StudentsController extends Controller
                     if($validate)
                     {
                         if($profile === FALSE){
-                            $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
+                            if(Users::cambiarPassword($modelUser->pk_user, $modelUser->password) === TRUE){
+                                $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
+                            }
                             if($modelUser->save())
                             {
                                 $model->save();
@@ -197,7 +200,7 @@ class StudentsController extends Controller
             $_SESSION['updateProfile'] = TRUE;
             $this->actionUpdate($model->pk_student);
         }
-
+        
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

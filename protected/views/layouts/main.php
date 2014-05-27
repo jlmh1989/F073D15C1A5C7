@@ -51,7 +51,7 @@
                                 array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
                                 array( 'label'=>'Maestros', 'url'=>array('/teachers/teachers')),
-                                array('label'=>'Material', 'url'=>array('/catalogs/catMaterial')),
+                                array('label'=>'Material', 'url'=>array('#')),
                                 array(
                                 'label'=>'Catálogos',
                                 'url'=>array('#'),
@@ -63,7 +63,7 @@
                                     array('label'=>'Documentos Maestro', 'url'=>array('/catalogs/catDocuments')),
                                     array('label'=>'Niveles', 'url'=>array('/catalogs/catLevels')),
                                     array('label'=>'Detalle de Niveles', 'url'=>array('/catalogs/catLevelDetail')),
-                                    array('label'=>'Materiales', 'url'=>array('#')),
+                                    array('label'=>'Materiales', 'url'=>array('/catalogs/catMaterial')),
                                     array('label'=>'Material por Nivel', 'url'=>array('/catalogs/materialLevel')),
                                     array('label'=>'Tarifas', 'url'=>array('/catalogs/catRates')),
                                     array('label'=>'Estatus de Clase', 'url'=>array('/catalogs/catStatusClass')),

@@ -2,6 +2,10 @@
 /* @var $this ClientsController */
 /* @var $model Clients */
 /* @var $form CActiveForm */
+$readOnly = 'readonly';
+if($model->pk_client == null){
+    $readOnly = '';
+}
 $idClienteWebLabel = "client_web";
 $idClienteWebInput = "Clients_client_web";
 $idNombreClienteLabel = "client_name";
@@ -107,7 +111,7 @@ $idFacturarCombo = "Clients_billing_data";
         <tr>
             <div class="row">
                 <td class="user"><?php echo $form->labelEx($modelUser,'username'); ?></td>
-		<td class="user"><?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>100)); ?>
+		<td class="user"><?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>100, 'readonly'=>$readOnly)); ?>
 		<?php echo $form->error($modelUser,'username'); ?></td>
 	</div>
 

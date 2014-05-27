@@ -24,7 +24,7 @@ class constantes{
     const NO = "0";
     const OTRA_NACIONALIDAD = "12";
     const FORMATO_FECHA = "yy-mm-dd";
-    const PATRON_PASS = "patron pass e24sys root";
+    const PATRON_PASS = '$1$Ehc23$09P';
 
     public static function getOpcionCombo() {
         return self::$opcion;

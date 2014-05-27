@@ -2,7 +2,10 @@
 /* @var $this StudentsController */
 /* @var $model Students */
 /* @var $form CActiveForm */
-
+$readOnly = 'readonly';
+if($model->pk_student == null){
+    $readOnly = '';
+}
 Yii::app()->clientScript->registerScript('script',
         '
         $("#user_th").click(function() {
@@ -44,7 +47,7 @@ Yii::app()->clientScript->registerScript('script',
         <tr>    
             <div class="row">
                 <td class="user"><?php echo $form->labelEx($modelUser,'username'); ?></td>
-		<td class="user"><?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>100)); ?>
+		<td class="user"><?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>100, 'readonly'=>$readOnly)); ?>
 		<?php echo $form->error($modelUser,'username'); ?></td>
 	</div>
 
