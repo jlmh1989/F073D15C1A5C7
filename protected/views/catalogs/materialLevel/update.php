@@ -7,15 +7,21 @@ $this->breadcrumbs=array(
 	$model->pk_material_level=>array('view','id'=>$model->pk_material_level),
 	'Update',
 );
-
+$this->menu=array(
+	array('label'=>'Crear Material por Nivel', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Material por Nivel', 'url'=>array('index')),
+);
+/*
 $this->menu=array(
 	array('label'=>'List MaterialLevel', 'url'=>array('index')),
 	array('label'=>'Create MaterialLevel', 'url'=>array('create')),
 	array('label'=>'View MaterialLevel', 'url'=>array('view', 'id'=>$model->pk_material_level)),
 	array('label'=>'Manage MaterialLevel', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
-<h1>Update MaterialLevel <?php echo $model->pk_material_level; ?></h1>
+<h1>Actualizar Material por Nivel</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

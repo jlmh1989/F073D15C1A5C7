@@ -7,16 +7,17 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CatMaster', 'url'=>array('create')),
-	array('label'=>'Manage CatMaster', 'url'=>array('admin')),
+	array('label'=>'Crear Catálogo General', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo General', 'url'=>array('index')),
 );
 ?>
 
-<h1>Cat&aacute;logo Maestro</h1>
+<h1>Cat&aacute;logo General</h1>
 
 <?php 
 $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
         'columns'=> array(
             'pk_cat_master',
             'desc_cat_master',
@@ -26,7 +27,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{view}',
+                'template'=>'{update}',
 		),
         ),
 ));

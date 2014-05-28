@@ -6,13 +6,19 @@ $this->breadcrumbs=array(
 	'Cat Masters'=>array('index'),
 	'Create',
 );
-
+$this->menu=array(
+	array('label'=>'Crear Catálogo General', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo General', 'url'=>array('index')),
+);
+/*
 $this->menu=array(
 	array('label'=>'List CatMaster', 'url'=>array('index')),
 	array('label'=>'Manage CatMaster', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
-<h1>Crear Cat&aacute;logo Maestro</h1>
+<h1>Crear Cat&aacute;logo General</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -115,10 +115,21 @@ class CatDocumentsController extends Controller
 	 */
 	public function actionIndex()
 	{
+                $model=new CatDocuments('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['CatDocuments']))
+			$model->attributes=$_GET['CatDocuments'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));
+                /*
 		$dataProvider=new CActiveDataProvider('CatDocuments');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+                 * 
+                 */
 	}
 
 	/**

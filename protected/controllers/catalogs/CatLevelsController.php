@@ -115,10 +115,21 @@ class CatLevelsController extends Controller
 	 */
 	public function actionIndex()
 	{
+                $model=new CatLevels('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['CatLevels']))
+			$model->attributes=$_GET['CatLevels'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));
+                /*
 		$dataProvider=new CActiveDataProvider('CatLevels');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+                 * 
+                 */
 	}
 
 	/**

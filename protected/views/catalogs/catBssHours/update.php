@@ -7,15 +7,21 @@ $this->breadcrumbs=array(
 	$model->pk_bss_hour=>array('view','id'=>$model->pk_bss_hour),
 	'Update',
 );
-
+$this->menu=array(
+	array('label'=>'Crear Hora Laboral', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Hora Laboral', 'url'=>array('index')),
+);
+/*
 $this->menu=array(
 	array('label'=>'List CatBssHours', 'url'=>array('index')),
 	array('label'=>'Create CatBssHours', 'url'=>array('create')),
 	array('label'=>'View CatBssHours', 'url'=>array('view', 'id'=>$model->pk_bss_hour)),
 	array('label'=>'Manage CatBssHours', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
-<h1>Update CatBssHours <?php echo $model->pk_bss_hour; ?></h1>
+<h1>Actualizar Hora Laboral</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -7,15 +7,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CatStatusClass', 'url'=>array('create')),
-	array('label'=>'Manage CatStatusClass', 'url'=>array('admin')),
+	array('label'=>'Crear Estatus Clase', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Estatus Clase', 'url'=>array('index')),
 );
 ?>
 
 <h1>Cat&aacute;logo Estatus de Clase</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
 	'columns'=> array(
             'pk_status_class',
             'desc_status_class',
@@ -34,7 +35,7 @@ $this->menu=array(
                 'value'=>'$data->fkRoleClass->desc_cat_detail_es'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{view}',
+                'template'=>'{update}',
 		),
         ),
 )); ?>

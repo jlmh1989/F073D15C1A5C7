@@ -115,10 +115,21 @@ class MaterialLevelController extends Controller
 	 */
 	public function actionIndex()
 	{
+                $model=new MaterialLevel('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['MaterialLevel']))
+			$model->attributes=$_GET['MaterialLevel'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));
+                /*
 		$dataProvider=new CActiveDataProvider('MaterialLevel');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+                 * 
+                 */
 	}
 
 	/**

@@ -7,15 +7,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CatRates', 'url'=>array('create')),
-	array('label'=>'Manage CatRates', 'url'=>array('admin')),
+	array('label'=>'Crear Tarifa', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Tarifa', 'url'=>array('index')),
 );
 ?>
 
 <h1>Cat&aacute;logo Tarifa</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
 	'columns'=> array(
             'pk_rate',
             'desc_tarifa',
@@ -25,7 +26,7 @@ $this->menu=array(
                 'value'=>'$data->rate'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{view}',
+                'template'=>'{update}',
 		),
         ),
 )); ?>

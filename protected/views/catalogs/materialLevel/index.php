@@ -7,15 +7,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create MaterialLevel', 'url'=>array('create')),
-	array('label'=>'Manage MaterialLevel', 'url'=>array('admin')),
+	array('label'=>'Crear Material por Nivel', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Material por Nivel', 'url'=>array('index')),
 );
 ?>
 
 <h1>Cat&aacute;logo Material por Nivel</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
 	'columns'=> array(
             array('name'=>'fkCatLevels',
                 'header'=>'Nivel',
@@ -31,7 +32,7 @@ $this->menu=array(
                 'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{view}',
+                'template'=>'{update}',
 		),
         ),
 )); ?>

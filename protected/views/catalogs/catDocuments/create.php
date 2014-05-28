@@ -6,11 +6,17 @@ $this->breadcrumbs=array(
 	'Cat Documents'=>array('index'),
 	'Create',
 );
-
+$this->menu=array(
+	array('label'=>'Crear Documento', 'url'=>array('create')),
+	array('label'=>'Ver Documentos', 'url'=>array('index')),
+);
+/*
 $this->menu=array(
 	array('label'=>'List CatDocuments', 'url'=>array('index')),
 	array('label'=>'Manage CatDocuments', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
 <h1>Crear Documento Maestro</h1>

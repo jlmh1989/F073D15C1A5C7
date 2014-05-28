@@ -115,10 +115,21 @@ class CatMaterialController extends Controller
 	 */
 	public function actionIndex()
 	{
+                $model=new CatMaterial('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['CatMaterial']))
+			$model->attributes=$_GET['CatMaterial'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));
+                /*
 		$dataProvider=new CActiveDataProvider('CatMaterial');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+                 * 
+                 */
 	}
 
 	/**

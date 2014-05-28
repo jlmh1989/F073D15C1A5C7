@@ -7,15 +7,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CatDocuments', 'url'=>array('create')),
-	array('label'=>'Manage CatDocuments', 'url'=>array('admin')),
+	array('label'=>'Crear Documento', 'url'=>array('create')),
+	array('label'=>'Ver Documentos', 'url'=>array('index')),
 );
 ?>
 
 <h1>Cat&aacute;logo Documentos</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
 	'columns'=> array(
             'pk_document',
             'desc_document',
@@ -25,7 +26,7 @@ $this->menu=array(
                 'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{view}',
+                'template'=>'{update}',
 		),
         ),
 )); ?>

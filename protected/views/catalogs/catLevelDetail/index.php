@@ -7,15 +7,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CatLevelDetail', 'url'=>array('create')),
-	array('label'=>'Manage CatLevelDetail', 'url'=>array('admin')),
+	array('label'=>'Crear Nivel Detalle', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Nivel Detalle', 'url'=>array('index')),
 );
 ?>
 
 <h1>Cat&aacute;logo Niveles Detalle</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
 	'columns'=> array(
             array('name'=>'fk_level',
                 'header'=>'Nivel',
@@ -35,7 +36,7 @@ $this->menu=array(
                 'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{view}',
+                'template'=>'{update}',
 		),
         ),
 )); ?>

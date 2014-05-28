@@ -7,15 +7,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CatMaterial', 'url'=>array('create')),
-	array('label'=>'Manage CatMaterial', 'url'=>array('admin')),
+	array('label'=>'Crear Material', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Material', 'url'=>array('index')),
 );
 ?>
 
 <h1>Cat&aacute;logo Materiales</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
 	'columns'=> array(
             'pk_material',
             'desc_material',
@@ -25,7 +26,7 @@ $this->menu=array(
                 'value'=>'$data->fkTypeMaterial->desc_cat_detail_es'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{view}',
+                'template'=>'{update}',
 		),
         ),
 )); ?>

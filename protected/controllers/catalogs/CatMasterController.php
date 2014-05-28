@@ -115,10 +115,21 @@ class CatMasterController extends Controller
 	 */
 	public function actionIndex()
 	{
+                $model=new CatMaster('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['CatMaster']))
+			$model->attributes=$_GET['CatMaster'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));
+                /*
 		$dataProvider=new CActiveDataProvider('CatMaster');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+                 * 
+                 */
 	}
 
 	/**

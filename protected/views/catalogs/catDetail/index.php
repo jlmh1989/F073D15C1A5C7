@@ -7,8 +7,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CatDetail', 'url'=>array('create')),
-	array('label'=>'Manage CatDetail', 'url'=>array('admin')),
+	array('label'=>'Crear Catálogo Detalle', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Detalle', 'url'=>array('index')),
 );
 ?>
 
@@ -22,7 +22,8 @@ $this->widget('zii.widgets.CListView', array(
 )); 
 */
 $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$dataProvider,
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
         'columns'=> array(
             'pk_cat_detail',
             'desc_cat_detail_es',
@@ -37,7 +38,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{view}',
+                'template'=>'{update}',
 		),
         ),
 ));

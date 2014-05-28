@@ -115,10 +115,21 @@ class CatRatesController extends Controller
 	 */
 	public function actionIndex()
 	{
+                $model=new CatRates('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['CatRates']))
+			$model->attributes=$_GET['CatRates'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));
+                /*
 		$dataProvider=new CActiveDataProvider('CatRates');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+                 * 
+                 */
 	}
 
 	/**

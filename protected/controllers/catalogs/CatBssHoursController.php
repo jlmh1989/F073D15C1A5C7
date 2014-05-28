@@ -115,10 +115,21 @@ class CatBssHoursController extends Controller
 	 */
 	public function actionIndex()
 	{
+                $model=new CatBssHours('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['CatBssHours']))
+			$model->attributes=$_GET['CatBssHours'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));
+                /*
 		$dataProvider=new CActiveDataProvider('CatBssHours');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+                 * 
+                 */
 	}
 
 	/**

@@ -6,11 +6,17 @@ $this->breadcrumbs=array(
 	'Cat Level Details'=>array('index'),
 	'Create',
 );
-
+$this->menu=array(
+	array('label'=>'Crear Nivel Detalle', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Nivel Detalle', 'url'=>array('index')),
+);
+/*
 $this->menu=array(
 	array('label'=>'List CatLevelDetail', 'url'=>array('index')),
 	array('label'=>'Manage CatLevelDetail', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
 <h1>Crear Detalle Nivel</h1>

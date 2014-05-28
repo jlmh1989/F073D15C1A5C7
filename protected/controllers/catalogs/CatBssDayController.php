@@ -115,10 +115,21 @@ class CatBssDayController extends Controller
 	 */
 	public function actionIndex()
 	{
+            $model=new CatBssDay('search');
+            $model->unsetAttributes();  // clear any default values
+            if(isset($_GET['CatBssDay']))
+                    $model->attributes=$_GET['CatBssDay'];
+
+            $this->render('index',array(
+                    'model'=>$model,
+            ));
+            /*
 		$dataProvider=new CActiveDataProvider('CatBssDay');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+             * 
+             */
 	}
 
 	/**

@@ -115,10 +115,21 @@ class CatStatusClassController extends Controller
 	 */
 	public function actionIndex()
 	{
+                $model=new CatStatusClass('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['CatStatusClass']))
+			$model->attributes=$_GET['CatStatusClass'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));
+                /*
 		$dataProvider=new CActiveDataProvider('CatStatusClass');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+                 * 
+                 */
 	}
 
 	/**
