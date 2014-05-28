@@ -81,8 +81,8 @@ class CatDetail extends CActiveRecord
 	{
 		return array(
 			'pk_cat_detail' => 'Id',
-			'desc_cat_detail_es' => 'Descripci&oacute;n Es',
-			'desc_cat_detail_en' => 'Descripci&oacute;n En',
+			'desc_cat_detail_es' => 'Descripci&oacute;n Espa&ntilde;ol',
+			'desc_cat_detail_en' => 'Descripci&oacute;n Ingles',
 			'status' => 'Estatus',
 			'fk_cat_master' => 'Cat&aacute;logo Maestro',
 		);

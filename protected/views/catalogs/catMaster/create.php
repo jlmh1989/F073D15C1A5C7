@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create CatMaster</h1>
+<h1>Crear Cat&aacute;logo Maestro</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

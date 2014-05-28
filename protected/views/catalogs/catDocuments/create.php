@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create CatDocuments</h1>
+<h1>Crear Documento Maestro</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

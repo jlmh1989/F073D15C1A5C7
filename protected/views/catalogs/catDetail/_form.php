@@ -5,7 +5,7 @@
 ?>
 
 <div class="form">
-<table width="100%" border="0">
+    <table class="zebra">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'cat-detail-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
@@ -32,8 +32,8 @@
         <tr>
 	<div class="row">
             <td><?php echo $form->labelEx($model,'status'); ?></td>
-		<td><?php echo $form->textField($model,'status'); ?>
-		<?php echo $form->error($model,'status'); ?></td>
+            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'status'); ?></td>
 	</div>
 
 	<div class="row">

@@ -5,7 +5,7 @@
 ?>
 
 <div class="form">
-
+    <table class="zebra">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'cat-documents-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
@@ -14,27 +14,23 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
+        <tr>
+            <td><?php echo $form->labelEx($model,'desc_document'); ?></td>
+            <td><?php echo $form->textField($model,'desc_document',array('size'=>50,'maxlength'=>50)); ?>
+            <?php echo $form->error($model,'desc_document'); ?></td>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'desc_document'); ?>
-		<?php echo $form->textField($model,'desc_document',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'desc_document'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status'); ?>
-		<?php echo $form->error($model,'status'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
-
+            <td><?php echo $form->labelEx($model,'status'); ?></td>
+            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'status'); ?></td>
+        </tr>
+        <tr>
+            <td>
+            <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+	</tr>
 <?php $this->endWidget(); ?>
-
+</table>
 </div><!-- form -->

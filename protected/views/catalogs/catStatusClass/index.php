@@ -12,7 +12,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat&aacute;logo Estatus Clases</h1>
+<h1>Cat&aacute;logo Estatus de Clase</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,

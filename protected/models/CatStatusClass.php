@@ -67,7 +67,7 @@ class CatStatusClass extends CActiveRecord
 			'pk_status_class' => 'Id',
 			'desc_status_class' => 'Descripci&oacute;n',
 			'long_desc' => 'Descripci&oacute;n Larga',
-			'is_reschedule_motive' => 'Is Reschedule Motive',
+			'is_reschedule_motive' => 'Reprogramado',
 			'fk_type_class' => 'Tipo Clase',
 			'fk_role_class' => 'Rol en Clase',
 		);

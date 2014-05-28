@@ -12,7 +12,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Cat&aacute;logo Material Niveles</h1>
+<h1>Cat&aacute;logo Material por Nivel</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,

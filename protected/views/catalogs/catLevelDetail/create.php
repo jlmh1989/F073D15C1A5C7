@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create CatLevelDetail</h1>
+<h1>Crear Detalle Nivel</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

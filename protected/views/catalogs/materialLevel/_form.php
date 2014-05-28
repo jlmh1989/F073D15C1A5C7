@@ -5,7 +5,7 @@
 ?>
 
 <div class="form">
-
+    <table class="zebra">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'material-level-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
@@ -14,33 +14,26 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
+        <tr>
+            <td><?php echo $form->labelEx($model,'fk_level'); ?></td>
+            <td><?php echo $form->dropDownList($model,'fk_level', CatLevels::model()->getCatLevels(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'fk_level'); ?></td>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'fk_level'); ?>
-		<?php echo $form->textField($model,'fk_level'); ?>
-		<?php echo $form->error($model,'fk_level'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'fk_material'); ?>
-		<?php echo $form->textField($model,'fk_material'); ?>
-		<?php echo $form->error($model,'fk_material'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status'); ?>
-		<?php echo $form->error($model,'status'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
-
+            <td><?php echo $form->labelEx($model,'fk_material'); ?></td>
+            <td><?php echo $form->dropDownList($model,'fk_material', CatMaterial::model()->getCatMaterial(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'fk_material'); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo $form->labelEx($model,'status'); ?></td>
+            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'status'); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 <?php $this->endWidget(); ?>
-
+    </table>
 </div><!-- form -->

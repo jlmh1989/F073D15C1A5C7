@@ -5,7 +5,7 @@
 ?>
 
 <div class="form">
-
+    <table class="zebra">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'cat-levels-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
@@ -14,39 +14,30 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
+        <tr>    
+            <td><?php echo $form->labelEx($model,'desc_level'); ?></td>
+            <td width="250"><?php echo $form->textField($model,'desc_level',array('size'=>50,'maxlength'=>50)); ?>
+            <?php echo $form->error($model,'desc_level'); ?></td>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+            <td><?php echo $form->labelEx($model,'fk_associated_book'); ?></td>
+            <td><?php echo $form->textField($model,'fk_associated_book'); ?>
+            <?php echo $form->error($model,'fk_associated_book'); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo $form->labelEx($model,'total_hours'); ?></td>
+            <td><?php echo $form->textField($model,'total_hours'); ?>
+            <?php echo $form->error($model,'total_hours'); ?></td>
 
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'desc_level'); ?>
-		<?php echo $form->textField($model,'desc_level',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'desc_level'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'fk_associated_book'); ?>
-		<?php echo $form->textField($model,'fk_associated_book'); ?>
-		<?php echo $form->error($model,'fk_associated_book'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'total_hours'); ?>
-		<?php echo $form->textField($model,'total_hours'); ?>
-		<?php echo $form->error($model,'total_hours'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status'); ?>
-		<?php echo $form->error($model,'status'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
-
+            <td><?php echo $form->labelEx($model,'status'); ?></td>
+            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'status'); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 <?php $this->endWidget(); ?>
-
+</table>
 </div><!-- form -->

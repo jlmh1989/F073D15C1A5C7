@@ -114,7 +114,6 @@ class CatLevels extends CActiveRecord
         {
             $criteria=new CDbCriteria;
             $criteria-> select='pk_level,desc_level';
-           		            
             return CHtml::listData(CatLevels::model()->findAll($criteria),'pk_level','desc_level');
         } 
 }

@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create CatRates</h1>
+<h1>Crear Tarifa</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

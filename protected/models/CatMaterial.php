@@ -101,4 +101,11 @@ class CatMaterial extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function getCatMaterial()
+        {
+            $criteria=new CDbCriteria;
+            $criteria-> select='pk_material,desc_material';
+            return CHtml::listData(CatMaterial::model()->findAll($criteria),'pk_material','desc_material');
+        }
 }

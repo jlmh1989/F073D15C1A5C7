@@ -13,13 +13,7 @@
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
-)); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-        
-        <tr>
+)); ?><tr>
 	<div class="row">
             <td><?php echo $form->labelEx($model,'desc_cat_master'); ?></td>
 		<td><?php echo $form->textField($model,'desc_cat_master',array('size'=>20,'maxlength'=>20)); ?>
@@ -28,8 +22,8 @@
 
 	<div class="row">
             <td><?php echo $form->labelEx($model,'status'); ?></td>
-		<td><?php echo $form->textField($model,'status'); ?>
-		<?php echo $form->error($model,'status'); ?></td>
+            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'status'); ?></td>
 	</div>
         </tr>
 

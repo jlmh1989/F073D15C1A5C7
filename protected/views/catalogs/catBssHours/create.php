@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create CatBssHours</h1>
+<h1>Crear Hora Laboral</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -5,7 +5,7 @@
 ?>
 
 <div class="form">
-
+    <table class="zebra">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'cat-status-class-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
@@ -14,45 +14,37 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
+        <tr>
+            <td><?php echo $form->labelEx($model,'desc_status_class'); ?></td>
+            <td width="250"><?php echo $form->textField($model,'desc_status_class',array('size'=>25,'maxlength'=>25)); ?>
+            <?php echo $form->error($model,'desc_status_class'); ?></td>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+            <td><?php echo $form->labelEx($model,'long_desc'); ?></td>
+            <td><?php echo $form->textField($model,'long_desc',array('size'=>60,'maxlength'=>200)); ?>
+            <?php echo $form->error($model,'long_desc'); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo $form->labelEx($model,'is_reschedule_motive'); ?></td>
+            <td><?php echo $form->dropDownList($model,'is_reschedule_motive', constantes::getOpcionSiNo(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'is_reschedule_motive'); ?></td>
 
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'desc_status_class'); ?>
-		<?php echo $form->textField($model,'desc_status_class',array('size'=>25,'maxlength'=>25)); ?>
-		<?php echo $form->error($model,'desc_status_class'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'long_desc'); ?>
-		<?php echo $form->textField($model,'long_desc',array('size'=>60,'maxlength'=>200)); ?>
-		<?php echo $form->error($model,'long_desc'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'is_reschedule_motive'); ?>
-		<?php echo $form->textField($model,'is_reschedule_motive'); ?>
-		<?php echo $form->error($model,'is_reschedule_motive'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'fk_type_class'); ?>
-		<?php echo $form->textField($model,'fk_type_class'); ?>
-		<?php echo $form->error($model,'fk_type_class'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'fk_role_class'); ?>
-		<?php echo $form->textField($model,'fk_role_class'); ?>
-		<?php echo $form->error($model,'fk_role_class'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
-
+            <td><?php echo $form->labelEx($model,'fk_type_class'); ?></td>
+            <td><?php echo $form->dropDownList($model,'fk_type_class', CatDetail::model()->getCatDetailsOptions(constantesCatalogos::TIPO_CURSO, constantes::LANG), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'fk_type_class'); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo $form->labelEx($model,'fk_role_class'); ?></td>
+            <td><?php echo $form->dropDownList($model,'fk_role_class', CatDetail::model()->getCatDetailsOptions(constantesCatalogos::ROLES_EN_CLASE, constantes::LANG), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'fk_role_class'); ?></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 <?php $this->endWidget(); ?>
-
+    </table>
 </div><!-- form -->
