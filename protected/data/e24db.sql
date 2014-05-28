@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.1.12
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 19-05-2014 a las 01:00:19
--- Versión del servidor: 5.6.12
--- Versión de PHP: 5.5.3
+-- Tiempo de generación: 28-05-2014 a las 20:10:56
+-- Versión del servidor: 5.6.16
+-- Versión de PHP: 5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `e24db`
 --
-CREATE DATABASE IF NOT EXISTS `e24db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `e24db`;
 
 -- --------------------------------------------------------
 
@@ -850,15 +848,16 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_students` (
   PRIMARY KEY (`pk_student`),
   UNIQUE KEY `XPKe24_students` (`pk_student`),
   KEY `XIF1e24_students` (`fk_client`),
-  KEY `fk_user` (`fk_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+  KEY `fk_user` (`fk_user`),
+  KEY `fk_state_dir` (`fk_state_dir`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_students`
 --
 
 INSERT INTO `tbl_e24_students` (`pk_student`, `fk_client`, `fk_user`, `name`, `email`, `neigborhod`, `county`, `phone`, `zipcode`, `birthdate`, `street`, `street_number`, `street_number_int`, `fk_state_dir`) VALUES
-(1, 1, 1, 'estudiante cemex uno update', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
+(1, 1, 1, 'estudiante cemex uno', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
 (2, 1, 1, 'estudiante cemex 2', 'est.2.cemex@demo.com', 'centro 2', 'monterrey', '8180887254', '66579', '1984-06-21', 'del paseo 2', 2212, 'b2', 31),
 (3, 1, 1, 'estudiante cemex 3', 'est.3.cemex@demo.com', 'centro 3', 'monterrey', '8180887245', '66579', '1984-04-21', 'del paseo 3', 2212, 'b2', 31),
 (4, 1, 1, 'estudiante cemex 4', 'est.4.cemex@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),
@@ -869,7 +868,8 @@ INSERT INTO `tbl_e24_students` (`pk_student`, `fk_client`, `fk_user`, `name`, `e
 (9, 3, 1, 'estudiante vitro 4', 'est.4.vitro@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),
 (10, 3, 1, 'estudiante vitro 5', 'est.5.vitro@demo.com', 'centro 5', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
 (11, 2, 1, 'estudiante personal 1', 'est.1.personal@demo.com', 'centro 6', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
-(12, 4, 1, 'estudiante personal 2', 'est.2.personal@demo.com', 'centro 7', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31);
+(12, 4, 1, 'estudiante personal 2', 'est.2.personal@demo.com', 'centro 7', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
+(13, 5, 21, 'Estudiante dos a', 'estudiante2@edu.com', 'Colonia estudiante 2', 'Monterrey', '3847563847', '34555', '2012-07-04', 'Calle estudiante 2', 123, '3c', 31);
 
 -- --------------------------------------------------------
 
@@ -1058,26 +1058,27 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_users` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`pk_user`),
   KEY `fk_role` (`fk_role`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=22 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_users`
 --
 
 INSERT INTO `tbl_e24_users` (`pk_user`, `fk_role`, `username`, `password`, `status`) VALUES
-(1, 58, 'estudiante', 'pafpqUaZAviPc', 1),
-(2, 59, 'maestro', 'paCTnGdlLovpU', 1),
-(3, 60, 'clienteCemex', 'clienteCemex', 1),
-(4, 61, 'admin', 'paT/1YTFu9I5w', 1),
-(11, 60, 'ejemplo', 'paMnl/x0aN2ec', 1),
-(12, 60, 'aaa', 'pa082z6rf0.pw', 1),
-(13, 62, 'root', 'paIZ4ohqoSopg', 1),
-(14, 60, 'maestro', 'paCTnGdlLovpU', 1),
-(15, 60, 'maestro0', 'paq.aGM6PLrxE', 1),
-(16, 60, 'maestro1', 'pa8t/LTDMmb1Q', 1),
-(17, 60, 'maestro1', 'pa8t/LTDMmb1Q', 1),
-(18, 60, 'maestro2', 'pavHpUKkoRqNQ', 1),
-(19, 60, 'maestro4', 'pasLpcun2YYMY', 1);
+(1, 58, 'estudiante', '$1$Ehc23$2EA1fqAP8LL2bZ0q7ikM60', 1),
+(2, 59, 'maestro', '$1$Ehc23$cum98xoyTSVb7zExxVIOL1', 1),
+(3, 60, 'clienteCemex', '$1$Ehc23$715rAiVG5VKc7NuRNTgQI1', 1),
+(4, 61, 'admin', '$1$Ehc23$1ttveg7nyIhUmQqsgEpC80', 1),
+(11, 60, 'ejemplo', '$1$Ehc23$4KVzLmJX98/0lAIrl1oxh0', 1),
+(12, 60, 'aaa', '$1$Ehc23$kyu1ROrRRR11J4L3R0y9j/', 1),
+(13, 62, 'root', '$1$Ehc23$8H.PdjVFxuPyREmdOrav51', 1),
+(14, 60, 'maestro', '$1$Ehc23$cum98xoyTSVb7zExxVIOL1', 1),
+(15, 60, 'maestro0', '$1$Ehc23$Tzg5ASHfuP8ExFJq.Q2Q10', 1),
+(16, 60, 'maestro1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
+(17, 60, 'maestro1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
+(18, 60, 'maestro2', '$1$Ehc23$nHLoX3/Inrod6HYyuS7WE0', 1),
+(19, 60, 'maestro4', '$1$Ehc23$OoCVGQ9j2ngbnNsIwYtOj0', 1),
+(21, 58, 'estudiante2', '$1$Ehc23$qTGdqGlffam4CUQuiq66k1', 1);
 
 --
 -- Restricciones para tablas volcadas
@@ -1172,6 +1173,7 @@ ALTER TABLE `tbl_e24_material_level`
 -- Filtros para la tabla `tbl_e24_students`
 --
 ALTER TABLE `tbl_e24_students`
+  ADD CONSTRAINT `fkState_pkCatDetail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
   ADD CONSTRAINT `fk_client_pk_client_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`),
   ADD CONSTRAINT `fk_user_pk_user_students` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`);
 
