@@ -118,7 +118,9 @@ if($model->pk_teacher == null){
     
     -->
         <?php
-        if($model->pk_teacher == null || Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR){
+        if($model->pk_teacher == null || 
+                Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR ||
+                Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA){
         ?>
         <tr>
             <th id="user_th" colspan="4" class="zebra_th" style="text-align: center">DATOS DE USUARIO</th>
@@ -313,9 +315,8 @@ if($model->pk_teacher == null){
     </tr>
     
     <div class="row">
-        <td class="horario_td"><?php //echo $form->labelEx($model, 'status'); ?></td>
-        <td class="horario_td"><?php echo $form->hiddenfield($model, 'status'); ?>
-        <?php echo $form->error($model, 'status'); ?></td>
+        <td class="horario_td"></td>
+        <td class="horario_td"></td>
         <td class="horario_td"></td>
         <td class="horario_td"></td>
     </div>

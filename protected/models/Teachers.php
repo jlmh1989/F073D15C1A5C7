@@ -35,6 +35,7 @@
  * @property CatDetail $fkNationality
  * @property CatDetail $fkStateBirth
  * @property CatDetail $fkStateDir
+ * @property CatDetail $fkEducation
  * @property CatDetail $fkStatusDocument
  * @property UnavailableSchedule[] $unavailableSchedules
  * @property Users $fkUser
@@ -83,6 +84,7 @@ class Teachers extends CActiveRecord
 			'fkNationality' => array(self::BELONGS_TO, 'CatDetail', 'fk_nationality'),
 			'fkStateBirth' => array(self::BELONGS_TO, 'CatDetail', 'fk_state_birth'),
 			'fkStateDir' => array(self::BELONGS_TO, 'CatDetail', 'fk_state_dir'),
+                        'fkEducation' => array(self::BELONGS_TO, 'CatDetail', 'fk_education'),
 			'fkStatusDocument' => array(self::BELONGS_TO, 'CatDetail', 'fk_status_document'),
 			'unavailableSchedules' => array(self::HAS_MANY, 'UnavailableSchedule', 'fk_teacher'),
                         'fkUser'=> array(self::BELONGS_TO, 'Users', 'fk_user'),

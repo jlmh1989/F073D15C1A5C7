@@ -33,6 +33,11 @@ class ClientsController extends Controller
                                              .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
 			),
+                        array('allow', // allow authenticated user to perform
+				'actions'=>array('perfil','updateProfile'),
+                                'expression'=>'(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE) ',
+				//'users'=>array('@'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -49,6 +54,23 @@ class ClientsController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+        
+        public function actionPerfil(){
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $model = Clients::model()->find('fk_user='.$pk_usuario);
+            $modelTEBD= $this->loadModelBillingData($model->pk_client);
+            $this->render('perfil',array(
+			'model'=>$model,
+                        'modelTEBD'=>$modelTEBD,
+            ));
+        }
+        
+        public function actionUpdateProfile(){
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $model = Clients::model()->find('fk_user='.$pk_usuario);
+            $_SESSION['updateProfile'] = TRUE;
+            $this->actionUpdate($model->pk_client);
+        }
 
 	/**
 	 * Creates a new model.
@@ -125,6 +147,10 @@ class ClientsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+                $profile = FALSE;
+                if(isset($_SESSION['updateProfile'])){
+                    $profile = $_SESSION['updateProfile'];
+                }
 		$model= $this->loadModel($id);
                 $modelTECA= $this->loadModelClassroomAddress($id);
                 $modelTEBD= $this->loadModelBillingData($id);
@@ -136,36 +162,48 @@ class ClientsController extends Controller
                 {   
                     $model->attributes=$_POST['Clients'];
                     $modelTECA->attributes=$_POST['ClassroomAddress'];
-                    $modelUser->attributes=$_POST['Users'];
-                    $valUser = $modelUser->validate();
+                    
                     $valTECA = $modelTECA->validate();
                     $valM = $model->validate();
-                    $validar = $valUser && $valTECA && $valM;
+                    $validar = $valTECA && $valM;
+                    if($profile === FALSE){
+                        $modelUser->attributes=$_POST['Users'];
+                        $valUser = $modelUser->validate();
+                        $validar = $validar && $valUser;
+                    }
+                    
                     if($model->billing_data === "1"){
                         $modelTEBD->attributes=$_POST['BillingData'];
                         $validar = $modelTEBD->validate() && $validar;
                     }
                     
                     if($validar){
-                        if(Users::cambiarPassword($modelUser->pk_user, $modelUser->password)){
-                            $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
-                        }
-                        if($modelUser->save()){
-                            $model->image = CUploadedFile::getInstance($model,'client_photo');
-                            if($model->image !== null){
-                                $rnd = rand(0,999999);
-                                $extensionImg = explode(".", $model->image);
-                                $filename = $rnd.'.'.$extensionImg[1];
-                                $path = realpath(Yii::app()->basePath.'/../images/client_photo');
-                                $model->image->saveAs($path . '/' .$filename);
-                                $model->client_photo = $filename;
+                        if($profile === FALSE){
+                            if(Users::cambiarPassword($modelUser->pk_user, $modelUser->password) === TRUE){
+                                $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
                             }
-                            if($model->save()){
-                                if($modelTECA->save()){
-                                    if($model->billing_data === "1"){
-                                        $modelTEBD->save();
-                                    }
+                            $modelUser->save();
+                        }
+                        
+                        $model->image = CUploadedFile::getInstance($model,'client_photo');
+                        if($model->image !== null){
+                            $rnd = rand(0,999999);
+                            $extensionImg = explode(".", $model->image);
+                            $filename = $rnd.'.'.$extensionImg[1];
+                            $path = realpath(Yii::app()->basePath.'/../images/client_photo');
+                            $model->image->saveAs($path . '/' .$filename);
+                            $model->client_photo = $filename;
+                        }
+                        if($model->save()){
+                            if($modelTECA->save()){
+                                if($model->billing_data === constantes::SI){
+                                    $modelTEBD->save();
+                                }
+                                if($profile === FALSE){
                                     $this->redirect(array('view','id'=>$model->pk_client));
+                                }else{
+                                    unset($_SESSION['updateProfile']);
+                                    $this->redirect(array('perfil'));
                                 }
                             }
                         }

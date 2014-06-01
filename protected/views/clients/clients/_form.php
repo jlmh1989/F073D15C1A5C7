@@ -212,11 +212,8 @@ $idFacturarCombo = "Clients_billing_data";
 	</div>
 
 	<div class="row">
-            <td class="contacto_td"><?php //echo $form->labelEx($model,'status'); ?></td>
-            <td class="contacto_td"><?php echo $form->hiddenField($model,'status', constantes::getOpcionStatus(),
-                    array('options' => array(constantes::$opcion_status[1]=>array('selected'=>true)))
-                    ); ?>
-		<?php echo $form->error($model,'status'); ?></td>
+            <td class="contacto_td"></td>
+            <td class="contacto_td"></td>
 	</div>
         </tr>
         <tr>

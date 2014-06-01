@@ -33,6 +33,11 @@ class TeachersController extends Controller
                                              .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
 			),
+                        array('allow', // allow authenticated user to perform
+				'actions'=>array('perfil','updateProfile'),
+                                'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
+				//'users'=>array('@'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -49,6 +54,22 @@ class TeachersController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+        
+        public function actionPerfil(){
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $model = Teachers::model()->find('fk_user='.$pk_usuario);
+            
+            $this->render('perfil',array(
+			'model'=>$model,
+            ));
+        }
+        
+        public function actionUpdateProfile(){
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $model = Teachers::model()->find('fk_user='.$pk_usuario);
+            $_SESSION['updateProfile'] = TRUE;
+            $this->actionUpdate($model->pk_teacher);
+        }
 
 	/**
 	 * Creates a new model.
@@ -73,7 +94,7 @@ class TeachersController extends Controller
                     
                     if($validate){
                         $modelUser->status=  constantes::ACTIVO;
-                        $modelUser->fk_role=(int)constantes::ROL_CLIENTE;
+                        $modelUser->fk_role=(int)constantes::ROL_MAESTRO;
                         $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
                         if($modelUser->save()){
                             $model->status=  constantes::ACTIVO;
@@ -110,6 +131,10 @@ class TeachersController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+                $profile = FALSE;
+                if(isset($_SESSION['updateProfile'])){
+                    $profile = $_SESSION['updateProfile'];
+                }
 		$model=$this->loadModel($id);
                 $modelCD = new CatDocuments();
                 $arrayDocuments = $this->loadArrayDocumentsTeachers($id);
@@ -127,10 +152,21 @@ class TeachersController extends Controller
                     $model->attributes=$_POST['Teachers'];
                     $modelCD->attributes=$_POST['CatDocuments'];
                     $validate = $model->validate();
+                    if($profile === FALSE){
+                        $modelUser->attributes=$_POST['Users'];
+                        $validUser = $modelUser->validate();
+                        $validate = $model->validate() && $validUser;
+                    }
                     
                     if($validate){
-                        $model->status= constantes::ACTIVO;
+                        
 			if($model->save()){
+                            if($profile === FALSE){
+                                if(Users::cambiarPassword($modelUser->pk_user, $modelUser->password) === TRUE){
+                                    $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
+                                }
+                                $modelUser->save();
+                            }
                             //array para nuevos registros
                             $insert = array_diff($modelCD->desc_document, $arrayDocuments);
                             //array para borrar registros
@@ -152,8 +188,12 @@ class TeachersController extends Controller
                             $this->deleteUnavailableSchedules($id);
                             //Guardar los nuevos horarios no disponibles
                             $this->guardarRangoHoraInactivoUS($id);
-                            
-                            $this->redirect(array('view','id'=>$model->pk_teacher));
+                            if($profile === FALSE){
+                                $this->redirect(array('view','id'=>$model->pk_teacher));
+                            }else{
+                                unset($_SESSION['updateProfile']);
+                                $this->redirect(array('perfil'));
+                            }
                         }
                     }
 		}
