@@ -119,48 +119,67 @@ class StudentsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-                $profile = FALSE;
-                if(isset($_SESSION['updateProfile'])){
-                    $profile = $_SESSION['updateProfile'];
+            $opcionUsuario = 0; //0 = admin,admin_sist, 1 = perfil, 2 = cliente, 3 = maestro
+            if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
+                $pk_usuario = Yii::app()->user->getState("pk_user");
+                $modelC = Clients::model()->find('fk_user='.$pk_usuario);
+                $criteria=new CDbCriteria;
+                $criteria->select='pk_student';
+                $criteria->addCondition('pk_student='.$id);
+                $criteria->addCondition('fk_client='.$modelC->pk_client);
+                $modelS = Students::model()->find($criteria);
+                if($modelS){
+                    $opcionUsuario = 2;
+                }else{
+                    throw new CHttpException(403, 'No tiene permisos para ejecutar la operacion solicitada.');
                 }
-		$model=$this->loadModel($id);
-                $modelUser = $this->loadModelUser($model->fk_user);
-                
-		if(isset($_POST['Students']))
-		{
-                    $model->attributes=$_POST['Students'];
-                    if($profile === FALSE){
-                        $modelUser->attributes=$_POST['Users'];
-                        $validUser = $modelUser->validate();
-                        $validate = $model->validate() && $validUser;
-                    }else{
-                        $validate = $model->validate();
-                    }
-                    
-                    if($validate)
-                    {
-                        if($profile === FALSE){
-                            if(Users::cambiarPassword($modelUser->pk_user, $modelUser->password) === TRUE){
-                                $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
-                            }
-                            if($modelUser->save())
-                            {
-                                $model->save();
-                                $this->redirect(array('view','id'=>$model->pk_student));
-                            }
-                        }else{
-                            $model->save();
-                            unset($_SESSION['updateProfile']);
-                            $this->redirect(array('perfil'));
-                        }
-                        
-                    }
-		}
+            }else if(Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO){
+		$opcionUsuario = 3;
+            }
+            if(isset($_SESSION['updateProfile'])){
+                $opcionUsuario = 1;
+            }
+            $model=$this->loadModel($id);
+            $modelUser = $this->loadModelUser($model->fk_user);
 
-                $this->render('update',array(
-			'model'=>$model,
-                        'modelUser'=>$modelUser,
-		));		
+            if(isset($_POST['Students']))
+            {
+                $model->attributes=$_POST['Students'];
+                if($opcionUsuario === 0){
+                    $modelUser->attributes=$_POST['Users'];
+                    $validUser = $modelUser->validate();
+                    $validate = $model->validate() && $validUser;
+                }else{
+                    $validate = $model->validate();
+                }
+
+                if($validate)
+                {
+                    if($opcionUsuario === 0){ //update admin, admin_sist
+                        if(Users::cambiarPassword($modelUser->pk_user, $modelUser->password) === TRUE){
+                            $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
+                        }
+                        if($modelUser->save())
+                        {
+                            $model->save();
+                            $this->redirect(array('view','id'=>$model->pk_student));
+                        }
+                    }else if($opcionUsuario === 1){//update desde perfil
+                        $model->save();
+                        unset($_SESSION['updateProfile']);
+                        $this->redirect(array('perfil'));
+                    }else if($opcionUsuario === 2 || $opcionUsuario === 3){//update desde cliente, maestro
+                        $model->save();
+                        $this->redirect(array('view','id'=>$model->pk_student));
+                    }
+
+                }
+            }
+
+            $this->render('update',array(
+                    'model'=>$model,
+                    'modelUser'=>$modelUser,
+            ));		
 	}
 
 	/**

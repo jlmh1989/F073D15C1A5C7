@@ -3,8 +3,12 @@
 /* @var $model Students */
 /* @var $form CActiveForm */
 $readOnly = 'readonly';
+$readOnlyCliente = false;
 if($model->pk_student == null){
     $readOnly = '';
+}
+if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
+    $readOnlyCliente = true;
 }
 Yii::app()->clientScript->registerScript('script',
         '
@@ -68,7 +72,12 @@ Yii::app()->clientScript->registerScript('script',
         <tr>
 	<div class="row">
             <td class="estudiante_td"><?php echo $form->labelEx($model,'fk_client'); ?></td>
-            <td class="estudiante_td" width="240px"><?php echo $form->dropDownList($model,'fk_client', Clients::model()->getClientsActivos(), constantes::getOpcionCombo()); ?>
+            <td class="estudiante_td" width="240px"><?php echo $form->dropDownList($model,'fk_client', Clients::model()->getClientsActivos(), 
+                    array(
+                        "tabindex" => "0",
+                        "empty" => constantes::OPCION_COMBO,
+                        "disabled"=>$readOnlyCliente
+                    ));?>
 		<?php echo $form->error($model,'fk_client'); ?></td>
 	</div>
 

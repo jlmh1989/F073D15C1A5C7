@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Estudiantes', 'url'=>array('alumnos')),
+	array('label'=>'Ver alumnos', 'url'=>array('alumnos')),
 );
 ?>
 
@@ -28,7 +28,7 @@ $this->menu=array(
                     'template'=>'{view} {update}',
                     'buttons'=>array (
                         'update'=> array(
-                            
+                            'url'=>'Yii::app()->createUrl("students/students/update", array("id"=>$data->pk_student))'
                         ),
                         'view'=>array(
                             'url'=>'Yii::app()->createUrl("students/students/view", array("id"=>$data->pk_student))'
