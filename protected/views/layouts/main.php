@@ -118,7 +118,7 @@
                             'items'=>array(
                                 array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Cursos','url'=>array('/courses/courses')),
-                                array('label'=>'Alumnos','url'=>array('/students/students')),
+                                array('label'=>'Alumnos','url'=>array('/clients/clients/alumnos')),
                                 array('label'=>'Perfil', 'url'=>array('/clients/clients/perfil')),
                                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout')),
                                 ),

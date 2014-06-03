@@ -4150,3 +4150,235 @@ HTTP_REFERER=http://localhost/e24sys/index.php?r=clients/clients/perfil
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (163)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php (72)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/03 03:14:22 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('perfil')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('clients/clients...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=clients/clients/perfil
+HTTP_REFERER=http://localhost/e24sys/index.php?r=site/login
+---
+2014/06/03 03:16:20 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('students/studen...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=students/students
+HTTP_REFERER=http://localhost/e24sys/index.php?r=clients/clients/perfil
+---
+2014/06/03 03:16:22 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('courses/courses')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=courses/courses
+HTTP_REFERER=http://localhost/e24sys/index.php?r=students/students
+---
+2014/06/03 04:58:29 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('students/studen...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=students/students
+HTTP_REFERER=http://localhost/e24sys/index.php
+---
+2014/06/03 05:11:41 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('students/studen...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=students/students
+HTTP_REFERER=http://localhost/e24sys/index.php?r=site/login
+---
+2014/06/03 05:11:42 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('students/studen...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=students/students
+HTTP_REFERER=http://localhost/e24sys/index.php?r=students/students
+---
+2014/06/03 05:15:55 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('students/studen...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=students/students
+HTTP_REFERER=http://localhost/e24sys/index.php?r=students/students
+---
+2014/06/03 05:44:17 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('clients/clients...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=clients/clients/update&id=1
+HTTP_REFERER=http://localhost/e24sys/index.php?r=clients/clients/alumnos
+---
+2014/06/03 05:45:41 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('update')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('clients/clients...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=clients/clients/update&id=1
+HTTP_REFERER=http://localhost/e24sys/index.php?r=clients/clients/alumnos
+---
+2014/06/03 05:46:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php:338
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php(54): ClientsController->loadModel('14')
+#1 [internal function]: ClientsController->actionView('14')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(ClientsController), Array)
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(ClientsController), Object(ReflectionMethod), Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('view')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('clients/clients...')
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#15 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#16 {main}
+REQUEST_URI=/e24sys/index.php?r=clients/clients/view&id=14
+---
+2014/06/03 05:46:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php:338
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/clients/ClientsController.php(54): ClientsController->loadModel('12')
+#1 [internal function]: ClientsController->actionView('12')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(ClientsController), Array)
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(ClientsController), Object(ReflectionMethod), Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('view')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('clients/clients...')
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#15 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#16 {main}
+REQUEST_URI=/e24sys/index.php?r=clients/clients/view&id=12
+---
+2014/06/03 06:20:03 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('view')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('students/studen...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=students/students/view&id=1
+HTTP_REFERER=http://localhost/e24sys/index.php?r=clients/clients/alumnos
+---
+2014/06/03 06:21:37 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'No tiene permisos para ejecutar la operacion solicitada.' in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/students/StudentsController.php:69
+Stack trace:
+#0 [internal function]: StudentsController->actionView('6')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CAction.php(108): ReflectionMethod->invokeArgs(Object(StudentsController), Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(47): CAction->runWithParamsInternal(Object(StudentsController), Object(ReflectionMethod), Array)
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('view')
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('students/studen...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#15 {main}
+REQUEST_URI=/e24sys/index.php?r=students/students/view&id=6
+---

@@ -34,7 +34,7 @@ class ClientsController extends Controller
 				//'users'=>array('@'),
 			),
                         array('allow', // allow authenticated user to perform
-				'actions'=>array('perfil','updateProfile'),
+				'actions'=>array('perfil','updateProfile','alumnos'),
                                 'expression'=>'(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE) ',
 				//'users'=>array('@'),
 			),
@@ -275,6 +275,22 @@ class ClientsController extends Controller
 			'model'=>$model,
 		));
 	}
+        
+        public function actionAlumnos(){
+            $model=new Students('search');
+            $model->unsetAttributes();  // clear any default values
+            
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $modelC = Clients::model()->find('fk_user='.$pk_usuario);
+            $model->fk_client = $modelC->pk_client;
+            
+            if(isset($_GET['Students']))
+                    $model->attributes=$_GET['Students'];
+
+            $this->render('alumnos',array(
+                    'model'=>$model,
+            ));
+        }
         
         public function actionCrearPdf(){
             $dataProvider = $_SESSION['reporte_clientes'];

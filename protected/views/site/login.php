@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h2>Login</h2>
+<h2>Por favor, ingresa tus datos para acceder al portal</h2>
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(

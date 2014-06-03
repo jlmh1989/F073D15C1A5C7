@@ -3,12 +3,11 @@
 /* @var $model Students */
 
 $this->breadcrumbs=array(
-	'Students'=>array('index')
+	'Estudiantes'
 );
 
 $this->menu=array(
-	array('label'=>'Estudiantes', 'url'=>array('index')),
-	array('label'=>'Alta estudiante', 'url'=>array('create')),
+	array('label'=>'Estudiantes', 'url'=>array('alumnos')),
 );
 ?>
 
@@ -26,9 +25,15 @@ $this->menu=array(
 		'county',
 		array(
                     'class'=>'CButtonColumn',
-                    'template'=>'{update}',
-                    'deleteConfirmation'=>'¿Seguro que quiere dar de baja el estudiante?',
-                    'afterDelete'=>'$.fn.yiiGridView.update("students-grid");',
+                    'template'=>'{view} {update}',
+                    'buttons'=>array (
+                        'update'=> array(
+                            
+                        ),
+                        'view'=>array(
+                            'url'=>'Yii::app()->createUrl("students/students/view", array("id"=>$data->pk_student))'
+                        )
+                    ),
 		),
 	),
 )); ?>

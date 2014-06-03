@@ -36,6 +36,11 @@ class StudentsController extends Controller
 				'actions'=>array('perfil','updateProfile'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ESTUDIANTE',
 			),
+                        array('allow', // allow authenticated user to perform
+				'actions'=>array('view','update'),
+                                'expression'=>'(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE) ',
+				//'users'=>array('@'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -48,9 +53,26 @@ class StudentsController extends Controller
 	 */
 	public function actionView($id)
 	{
+            if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
+                $pk_usuario = Yii::app()->user->getState("pk_user");
+                $modelC = Clients::model()->find('fk_user='.$pk_usuario);
+                $criteria=new CDbCriteria;
+                $criteria->select='pk_student';
+                $criteria->addCondition('pk_student='.$id);
+                $criteria->addCondition('fk_client='.$modelC->pk_client);
+                $modelS = Students::model()->find($criteria);
+                if($modelS){
+                    $this->render('view',array(
+			'model'=>$this->loadModel($id),
+                    ));
+                }else{
+                    throw new CHttpException(403, 'No tiene permisos para ejecutar la operacion solicitada.');
+                }
+            }else{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
+            }
 	}
 
 	/**
