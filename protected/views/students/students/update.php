@@ -22,6 +22,17 @@ if (isset($_SESSION['updateProfile'])) {
             array('label'=>'Ver alumnos', 'url'=>Yii::app()->createUrl("clients/clients/alumnos")),
         );
     echo '<h3>Actualizar datos del Estudiante</h3>';
+} else if(Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO){ 
+    $this->breadcrumbs=array(
+            'Alumnos',
+            $model->name,
+            'Update'
+    );
+
+    $this->menu=array(
+            array('label'=>'Ver alumnos', 'url'=>Yii::app()->createUrl("teachers/teachers/alumnos")),
+        );
+    echo '<h3>Actualizar datos del Estudiante</h3>';
 } else {
     $this->breadcrumbs = array(
         'Students' => array('index'),

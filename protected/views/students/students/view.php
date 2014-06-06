@@ -10,6 +10,15 @@ if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
     $this->menu=array(
             array('label'=>'Ver alumnos', 'url'=>Yii::app()->createUrl("clients/clients/alumnos")),
         );
+}else if(Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO){
+    $this->breadcrumbs=array(
+            'Alumnos',
+            $model->name,
+    );
+    
+    $this->menu=array(
+            array('label'=>'Ver alumnos', 'url'=>Yii::app()->createUrl("teachers/teachers/alumnos")),
+        );
 }else{
     $this->breadcrumbs=array(
             'Students'=>array('index'),
@@ -23,7 +32,7 @@ if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
 }
 ?>
 
-<h1>Ver perfil estudiante <?php echo $model->name; ?></h1>
+<h3>Ver perfil estudiante <?php echo $model->name; ?></h3>
 
 <table class="zebra">
     <tr>

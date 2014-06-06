@@ -141,7 +141,29 @@ class Students extends CActiveRecord
                         'sort'=>$sort,
 		));
 	}
-
+        
+        public function searchByTeacher()
+	{
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $modelT = Teachers::model()->find('fk_user='.$pk_usuario);
+            $criteria = new CDbCriteria;
+            $criteria->distinct=true;
+            $criteria->select = 't.*';
+            $criteria->join ='INNER JOIN TBL_E24_CLIENTS ON t.FK_CLIENT = TBL_E24_CLIENTS.PK_CLIENT '
+                            .'INNER JOIN TBL_E24_COURSES ON TBL_E24_CLIENTS.PK_CLIENT = TBL_E24_COURSES.FK_CLIENT';
+            $criteria->condition = 'TBL_E24_COURSES.FK_TEACHER = :value';
+            $criteria->params = array(":value" => $modelT->pk_teacher);            
+            $criteria->compare('t.name',$this->name,true);
+            $sort = new CSort();
+            $sort->attributes = array(
+                'name'=>array(
+                    'asc'=>'name',
+                    'desc'=>'name desc',
+                ),
+            );
+            return new CActiveDataProvider($this,array('criteria'=>$criteria, 'sort'=>$sort));
+	}
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

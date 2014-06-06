@@ -1,9 +1,9 @@
 <?php
-/* @var $this ClientsController */
+/* @var $this TeachersController */
 /* @var $model Students */
 
 $this->breadcrumbs=array(
-	'Estudiantes'
+	'Alumnos'
 );
 
 $this->menu=array(
@@ -15,8 +15,8 @@ $this->menu=array(
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'students-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
+	'dataProvider'=>$model->searchByTeacher(),
+	'filter'=>  $model,
 	'columns'=>array(
 		'name',
                 'fkClient.client_name',
@@ -37,3 +37,4 @@ $this->menu=array(
 		),
 	),
 )); ?>
+

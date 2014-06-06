@@ -38,7 +38,8 @@ class StudentsController extends Controller
 			),
                         array('allow', // allow authenticated user to perform
 				'actions'=>array('view','update'),
-                                'expression'=>'(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE) ',
+                                'expression'=>'(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE) '
+                                                .'|| (Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO)',
 				//'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -61,6 +62,24 @@ class StudentsController extends Controller
                 $criteria->addCondition('pk_student='.$id);
                 $criteria->addCondition('fk_client='.$modelC->pk_client);
                 $modelS = Students::model()->find($criteria);
+                if($modelS){
+                    $this->render('view',array(
+			'model'=>$this->loadModel($id),
+                    ));
+                }else{
+                    throw new CHttpException(403, 'No tiene permisos para ejecutar la operacion solicitada.');
+                }
+            }else if(Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO){
+                $pk_usuario = Yii::app()->user->getState("pk_user");
+                $modelT = Teachers::model()->find('fk_user='.$pk_usuario);
+                $criteria = new CDbCriteria;
+                $criteria->distinct=true;
+                $criteria->select = 't.*';
+                $criteria->join ='INNER JOIN TBL_E24_CLIENTS ON t.FK_CLIENT = TBL_E24_CLIENTS.PK_CLIENT '
+                                .'INNER JOIN TBL_E24_COURSES ON TBL_E24_CLIENTS.PK_CLIENT = TBL_E24_COURSES.FK_CLIENT';
+                $criteria->condition = 'TBL_E24_COURSES.FK_TEACHER = :pkTeacher AND t.pk_student = :pkStudents';
+                $criteria->params = array(":pkTeacher" => $modelT->pk_teacher,":pkStudents" => $id);
+                $modelS =  Students::model()->find($criteria);
                 if($modelS){
                     $this->render('view',array(
 			'model'=>$this->loadModel($id),
@@ -134,7 +153,21 @@ class StudentsController extends Controller
                     throw new CHttpException(403, 'No tiene permisos para ejecutar la operacion solicitada.');
                 }
             }else if(Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO){
-		$opcionUsuario = 3;
+                $pk_usuario = Yii::app()->user->getState("pk_user");
+                $modelT = Teachers::model()->find('fk_user='.$pk_usuario);
+                $criteria = new CDbCriteria;
+                $criteria->distinct=true;
+                $criteria->select = 't.*';
+                $criteria->join ='INNER JOIN TBL_E24_CLIENTS ON t.FK_CLIENT = TBL_E24_CLIENTS.PK_CLIENT '
+                                .'INNER JOIN TBL_E24_COURSES ON TBL_E24_CLIENTS.PK_CLIENT = TBL_E24_COURSES.FK_CLIENT';
+                $criteria->condition = 'TBL_E24_COURSES.FK_TEACHER = :pkTeacher AND t.pk_student = :pkStudents';
+                $criteria->params = array(":pkTeacher" => $modelT->pk_teacher,":pkStudents" => $id);
+                $modelS =  Students::model()->find($criteria);
+                if($modelS){
+                    $opcionUsuario = 3;
+                }else{
+                    throw new CHttpException(403, 'No tiene permisos para ejecutar la operacion solicitada.');
+                }
             }
             if(isset($_SESSION['updateProfile'])){
                 $opcionUsuario = 1;

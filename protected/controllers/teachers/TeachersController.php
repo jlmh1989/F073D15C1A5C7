@@ -34,7 +34,7 @@ class TeachersController extends Controller
 				//'users'=>array('@'),
 			),
                         array('allow', // allow authenticated user to perform
-				'actions'=>array('perfil','updateProfile'),
+				'actions'=>array('perfil','updateProfile','alumnos'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -69,6 +69,17 @@ class TeachersController extends Controller
             $model = Teachers::model()->find('fk_user='.$pk_usuario);
             $_SESSION['updateProfile'] = TRUE;
             $this->actionUpdate($model->pk_teacher);
+        }
+        
+        public function actionAlumnos(){
+            $model=new Students('searchByTeacher');
+            $model->unsetAttributes();
+            if(isset($_GET['Students']))
+                    $model->attributes=$_GET['Students'];
+
+            $this->render('alumnos',array(
+                    'model'=>$model,
+            ));
         }
 
 	/**
