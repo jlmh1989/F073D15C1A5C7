@@ -26,6 +26,22 @@ class UserIdentity extends CUserIdentity
 		$this->errorCode=self::ERROR_NONE;
                 $this->setState("rol", $user->fk_role);
                 $this->setState("pk_user", $user->pk_user);
+                if($user->fk_role === constantes::ROL_CLIENTE){
+                    $modelC = Clients::model()->find('fk_user='.$user->pk_user);
+                    $this->setState("foto", $modelC->client_photo === null || $modelC->client_photo === ''? '':'images/client_photo/'.$modelC->client_photo);
+                    $this->setState("nombre", $modelC->client_name);
+                }else if($user->fk_role === constantes::ROL_ESTUDIANTE){
+                    $modelS = Students::model()->find('fk_user='.$user->pk_user);
+                    $this->setState("foto", '');
+                    $this->setState("nombre", $modelS->name);
+                }else if($user->fk_role === constantes::ROL_MAESTRO){
+                    $modelT = Teachers::model()->find('fk_user='.$user->pk_user);
+                    $this->setState("foto", '');
+                    $this->setState("nombre", $modelT->name);
+                }else{
+                    $this->setState("foto", '');
+                    $this->setState("nombre", '');
+                }
             }
             return !$this->errorCode;
 	}

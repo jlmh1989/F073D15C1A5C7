@@ -11,7 +11,7 @@ $this->menu=array(
 );
 ?>
 
-<center><strong>Estudiantes</strong></center>
+<!-- <center><strong>Estudiantes</strong></center> -->
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'students-grid',

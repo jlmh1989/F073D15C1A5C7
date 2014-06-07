@@ -32,7 +32,7 @@ if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
 }
 ?>
 
-<h3>Ver perfil estudiante <?php echo $model->name; ?></h3>
+<!-- <h3>Ver perfil estudiante <?php //echo $model->name; ?></h3> -->
 
 <table class="zebra">
     <tr>

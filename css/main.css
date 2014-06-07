@@ -35,6 +35,12 @@ body
     padding: 20px;
 }
 
+#perfil
+{
+    padding: 0px 20px 20px 0;
+    text-align: center;
+}
+
 #sidebar
 {
     padding: 20px 20px 20px 0;

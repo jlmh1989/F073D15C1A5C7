@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-05-2014 a las 20:10:56
+-- Tiempo de generación: 07-06-2014 a las 21:54:35
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -336,6 +336,30 @@ INSERT INTO `tbl_e24_cat_documents` (`pk_document`, `desc_document`, `status`) V
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tbl_e24_cat_levels`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_e24_cat_levels` (
+  `pk_level` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `desc_level` varchar(50) NOT NULL,
+  `fk_associated_book` smallint(5) unsigned NOT NULL,
+  `total_hours` tinyint(3) unsigned NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`pk_level`),
+  UNIQUE KEY `XPKe24_cat_levels` (`pk_level`),
+  KEY `XIF1e24_cat_levels` (`fk_associated_book`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `tbl_e24_cat_levels`
+--
+
+INSERT INTO `tbl_e24_cat_levels` (`pk_level`, `desc_level`, `fk_associated_book`, `total_hours`, `status`) VALUES
+(3, 'Basico 1', 1, 50, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tbl_e24_cat_level_detail`
 --
 
@@ -391,30 +415,6 @@ INSERT INTO `tbl_e24_cat_level_detail` (`pk_level_detail`, `fk_level`, `topics`,
 (32, 3, 'ADVICE/ A FORMAL E-MAIL', '01:30:00', '6.4, 6.5', '66, 67', 0, 1),
 (33, 3, 'UNIT 4, 5, 6 ---BRING IT TOGETHER 4, 5, 6', '01:30:00', 'REVIEW B', '68, 69, 70, 71', 0, 1),
 (34, 3, 'FINAL EXAM AND REVIEW', '01:30:00', 'Final Exam', 'Final Exam', 1, 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tbl_e24_cat_levels`
---
-
-CREATE TABLE IF NOT EXISTS `tbl_e24_cat_levels` (
-  `pk_level` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `desc_level` varchar(50) NOT NULL,
-  `fk_associated_book` smallint(5) unsigned NOT NULL,
-  `total_hours` tinyint(3) unsigned NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  PRIMARY KEY (`pk_level`),
-  UNIQUE KEY `XPKe24_cat_levels` (`pk_level`),
-  KEY `XIF1e24_cat_levels` (`fk_associated_book`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Volcado de datos para la tabla `tbl_e24_cat_levels`
---
-
-INSERT INTO `tbl_e24_cat_levels` (`pk_level`, `desc_level`, `fk_associated_book`, `total_hours`, `status`) VALUES
-(3, 'Basico 1', 1, 50, 1);
 
 -- --------------------------------------------------------
 
@@ -610,15 +610,64 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_clients` (
 --
 
 INSERT INTO `tbl_e24_clients` (`pk_client`, `fk_type_client`, `fk_user`, `client_name`, `client_photo`, `contact_name`, `contact_mail`, `contact_phone`, `contact_phone_ext`, `client_web`, `status`, `billing_data`, `contact_cellphone`) VALUES
-(1, 2, 3, 'Cemex', '973972.jpg', 'demo cliente 1', 'cliente.demo.1@cemex.com', '813333333333', '333', 'www.cemex.com', 1, 1, '0443333333333'),
-(2, 3, 3, 'particular demo 1', '', 'particular demo 1', 'particular.demo.2@demo.com', '8144444444', '4444', NULL, 1, 0, '0444444444444'),
-(3, 2, 3, 'vitro', '', 'demo cliente 2', 'cliente.demo.2@vitro.com', '8155555555', '555', 'www.vitro.com', 1, 1, '0445555555555'),
-(4, 3, 3, 'particular demo 2', '', 'particular demo 2', 'particular.demo.2@demo.com', '8155555555', '555', NULL, 1, 1, '0445555555555'),
-(5, 2, 3, 'mi empresa', '', 'nombre persona empresa', 'correo', '951228384', '', '', 1, 0, '8110818911'),
-(6, 2, 3, 'ejemplo empresa 1', '', 'nombre persona empresa', 'ejemplo@ejemplo', '1234567890', '1234', 'www.ejemplo.es', 0, 0, '8100000000'),
-(7, 2, 3, 'AAEE', '', 'Jose Hernandez', 'ejemplo@ejemplo', '528110818911', '1234', 'ejemplo.pagina.web', 1, 0, '528110818911'),
+(1, 2, 3, 'Cemex SA', '601733.jpg', 'demo cliente 1', 'cliente.demo.1@cemex.com', '813333333333', '333', 'www.cemex.com', 1, 1, '0443333333333'),
+(2, 3, 46, 'particular demo 1', '', 'particular demo 1', 'particular.demo.2@demo.com', '8144444444', '4444', NULL, 1, 0, '0444444444444'),
+(3, 2, 47, 'vitro', '', 'demo cliente 2', 'cliente.demo.2@vitro.com', '8155555555', '555', 'www.vitro.com', 1, 1, '0445555555555'),
+(4, 3, 48, 'particular demo 2', '', 'particular demo 2', 'particular.demo.2@demo.com', '8155555555', '555', NULL, 1, 1, '0445555555555'),
+(5, 2, 49, 'mi empresa', '', 'nombre persona empresa', 'correo', '951228384', '', '', 1, 0, '8110818911'),
+(6, 2, 50, 'ejemplo empresa 1', '', 'nombre persona empresa', 'ejemplo@ejemplo', '1234567890', '1234', 'www.ejemplo.es', 0, 0, '8100000000'),
+(7, 2, 51, 'AAEE', '', 'Jose Hernandez', 'ejemplo@ejemplo', '528110818911', '1234', 'ejemplo.pagina.web', 1, 0, '528110818911'),
 (8, 2, 11, 'EEEEE', '', 'nombre e', 'correoe@correoe.com', '1234567890', '1234', 'ejemplo.pagina.web', 1, 0, '8100000000'),
 (9, 2, 12, 'AAAAAAMODIF', '', 'nombre aaa', 'aaaa@aa.aa', '1234567890', '1234', 'ejemplo.pagina.web', 0, 1, '8100000000');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_e24_courses`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
+  `pk_course` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_level` mediumint(8) unsigned NOT NULL,
+  `fk_client` int(10) unsigned NOT NULL,
+  `fk_teacher` mediumint(8) unsigned NOT NULL,
+  `fk_type_course` mediumint(8) unsigned NOT NULL,
+  `fk_group` int(10) unsigned DEFAULT NULL,
+  `fk_classrom_address` int(11) unsigned NOT NULL,
+  `initial_date` date NOT NULL,
+  `desc_curse` varchar(50) NOT NULL,
+  `other_level` varchar(50) DEFAULT NULL,
+  `status` smallint(1) NOT NULL,
+  PRIMARY KEY (`pk_course`),
+  UNIQUE KEY `XPKe24_courses` (`pk_course`,`fk_client`),
+  KEY `fk_client` (`fk_client`),
+  KEY `XIF2e24_courses` (`fk_group`),
+  KEY `XIF3e24_courses` (`fk_level`),
+  KEY `XIF4e24_courses` (`fk_teacher`),
+  KEY `XIF5e24_courses` (`fk_type_course`),
+  KEY `fk_classrom_address` (`fk_classrom_address`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Volcado de datos para la tabla `tbl_e24_courses`
+--
+
+INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `fk_classrom_address`, `initial_date`, `desc_curse`, `other_level`, `status`) VALUES
+(1, 3, 1, 3, 5, 1, 1, '2013-12-20', 'Curso basico cemez 1', NULL, 1),
+(2, 3, 1, 4, 5, 2, 1, '2013-12-22', 'Curso basico cemez 2', NULL, 1),
+(3, 3, 3, 3, 5, 3, 3, '2013-12-23', 'Curso vitro  1', '', 1),
+(4, 3, 3, 4, 5, 4, 3, '2013-12-24', 'Curso vitro  2', NULL, 1),
+(5, 3, 2, 3, 4, NULL, 2, '2013-12-25', 'Curso particular  1', NULL, 0),
+(6, 3, 4, 4, 4, NULL, 4, '2013-12-25', 'Curso particular  2', NULL, 0),
+(7, 3, 3, 11, 4, 2, 3, '2014-04-24', 'Ejemplo Curso 08:00', '', 1),
+(8, 3, 1, 3, 4, 2, 1, '2014-04-16', 'Ejemplo curso con horario', '', 0),
+(9, 3, 4, 7, 4, 2, 4, '2014-05-08', 'Curso con horario', '', 1),
+(10, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(11, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(12, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(13, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(14, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(15, 3, 1, 12, 4, 2, 1, '2014-05-23', 'Ejemplo curso cemex', '', 1);
 
 -- --------------------------------------------------------
 
@@ -671,55 +720,6 @@ INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bs
 (40, 3, 4, '08:00:00', '09:30:00', 1),
 (41, 3, 5, '08:00:00', '09:30:00', 1),
 (42, 3, 6, '08:00:00', '09:30:00', 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tbl_e24_courses`
---
-
-CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
-  `pk_course` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_level` mediumint(8) unsigned NOT NULL,
-  `fk_client` int(10) unsigned NOT NULL,
-  `fk_teacher` mediumint(8) unsigned NOT NULL,
-  `fk_type_course` mediumint(8) unsigned NOT NULL,
-  `fk_group` int(10) unsigned DEFAULT NULL,
-  `fk_classrom_address` int(11) unsigned NOT NULL,
-  `initial_date` date NOT NULL,
-  `desc_curse` varchar(50) NOT NULL,
-  `other_level` varchar(50) DEFAULT NULL,
-  `status` smallint(1) NOT NULL,
-  PRIMARY KEY (`pk_course`),
-  UNIQUE KEY `XPKe24_courses` (`pk_course`,`fk_client`),
-  KEY `fk_client` (`fk_client`),
-  KEY `XIF2e24_courses` (`fk_group`),
-  KEY `XIF3e24_courses` (`fk_level`),
-  KEY `XIF4e24_courses` (`fk_teacher`),
-  KEY `XIF5e24_courses` (`fk_type_course`),
-  KEY `fk_classrom_address` (`fk_classrom_address`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
-
---
--- Volcado de datos para la tabla `tbl_e24_courses`
---
-
-INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `fk_classrom_address`, `initial_date`, `desc_curse`, `other_level`, `status`) VALUES
-(1, 3, 1, 3, 5, 1, 1, '2013-12-20', 'Curso basico cemez 1', NULL, 1),
-(2, 3, 1, 4, 5, 2, 1, '2013-12-22', 'Curso basico cemez 2', NULL, 1),
-(3, 3, 3, 3, 5, 3, 3, '2013-12-23', 'Curso vitro  1', '', 1),
-(4, 3, 3, 4, 5, 4, 3, '2013-12-24', 'Curso vitro  2', NULL, 1),
-(5, 3, 2, 3, 4, NULL, 2, '2013-12-25', 'Curso particular  1', NULL, 0),
-(6, 3, 4, 4, 4, NULL, 4, '2013-12-25', 'Curso particular  2', NULL, 0),
-(7, 3, 3, 11, 4, 2, 3, '2014-04-24', 'Ejemplo Curso 08:00', '', 1),
-(8, 3, 1, 3, 4, 2, 1, '2014-04-16', 'Ejemplo curso con horario', '', 0),
-(9, 3, 4, 7, 4, 2, 4, '2014-05-08', 'Curso con horario', '', 1),
-(10, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(11, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(12, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(13, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(14, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(15, 3, 1, 12, 4, 2, 1, '2014-05-23', 'Ejemplo curso cemex', '', 1);
 
 -- --------------------------------------------------------
 
@@ -857,18 +857,18 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_students` (
 --
 
 INSERT INTO `tbl_e24_students` (`pk_student`, `fk_client`, `fk_user`, `name`, `email`, `neigborhod`, `county`, `phone`, `zipcode`, `birthdate`, `street`, `street_number`, `street_number_int`, `fk_state_dir`) VALUES
-(1, 1, 1, 'estudiante cemex uno', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
-(2, 1, 1, 'estudiante cemex 2', 'est.2.cemex@demo.com', 'centro 2', 'monterrey', '8180887254', '66579', '1984-06-21', 'del paseo 2', 2212, 'b2', 31),
-(3, 1, 1, 'estudiante cemex 3', 'est.3.cemex@demo.com', 'centro 3', 'monterrey', '8180887245', '66579', '1984-04-21', 'del paseo 3', 2212, 'b2', 31),
-(4, 1, 1, 'estudiante cemex 4', 'est.4.cemex@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),
-(5, 1, 1, 'estudiante cemex 5', 'est.5.cemex@demo.com', 'centro 5', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
-(6, 3, 1, 'estudiante vitro 1 update', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
-(7, 3, 1, 'estudiante vitro 2', 'est.2.vitro@demo.com', 'centro 2', 'monterrey', '8180887254', '66579', '1984-06-21', 'del paseo 2', 2212, 'b2', 31),
-(8, 3, 1, 'estudiante vitro 3', 'est.3.vitro@demo.com', 'centro 3', 'monterrey', '8180887245', '66579', '1984-04-21', 'del paseo 3', 2212, 'b2', 31),
-(9, 3, 1, 'estudiante vitro 4', 'est.4.vitro@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),
-(10, 3, 1, 'estudiante vitro 5', 'est.5.vitro@demo.com', 'centro 5', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
-(11, 2, 1, 'estudiante personal 1', 'est.1.personal@demo.com', 'centro 6', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
-(12, 4, 1, 'estudiante personal 2', 'est.2.personal@demo.com', 'centro 7', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
+(1, 1, 1, 'estudiante cemex 1 update', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
+(2, 1, 35, 'estudiante cemex 2', 'est.2.cemex@demo.com', 'centro 2', 'monterrey', '8180887254', '66579', '1984-06-21', 'del paseo 2', 2212, 'b2', 31),
+(3, 1, 36, 'estudiante cemex 3', 'est.3.cemex@demo.com', 'centro 3', 'monterrey', '8180887245', '66579', '1984-04-21', 'del paseo 3', 2212, 'b2', 31),
+(4, 1, 37, 'estudiante cemex 4', 'est.4.cemex@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),
+(5, 1, 38, 'estudiante cemex 5', 'est.5.cemex@demo.com', 'centro 5', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
+(6, 3, 39, 'estudiante vitro 1 update', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
+(7, 3, 41, 'estudiante vitro 2', 'est.2.vitro@demo.com', 'centro 2', 'monterrey', '8180887254', '66579', '1984-06-21', 'del paseo 2', 2212, 'b2', 31),
+(8, 3, 42, 'estudiante vitro 3', 'est.3.vitro@demo.com', 'centro 3', 'monterrey', '8180887245', '66579', '1984-04-21', 'del paseo 3', 2212, 'b2', 31),
+(9, 3, 43, 'estudiante vitro 4', 'est.4.vitro@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),
+(10, 3, 44, 'estudiante vitro 5', 'est.5.vitro@demo.com', 'centro 5', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
+(11, 2, 45, 'estudiante personal 1', 'est.1.personal@demo.com', 'centro 6', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
+(12, 4, 40, 'estudiante personal 2', 'est.2.personal@demo.com', 'centro 7', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
 (13, 5, 21, 'Estudiante dos a', 'estudiante2@edu.com', 'Colonia estudiante 2', 'Monterrey', '3847563847', '34555', '2012-07-04', 'Calle estudiante 2', 123, '3c', 31);
 
 -- --------------------------------------------------------
@@ -952,15 +952,15 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_teachers` (
 
 INSERT INTO `tbl_e24_teachers` (`pk_teacher`, `fk_user`, `name`, `street`, `street_numer`, `street_number_int`, `neighborhood`, `fk_nationality`, `fk_state_dir`, `county`, `zipcode`, `birthdate`, `fk_state_birth`, `fk_education`, `nationality_other`, `fk_status_document`, `phone`, `cellphone`, `email`, `entrance_score`, `rate`, `spesification`, `comments`, `status`) VALUES
 (3, 2, 'Maestro Demo 1', 'Calle demo 1', 1111, 'A-1', 'colonia demo 1', 11, 31, 'municipio demo 1', '06730', '1984-02-20', 31, 51, NULL, 54, '8111111111', '0441111111111', 'demo2@demo.com', 80, 135.5, 'espesificacion demo 1', 'comentario demo 1', 1),
-(4, 2, 'Maestro Demo 2', 'Calle demo 2', 2222, 'B-2', 'colonia demo 2', 12, 31, 'municipio demo 2', '66730', '1982-03-19', NULL, 52, 'Americana', 55, '8222222222', '0442222222222', 'demo2@demo.com', 90, 0, 'espesificacion demo 2', 'comentario demo 2', 1),
-(5, 2, 'maestro prueba', 'ejemplo calle', 123, '', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-02', 31, 50, NULL, 55, '1234567890', '1234567890', '', 9, 0, '', '', 1),
-(6, 2, 'maestro prueba update', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-15', 31, 50, NULL, 55, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 0, 'esopecificaciones', 'comentarios', 1),
+(4, 22, 'Maestro Demo 2', 'Calle demo 2', 2222, 'B-2', 'colonia demo 2', 12, 31, 'municipio demo 2', '66730', '1982-03-19', NULL, 52, 'Americana', 55, '8222222222', '0442222222222', 'demo2@demo.com', 90, 0, 'espesificacion demo 2', 'comentario demo 2', 1),
+(5, 23, 'maestro prueba', 'ejemplo calle', 123, '', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-02', 31, 50, NULL, 55, '1234567890', '1234567890', '', 9, 0, '', '', 1),
+(6, 24, 'maestro prueba update', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-15', 31, 50, NULL, 55, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 0, 'esopecificaciones', 'comentarios', 1),
 (7, 14, 'maestro prueba', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-04-04', 31, 50, NULL, 56, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 0, 'ejemplo', 'ejemplo', 0),
 (8, 15, 'Maestro', 'calle', 123, '1', 'colonia', 12, 31, 'Monterrey', '68000', '2011-12-01', 31, 50, '', 55, '012121212', '1212121212', 'ejemplo@ejemplo.com', 9, 0, '', '', 1),
 (9, 16, 'Maestro 1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2013-11-06', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
 (10, 17, 'Mestro1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2014-03-05', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
 (11, 18, 'Maestro 2', 'calle', 123, '1', 'colonia', 11, 31, 'Monterrey', '68000', '2013-12-03', 31, 50, NULL, 55, '1212121212', '1212121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
-(12, 19, 'nombre maestro 4', 'calle', 123, '1', 'coloni', 11, 31, 'Mty', '64000', '2014-04-07', 31, 50, NULL, 55, '12121212', '1212121212', '', 8, 0, '', '', 1);
+(12, 19, 'nombre maestro apellido 4', 'calle', 123, '1', 'coloni', 11, 31, 'Mty', '64000', '2014-04-07', 31, 50, NULL, 55, '12121212', '1212121212', '', 8, 0, '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -1007,7 +1007,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_unavailable_schedule` (
   UNIQUE KEY `XPKtbl_e24_unavailable_schedule` (`fk_bss_day`,`fk_teacher`,`pk_unavailable_schedule`),
   KEY `fk_bss_day` (`fk_bss_day`),
   KEY `XIF2tbl_e24_unavailable_schedule` (`fk_teacher`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=153 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=161 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_unavailable_schedule`
@@ -1031,10 +1031,6 @@ INSERT INTO `tbl_e24_unavailable_schedule` (`pk_unavailable_schedule`, `fk_bss_d
 (130, 8, 11, '07:30:00', '10:00:00', 1),
 (131, 9, 11, '06:30:00', '08:30:00', 1),
 (132, 9, 11, '09:00:00', '10:00:00', 1),
-(133, 4, 12, '06:30:00', '07:30:00', 1),
-(134, 5, 12, '06:30:00', '07:30:00', 1),
-(135, 5, 12, '08:30:00', '10:00:00', 1),
-(136, 9, 12, '06:30:00', '09:00:00', 1),
 (145, 4, 3, '11:00:00', '13:00:00', 1),
 (146, 5, 3, '11:00:00', '13:00:00', 1),
 (147, 5, 3, '16:00:00', '17:00:00', 1),
@@ -1042,7 +1038,11 @@ INSERT INTO `tbl_e24_unavailable_schedule` (`pk_unavailable_schedule`, `fk_bss_d
 (149, 7, 3, '11:00:00', '13:00:00', 1),
 (150, 7, 3, '17:00:00', '18:00:00', 1),
 (151, 8, 3, '11:00:00', '13:00:00', 1),
-(152, 9, 3, '07:00:00', '13:00:00', 1);
+(152, 9, 3, '07:00:00', '13:00:00', 1),
+(157, 4, 12, '06:30:00', '07:30:00', 1),
+(158, 5, 12, '06:30:00', '07:30:00', 1),
+(159, 5, 12, '08:30:00', '10:00:00', 1),
+(160, 9, 12, '06:30:00', '09:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -1058,7 +1058,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_users` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`pk_user`),
   KEY `fk_role` (`fk_role`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=52 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_users`
@@ -1072,13 +1072,33 @@ INSERT INTO `tbl_e24_users` (`pk_user`, `fk_role`, `username`, `password`, `stat
 (11, 60, 'ejemplo', '$1$Ehc23$4KVzLmJX98/0lAIrl1oxh0', 1),
 (12, 60, 'aaa', '$1$Ehc23$kyu1ROrRRR11J4L3R0y9j/', 1),
 (13, 62, 'root', '$1$Ehc23$8H.PdjVFxuPyREmdOrav51', 1),
-(14, 60, 'maestro', '$1$Ehc23$cum98xoyTSVb7zExxVIOL1', 1),
-(15, 60, 'maestro0', '$1$Ehc23$Tzg5ASHfuP8ExFJq.Q2Q10', 1),
-(16, 60, 'maestro1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
-(17, 60, 'maestro1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
-(18, 60, 'maestro2', '$1$Ehc23$nHLoX3/Inrod6HYyuS7WE0', 1),
-(19, 60, 'maestro4', '$1$Ehc23$OoCVGQ9j2ngbnNsIwYtOj0', 1),
-(21, 58, 'estudiante2', '$1$Ehc23$qTGdqGlffam4CUQuiq66k1', 1);
+(14, 59, 'maestro', '$1$Ehc23$cum98xoyTSVb7zExxVIOL1', 1),
+(15, 59, 'maestro0', '$1$Ehc23$Tzg5ASHfuP8ExFJq.Q2Q10', 1),
+(16, 59, 'maestro1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
+(17, 59, 'maestro1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
+(18, 59, 'maestro2', '$1$Ehc23$nHLoX3/Inrod6HYyuS7WE0', 1),
+(19, 59, 'maestro4', '$1$Ehc23$OoCVGQ9j2ngbnNsIwYtOj0', 1),
+(21, 58, 'estudiante2', '$1$Ehc23$qTGdqGlffam4CUQuiq66k1', 1),
+(22, 59, 'maestro5', '$1$Ehc23$UFzGkXC0inxsTCuMgWwYN1', 1),
+(23, 59, 'maestro6', '$1$Ehc23$UKDaLlatbpmksJsymwa/41', 1),
+(24, 59, 'maestro7', '$1$Ehc23$pVNvZXvPb5qwPLs41rs3v1', 1),
+(35, 58, 'estudiante3', '$1$Ehc23$0gmbfj7jA56nuLzd8M8Gf.', 1),
+(36, 58, 'estudiante4', '$1$Ehc23$499B0emTLIUlUVbUQRV25/', 1),
+(37, 58, 'estudiante5', '$1$Ehc23$oYUoOgtyqlJyfSsbWe.5F/', 1),
+(38, 58, 'estudiante6', '$1$Ehc23$MGskHqlALszFJ5hv/WQiF/', 1),
+(39, 58, 'estudiante7', '$1$Ehc23$7aJi1hXYETQj3pWGEJ1MM/', 1),
+(40, 58, 'estudiante8', '$1$Ehc23$FPeagrY6u6oH.VYlzRoCG1', 1),
+(41, 58, 'estudiante9', '$1$Ehc23$RZGSWRrIP.x8kopuLllCR/', 1),
+(42, 58, 'estudiante10', '$1$Ehc23$QwW66QVUGoHuBUyD1UHwb/', 1),
+(43, 58, 'estudiante11', '$1$Ehc23$PH0yBHHzzQA6TS9EMoWBH0', 1),
+(44, 58, 'estudiante12', '$1$Ehc23$eeh6YeaJIxYdZbk7Lw4OZ.', 1),
+(45, 58, 'estudiante13', '$1$Ehc23$cQER.niOkbfO3gdJqBDAp0', 1),
+(46, 60, 'cliente1', '$1$Ehc23$/LELfTqEtiBR5r0x6zh/N.', 1),
+(47, 60, 'cliente2', '$1$Ehc23$hWtbDzjEHa1qPf8iLYMCN.', 1),
+(48, 60, 'cliente3', '$1$Ehc23$2UZxcYaBr5zHv8ficWaRT/', 1),
+(49, 60, 'cliente4', '$1$Ehc23$1A/K4d54vWMVw/x6/8A/T1', 1),
+(50, 60, 'cliente5', '$1$Ehc23$k1VFOz9tTpUA1v46noOUr.', 1),
+(51, 60, 'cliente6', '$1$Ehc23$eeNfspbl.mDkgX1xMf8fF1', 1);
 
 --
 -- Restricciones para tablas volcadas
@@ -1138,13 +1158,6 @@ ALTER TABLE `tbl_e24_clients`
   ADD CONSTRAINT `fk_user_pk_user` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`);
 
 --
--- Filtros para la tabla `tbl_e24_course_schedule`
---
-ALTER TABLE `tbl_e24_course_schedule`
-  ADD CONSTRAINT `fk_courseschedule_pk_bssday` FOREIGN KEY (`fk_bss_day`) REFERENCES `tbl_e24_cat_bss_day` (`pk_bss_day`),
-  ADD CONSTRAINT `fk_courseschedule_pk_courses` FOREIGN KEY (`fk_course`) REFERENCES `tbl_e24_courses` (`pk_course`);
-
---
 -- Filtros para la tabla `tbl_e24_courses`
 --
 ALTER TABLE `tbl_e24_courses`
@@ -1154,6 +1167,13 @@ ALTER TABLE `tbl_e24_courses`
   ADD CONSTRAINT `fk_curses_pk_groups` FOREIGN KEY (`fk_group`) REFERENCES `tbl_e24_groups` (`pk_group`),
   ADD CONSTRAINT `fk_curses_pk_teachers` FOREIGN KEY (`fk_teacher`) REFERENCES `tbl_e24_teachers` (`pk_teacher`),
   ADD CONSTRAINT `fk_type_course_pk_cat_detail` FOREIGN KEY (`fk_type_course`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`);
+
+--
+-- Filtros para la tabla `tbl_e24_course_schedule`
+--
+ALTER TABLE `tbl_e24_course_schedule`
+  ADD CONSTRAINT `fk_courseschedule_pk_bssday` FOREIGN KEY (`fk_bss_day`) REFERENCES `tbl_e24_cat_bss_day` (`pk_bss_day`),
+  ADD CONSTRAINT `fk_courseschedule_pk_courses` FOREIGN KEY (`fk_course`) REFERENCES `tbl_e24_courses` (`pk_course`);
 
 --
 -- Filtros para la tabla `tbl_e24_documents_teachers`
