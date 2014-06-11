@@ -137,7 +137,7 @@ Yii::app()->clientScript->registerScript('script',
             <td colspan="4">
                 <table class="zebra" align="center" class="horario_td" id="tablaHorario">
                     <thead>
-                        <tr>
+                        <tr class="tr_horario">
                             <td width="100px" align="center" style="font-weight: bold; font-size: 12px">Dia</td>
                             <td width="100px" align="center" style="font-weight: bold; font-size: 12px">Hora Inicio</td>
                             <td width="100px" align="center" style="font-weight: bold; font-size: 12px">Hora Fin</td>

@@ -278,14 +278,23 @@ class CoursesController extends Controller
         public function actionGetHorarioHtml(){
             $html = '';
             $dias = CatBssDay::model()->getCatBssDayListData(constantes::ACTIVO);
+            $i = 0;
+            $css = '';
+            ksort($_SESSION['horarioCurso']);
             foreach ($_SESSION['horarioCurso'] as $keyBssDay => $arrayBssDay) {
                 foreach ($arrayBssDay as $keyHorario => $arrayHorario) {
-                    $html .= '<tr>';
+                    if(($i % 2) === 0){
+                        $css = 'odd_';
+                    }else{
+                        $css = 'even_';
+                    }
+                    $html .= '<tr class="'.$css.'">';
                     $html .= '<td align="center" >'.$dias[$keyBssDay].'</td>';
                     $html .= '<td align="center" >'.$arrayHorario['inicio'].'</td>';
                     $html .= '<td align="center" >'.$arrayHorario['fin'].'</td>';
                     $html .= '<td align="center" ><span id="'.$keyHorario.'" style="cursor: pointer" onclick="eliminarHorario('.$keyBssDay.','.'\''.$keyHorario.'\''.')"><img src="images/delete.png"/></span></td>';
                     $html .= '</tr>';
+                    $i++;
                 }
             }
             echo $html;

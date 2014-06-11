@@ -305,6 +305,10 @@ table {
         float:left;
 }
 
+.tr_horario{
+    background: #C3DBE1;
+}
+
 .odd_ {
     background: #E5F1F4;
 }
