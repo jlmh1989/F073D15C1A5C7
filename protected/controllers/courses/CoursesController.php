@@ -32,8 +32,8 @@ class CoursesController extends Controller
                                     'crearPdf','domicilioCliente','inactivos','mapa','datosMapa',
                                     'agregarHorario','eliminarHorario','getHorarioHtml',
                                     'createHorario','createDatos','asignarMaestro','asignarDireccion',
-                                    'getDomicilioHtml','getDomicilioJson','guardarDireccion',
-                                    'cancelarDireccion','guardarCursoBD','validarHorario'),
+                                    'getDomicilioHtml','getDomicilioJson','guardarDireccion','getCursosHtml',
+                                    'cancelarDireccion','guardarCursoBD','validarHorario','editarDireccion'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR'
                                              .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
@@ -156,7 +156,7 @@ class CoursesController extends Controller
         }
         
         public function actionAsignarDireccion(){
-            if($_SESSION['curso']['nuevo'] === 1){
+            if($_SESSION['curso']['nuevo'] === 1){ //nuevo
                 $model = new ClassroomAddress;
                 $model->attributes = $_POST['ClassroomAddress'];
                 if($model->validate()){
@@ -167,7 +167,18 @@ class CoursesController extends Controller
                 }else{
                     $this->render('createDireccion', array('model'=>$model));
                 }
-            }else{
+            } else if($_SESSION['curso']['nuevo'] === 2){ //update
+                $model = ClassroomAddress::model()->findByPk($_POST['ClassroomAddress']['pk_classroom_direction']);
+                $model->attributes = $_POST['ClassroomAddress'];
+                if($model->validate()){
+                    $model->update();
+                    $_SESSION['curso']['nuevo'] = 0;
+                    $_SESSION['curso']['direccion'] = $model;
+                    $this->render('createDireccion', array('model'=>$model));
+                }else{
+                    $this->render('createDireccion', array('model'=>$model));
+                }
+            } else{
                 $model = $_SESSION['curso']['direccion'];
                 $this->render('createDireccion', array('model'=>$model));
             }
@@ -200,6 +211,10 @@ class CoursesController extends Controller
         
         public function actionGuardarDireccion(){
             $_SESSION['curso']['nuevo'] = 1;
+        }
+        
+        public function actionEditarDireccion(){
+            $_SESSION['curso']['nuevo'] = 2;
         }
         
         public function actionCancelarDireccion(){
@@ -296,6 +311,37 @@ class CoursesController extends Controller
                     $html .= '</tr>';
                     $i++;
                 }
+            }
+            echo $html;
+        }
+        
+        public function actionGetCursosHtml(){
+            $pkMaestro = Yii::app()->getRequest()->getParam("pkMaestro");
+            $html = '';
+            if($pkMaestro !== ''){
+                $criteria=new CDbCriteria;
+                $criteria->addCondition('status='.constantes::ACTIVO);
+                $criteria->addCondition('fk_teacher='.$pkMaestro);
+                $modelList = Courses::model()->findAll($criteria);
+                foreach ($modelList as $model) {
+                    $css = '';
+                    $porcentaje = rand(10, 100);
+                    if($porcentaje >= 75){
+                        $css = 'red';
+                    }else if($porcentaje >= 50){
+                        $css = 'orange';
+                    }
+                    
+                    $html .= '<tr>';
+                    $html .= '<td>
+                            <div id="'.$model->pk_course.'" class="meter '.$css.' nostripes" style="width: 97%;font-size: 12px">
+                            <div style="font-weight: bold; color: white; padding: 0px 5px 0px 10px">'.$model->desc_curse.'</div>
+                            <span style="width: '.$porcentaje.'%; font-weight: bold; text-align: center">('.$porcentaje.'%)</span>
+                            </div>
+                            </td>';
+                    $html .= '</tr>';
+                }
+                
             }
             echo $html;
         }

@@ -178,7 +178,7 @@ class Teachers extends CActiveRecord
         {
             $criteria=new CDbCriteria;
             $criteria-> select='pk_teacher,name';
-           		            
+            $criteria->addCondition('status='.constantes::ACTIVO);
             return CHtml::listData(Teachers::model()->findAll($criteria),'pk_teacher','name');
         } 
 }

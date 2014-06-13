@@ -8,9 +8,32 @@ Yii::app()->clientScript->registerScript('script',
             $(location).attr("href","'.Yii::app()->createUrl('courses/courses/createHorario').'");
         });
         
+        $(function() {
+            if($("#CursoMaestro_fk_teacher").val() !== ""){
+                $("#CursoMaestro_fk_teacher").change();
+            }
+        });
         '); 
 ?>
-
+<script>
+    function cargarCursosMaestro(id){
+        $.ajax({
+            url: "<?= Yii::app()->createUrl('courses/courses/getCursosHtml');?>",
+            data: {pkMaestro: id},
+            dataType: "text"
+         }).done(function( msg ) {
+             $( "#tablaCursos tbody" ).html(msg);
+             $(".meter > span").each(function() {
+                $(this)
+                    .data("origWidth", $(this).width())
+                    .width(0)
+                    .animate({
+                            width: $(this).data("origWidth")
+                    }, 1200);
+            });
+         });
+    }
+</script>
 <div class="form">
     <table class="zebra">
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -24,7 +47,7 @@ Yii::app()->clientScript->registerScript('script',
 )); ?>
 
         <tr>
-            <th id="direccion_th" colspan="4" style="text-align: center">
+            <th id="direccion_th" colspan="4" style="text-align: center; ">
                 ASIGNAR MAESTRO
             </th>
         </tr>
@@ -32,12 +55,26 @@ Yii::app()->clientScript->registerScript('script',
         <tr>
             <td class="datos_td" width="240px"></td>
 		<td class="datos_td" width="150px" style="text-align: center"><?php echo $form->labelEx($model,'fk_teacher'); ?></td>
-                <td width="240px"><?php echo $form->dropDownList($model,'fk_teacher', Teachers::model()->getTeachers(), constantes::getOpcionCombo()); ?>
+                <td width="240px"><?php echo $form->dropDownList($model,'fk_teacher', Teachers::model()->getTeachers(), 
+                        array(
+                        "tabindex" => "0",
+                        "empty" => constantes::OPCION_COMBO,
+                        'onChange' => 'cargarCursosMaestro(this.value)')
+                        ); ?>
 		<?php echo $form->error($model,'fk_teacher'); ?></td>
                 <td width="240px"></td>
         </tr>
         </table>
-    <hr>
+        <table class="zebra" align="center" width="60%" id="tablaCursos">
+            <thead>
+                <tr>
+                    <td align="center" colspan="2" style="font-weight: bold; font-size: 12px">Cursos</td>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table> 
     <table>
         <tr>
             <td width="240px"><div class="boton" id="irAtras"><< Atr&aacute;s</div></td>

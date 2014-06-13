@@ -16,16 +16,8 @@ $ajaxDom = '
         $("#ClassroomAddress_country").prop("disabled", true);
         $("#ClassroomAddress_zipcode").prop("disabled", true);
         $("#ClassroomAddress_phone").prop("disabled", true);
-        $("#ClassroomAddress_datos_mapa").prop("disabled", true);
-        $.ajax({
-            url: "'.Yii::app()->createUrl("courses/courses/getDomicilioHtml").'", 
-            dataType: "text"
-         }).done(function( msg ) {
-            if(msg !== ""){
-                $( "#tablaDmicilios tbody" ).html(msg);
-            }
-         }); '; 
-if($_SESSION['curso']['nuevo'] === 1){
+        $("#ClassroomAddress_datos_mapa").prop("disabled", true);'; 
+if($_SESSION['curso']['nuevo'] === 1 || $_SESSION['curso']['nuevo'] === 2){
     $ajaxDom = '$("#cancelarDomicilio").show();
                 $("#guardarDomicilio").show();
                 $("#irAtras").hide();
@@ -64,39 +56,46 @@ Yii::app()->clientScript->registerScript('script',
             $("#ClassroomAddress_datos_mapa").blur();
         });
         
-        $("#nuevoDomicilio").click(function(){
-            
-        });
-        
         ',CClientScript::POS_READY);
 ?>
-<script type="text/javascript" src="//www.google.com/jsapi"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
-    google.load("maps", "3", {'other_params': 'sensor=false'});
-
-    var map = null;
+    google.load("maps", "3", {other_params:'sensor=false'});
+    var latitud;
+    var longitud;
+    var isLoadInit = true;
     
-    function pintarMapa(latitud, longitud) {
-        var mapOptions = {center: new google.maps.LatLng(latitud, longitud),
+    function loadApiGoogle() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' +
+                     'callback=pintarMapa';
+        document.body.appendChild(script);
+    }
+    
+    function pintarMapa() {
+        var latLng = new google.maps.LatLng(latitud, longitud);
+        var mapOptions = {
+            center: latLng,
             zoom: 13,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             mapTypeControlOptions: {sensor: true,
                 position: google.maps.ControlPosition.LEFT_BOTTOM,
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}};
 
-        map = new google.maps.Map(document.getElementById("mapa"), mapOptions);
+        var map = new google.maps.Map(document.getElementById("mapa"), mapOptions);
         new google.maps.Marker({map: map,
-            position: new google.maps.LatLng(latitud, longitud),
+            position: latLng,
             title: 'Ubicacion Curso'});
     }
-
+    
     function cargaMapa(){
         var datoMapa = $("#ClassroomAddress_datos_mapa").val();
         var arrayDM = datoMapa.split(",");
-        var latitud = $.trim(arrayDM[0]);
-        var longitud = $.trim(arrayDM[1]);
+        latitud = $.trim(arrayDM[0]);
+        longitud = $.trim(arrayDM[1]);
         if((latitud.trim() !== "") && (longitud.trim() !== "")){
-            pintarMapa(latitud.trim(), longitud.trim());
+            pintarMapa();
             $(".mapa_div").show();
         }else{
             $(".mapa_div").hide();
@@ -133,6 +132,7 @@ Yii::app()->clientScript->registerScript('script',
         $("#dir_clase_th").html("CREAR NUEVA DIRECCI&Oacute;N");
         $("#cancelarDomicilio").show();
         $("#guardarDomicilio").show();
+        $("#nuevoDomicilio").hide();
         $(".mapa_div").hide();
         $("#irAtras").hide();
         $("#guardar").hide();
@@ -170,6 +170,26 @@ Yii::app()->clientScript->registerScript('script',
     
     function guardarDomicilio(){
         $("#direccion_courses-form").submit();
+    }
+    
+    function editarDomicilio(){
+        $.ajax("<?= Yii::app()->createUrl('courses/courses/editarDireccion')?>");
+        $("#dir_clase_th").html("EDITAR DIRECCI&Oacute;N");
+        $("#cancelarDomicilio").show();
+        $("#guardarDomicilio").show();
+        $("#nuevoDomicilio").hide();
+        $("#irAtras").hide();
+        $("#guardar").hide();
+        $("#ClassroomAddress_street").prop("disabled", false);
+        $("#ClassroomAddress_street_number").prop("disabled", false);
+        $("#ClassroomAddress_street_number_int").prop("disabled", false);
+        $("#ClassroomAddress_neighborhood").prop("disabled", false);
+        $("#ClassroomAddress_county").prop("disabled", false);
+        $("#ClassroomAddress_fk_state_dir").prop("disabled", false);
+        $("#ClassroomAddress_country").prop("disabled", false);
+        $("#ClassroomAddress_zipcode").prop("disabled", false);
+        $("#ClassroomAddress_phone").prop("disabled", false);
+        $("#ClassroomAddress_datos_mapa").prop("disabled", false);
     }
     
     function guardarCurso(){
@@ -215,6 +235,9 @@ Yii::app()->clientScript->registerScript('script',
         <tr>
             <td width="130px">
                 <div class="boton" id="nuevoDomicilio" onclick="nuevoDomicilio()">Nuevo</div>
+            </td>
+            <td width="130px">
+                <div class="boton" id="editarDomicilio" onclick="editarDomicilio()">Editar</div>
             </td>
             <td width="130px">
                 <div class="boton" id="cancelarDomicilio" onclick="cancelarDomicilio()">Cancelar</div>
