@@ -16,6 +16,20 @@ Yii::app()->clientScript->registerScript('script',
         '); 
 ?>
 <script>
+    
+    function cargarDatosCurso(idCurso){
+        $("#datos_curso_"+idCurso).css("visibility", "hidden");
+        $(".meter").animate({
+            height: "45px"
+        }, 300);
+        if($("#div_curso_"+idCurso).height() <= 45){
+            $("#datos_curso_"+idCurso).css("visibility", "");
+            $("#div_curso_"+idCurso).animate({
+            height: "130px"
+            }, 300);
+        }
+    }
+    
     function cargarCursosMaestro(id){
         $.ajax({
             url: "<?= Yii::app()->createUrl('courses/courses/getCursosHtml');?>",
@@ -29,7 +43,7 @@ Yii::app()->clientScript->registerScript('script',
                     .width(0)
                     .animate({
                             width: $(this).data("origWidth")
-                    }, 1200);
+                    }, 800);
             });
          });
     }

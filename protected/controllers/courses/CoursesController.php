@@ -314,7 +314,7 @@ class CoursesController extends Controller
             }
             echo $html;
         }
-        
+
         public function actionGetCursosHtml(){
             $pkMaestro = Yii::app()->getRequest()->getParam("pkMaestro");
             $html = '';
@@ -323,6 +323,7 @@ class CoursesController extends Controller
                 $criteria->addCondition('status='.constantes::ACTIVO);
                 $criteria->addCondition('fk_teacher='.$pkMaestro);
                 $modelList = Courses::model()->findAll($criteria);
+                $modelT = Teachers::model()->findByPk($pkMaestro);
                 foreach ($modelList as $model) {
                     $css = '';
                     $porcentaje = rand(10, 100);
@@ -334,9 +335,34 @@ class CoursesController extends Controller
                     
                     $html .= '<tr>';
                     $html .= '<td>
-                            <div id="'.$model->pk_course.'" class="meter '.$css.' nostripes" style="width: 97%;font-size: 12px">
-                            <div style="font-weight: bold; color: white; padding: 0px 5px 0px 10px">'.$model->desc_curse.'</div>
+                            <div id="div_curso_'.$model->pk_course.'" class="meter '.$css.' nostripes" style="width: 97%;font-size: 12px; height: 45px;">
+                            <div style="font-weight: bold; color: white; padding: 0px 5px 0px 10px; cursor: pointer" onClick="cargarDatosCurso('.$model->pk_course.')"><u>'.$model->desc_curse.'</u></div>
                             <span style="width: '.$porcentaje.'%; font-weight: bold; text-align: center">('.$porcentaje.'%)</span>
+                            <div id="datos_curso_'.$model->pk_course.'"  style="color: white; padding: 15px 5px 0px 10px;font-size: 14px; visibility:hidden;">
+                            <table>
+                            <tr>
+                            <td style="font-weight: bold;">Cliente:</td>
+                            <td>'.$model->fkClient->client_name.'</td>
+                            <td style="font-weight: bold;">Tipo Curso:</td>
+                            <td>'.$model->fkTypeCourse->desc_cat_detail_es.'</td>
+                            </tr>
+                            <tr>
+                            <td style="font-weight: bold;">Fecha Inicio:</td>
+                            <td>'.$model->initial_date.'</td>
+                            <td style="font-weight: bold;">Tarifa:</td>
+                            <td>$'.$modelT->rate.'</td>
+                            </tr>
+                            <tr>
+                            <td style="font-weight: bold;">Nivel:</td>
+                            <td>'.$model->fkLevel->desc_level.'</td>
+                            <td style="font-weight: bold;">Direcci&oacute;n:</td>
+                            <td>'.$model->fkClassromAddress->street.' 
+                                '.$model->fkClassromAddress->street_number.',
+                                '.$model->fkClassromAddress->county.',
+                                '.$model->fkClassromAddress->fkStateDir->desc_cat_detail_es.'</td>
+                            </tr>
+                            </table>
+                            </div>
                             </div>
                             </td>';
                     $html .= '</tr>';
