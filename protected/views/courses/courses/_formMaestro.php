@@ -18,7 +18,7 @@ Yii::app()->clientScript->registerScript('script',
 <script>
     
     function cargarDatosCurso(idCurso){
-        $("#datos_curso_"+idCurso).css("visibility", "hidden");
+        $(".datosCurso").css("visibility", "hidden");
         $(".meter").animate({
             height: "45px"
         }, 300);
@@ -36,7 +36,7 @@ Yii::app()->clientScript->registerScript('script',
             data: {pkMaestro: id},
             dataType: "text"
          }).done(function( msg ) {
-             $( "#tablaCursos tbody" ).html(msg);
+             $( "#tablaCursos" ).html(msg);
              $(".meter > span").each(function() {
                 $(this)
                     .data("origWidth", $(this).width())
@@ -80,14 +80,7 @@ Yii::app()->clientScript->registerScript('script',
         </tr>
         </table>
         <table class="zebra" align="center" width="60%" id="tablaCursos">
-            <thead>
-                <tr>
-                    <td align="center" colspan="2" style="font-weight: bold; font-size: 12px">Cursos</td>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
+            
         </table> 
     <table>
         <tr>

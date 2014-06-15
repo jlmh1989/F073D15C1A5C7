@@ -6525,3 +6525,362 @@ Stack trace:
 REQUEST_URI=/e24sys/index.php?r=courses/courses/getCursosHtml&pkMaestro=3
 HTTP_REFERER=http://localhost/e24sys/index.php?r=courses/courses/createHorario
 ---
+2014/06/14 06:46:46 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 06:46:46 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 06:46:46 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 06:46:46 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 06:46:48 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 06:46:48 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 06:46:48 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 06:46:48 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:00:48 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:00:48 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:00:48 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:00:48 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:00:49 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:00:49 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:00:49 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:00:49 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/14 07:04:09 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('courses/courses')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=courses/courses
+HTTP_REFERER=http://localhost/e24sys/index.php
+---
+2014/06/14 07:04:13 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/alumnos
+---
+2014/06/14 07:04:25 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('courses/courses')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=courses/courses
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/perfil
+---
+2014/06/14 07:07:11 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('courses/courses')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=courses/courses
+HTTP_REFERER=http://localhost/e24sys/index.php?r=courses/courses
+---
+2014/06/14 07:08:47 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('courses/courses')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=courses/courses
+HTTP_REFERER=http://localhost/e24sys/index.php?r=site/index
+---
+2014/06/14 19:17:42 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/alumnos
+---
+2014/06/14 19:20:25 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/alumnos
+---
+2014/06/14 20:04:57 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('courses/courses')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=courses/courses
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/alumnos
+---
+2014/06/14 20:12:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "cursos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('cursos')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('cursos')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/cursos
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/perfil
+---
+2014/06/14 20:50:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "cursos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('cursos')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('cursos')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/cursos
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/alumnos
+---
+2014/06/14 21:29:23 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curso".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('curso')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('curso')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/curso
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/alumnos
+---
+2014/06/14 21:30:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curso".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('curso')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('curso')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/curso
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/curso
+---
+2014/06/14 21:30:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curso".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('curso')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('curso')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/curso
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/curso
+---
+2014/06/14 21:30:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curso".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('curso')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('curso')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/curso
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/curso
+---
+2014/06/14 21:30:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curso".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('curso')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('curso')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/curso
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/curso
+---
+2014/06/14 21:30:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curso".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('curso')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('curso')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/curso
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/curso
+---
+2014/06/14 21:30:03 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curso".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('curso')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('curso')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/curso
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/curso
+---
+2014/06/14 21:30:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "curso".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('curso')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('curso')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/curso
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/curso
+---
+2014/06/14 21:34:06 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/cursos
+---
+2014/06/15 01:57:46 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/15 01:57:46 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/15 01:57:46 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/15 01:57:46 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/15 01:57:47 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/15 01:57:47 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/15 01:57:47 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/15 01:57:47 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)

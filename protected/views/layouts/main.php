@@ -104,7 +104,7 @@
                             'activateParents' => true,
                             'items'=>array(
                                 array('label'=>'Home', 'url'=>array('/site/index')),
-                                array('label'=>'Cursos','url'=>array('/courses/courses')),
+                                array('label'=>'Cursos','url'=>array('teachers/teachers/cursos')),
                                 array('label'=>'Alumnos','url'=>array('/teachers/teachers/alumnos')),
                                 array('label'=>'Materiales', 'url'=>array('#')),
                                 array('label'=>'Perfil', 'url'=>array('/teachers/teachers/perfil')),

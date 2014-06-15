@@ -34,7 +34,7 @@ class TeachersController extends Controller
 				//'users'=>array('@'),
 			),
                         array('allow', // allow authenticated user to perform
-				'actions'=>array('perfil','updateProfile','alumnos'),
+				'actions'=>array('perfil','updateProfile','alumnos','cursos'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -224,13 +224,18 @@ class TeachersController extends Controller
 	public function actionDelete($id)
 	{
 		$model = $this->loadModel($id);
-                $model->status = 0;
+                $model->status = constantes::INACTIVO;
                 $model->save();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('activos'));
 	}
         
+        public function actionCursos(){
+            $this->render('cursos');
+        }
+
+
         public function actionAddInactivoUS(){
             $_SESSION['inactivoUS'][Yii::app()->getRequest()->getParam("pkDay")][Yii::app()->getRequest()->getParam("idHour")]['inicio'] = Yii::app()->getRequest()->getParam("inicio");
             $_SESSION['inactivoUS'][Yii::app()->getRequest()->getParam("pkDay")][Yii::app()->getRequest()->getParam("idHour")]['fin'] = Yii::app()->getRequest()->getParam("fin");
