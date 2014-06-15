@@ -69,6 +69,23 @@ div.form input[type=submit]
     white-space: pre;
 }
 
+div.form input[type=submit]:hover
+{
+    font-size: 12px;
+    text-shadow: 1px 1px 1px #fff;
+    margin-right: 9px;
+    height: 25px;
+    background-color: rgba(144, 188, 201, 0.85);
+    border:1px solid #898989;
+    color: #4e4e4e;
+    width: 120px;
+    margin-right: 6px;
+    box-sizing: border-box;
+    -webkit-appearance: push-button;
+    -webkit-user-select: none;
+    white-space: pre;
+}
+
 div.form input[type=checkbox]
 {
     color: #4e4e4e;
@@ -256,6 +273,47 @@ table {
     -webkit-border-radius: 6px 6px 0 0;
     border-radius: 6px 6px 0 0;
     cursor: pointer;
+}
+
+table.login{
+    width: 300px;
+    margin-left:auto; 
+    margin-right:auto;
+    text-align: center;
+    border-collapse:separate;
+    border: solid #25383B 1px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+table.login td{
+    padding: 4px;
+}
+
+.login_header {
+    font-size: 24px;
+    height: 50px;
+    color: white;
+    background: none repeat scroll 0% 0% #25383B;
+}
+
+.login_body{
+    padding-top: 10px;
+}
+
+.login_body input[type=text], .login_body input[type=password]{
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #bbb;
+    padding: 3px; 
+    height: 25px;
+    width: 220px;
+}
+
+.login_footer{
+    height: 50px;
+    overflow: hidden;
 }
 
 .checkboxgroup {
