@@ -6884,3 +6884,318 @@ in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:04 [error] [php] Undefined index: curso (/Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/createHorario.php:4)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): CoursesController->renderFile()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CoursesController->renderPartial()
+#2 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php(127): CoursesController->render()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): CoursesController->actionCreateHorario()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CoursesController->runAction()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CoursesController->filterAccessControl()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CoursesController->runActionWithFilters()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CoursesController->run()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#15 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=courses/courses/createHorario
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/createHorario.php (4)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (127)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:16 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:16 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:16 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:16 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:18 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:18 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:18 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:18 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:17:21 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. The SQL statement executed was: CALL GetMaestrosDisponible(:horarioMsg).
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php (242)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/_formMaestro.php (72)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/createMaestro.php (21)
+2014/06/20 06:17:21 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. The SQL statement executed was: CALL GetMaestrosDisponible(:horarioMsg)' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/db/CDbCommand.php:543
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php(242): CDbCommand->queryAll(Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/_formMaestro.php(72): Teachers->getMaestrosDisponibleCurso('2-10:00-11:00,3...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(126): require('/Applications/X...')
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): CBaseController->renderInternal('/Applications/X...', Array, true)
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): CBaseController->renderFile('/Applications/X...', Array, true)
+#6 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/createMaestro.php(21): CController->renderPartial('_formMaestro', Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(126): require('/Applications/X...')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): CBaseController->renderInternal('/Applications/X...', Array, true)
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): CBaseController->renderFile('/Applications/X...', Array, true)
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CController->renderPartial('createMaestro', Array, true)
+#11 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php(154): CController->render('createMaestro', Array)
+#12 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php(125): CoursesController->actionAsignarMaestro()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): CoursesController->actionCreateHorario()
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#16 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#17 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#18 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#19 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#20 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#21 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#22 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('createHorario')
+#23 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('courses/courses...')
+#24 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#25 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#26 {main}
+REQUEST_URI=/e24sys/index.php?r=courses/courses/createHorario
+HTTP_REFERER=http://localhost/e24sys/index.php?r=courses/courses/update&id=1
+---
+2014/06/20 06:23:25 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:23:25 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:23:25 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:23:25 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:23:28 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:23:28 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:23:28 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:23:28 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:23:29 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. The SQL statement executed was: CALL GetMaestrosDisponible(:horarioMsg).
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php (243)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/_formMaestro.php (72)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/createMaestro.php (21)
+2014/06/20 06:23:29 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound. The SQL statement executed was: CALL GetMaestrosDisponible(:horarioMsg)' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/db/CDbCommand.php:543
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/db/CDbCommand.php(396): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php(243): CDbCommand->queryAll(Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/_formMaestro.php(72): Teachers->getMaestrosDisponibleCurso('2-10:00-11:00,3...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(126): require('/Applications/X...')
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): CBaseController->renderInternal('/Applications/X...', Array, true)
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): CBaseController->renderFile('/Applications/X...', Array, true)
+#6 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/createMaestro.php(21): CController->renderPartial('_formMaestro', Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(126): require('/Applications/X...')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): CBaseController->renderInternal('/Applications/X...', Array, true)
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): CBaseController->renderFile('/Applications/X...', Array, true)
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CController->renderPartial('createMaestro', Array, true)
+#11 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php(154): CController->render('createMaestro', Array)
+#12 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php(125): CoursesController->actionAsignarMaestro()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): CoursesController->actionCreateHorario()
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#15 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#16 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#17 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#18 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#19 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#20 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#21 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#22 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('createHorario')
+#23 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('courses/courses...')
+#24 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#25 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#26 {main}
+REQUEST_URI=/e24sys/index.php?r=courses/courses/createHorario
+HTTP_REFERER=http://localhost/e24sys/index.php?r=courses/courses/update&id=1
+---
+2014/06/20 06:25:34 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:25:34 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:25:34 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:25:34 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:25:40 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:25:40 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:25:40 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:25:40 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:26:06 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:26:06 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:26:06 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:26:06 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:26:08 [error] [php] Invalid argument supplied for foreach() (/Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/helpers/CHtml.php:2078)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(126): require()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): CoursesController->renderInternal()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): CoursesController->renderFile()
+#3 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/createMaestro.php(21): CoursesController->renderPartial()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(126): require()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): CoursesController->renderInternal()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): CoursesController->renderFile()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CoursesController->renderPartial()
+#8 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php(154): CoursesController->render()
+#9 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php(125): CoursesController->actionAsignarMaestro()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): CoursesController->actionCreateHorario()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CoursesController->runAction()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#15 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CoursesController->filterAccessControl()
+#16 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#17 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#18 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CoursesController->runActionWithFilters()
+#19 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CoursesController->run()
+#20 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#21 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#22 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=courses/courses/createHorario
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php (243)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/_formMaestro.php (72)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/courses/courses/createMaestro.php (21)
+2014/06/20 06:32:07 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:07 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:07 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:07 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:10 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:10 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:10 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:10 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:12 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:12 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:12 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:32:12 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:33:25 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:33:25 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:33:25 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:33:25 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:33:26 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:33:26 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:33:26 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/06/20 06:33:26 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (100)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (94)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)

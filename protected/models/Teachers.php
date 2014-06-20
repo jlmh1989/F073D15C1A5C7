@@ -235,4 +235,11 @@ class Teachers extends CActiveRecord
             $criteria->addCondition('status='.constantes::ACTIVO);
             return CHtml::listData(Teachers::model()->findAll($criteria),'pk_teacher','name');
         }
+        
+        public function getMaestrosDisponibleCurso($horarioMsg){
+            $comand = Yii::app()->db->createCommand('CALL GetMaestrosDisponible(:horarioMsg)');
+            $comand->bindParam('horarioMsg', $horarioMsg);
+            $result = $comand->query();
+            return CHtml::listData($result,'pk_teacher','name');
+        }
 }
