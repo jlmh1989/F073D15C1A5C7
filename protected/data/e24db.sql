@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-06-2014 a las 21:54:35
+-- Tiempo de generación: 20-06-2014 a las 22:45:18
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -19,6 +19,86 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `e24db`
 --
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMaestrosDisponible`(in horarioMsg text)
+BEGIN
+	declare dia varchar(20) default '';
+	declare horarioTmp varchar(20) default '';
+	declare hora_inicio varchar(20) default '';
+	declare hora_fin varchar(20) default '';
+	declare pk_maestro integer default 0;
+	declare nombre_maestro varchar(100) default '';
+	declare i integer default 0;
+	declare count_maestro_disp integer default 0;
+	-- obtener maestros ordenados de los que mas curso tienen a menos
+	declare maestro_cursor cursor for select t.pk_teacher, t.name
+											from tbl_e24_teachers t 
+											left join tbl_e24_courses c on c.fk_teacher = t.pk_teacher
+											where t.status = 1
+											group by t.pk_teacher
+											order by count(t.pk_teacher) desc,
+											c.desc_curse desc;
+	declare continue handler for not found set i = 1;
+	create temporary table if not exists horario(pk_dia integer not null, 
+												 hora_inicio time not null, 
+												 hora_fin time not null);
+	create temporary table if not exists maestro(pk_teacher integer not null, 
+												 name varchar(100) not null);
+
+	-- Extraer el mensaje de los horarios capturados
+	REPEAT
+		SET horarioTmp = (SELECT TRIM(SUBSTRING_INDEX(horarioMsg, ',', 1)));
+		SET i = 0;
+			REPEAT
+				CASE i 
+					WHEN 0 THEN
+						SET dia = (SELECT TRIM(SUBSTRING_INDEX(horarioTmp, '-', 1)));
+					WHEN 1 THEN
+						SET hora_inicio = (SELECT TRIM(SUBSTRING_INDEX(horarioTmp, '-', 1)));
+					WHEN 2 THEN
+						SET hora_fin = (SELECT TRIM(SUBSTRING_INDEX(horarioTmp, '-', 1)));
+				END CASE;
+				SET i = i + 1;
+				SET horarioTmp = (SELECT RIGHT(horarioTmp, TRIM(LENGTH(horarioTmp) - LENGTH(SUBSTRING_INDEX(horarioTmp, '-', 1))-1)));
+			UNTIL (horarioTmp = '')
+			END REPEAT;
+		SET horarioMsg = (SELECT RIGHT(horarioMsg, TRIM(LENGTH(horarioMsg) - LENGTH(SUBSTRING_INDEX(horarioMsg, ',', 1))-1)));
+		INSERT INTO horario VALUES(dia, hora_inicio, hora_fin);
+	UNTIL (horarioMsg = '')
+	END REPEAT;
+
+	-- comprobar horario disponible
+	set i = 0;
+	open maestro_cursor;
+	leer_maestro_cursor: loop
+		fetch maestro_cursor into pk_maestro, nombre_maestro;
+		if i = 1 then
+			leave leer_maestro_cursor;
+		end if;
+		
+		select count(*) into count_maestro_disp 
+			from tbl_e24_unavailable_schedule us
+			inner join horario hr on hr.pk_dia = us.fk_bss_day
+			where (hr.hora_inicio >= us.initial_hour and hr.hora_inicio <= us.final_hour) 
+				and (hr.hora_fin >= us.initial_hour and hr.hora_fin <= us.final_hour) 
+				and us.fk_teacher = pk_maestro;
+		
+		if count_maestro_disp = 0 then
+			insert into maestro values(pk_maestro, nombre_maestro);
+		end if;
+	end loop leer_maestro_cursor;
+	close maestro_cursor;
+	
+	select m.pk_teacher, m.name from maestro m;
+	drop table horario;
+	drop table maestro;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -569,7 +649,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_classroom_address` (
 --
 
 INSERT INTO `tbl_e24_classroom_address` (`pk_classroom_direction`, `fk_client`, `street`, `street_number`, `street_number_int`, `neighborhood`, `county`, `fk_state_dir`, `country`, `zipcode`, `status`, `phone`, `datos_mapa`) VALUES
-(1, 1, 'calse demo 1', 6666, '66', 'doctores', 'monterrey', 31, 'mexico', '06613', 1, '8166666666', '25.656047, -100.279583'),
+(1, 1, 'clase demo 1', 6666, '66', 'doctores', 'monterrey', 31, 'mexico', '06613', 1, '8166666666', '25.656047, -100.279583'),
 (2, 2, 'calse demo 2', 6666, '66', 'doctores', 'monterrey', 31, 'mexico', '06613', 1, '8166666666', '25.661535, -100.282713'),
 (3, 3, 'calse demo 3', 7777, '77', 'fundadores', 'san pedro', 31, 'mexico', '06613', 1, '8177777777', '25.656047, -100.279583'),
 (4, 4, 'calse demo 4', 8888, '88', 'del poniente', 'santa catarina', 31, 'mexico', '66713', 1, '8188888888', '25.656047, -100.279583'),
@@ -653,7 +733,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
 --
 
 INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `fk_classrom_address`, `initial_date`, `desc_curse`, `other_level`, `status`) VALUES
-(1, 3, 1, 3, 5, 1, 1, '2013-12-20', 'Curso basico cemez 1', NULL, 1),
+(1, 3, 1, 11, 5, 1, 1, '2013-12-20', 'Curso basico cemez 1', '', 1),
 (2, 3, 1, 4, 5, 2, 1, '2013-12-22', 'Curso basico cemez 2', NULL, 1),
 (3, 3, 3, 3, 5, 3, 3, '2013-12-23', 'Curso vitro  1', '', 1),
 (4, 3, 3, 4, 5, 4, 3, '2013-12-24', 'Curso vitro  2', NULL, 1),
@@ -665,7 +745,7 @@ INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher
 (10, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
 (11, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
 (12, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(13, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
+(13, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 0),
 (14, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
 (15, 3, 1, 12, 4, 2, 1, '2014-05-23', 'Ejemplo curso cemex', '', 1);
 
@@ -687,16 +767,13 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_course_schedule` (
   KEY `fk_curse` (`fk_course`),
   KEY `fk_bss_day` (`fk_bss_day`),
   KEY `XIF2e24_curse_schedule` (`fk_course`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_course_schedule`
 --
 
 INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bss_day`, `initial_hour`, `final_hour`, `status`) VALUES
-(1, 1, 4, '08:00:00', '09:30:00', 1),
-(2, 1, 6, '08:00:00', '09:30:00', 1),
-(3, 1, 8, '08:00:00', '09:30:00', 1),
 (4, 2, 6, '08:00:00', '09:30:00', 1),
 (5, 2, 7, '08:00:00', '09:30:00', 1),
 (6, 2, 8, '08:00:00', '09:30:00', 1),
@@ -719,7 +796,11 @@ INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bs
 (39, 15, 4, '10:00:00', '10:30:00', 1),
 (40, 3, 4, '08:00:00', '09:30:00', 1),
 (41, 3, 5, '08:00:00', '09:30:00', 1),
-(42, 3, 6, '08:00:00', '09:30:00', 1);
+(42, 3, 6, '08:00:00', '09:30:00', 1),
+(47, 1, 4, '08:00:00', '09:30:00', 1),
+(48, 1, 5, '10:00:00', '11:00:00', 1),
+(49, 1, 6, '08:00:00', '09:30:00', 1),
+(50, 1, 8, '08:00:00', '09:30:00', 1);
 
 -- --------------------------------------------------------
 
@@ -952,15 +1033,15 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_teachers` (
 
 INSERT INTO `tbl_e24_teachers` (`pk_teacher`, `fk_user`, `name`, `street`, `street_numer`, `street_number_int`, `neighborhood`, `fk_nationality`, `fk_state_dir`, `county`, `zipcode`, `birthdate`, `fk_state_birth`, `fk_education`, `nationality_other`, `fk_status_document`, `phone`, `cellphone`, `email`, `entrance_score`, `rate`, `spesification`, `comments`, `status`) VALUES
 (3, 2, 'Maestro Demo 1', 'Calle demo 1', 1111, 'A-1', 'colonia demo 1', 11, 31, 'municipio demo 1', '06730', '1984-02-20', 31, 51, NULL, 54, '8111111111', '0441111111111', 'demo2@demo.com', 80, 135.5, 'espesificacion demo 1', 'comentario demo 1', 1),
-(4, 22, 'Maestro Demo 2', 'Calle demo 2', 2222, 'B-2', 'colonia demo 2', 12, 31, 'municipio demo 2', '66730', '1982-03-19', NULL, 52, 'Americana', 55, '8222222222', '0442222222222', 'demo2@demo.com', 90, 0, 'espesificacion demo 2', 'comentario demo 2', 1),
-(5, 23, 'maestro prueba', 'ejemplo calle', 123, '', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-02', 31, 50, NULL, 55, '1234567890', '1234567890', '', 9, 0, '', '', 1),
-(6, 24, 'maestro prueba update', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-15', 31, 50, NULL, 55, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 0, 'esopecificaciones', 'comentarios', 1),
-(7, 14, 'maestro prueba', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-04-04', 31, 50, NULL, 56, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 0, 'ejemplo', 'ejemplo', 0),
-(8, 15, 'Maestro', 'calle', 123, '1', 'colonia', 12, 31, 'Monterrey', '68000', '2011-12-01', 31, 50, '', 55, '012121212', '1212121212', 'ejemplo@ejemplo.com', 9, 0, '', '', 1),
-(9, 16, 'Maestro 1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2013-11-06', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
-(10, 17, 'Mestro1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2014-03-05', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
-(11, 18, 'Maestro 2', 'calle', 123, '1', 'colonia', 11, 31, 'Monterrey', '68000', '2013-12-03', 31, 50, NULL, 55, '1212121212', '1212121212', 'ejemplo@ejemplo.com', 8, 0, '', '', 1),
-(12, 19, 'nombre maestro apellido 4', 'calle', 123, '1', 'coloni', 11, 31, 'Mty', '64000', '2014-04-07', 31, 50, NULL, 55, '12121212', '1212121212', '', 8, 0, '', '', 1);
+(4, 22, 'Maestro Demo 2', 'Calle demo 2', 2222, 'B-2', 'colonia demo 2', 12, 31, 'municipio demo 2', '66730', '1982-03-19', NULL, 52, 'Americana', 55, '8222222222', '0442222222222', 'demo2@demo.com', 90, 145.5, 'espesificacion demo 2', 'comentario demo 2', 1),
+(5, 23, 'maestro prueba', 'ejemplo calle', 123, '', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-02', 31, 50, NULL, 55, '1234567890', '1234567890', '', 9, 155.5, '', '', 1),
+(6, 24, 'maestro prueba update', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-03-15', 31, 50, NULL, 55, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 165.5, 'esopecificaciones', 'comentarios', 1),
+(7, 14, 'maestro prueba', 'ejemplo calle', 123, '123', 'ejemplo colonia', 11, 31, 'Monterrey', '68000', '2014-04-04', 31, 50, NULL, 56, '1234567890', '1234567890', 'ejemplo@ejemplo.ejemplo', 9, 175.5, 'ejemplo', 'ejemplo', 0),
+(8, 15, 'Maestro', 'calle', 123, '1', 'colonia', 12, 31, 'Monterrey', '68000', '2011-12-01', 31, 50, '', 55, '012121212', '1212121212', 'ejemplo@ejemplo.com', 9, 185.5, '', '', 1),
+(9, 16, 'Maestro 1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2013-11-06', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, 195.5, '', '', 1),
+(10, 17, 'Mestro1', 'calle', 123, '1', 'colonia', 11, 31, 'Mty', '68000', '2014-03-05', 31, 50, NULL, 55, '12121212', '12121212', 'ejemplo@ejemplo.com', 8, 175.5, '', '', 1),
+(11, 18, 'Maestro 2', 'calle', 123, '1', 'colonia', 11, 31, 'Monterrey', '68000', '2013-12-03', 31, 50, NULL, 55, '1212121212', '1212121212', 'ejemplo@ejemplo.com', 8, 195.5, '', '', 1),
+(12, 19, 'nombre maestro apellido 4', 'calle', 123, '1', 'coloni', 11, 31, 'Mty', '64000', '2014-04-07', 31, 50, NULL, 55, '12121212', '1212121212', '', 8, 115.5, '', '', 1);
 
 -- --------------------------------------------------------
 
