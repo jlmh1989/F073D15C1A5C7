@@ -34,7 +34,7 @@ class TeachersController extends Controller
 				//'users'=>array('@'),
 			),
                         array('allow', // allow authenticated user to perform
-				'actions'=>array('perfil','updateProfile','alumnos','cursos'),
+				'actions'=>array('perfil','updateProfile','alumnos','cursos','a'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -459,4 +459,10 @@ class TeachersController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+        public function actionA(){
+            echo '<pre>';
+            print_r($modelEstudiantes = Courses::getEstudiantes(5));
+            echo '</pre>';
+        }
 }

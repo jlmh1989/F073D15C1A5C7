@@ -87,6 +87,8 @@ class CoursesController extends Controller
                 $model->initial_date = $modelC->initial_date;
                 $model->other_level = $modelC->other_level;
                 $_SESSION['curso']['curso']['pk_course'] = $modelC->pk_course;
+                $_SESSION['curso']['curso']['fk_client_orig'] = $modelC->fkClient;
+                $_SESSION['curso']['curso']['fk_type_orig'] = $modelC->fk_type_course;
                 $_SESSION['curso']['curso']['operacion'] = 'update';
                 $_SESSION['curso']['datos'] = $model->attributes;
                 $_SESSION['curso']['maestro']['fk_teacher'] = $modelC->fk_teacher;
@@ -191,8 +193,15 @@ class CoursesController extends Controller
                 $model->fk_teacher = $_SESSION['curso']['maestro']['fk_teacher'];
                 $model->fk_classrom_address = $_SESSION['curso']['direccion']['pk_classroom_direction'];
                 $model->status = constantes::ACTIVO;
+                if($model->fk_group === ''){
+                    $model->fk_group = new CDbExpression('NULL'); 
+                }
                 if($model->save()){
                     $this->guardarHorario($model->pk_course);
+                    if($model->fk_type_course === constantes::CURSO_INDIVIDUAL){
+                        //si el curso el indivudual, crear alumno con los datos del cliente
+                        $this->guardarEstudiante($model->fk_client);
+                    }
                 }
             }elseif($_SESSION['curso']['curso']['operacion'] === 'update') {
                 $model = $this->loadModel($_SESSION['curso']['curso']['pk_course']);
@@ -200,15 +209,60 @@ class CoursesController extends Controller
                 $model->fk_teacher = $_SESSION['curso']['maestro']['fk_teacher'];
                 $model->fk_classrom_address = $_SESSION['curso']['direccion']['pk_classroom_direction'];
                 $model->status = constantes::ACTIVO;
+                if($model->fk_group === ''){
+                    $model->fk_group = new CDbExpression('NULL'); 
+                }
                 if($model->save()){
-                    $this->deleteHorarioBD($model->pk_course);
-                    $this->guardarHorario($model->pk_course);
+                        if($model->fk_type_course === constantes::CURSO_INDIVIDUAL){
+                            //comprobar si el cliente se cambio
+                            if($model->fk_client !== $_SESSION['curso']['curso']['fk_client_orig']['pk_client']){
+                                //Buscamos el estudiante anterior para eliminar
+                                $criteria = new CDbCriteria;
+                                $criteria->select='pk_student';
+                                $criteria->addCondition('fk_client='.$_SESSION['curso']['curso']['fk_client_orig']['pk_client']);
+                                $criteria->addCondition('fk_user='.$_SESSION['curso']['curso']['fk_client_orig']['fk_user']);
+                                Students::model()->deleteAll($criteria);
+
+                                //si el curso el indivudual, crear alumno con los datos del cliente
+                                $this->guardarEstudiante($model->fk_client);
+                            }
+                        }elseif (($model->fk_type_course === constantes::CURSO_GRUPAL) && 
+                                ($_SESSION['curso']['curso']['fk_type_orig'] === constantes::CURSO_INDIVIDUAL)) {
+                            //Buscamos el estudiante anterior para eliminar
+                            $criteria = new CDbCriteria;
+                            $criteria->select='pk_student';
+                            $criteria->addCondition('fk_client='.$_SESSION['curso']['curso']['fk_client_orig']['pk_client']);
+                            $criteria->addCondition('fk_user='.$_SESSION['curso']['curso']['fk_client_orig']['fk_user']);
+                            Students::model()->deleteAll($criteria);
+                        }
+                        $this->deleteHorarioBD($model->pk_course);
+                        $this->guardarHorario($model->pk_course);
                 }
             }
             unset($_SESSION['curso']);
             unset($_SESSION['horarioCurso']);
         }
         
+        private function guardarEstudiante($fkCliente){
+            $modelCliente = Clients::model()->findByPk($fkCliente);
+            $modelEstudiante = new Students();
+            $modelEstudiante->fk_client = $modelCliente->pk_client;
+            $modelEstudiante->fk_user = $modelCliente->fk_user;
+            $modelEstudiante->name = $modelCliente->client_name;
+            $modelEstudiante->email = $modelCliente->contact_mail;
+            $modelEstudiante->neigborhod = 'No capturado';
+            $modelEstudiante->county = 'No capturado';
+            $modelEstudiante->phone = $modelCliente->contact_phone;
+            $modelEstudiante->zipcode = '00000';
+            $modelEstudiante->birthdate = '1980-01-01';
+            $modelEstudiante->street = 'No capturador';
+            $modelEstudiante->street_number = 0;
+            $modelEstudiante->street_number_int = '0';
+            $modelEstudiante->fk_state_dir = '31';
+            $modelEstudiante->save();
+        }
+
+
         public function actionGuardarDireccion(){
             $_SESSION['curso']['nuevo'] = 1;
         }

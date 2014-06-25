@@ -131,4 +131,28 @@ class Courses extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public static function getFechaFin($pkCurso){
+            $comand = Yii::app()->db->createCommand('SELECT GETFECHACURSOFIN(:PK_CURSO)');
+            $comand->bindParam('PK_CURSO', $pkCurso);
+            return $comand->queryScalar();
+        }
+        
+        public static function getEstudiantes($pkCurso, $pkType){
+            $criteria = new CDbCriteria;
+            $criteria->distinct=true;
+            $criteria->select = 't.*';
+            if($pkType === constantes::CURSO_GRUPAL){
+                $criteria->join ='INNER JOIN TBL_E24_STUDENTS_GROUP ON t.PK_STUDENT = TBL_E24_STUDENTS_GROUP.FK_STUDENT '
+                            .'INNER JOIN TBL_E24_COURSES ON TBL_E24_STUDENTS_GROUP.FK_GROUP = TBL_E24_COURSES.FK_GROUP';
+                $criteria->addCondition('TBL_E24_STUDENTS_GROUP.FK_CLIENT = TBL_E24_COURSES.FK_CLIENT');
+                $criteria->addCondition('TBL_E24_STUDENTS_GROUP.STATUS = '.constantes::ACTIVO);
+            }else{
+                $criteria->join = 'INNER JOIN TBL_E24_COURSES ON t.FK_CLIENT = TBL_E24_COURSES.FK_CLIENT';
+                $criteria->addCondition('t.FK_USER = (SELECT TBL_E24_CLIENTS.FK_USER FROM TBL_E24_CLIENTS WHERE TBL_E24_CLIENTS.PK_CLIENT = TBL_E24_COURSES.FK_CLIENT)');
+            }
+            $criteria->addCondition('TBL_E24_COURSES.PK_COURSE = :value');
+            $criteria->params = array(":value" => $pkCurso);    
+            return Students::model()->findAll($criteria);
+        }
 }

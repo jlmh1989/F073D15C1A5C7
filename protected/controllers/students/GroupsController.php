@@ -65,8 +65,9 @@ class GroupsController extends Controller
 		if(isset($_POST['Groups']))
 		{
 			$model->attributes=$_POST['Groups'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_group));
+			if($model->save()){
+                            $this->redirect(array('index'));
+                        }
 		}
 
 		$this->render('create',array(
@@ -90,7 +91,7 @@ class GroupsController extends Controller
 		{
 			$model->attributes=$_POST['Groups'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_group));
+				$this->redirect(array('index'));
 		}
 
 		$this->render('update',array(

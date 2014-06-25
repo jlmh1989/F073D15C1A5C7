@@ -38,7 +38,7 @@ $this->menu=array(
                 'birthdate',
 		array(
                     'class'=>'CButtonColumn',
-                    'template'=>'{delete},{update}',
+                    'template'=>'{delete}{update}',
                     'deleteConfirmation'=>'¿Seguro que quiere dar de baja el maestro?',
                     'afterDelete'=>'$.fn.yiiGridView.update("teachers-grid");',
 		),

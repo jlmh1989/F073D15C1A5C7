@@ -25,6 +25,8 @@ class constantes{
     const OTRA_NACIONALIDAD = "12";
     const FORMATO_FECHA = "yy-mm-dd";
     const PATRON_PASS = '$1$Ehc23$09P';
+    const CURSO_GRUPAL = "5";
+    const CURSO_INDIVIDUAL = "4";
 
     public static function getOpcionCombo() {
         return self::$opcion;

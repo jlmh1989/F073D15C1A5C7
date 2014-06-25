@@ -43,7 +43,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'desc_curse',
             array(
                     'class'=>'CButtonColumn',
-                    'template'=>'{delete},{update}',
+                    'template'=>'{delete}{update}',
                     'deleteConfirmation'=>'¿Seguro que quiere dar de baja el curso?',
                     'afterDelete'=>'$.fn.yiiGridView.update("courses-grid");',
 		),

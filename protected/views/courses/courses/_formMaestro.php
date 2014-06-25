@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerScript('script',
         if($("#div_curso_"+idCurso).height() <= 45){
             $("#datos_curso_"+idCurso).css("visibility", "");
             $("#div_curso_"+idCurso).animate({
-            height: "130px"
+            height: "150px"
             }, 300);
         }
     }

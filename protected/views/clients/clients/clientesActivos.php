@@ -35,7 +35,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'value'=>'$data->contact_name'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{delete},{update}',
+                'template'=>'{delete}{update}',
                 'deleteConfirmation'=>'¿Seguro que quiere dar de baja el cliente?',
                 'afterDelete'=>'$.fn.yiiGridView.update("clients-grid");',
 		),

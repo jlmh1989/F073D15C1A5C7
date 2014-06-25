@@ -23,7 +23,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Cursos', 'url' => array('#')),
+    array('label' => 'Horario', 'url' => array('horario')),
 );
 ?>
 
@@ -36,9 +36,13 @@ $this->menu = array(
         if($("#div_curso_"+idCurso).height() <= 45){
             $("#datos_curso_"+idCurso).css("visibility", "");
             $("#div_curso_"+idCurso).animate({
-            height: "130px"
+            height: "200px"
             }, 300);
         }
+    }
+    
+    function agregarAlumno(pkCurso, pkCliente, pkGrupo){
+        $(location).attr("href","<?= Yii::app()->createUrl('students/students/create')?>");
     }
 </script>
 

@@ -27,7 +27,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                     'class'=>'CButtonColumn',
-                    'template'=>'{delete},{update}',
+                    'template'=>'{delete}{update}',
                     'deleteConfirmation'=>'¿Seguro que quiere dar de baja el grupo?',
                     'afterDelete'=>'$.fn.yiiGridView.update("group-grid");',
 		),

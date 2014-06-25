@@ -37,7 +37,7 @@ class StudentsController extends Controller
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ESTUDIANTE',
 			),
                         array('allow', // allow authenticated user to perform
-				'actions'=>array('view','update'),
+				'actions'=>array('create','view','update'),
                                 'expression'=>'(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE) '
                                                 .'|| (Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO)',
 				//'users'=>array('@'),

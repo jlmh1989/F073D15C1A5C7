@@ -181,17 +181,40 @@ class Teachers extends CActiveRecord
                 $criteria->addCondition('status='.constantes::ACTIVO);
                 $criteria->addCondition('fk_teacher='.$pkMaestro);
                 $modelList = Courses::model()->findAll($criteria);
+                
                 foreach ($modelList as $model) {
                     $css = '';
+                    $botones = '';
+                    $nombreGrupo = '';
+                    $modelEstudiantes = Courses::getEstudiantes($model->pk_course, $model->fk_type_course);
                     $porcentaje = rand(10, 100);
                     if($porcentaje >= 75){
                         $css = 'red';
                     }else if($porcentaje >= 50){
                         $css = 'orange';
                     }
+                    if($infoBasica === false && $model->fk_type_course === constantes::CURSO_GRUPAL){
+                        $botones = '<table>
+                                <tr>
+                                <td><input class="botonCurso" type="button" value="Nuevo Alumno" onClick="agregarAlumno('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.')"></td>
+                                <td></td>
+                                </tr>
+                                </table>';
+                    }elseif ($infoBasica === false) {
+                        $botones = '<table>
+                                <tr>
+                                <td></td>
+                                <td></td>
+                                </tr>
+                                </table>';
+                    }
+                    if($model->fk_type_course === constantes::CURSO_GRUPAL){
+                        $nombreGrupo = '<td style="font-weight: bold;">Grupo:</td>
+                                        <td>'.$model->fkGroup->desc_group.'</td>';
+                    }
                     
-                    $html .= '<tr>';
-                    $html .= '<td>
+                    $html .= '<tr>
+                            <td>
                             <div id="div_curso_'.$model->pk_course.'" class="meter '.$css.' nostripes" style="width: 97%;font-size: 12px; height: 45px;">
                             <div style="font-weight: bold; color: white; padding: 0px 5px 0px 10px; cursor: pointer" onClick="cargarDatosCurso('.$model->pk_course.')"><u>'.$model->desc_curse.'</u></div>
                             <span style="width: '.$porcentaje.'%; font-weight: bold; text-align: center">('.$porcentaje.'%)</span>
@@ -207,7 +230,8 @@ class Teachers extends CActiveRecord
                             <td style="font-weight: bold;">Fecha Inicio:</td>
                             <td>'.$model->initial_date.'</td>
                             <td style="font-weight: bold;">Fecha Fin:</td>
-                            <td></td></tr>
+                            <td></td>
+                            </tr>
                             <tr>
                             <td style="font-weight: bold;">Nivel:</td>
                             <td>'.$model->fkLevel->desc_level.'</td>
@@ -217,11 +241,17 @@ class Teachers extends CActiveRecord
                                 '.$model->fkClassromAddress->county.',
                                 '.$model->fkClassromAddress->fkStateDir->desc_cat_detail_es.'</td>
                             </tr>
-                            </table>
+                            <tr>
+                            <td style="font-weight: bold;"># Estudientes:</td>
+                            <td>'.count($modelEstudiantes).'</td>'.
+                            $nombreGrupo.'    
+                            </tr>
+                            </table>'.
+                            $botones.'
                             </div>
                             </div>
-                            </td>';
-                    $html .='</tr>';
+                            </td>
+                            </tr>';
                 }
                 
             }
