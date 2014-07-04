@@ -34,7 +34,7 @@ class TeachersController extends Controller
 				//'users'=>array('@'),
 			),
                         array('allow', // allow authenticated user to perform
-				'actions'=>array('perfil','updateProfile','alumnos','cursos','a'),
+				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -81,8 +81,19 @@ class TeachersController extends Controller
                     'model'=>$model,
             ));
         }
+        
+        public function actionCrearAlumno(){
+            $pkCurso = Yii::app()->getRequest()->getParam("pkCurso");
+            $pkCliente = Yii::app()->getRequest()->getParam("pkCliente");
+            $pkGrupo = Yii::app()->getRequest()->getParam("pkGrupo");
+            $descCurso = Yii::app()->getRequest()->getParam("descCurso");
+            $_SESSION['crearAlumno']['pkCurso'] = $pkCurso;
+            $_SESSION['crearAlumno']['pkCliente'] = $pkCliente;
+            $_SESSION['crearAlumno']['pkGrupo'] = $pkGrupo;
+            $_SESSION['crearAlumno']['descCurso'] = $descCurso;
+        }
 
-	/**
+        /**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */

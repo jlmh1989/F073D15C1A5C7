@@ -41,8 +41,15 @@ $this->menu = array(
         }
     }
     
-    function agregarAlumno(pkCurso, pkCliente, pkGrupo){
-        $(location).attr("href","<?= Yii::app()->createUrl('students/students/create')?>");
+    function agregarAlumno(pkCurso, pkCliente, pkGrupo, descCurso){
+        $.ajax({
+            type: "POST",
+            url : "<?= Yii::app()->createUrl('teachers/teachers/crearAlumno')?>",
+            data : {pkCurso : pkCurso, pkCliente : pkCliente, pkGrupo : pkGrupo, descCurso: descCurso}
+        })
+        .done(function (msg){
+            $(location).attr("href","<?= Yii::app()->createUrl('students/students/create')?>");
+        });
     }
 </script>
 

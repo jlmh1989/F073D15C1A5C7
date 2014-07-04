@@ -102,6 +102,10 @@ class StudentsController extends Controller
 	{
 		$model=new Students;
                 $modelUser = new Users();
+                
+                if(isset($_SESSION['crearAlumno'])){
+                    $model->fk_client = $_SESSION['crearAlumno']['pkCliente'];
+                }
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -119,8 +123,21 @@ class StudentsController extends Controller
                         $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
                         if($modelUser->save()){
                             $model->fk_user=$modelUser->pk_user;
-                            if($model->save())
-                                $this->redirect(array('view','id'=>$model->pk_student));
+                            if($model->save()){
+                                if(isset($_SESSION['crearAlumno'])){
+                                    $group = new StudentsGroup();
+                                    $group->fk_client = $_SESSION['crearAlumno']['pkCliente'];
+                                    $group->fk_group = $_SESSION['crearAlumno']['pkGrupo'];
+                                    $group->fk_student = $model->pk_student;
+                                    $group->status = constantes::ACTIVO;
+                                    $group->save();
+                                    unset($_SESSION['crearAlumno']);
+                                    $this->redirect(array('teachers/teachers/cursos'));
+                                }else {
+                                    $this->redirect(array('view','id'=>$model->pk_student));
+                                }
+                            }
+                                
                         }
                     }
 		}

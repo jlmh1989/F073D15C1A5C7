@@ -65,9 +65,10 @@
                                   'name'=>'initial_date',
                                   'model'=>$model,
                                   'options' => array(
-                                                'mode'=>'focus',
-                                                'dateFormat'=> constantes::FORMATO_FECHA,
-                                                'showAnim' => 'slideDown',
+                                        'mode'=>'focus',
+                                        'dateFormat'=> constantes::FORMATO_FECHA,
+                                        'showAnim' => 'slideDown',
+                                        'minDate'=>0,
                                   ),
                                   'htmlOptions'=>array('size'=>20,'class'=>'date', //'value'=>date("d F, Y")
                                   ),

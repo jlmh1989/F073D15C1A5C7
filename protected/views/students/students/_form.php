@@ -4,15 +4,17 @@
 /* @var $form CActiveForm */
 $readOnly = 'readonly';
 $readOnlyCliente = false;
+$scriptInit = '';
 if($model->pk_student == null){
     $readOnly = '';
 }
 if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
     $readOnlyCliente = true;
 }
-Yii::app()->clientScript->registerScript('script',
-        '
-        $("#user_th").click(function() {
+if(isset($_SESSION['crearAlumno'])){
+    $readOnlyCliente = true;
+}
+$scriptInit .= '$("#user_th").click(function() {
             if($(".user").is(":visible")){
                 $(".user").hide();
             }else{
@@ -26,8 +28,9 @@ Yii::app()->clientScript->registerScript('script',
             }else{
                 $(".estudiante_td").show();
             }
-        });
-        ',
+        });';
+Yii::app()->clientScript->registerScript('script',
+        $scriptInit,
         CClientScript::POS_READY);
 ?>
 
@@ -131,9 +134,12 @@ Yii::app()->clientScript->registerScript('script',
                                   'name'=>'birthdate',
                                   'model'=>$model,
                                   'options' => array(
-                                                'mode'=>'focus',
-                                                'dateFormat'=>  constantes::FORMATO_FECHA,
-                                                'showAnim' => 'slideDown',
+                                        'mode'=>'focus',
+                                        'dateFormat'=>  constantes::FORMATO_FECHA,
+                                        'showAnim' => 'slideDown',
+                                        'changeMonth'=>true,
+                                        'changeYear'=>true,
+                                        'maxDate'=>"+0D",
                                   ),
                                   'htmlOptions'=>array('size'=>20,'class'=>'date', //'value'=>date("d F, Y")
                                   ),
