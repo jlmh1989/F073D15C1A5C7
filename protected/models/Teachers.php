@@ -196,14 +196,16 @@ class Teachers extends CActiveRecord
                     if($infoBasica === false && $model->fk_type_course === constantes::CURSO_GRUPAL){
                         $botones = '<table>
                                 <tr>
-                                <td><input class="botonCurso" type="button" value="Nuevo Alumno" onClick="agregarAlumno('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.',\''.$model->desc_curse.'\')"></td>
+                                <td width="140px"><input class="botonCurso" type="button" value="Nuevo Alumno" onClick="agregarAlumno('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.',\''.$model->desc_curse.'\')"></td>
+                                <td width="140px"><input class="botonCurso" type="button" value="Admin Alumnos" onClick="adminAlumnos('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.',\''.$model->desc_curse.'\')"></td>
                                 <td></td>
                                 </tr>
                                 </table>';
-                    }elseif ($infoBasica === false) {
+                    }elseif ($infoBasica === false  && $model->fk_type_course === constantes::CURSO_INDIVIDUAL) {
                         $botones = '<table>
                                 <tr>
-                                <td></td>
+                                <td width="140px"><input class="botonCurso" type="button" value="Ver Alumno" onClick="verAlumno('.$modelEstudiantes[0]->pk_student.',\''.$model->desc_curse.'\')"></td>
+                                <td width="140px"><input class="botonCurso" type="button" value="Editar Alumno" onClick="editarAlumno('.$modelEstudiantes[0]->pk_student.',\''.$model->desc_curse.'\')"></td>
                                 <td></td>
                                 </tr>
                                 </table>';

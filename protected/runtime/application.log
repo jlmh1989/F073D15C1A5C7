@@ -7842,3 +7842,241 @@ in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (101)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (95)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/04 04:30:05 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('create')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/create
+HTTP_REFERER=http://localhost/e24sys/index.php?r=site/login
+---
+2014/07/05 02:55:05 [error] [exception.CException] exception 'CException' with message 'TeachersController cannot find the requested view "adminAlumnos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:878
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CController->renderPartial('adminAlumnos', Array, true)
+#1 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(102): CController->render('adminAlumnos', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionAdminAlumnos()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('adminAlumnos')
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#15 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/adminAlumnos
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/cursos
+---
+2014/07/05 02:55:08 [error] [exception.CException] exception 'CException' with message 'TeachersController cannot find the requested view "adminAlumnos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:878
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CController->renderPartial('adminAlumnos', Array, true)
+#1 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(102): CController->render('adminAlumnos', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionAdminAlumnos()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('adminAlumnos')
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#15 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/adminAlumnos
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/cursos
+---
+2014/07/05 02:57:13 [error] [exception.CException] exception 'CException' with message 'TeachersController cannot find the requested view "adminAlumnos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:878
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CController->renderPartial('adminAlumnos', Array, true)
+#1 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(102): CController->render('adminAlumnos', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionAdminAlumnos()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('adminAlumnos')
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#15 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/adminAlumnos
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/cursos
+---
+2014/07/05 02:58:03 [error] [exception.CException] exception 'CException' with message 'TeachersController cannot find the requested view "adminAlumnos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:878
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CController->renderPartial('adminAlumnos', Array, true)
+#1 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(102): CController->render('adminAlumnos', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionAdminAlumnos()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('adminAlumnos')
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#15 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/adminAlumnos
+HTTP_REFERER=http://localhost/e24sys/index.php?r=teachers/teachers/cursos
+---
+2014/07/05 02:58:11 [error] [exception.CException] exception 'CException' with message 'TeachersController cannot find the requested view "adminAlumnos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:878
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CController->renderPartial('adminAlumnos', Array, true)
+#1 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(102): CController->render('adminAlumnos', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionAdminAlumnos()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('adminAlumnos')
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#15 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/adminAlumnos
+---
+2014/07/05 03:23:20 [error] [exception.CException] exception 'CException' with message 'TeachersController cannot find the requested view "adminAlumnos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:878
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): CController->renderPartial('adminAlumnos', Array, true)
+#1 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(102): CController->render('adminAlumnos', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionAdminAlumnos()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('adminAlumnos')
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#14 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#15 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/adminAlumnos
+---
+2014/07/05 04:10:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "cursos".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('cursos')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('cursos')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('students/studen...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=students/students/cursos
+HTTP_REFERER=http://localhost/e24sys/index.php?r=students/students/create
+---
+2014/07/05 04:34:20 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('alumnos')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('clients/clients...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=clients/clients/alumnos
+HTTP_REFERER=http://localhost/e24sys/index.php?r=students/students/view&id=11
+---
+2014/07/05 06:26:02 [error] [php] Trying to get property of non-object (/Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php:207)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): TeachersController->renderInternal()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): TeachersController->renderFile()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): TeachersController->renderPartial()
+#3 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(278): TeachersController->render()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionCursos()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): TeachersController->runAction()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): TeachersController->filterAccessControl()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): TeachersController->runActionWithFilters()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): TeachersController->run()
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#15 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#16 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/cursos
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php (207)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/teachers/teachers/cursos.php (81)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php (278)
+2014/07/05 06:27:24 [error] [php] Trying to get property of non-object (/Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php:208)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): TeachersController->renderInternal()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): TeachersController->renderFile()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): TeachersController->renderPartial()
+#3 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(278): TeachersController->render()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionCursos()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): TeachersController->runAction()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): TeachersController->filterAccessControl()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): TeachersController->runActionWithFilters()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): TeachersController->run()
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#15 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#16 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/cursos
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php (208)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/teachers/teachers/cursos.php (81)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php (278)
+2014/07/05 06:27:36 [error] [php] Trying to get property of non-object (/Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php:208)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CBaseController.php(95): TeachersController->renderInternal()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): TeachersController->renderFile()
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): TeachersController->renderPartial()
+#3 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(278): TeachersController->render()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionCursos()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): TeachersController->runAction()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): TeachersController->filterAccessControl()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): TeachersController->runActionWithFilters()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): TeachersController->run()
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#15 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#16 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/cursos
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/models/Teachers.php (208)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/teachers/teachers/cursos.php (81)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php (278)

@@ -164,6 +164,27 @@ class Students extends CActiveRecord
             return new CActiveDataProvider($this,array('criteria'=>$criteria, 'sort'=>$sort));
 	}
         
+        public function searchByCourse(){
+            $criteria = new CDbCriteria;
+            $criteria->distinct=true;
+            $criteria->select = 't.*';
+            $criteria->join ='INNER JOIN TBL_E24_STUDENTS_GROUP ON t.PK_STUDENT = TBL_E24_STUDENTS_GROUP.FK_STUDENT '
+                        .'INNER JOIN TBL_E24_COURSES ON TBL_E24_STUDENTS_GROUP.FK_GROUP = TBL_E24_COURSES.FK_GROUP';
+            $criteria->addCondition('TBL_E24_STUDENTS_GROUP.FK_CLIENT = TBL_E24_COURSES.FK_CLIENT');
+            $criteria->addCondition('TBL_E24_STUDENTS_GROUP.STATUS = '.constantes::ACTIVO);            
+            $criteria->addCondition('TBL_E24_COURSES.PK_COURSE = :value');
+            $criteria->params = array(":value" => $_SESSION['adminAlumno']['pkCurso']);  
+            $criteria->compare('t.name',$this->name,true);
+            $sort = new CSort();
+            $sort->attributes = array(
+                'name'=>array(
+                    'asc'=>'name',
+                    'desc'=>'name desc',
+                ),
+            );
+            return new CActiveDataProvider($this,array('criteria'=>$criteria, 'sort'=>$sort));
+        }
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

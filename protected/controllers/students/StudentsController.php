@@ -220,7 +220,15 @@ class StudentsController extends Controller
                         $this->redirect(array('perfil'));
                     }else if($opcionUsuario === 2 || $opcionUsuario === 3){//update desde cliente, maestro
                         $model->save();
-                        $this->redirect(array('view','id'=>$model->pk_student));
+                        if($_SESSION['adminAlumno']['source'] === 'curso'){
+                            $this->redirect(array('teachers/teachers/adminAlumnos'));
+                        }elseif($_SESSION['adminAlumno']['source'] === 'alumnos'){
+                            $this->redirect(array('teachers/teachers/alumnos'));
+                        }elseif ($_SESSION['adminAlumno']['source'] === 'editarAlumno') {
+                            $this->redirect(array('teachers/teachers/cursos'));
+                        }else{
+                            $this->redirect(array('view','id'=>$model->pk_student));
+                        }
                     }
 
                 }

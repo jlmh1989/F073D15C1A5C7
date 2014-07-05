@@ -3,6 +3,7 @@
 /* @var $model Students */
 if(isset($_SESSION['crearAlumno'])){
     $this->breadcrumbs=array(
+            'Cursos'=>array('teachers/teachers/cursos'),
             'Curso['.$_SESSION['crearAlumno']['descCurso'].']',
             'Nuevo Alumno',
     );

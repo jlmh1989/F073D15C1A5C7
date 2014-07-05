@@ -3,7 +3,7 @@
 /* @var $model Students */
 if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
     $this->breadcrumbs=array(
-            'Alumnos',
+            'Alumnos'=>array("clients/clients/alumnos"),
             $model->name,
     );
     
@@ -11,14 +11,34 @@ if(Yii::app()->user->getState("rol") === constantes::ROL_CLIENTE){
             array('label'=>'Ver alumnos', 'url'=>Yii::app()->createUrl("clients/clients/alumnos")),
         );
 }else if(Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO){
-    $this->breadcrumbs=array(
-            'Alumnos',
+    if($_SESSION['adminAlumno']['source'] === 'curso'){
+        $this->breadcrumbs=array(
+            'Cursos'=>array('teachers/teachers/cursos'),
+            'Curso['.$_SESSION['adminAlumno']['descCurso'].']',
+            'Admin Alumnos'=>array("teachers/teachers/adminAlumnos"),
             $model->name,
-    );
-    
-    $this->menu=array(
+        );
+        $this->menu=array(
+                array('label'=>'Admin alumnos', 'url'=>Yii::app()->createUrl("teachers/teachers/adminAlumnos")),
+        );
+    }elseif ($_SESSION['adminAlumno']['source'] === 'alumnos'){
+        $this->breadcrumbs=array(
+            'Alumnos'=>array("teachers/teachers/alumnos"),
+            $model->name,
+        );
+        $this->menu=array(
             array('label'=>'Ver alumnos', 'url'=>Yii::app()->createUrl("teachers/teachers/alumnos")),
         );
+    }elseif($_SESSION['adminAlumno']['source'] === 'verAlumno'){
+        $this->breadcrumbs=array(
+            'Cursos'=>array('teachers/teachers/cursos'),
+            'Curso['.$_SESSION['adminAlumno']['descCurso'].']',
+            $model->name,
+        );
+        $this->menu=array(
+                array('label'=>'Cursos', 'url'=>Yii::app()->createUrl("teachers/teachers/cursos")),
+        );
+    }
 }else{
     $this->breadcrumbs=array(
             'Students'=>array('index'),

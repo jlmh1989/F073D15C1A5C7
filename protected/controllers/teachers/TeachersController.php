@@ -34,7 +34,8 @@ class TeachersController extends Controller
 				//'users'=>array('@'),
 			),
                         array('allow', // allow authenticated user to perform
-				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno'),
+				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno','adminAlumnos',
+                                                'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -72,6 +73,7 @@ class TeachersController extends Controller
         }
         
         public function actionAlumnos(){
+            $_SESSION['adminAlumno']['source'] = 'alumnos';
             $model=new Students('searchByTeacher');
             $model->unsetAttributes();
             if(isset($_GET['Students']))
@@ -92,6 +94,46 @@ class TeachersController extends Controller
             $_SESSION['crearAlumno']['pkGrupo'] = $pkGrupo;
             $_SESSION['crearAlumno']['descCurso'] = $descCurso;
         }
+        
+        public function actionAdminRedirectAlumnos(){
+            $_SESSION['adminAlumno']['pkCurso'] = Yii::app()->getRequest()->getParam("pkCurso");
+            $_SESSION['adminAlumno']['descCurso'] = Yii::app()->getRequest()->getParam("descCurso");
+            $_SESSION['adminAlumno']['source'] = 'curso';
+        }
+        
+        public function actionAdminAlumnos(){
+            $model=new Students('searchByCourse');
+            $model->unsetAttributes();  // clear any default values
+            if(isset($_GET['Students']))
+                    $model->attributes=$_GET['Students'];
+
+            $this->render('adminAlumnos',array(
+                    'model'=>$model,
+            ));
+        }
+        
+        public function actionVerAlumno(){
+            $_SESSION['adminAlumno']['descCurso'] = Yii::app()->getRequest()->getParam("descCurso");
+            $_SESSION['adminAlumno']['source'] = 'verAlumno';
+        }
+        
+        public function actionEditarAlumno(){
+            $_SESSION['adminAlumno']['descCurso'] = Yii::app()->getRequest()->getParam("descCurso");
+            $_SESSION['adminAlumno']['source'] = 'editarAlumno';
+        }
+        
+        /**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDeleteStudent($id)
+	{
+		$model = Students::model()->findByPk($id)->delete();
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('adminAlumnos'));
+	}
 
         /**
 	 * Creates a new model.
@@ -470,10 +512,4 @@ class TeachersController extends Controller
 			Yii::app()->end();
 		}
 	}
-        
-        public function actionA(){
-            echo '<pre>';
-            print_r($modelEstudiantes = Courses::getEstudiantes(5));
-            echo '</pre>';
-        }
 }

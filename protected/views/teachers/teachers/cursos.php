@@ -51,6 +51,36 @@ $this->menu = array(
             $(location).attr("href","<?= Yii::app()->createUrl('students/students/create')?>");
         });
     }
+    
+    function adminAlumnos(pkCurso, pkCliente ,pkGrupo, descCurso){
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('teachers/teachers/adminRedirectAlumnos')?>",
+            data: {pkCurso : pkCurso, pkCliente : pkCliente, pkGrupo : pkGrupo, descCurso : descCurso}
+        }).done(function (msg){
+            $(location).attr("href","<?= Yii::app()->createUrl('teachers/teachers/adminAlumnos')?>");
+        });
+    }
+    
+    function verAlumno(pkStudent, descCurso){
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('teachers/teachers/verAlumno')?>",
+            data: {descCurso : descCurso}
+        }).done(function (msg){
+            $(location).attr("href","<?= Yii::app()->createUrl('students/students/view')?>&id="+pkStudent);
+        });
+    }
+    
+    function editarAlumno(pkStudent, descCurso){
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('teachers/teachers/editarAlumno')?>",
+            data: {descCurso : descCurso}
+        }).done(function (msg){
+            $(location).attr("href","<?= Yii::app()->createUrl('students/students/update')?>&id="+pkStudent);
+        });
+    }
 </script>
 
 <table class="zebra" align="center" width="60%" id="tablaCursos">
