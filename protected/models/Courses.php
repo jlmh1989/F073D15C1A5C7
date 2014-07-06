@@ -132,12 +132,6 @@ class Courses extends CActiveRecord
 		return parent::model($className);
 	}
         
-        public static function getFechaFin($pkCurso){
-            $comand = Yii::app()->db->createCommand('SELECT GETFECHACURSOFIN(:PK_CURSO)');
-            $comand->bindParam('PK_CURSO', $pkCurso);
-            return $comand->queryScalar();
-        }
-        
         public static function getEstudiantes($pkCurso, $pkType){
             $criteria = new CDbCriteria;
             $criteria->distinct=true;
@@ -154,5 +148,18 @@ class Courses extends CActiveRecord
             $criteria->addCondition('TBL_E24_COURSES.PK_COURSE = :value');
             $criteria->params = array(":value" => $pkCurso);    
             return Students::model()->findAll($criteria);
+        }
+        
+        public static function getFechaFInPorcentaje($pkCurso){
+            $comand = Yii::app()->db->createCommand('CALL stp_courses_cursor(:pkCurso, :pkClient, :pkTeacher, :pkStudent, @status, @statusMsg)');
+            $comand->bindParam('pkCurso', $pkCurso);
+            $comand->bindValue('pkClient', NULL);
+            $comand->bindValue('pkTeacher', NULL);
+            $comand->bindValue('pkStudent', NULL);
+
+            $result = $comand->query();
+            foreach ($result as $row){
+                return $row;
+            }
         }
 }

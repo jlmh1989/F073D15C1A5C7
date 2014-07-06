@@ -126,4 +126,9 @@ class CatBssDay extends CActiveRecord
             $criteria->addCondition('status='.$status);
             return CHtml::listData(CatBssDay::model()->findAll($criteria),'pk_bss_day','desc_day');
         } 
+        
+        public static function getIdUltimoDia(){
+            $comand = Yii::app()->db->createCommand('select max(pk_bss_day) as idMax from tbl_e24_cat_bss_day');
+            return $comand->queryScalar();
+        }
 }

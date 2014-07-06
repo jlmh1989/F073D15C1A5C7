@@ -32,6 +32,11 @@ class CatBssHoursController extends Controller
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
 			),
+                        array('allow', // allow authenticated user to perform
+				'actions'=>array('getMinMaxHour'),
+                                'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
+				//'users'=>array('@'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -48,8 +53,20 @@ class CatBssHoursController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+        
+        public function actionGetMinMaxHour(){
+            $reader = CatBssHours::getMinMaxHour();
+            $json = '{';
+            foreach($reader as $row) { 
+                $hrMin = explode(":", $row['minHr']);
+                $hrMax = explode(":", $row['maxHr']);
+                $json .= '"minHr":'.$hrMin[0].',"maxHr":'.$hrMax[0];
+            }
+            $json .= '}';
+            echo $json;
+        }
 
-	/**
+        /**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */

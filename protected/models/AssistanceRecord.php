@@ -13,12 +13,14 @@
  * @property string $reschedule_date
  * @property string $reschedule_time
  * @property string $cancellation_reason
+ * @property integer $fk_level_detail
  *
  * The followings are the available model relations:
  * @property Courses $fkCourse
- * @property Courses $fkClient
+ * @property Clients $fkClient
  * @property CatStatusClass $fkStatusClass
  * @property Students $fkStudent
+ * @property CatLevelDetail $fkLevelDetail
  */
 class AssistanceRecord extends CActiveRecord
 {
@@ -58,9 +60,10 @@ class AssistanceRecord extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'fkCourse' => array(self::BELONGS_TO, 'Courses', 'fk_course'),
-			'fkClient' => array(self::BELONGS_TO, 'Courses', 'fk_client'),
+			'fkClient' => array(self::BELONGS_TO, 'Clients', 'fk_client'),
 			'fkStatusClass' => array(self::BELONGS_TO, 'CatStatusClass', 'fk_status_class'),
 			'fkStudent' => array(self::BELONGS_TO, 'Students', 'fk_student'),
+                        'fkLevelDetail' => array(self::BELONGS_TO, 'CatLevelDetail', 'fk_level_detail'),
 		);
 	}
 

@@ -35,7 +35,7 @@ class TeachersController extends Controller
 			),
                         array('allow', // allow authenticated user to perform
 				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno','adminAlumnos',
-                                                'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno'),
+                                                'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario','a'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -129,11 +129,21 @@ class TeachersController extends Controller
 	 */
 	public function actionDeleteStudent($id)
 	{
-		$model = Students::model()->findByPk($id)->delete();
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('adminAlumnos'));
+            $model = Students::model()->findByPk($id)->delete();
+            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+            if(!isset($_GET['ajax']))
+                    $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('adminAlumnos'));
 	}
+        
+        public function actionHorario(){
+            $this->render('horario');
+        }
+        
+        public function actionA() {
+            echo '<pre>';
+            print_r(Courses::getFechaFInPorcentaje(1));
+            echo '</pre>';
+        }
 
         /**
 	 * Creates a new model.

@@ -32,13 +32,22 @@ class CatBssDayController extends Controller
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
 			),
+                        array('allow', // allow authenticated user to perform
+				'actions'=>array('getFinDiaSemana'),
+                                'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
+				//'users'=>array('@'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
 	}
+        
+        public function actionGetFinDiaSemana(){
+            echo CatBssDay::getIdUltimoDia();
+        }
 
-	/**
+        /**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */

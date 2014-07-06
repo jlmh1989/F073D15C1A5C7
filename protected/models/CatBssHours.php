@@ -109,4 +109,9 @@ class CatBssHours extends CActiveRecord
            		            
             return CatBssHours::model()->findAll($criteria);
         } 
+        
+        public static function getMinMaxHour(){
+            $comand = Yii::app()->db->createCommand('SELECT min(initial_hour) as minHr, max(initial_hour) as maxHr FROM tbl_e24_cat_bss_hours');
+            return $comand->query();
+        }
 }

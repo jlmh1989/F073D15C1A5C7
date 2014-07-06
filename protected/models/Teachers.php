@@ -183,11 +183,12 @@ class Teachers extends CActiveRecord
                 $modelList = Courses::model()->findAll($criteria);
                 
                 foreach ($modelList as $model) {
+                    $infoCurso = Courses::getFechaFInPorcentaje($model->pk_course);
                     $css = '';
                     $botones = '';
                     $nombreGrupo = '';
                     $modelEstudiantes = Courses::getEstudiantes($model->pk_course, $model->fk_type_course);
-                    $porcentaje = rand(10, 100);
+                    $porcentaje = $infoCurso['tmp_percent'];
                     if($porcentaje >= 75){
                         $css = 'red';
                     }else if($porcentaje >= 50){
@@ -232,7 +233,7 @@ class Teachers extends CActiveRecord
                             <td style="font-weight: bold;">Fecha Inicio:</td>
                             <td>'.$model->initial_date.'</td>
                             <td style="font-weight: bold;">Fecha Fin:</td>
-                            <td></td>
+                            <td>'.$infoCurso['tmp_final_date'].'</td>
                             </tr>
                             <tr>
                             <td style="font-weight: bold;">Nivel:</td>
