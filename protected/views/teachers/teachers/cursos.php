@@ -4,7 +4,7 @@
 Yii::app()->clientScript->registerScript('script',
         '
         $(function() {
-            $(".meter > span").each(function() {
+            $(".meter > div > span").each(function() {
                 $(this)
                     .data("origWidth", $(this).width())
                     .width(0)
@@ -31,12 +31,12 @@ $this->menu = array(
     function cargarDatosCurso(idCurso){
         $(".datosCurso").css("visibility", "hidden");
         $(".meter").animate({
-            height: "45px"
+            height: "50px"
         }, 300);
-        if($("#div_curso_"+idCurso).height() <= 45){
+        if($("#div_curso_"+idCurso).height() <= 50){
             $("#datos_curso_"+idCurso).css("visibility", "");
             $("#div_curso_"+idCurso).animate({
-            height: "200px"
+            height: "210px"
             }, 300);
         }
     }

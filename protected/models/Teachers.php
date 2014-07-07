@@ -218,9 +218,9 @@ class Teachers extends CActiveRecord
                     
                     $html .= '<tr>
                             <td>
-                            <div id="div_curso_'.$model->pk_course.'" class="meter '.$css.' nostripes" style="width: 97%;font-size: 12px; height: 45px;">
-                            <div style="font-weight: bold; color: white; padding: 0px 5px 0px 10px; cursor: pointer" onClick="cargarDatosCurso('.$model->pk_course.')"><u>'.$model->desc_curse.'</u></div>
-                            <span style="width: '.$porcentaje.'%; font-weight: bold; text-align: center">('.$porcentaje.'%)</span>
+                            <div id="div_curso_'.$model->pk_course.'" class="meter '.$css.' nostripes" style="width: 97%;font-size: 12px; height: 50px;">
+                            <div style="font-weight: bold; color: white; padding: 0px 5px 0px 10px; cursor: pointer" onClick="cargarDatosCurso('.$model->pk_course.')"><u>'.$model->desc_curse.'</u> ('.$porcentaje.'% de avance)</div>
+                            <div class="barra"><span style="width: '.$porcentaje.'%; font-weight: bold; text-align: center"></span></div>
                             <div id="datos_curso_'.$model->pk_course.'" class="datosCurso" style="color: white; padding: 15px 5px 0px 10px;font-size: 14px; visibility:hidden;">
                             <table>
                             <tr>

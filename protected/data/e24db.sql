@@ -1,15 +1,10 @@
--- phpMyAdmin SQL Dump
--- version 4.1.12
--- http://www.phpmyadmin.net
---
 -- Servidor: localhost
--- Tiempo de generación: 20-06-2014 a las 22:45:18
+-- Tiempo de generación: 07-07-2014 a las 05:10:54
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -22,9 +17,569 @@ SET time_zone = "+00:00";
 
 DELIMITER $$
 --
+-- Funciones
+--
+CREATE DEFINER=`user2646055`@`localhost` FUNCTION `courseEndDate`(p_pk_course INT) RETURNS varchar(1000) CHARSET latin1
+    READS SQL DATA
+    DETERMINISTIC
+BEGIN
+	-- Declare variables used in this function
+  DECLARE v_initial_date       INT;
+  DECLARE v_initial_date_desc  VARCHAR(10);  
+  DECLARE v_total_time         INT DEFAULT 0;    
+  DECLARE v_count_time         INT DEFAULT 0;      
+  DECLARE v_fk_bss_day         INT DEFAULT 0;
+  DECLARE v_class_day          VARCHAR(10);
+  DECLARE v_class_time         INT DEFAULT 0;
+  DECLARE v_monday_time        INT DEFAULT 0;  
+  DECLARE v_tuesday_time       INT DEFAULT 0;  
+  DECLARE v_wednesday_time     INT DEFAULT 0;
+  DECLARE v_thursday_time      INT DEFAULT 0;
+  DECLARE v_friday_time        INT DEFAULT 0;  
+  DECLARE v_saturday_time      INT DEFAULT 0;
+  DECLARE v_sunday_time        INT DEFAULT 0;
+  DECLARE no_more_rows         BOOLEAN;
+  DECLARE find_day             BOOLEAN DEFAULT FALSE;
+  DECLARE contador             int default 0;
+  DECLARE class_counter        int default 0;
+  DECLARE v_time_spent         int default 0;
+  DECLARE stringnada           VARCHAR(1000) DEFAULT '';
+  
+  
+   -- Obtener un cursor con las llaves de los dias del curso , tiempo que dura la clase 
+   -- y la descripcion del dia de clase en ingles
+  DECLARE cur_schedul_calendar CURSOR FOR
+   select cs1.fk_bss_day, TIME_TO_SEC( cs1.final_hour  ) - TIME_TO_SEC( cs1.initial_hour  ) AS class_time, 
+   cb1.desc_day   
+    from tbl_e24_course_schedule  cs1
+     join tbl_e24_cat_bss_day  cb1 on (cs1.fk_bss_day = cb1.pk_bss_day)
+     where fk_course = p_pk_course;
+       
+   -- Declare 'handlers' for exceptions, this is for finish course
+    DECLARE CONTINUE HANDLER FOR NOT FOUND 
+                 SET no_more_rows = TRUE;     
+        
+    
+    -- Se obtiene el tiempo gastado, si existe
+    SELECT SUM(TIME_TO_SEC( TEMP.duration  )) 
+      INTO v_time_spent
+      FROM (
+            SELECT c1.duration
+              FROM tbl_e24_assistance_record a1
+              JOIN tbl_e24_cat_level_detail c1 
+                ON a1.fk_level_detail = c1.pk_level_detail
+              JOIN tbl_e24_cat_status_class c2 
+                ON (a1.fk_status_class = c2.pk_status_class 
+                    AND  c2.is_reschedule_motive = 0)
+             WHERE fk_course = p_pk_course
+            GROUP BY a1.class_date , a1.fk_course,fk_client
+           )    AS TEMP; 
+           
+      -- obtener el tiempo total del curso
+      SELECT SUM(TIME_TO_SEC( l1.duration  ))
+          INTO v_total_time    
+          FROM tbl_e24_cat_level_detail l1 
+          JOIN tbl_e24_courses c2 
+            ON ( c2.fk_level = l1.fk_level  
+                 AND c2.pk_course = p_pk_course             
+                )
+             AND l1.status = 1 ; 
+     set stringnada =concat(stringnada, concat(' v_time_spent: ',  v_time_spent));        
+     set stringnada =concat(stringnada, concat(' v_total_time: ',  v_total_time));            
+   -- Se valida si ya existen clases de curso, si es asi, tomar:
+    -- el dia de la ultima clase y la cantidad de horas gastadas
+    IF(v_time_spent > 0) THEN 
+      
+    -- El tiempo total sera la resta entre el inicial y el gastado  
+    SET v_total_time = v_total_time - v_time_spent;
+    set stringnada = concat(stringnada, concat(' 2v_total_time: ',  v_total_time)); 
+     
+    SELECT TO_DAYS(MAX(class_date)), DAYNAME(MAX(class_date))
+      INTO v_initial_date,  v_initial_date_desc 
+     FROM tbl_e24_assistance_record 
+     WHERE fk_course = 1 
+       AND reschedule_date IS NULL; 
+      set stringnada =concat(stringnada, concat(' 1v_initial_date: ',  v_initial_date)); 
+      set stringnada =concat(stringnada, concat(' 1v_initial_date_desc: ',  v_initial_date_desc));    
+         
+   ELSE  -- Si no existen clases, tomar el dia inical del curso y las horas totales
+      -- Se obtiene el dia inical en formato numerico desde el dia 0 D.C.
+      -- Se obtiene el dia inicial en texto ( dia de la semana en ingles)
+      select  TO_DAYS(initial_date), DAYNAME(initial_date) 
+      INTO v_initial_date,  v_initial_date_desc 
+      from tbl_e24_courses where pk_course = p_pk_course;
+     
+      set stringnada =concat(stringnada, concat(' v_initial_date: ',  v_initial_date)); 
+      set stringnada =concat(stringnada, concat(' v_initial_date_desc: ',  v_initial_date_desc)); 
+                                               
+   END IF;
+             
+  -- barrer cursor y colocar un peso a cada dia
+  OPEN cur_schedul_calendar;
+
+    schedul_loop: LOOP
+    FETCH cur_schedul_calendar 
+     INTO v_fk_bss_day,
+          v_class_time,
+          v_class_day;
+    
+    IF no_more_rows THEN
+          CLOSE cur_schedul_calendar;
+          LEAVE schedul_loop;
+    END IF;  
+      
+    set stringnada =concat(stringnada, concat(' v_fk_bss_day: ',  v_fk_bss_day));        
+    set stringnada =concat(stringnada, concat(' v_class_time: ',  v_class_time));        
+    set stringnada =concat(stringnada, concat(' v_class_day: ',  v_class_day));        
+            
+    IF ( 'MONDAY' LIKE UPPER(v_class_day)) THEN           
+     -- Colocar el tiempo que dura la clase este dia
+     SET v_monday_time = v_monday_time + v_class_time; 
+    ELSEIF ( 'TUESDAY' LIKE UPPER(v_class_day))  THEN
+     SET v_tuesday_time = v_tuesday_time + v_class_time;
+    ELSEIF ( 'WEDNESDAY' LIKE UPPER(v_class_day))  THEN
+     SET v_wednesday_time = v_wednesday_time+  v_class_time;
+    ELSEIF ( 'THURSDAY' LIKE UPPER(v_class_day))  THEN   
+     SET v_thursday_time = v_thursday_time +  v_class_time;
+    ELSEIF ( 'FRIDAY' LIKE UPPER(v_class_day))  THEN 
+     SET v_friday_time = v_friday_time + v_class_time;
+    ELSEIF ( 'SATURDAY' LIKE UPPER(v_class_day))  THEN
+     SET v_saturday_time = v_saturday_time + v_class_time;
+    ELSEIF ( 'SUNDAY' LIKE UPPER(v_class_day))  THEN
+     SET v_sunday_time = v_sunday_time + v_class_time;
+    END IF;
+                      
+                          
+    END LOOP schedul_loop;  
+    
+     set stringnada =concat(stringnada, concat(' v_monday_time: ',  v_monday_time));        
+     set stringnada =concat(stringnada, concat(' v_tuesday_time: ',  v_tuesday_time));        
+     set stringnada =concat(stringnada, concat(' v_wednesday_time: ',  v_wednesday_time));        
+     set stringnada =concat(stringnada, concat(' v_thursday_time: ',  v_thursday_time));        
+     set stringnada =concat(stringnada, concat(' v_friday_time: ',  v_friday_time));        
+     set stringnada =concat(stringnada, concat(' v_saturday_time: ',  v_saturday_time));        
+     set stringnada =concat(stringnada, concat(' v_sunday_time: ',  v_sunday_time));        
+    
+        
+    IF ( 'MONDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_monday_time;
+    END IF;
+  
+    IF ( 'TUESDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_tuesday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_tuesday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF;    
+    
+    IF ( 'WEDNESDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_wednesday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_wednesday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF; 
+    
+    IF ( 'THURSDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_thursday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_thursday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF; 
+    
+    IF ( 'FRIDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_friday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_friday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF; 
+    
+    IF ( 'SATURDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_saturday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_saturday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF; 
+    
+    IF ( 'SUNDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_sunday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_sunday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF;     
+            
+           set stringnada =concat(stringnada, concat(' v_count_time: ',  v_count_time));        
+           set stringnada =concat(stringnada, concat(' v_initial_date: ',  v_initial_date));
+           -- set contador = contador +1;
+   set stringnada =concat(stringnada, concat('--- v_total_time: ',  v_total_time));        
+           set stringnada =concat(stringnada, concat('--- v_count_time: ',  v_count_time));
+
+  -- crear un while y barrer mientras no se rebase la cantida de horas
+  -- sumar cada dia en 1 y sumar las horas correspondientes al dia
+  counter_loop: LOOP
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_monday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_tuesday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_wednesday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_thursday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_friday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_saturday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_sunday_time;
+    SET v_initial_date = v_initial_date + 1;   
+    set contador = contador +1;  
+  END LOOP counter_loop;
+  
+   set stringnada = concat(stringnada, concat(' contador: ',  contador));  
+  -- */
+  
+  -- convertir la fecha en un dia "racional"
+  return stringnada;
+  -- RETURN  FROM_DAYS(v_initial_date);
+ 
+END$$
+
+CREATE DEFINER=`user2646055`@`localhost` FUNCTION `courseInitialEndDate`(p_pk_course INT) RETURNS date
+    READS SQL DATA
+    DETERMINISTIC
+BEGIN
+	DECLARE v_initial_date       INT;
+  DECLARE v_initial_date_desc  VARCHAR(10);  
+  DECLARE v_total_time         INT DEFAULT 0;    
+  DECLARE v_count_time         INT DEFAULT 0;      
+  DECLARE v_fk_bss_day         INT DEFAULT 0;
+  DECLARE v_class_day          VARCHAR(10);
+  DECLARE v_class_time         INT DEFAULT 0;
+  DECLARE v_monday_time        INT DEFAULT 0;  
+  DECLARE v_tuesday_time       INT DEFAULT 0;  
+  DECLARE v_wednesday_time     INT DEFAULT 0;
+  DECLARE v_thursday_time      INT DEFAULT 0;
+  DECLARE v_friday_time        INT DEFAULT 0;  
+  DECLARE v_saturday_time      INT DEFAULT 0;
+  DECLARE v_sunday_time        INT DEFAULT 0;
+  DECLARE no_more_rows         BOOLEAN;
+  DECLARE find_day             BOOLEAN DEFAULT FALSE;
+  DECLARE contador             int default 0;
+  DECLARE stringnada           VARCHAR(1000) DEFAULT '';
+  
+  
+   -- Obtener un cursor con los id , tiempo que dura la clase y dia de la semana en ingles
+  DECLARE cur_schedul_calendar CURSOR FOR
+   select cs1.fk_bss_day, TIME_TO_SEC( cs1.final_hour  ) - TIME_TO_SEC( cs1.initial_hour  ) AS class_time, cb1.desc_day   
+    from tbl_e24_course_schedule  cs1
+     join tbl_e24_cat_bss_day  cb1 on (cs1.fk_bss_day = cb1.pk_bss_day)
+     where fk_course = p_pk_course;
+       
+   -- Declare 'handlers' for exceptions
+    DECLARE CONTINUE HANDLER FOR NOT FOUND 
+                 SET no_more_rows = TRUE;     
+  
+  
+  
+  
+  -- Se obtiene el dia inical en formato numerico desde el dia 0 D.C.
+  -- Se obtiene el dia inicial en texto ( dia de la semana en ingles)
+  select  TO_DAYS(initial_date), DAYNAME(initial_date) 
+  INTO v_initial_date,  v_initial_date_desc 
+  from tbl_e24_courses where pk_course = p_pk_course;
+  
+  
+   set stringnada =concat(stringnada, concat(' v_initial_date: ',  v_initial_date)); 
+   set stringnada =concat(stringnada, concat(' v_initial_date_desc: ',  v_initial_date_desc)); 
+  
+  -- obtener el tiempo total del curso
+  SELECT SUM(TIME_TO_SEC( l1.duration  ))
+      INTO v_total_time    
+      FROM tbl_e24_cat_level_detail l1 
+      JOIN tbl_e24_courses c2 
+        ON ( c2.fk_level = l1.fk_level  
+             AND c2.pk_course = p_pk_course             
+            )
+         AND l1.status = 1 ;
+            
+           
+  set stringnada =concat(stringnada, concat(' v_total_time: ',  v_total_time)); 
+  
+  -- barrer cursor y colocar un peso a cada dia
+  OPEN cur_schedul_calendar;
+
+    schedul_loop: LOOP
+    FETCH cur_schedul_calendar 
+     INTO v_fk_bss_day,
+          v_class_time,
+          v_class_day;
+    
+    IF no_more_rows THEN
+          CLOSE cur_schedul_calendar;
+          LEAVE schedul_loop;
+    END IF;  
+      
+    set stringnada =concat(stringnada, concat(' v_fk_bss_day: ',  v_fk_bss_day));        
+    set stringnada =concat(stringnada, concat(' v_class_time: ',  v_class_time));        
+    set stringnada =concat(stringnada, concat(' v_class_day: ',  v_class_day));        
+            
+    IF ( 'MONDAY' LIKE UPPER(v_class_day)) THEN           
+     -- Colocar el tiempo que dura la clase este dia
+     SET v_monday_time = v_monday_time + v_class_time; 
+    ELSEIF ( 'TUESDAY' LIKE UPPER(v_class_day))  THEN
+     SET v_tuesday_time = v_tuesday_time + v_class_time;
+    ELSEIF ( 'WEDNESDAY' LIKE UPPER(v_class_day))  THEN
+     SET v_wednesday_time = v_wednesday_time+  v_class_time;
+    ELSEIF ( 'THURSDAY' LIKE UPPER(v_class_day))  THEN   
+     SET v_thursday_time = v_thursday_time +  v_class_time;
+    ELSEIF ( 'FRIDAY' LIKE UPPER(v_class_day))  THEN 
+     SET v_friday_time = v_friday_time + v_class_time;
+    ELSEIF ( 'SATURDAY' LIKE UPPER(v_class_day))  THEN
+     SET v_saturday_time = v_saturday_time + v_class_time;
+    ELSEIF ( 'SUNDAY' LIKE UPPER(v_class_day))  THEN
+     SET v_sunday_time = v_sunday_time + v_class_time;
+    END IF;
+                      
+                          
+    END LOOP schedul_loop;  
+    
+     set stringnada =concat(stringnada, concat(' v_monday_time: ',  v_monday_time));        
+     set stringnada =concat(stringnada, concat(' v_tuesday_time: ',  v_tuesday_time));        
+     set stringnada =concat(stringnada, concat(' v_wednesday_time: ',  v_wednesday_time));        
+     set stringnada =concat(stringnada, concat(' v_thursday_time: ',  v_thursday_time));        
+     set stringnada =concat(stringnada, concat(' v_friday_time: ',  v_friday_time));        
+     set stringnada =concat(stringnada, concat(' v_saturday_time: ',  v_saturday_time));        
+     set stringnada =concat(stringnada, concat(' v_sunday_time: ',  v_sunday_time));        
+    
+        
+    IF ( 'MONDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_monday_time;
+    END IF;
+  
+    IF ( 'TUESDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_tuesday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_tuesday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF;    
+    
+    IF ( 'WEDNESDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_wednesday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_wednesday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF; 
+    
+    IF ( 'THURSDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_thursday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_thursday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF; 
+    
+    IF ( 'FRIDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_friday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_friday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF; 
+    
+    IF ( 'SATURDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_saturday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_saturday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF; 
+    
+    IF ( 'SUNDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+     -- validar si la bandera find_day es true, si es asi agregar un dia a la fecha inicial 
+        SET find_day      =  TRUE;
+        SET v_count_time  =  v_count_time + v_sunday_time;    
+    
+    ELSEIF(find_day) THEN    
+         SET v_count_time  =  v_count_time + v_sunday_time;   
+         SET v_initial_date = v_initial_date + 1;
+    END IF;     
+            
+           set stringnada =concat(stringnada, concat(' v_count_time: ',  v_count_time));        
+           set stringnada =concat(stringnada, concat(' v_initial_date: ',  v_initial_date));
+           set contador = contador +1;
+
+
+  -- crear un while y barrer mientras no se rebase la cantida de horas
+  -- sumar cada dia en 1 y sumar las horas correspondientes al dia
+  counter_loop: LOOP
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_monday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_tuesday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_wednesday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_thursday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_friday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_saturday_time;
+    SET v_initial_date = v_initial_date + 1;
+    set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;
+    
+  	SET v_count_time  = v_count_time + v_sunday_time;
+    SET v_initial_date = v_initial_date + 1;   
+    set contador = contador +1;  
+  END LOOP counter_loop;
+  
+   set stringnada = concat(stringnada, concat(' contador: ',  contador));  
+  
+  
+  -- convertir la fecha en un dia "racional"
+  -- RETURN stringnada;
+  RETURN  FROM_DAYS(v_initial_date);
+END$$
+
+CREATE DEFINER=`user2646055`@`localhost` FUNCTION `percentComplete`(p_pk_course INT) RETURNS decimal(5,2)
+    READS SQL DATA
+    DETERMINISTIC
+BEGIN
+	DECLARE v_percent_complete DECIMAL(5,2);
+  DECLARE v_time_spent       INT;
+  DECLARE v_total_time       INT;       
+  
+  -- Inicializar porcentaje en cero
+  SET v_percent_complete = 0;
+ 
+  -- Obtener suma de horas gastadas en clase al momento, 
+  -- se une la tabla catalogo detalle, para obtener de ahi las horas,
+  -- se une la tabla de estatus de clase, para obtener de ahi cuales son recalendarizadas
+  -- las recalendarizadas no se consideran como gastadas 
+  SELECT SUM(TIME_TO_SEC( TEMP.duration  )) 
+    INTO v_time_spent
+    FROM (
+          SELECT c1.duration
+            FROM tbl_e24_assistance_record a1
+            JOIN tbl_e24_cat_level_detail c1 
+              ON a1.fk_level_detail = c1.pk_level_detail
+            JOIN tbl_e24_cat_status_class c2 
+              ON (a1.fk_status_class = c2.pk_status_class 
+                  AND  c2.is_reschedule_motive = 0)
+           WHERE fk_course = p_pk_course
+          GROUP BY a1.class_date , a1.fk_course,fk_client
+         )    AS TEMP;
+    
+    -- Si el tiempo gastado es 0, terminar 
+    IF v_time_spent IS NULL OR v_time_spent = 0 THEN      
+      RETURN v_percent_complete;
+    END IF;
+    
+                  
+    -- Se obtiene el tiempo total de el curso 
+    SELECT SUM(TIME_TO_SEC( l1.duration  ))
+      INTO v_total_time    
+      FROM tbl_e24_cat_level_detail l1 
+      JOIN tbl_e24_courses c2 
+        ON ( c2.fk_level = l1.fk_level  
+             AND c2.pk_course = 1
+            );
+            
+    -- Si el tiempo TOTAL es 0, terminar 
+    IF v_total_time IS NULL OR v_total_time = 0 THEN      
+      RETURN v_percent_complete;
+    END IF;            
+       
+    -- Se obtiene el porcentaje completado del curso
+    SET v_percent_complete = ((v_time_spent /v_total_time) * 100);
+         
+	RETURN v_percent_complete;
+END$$
+
+--
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMaestrosDisponible`(in horarioMsg text)
+CREATE DEFINER=`user2646055`@`localhost` PROCEDURE `GetMaestrosDisponible`(in horarioMsg text)
 BEGIN
 	declare dia varchar(20) default '';
 	declare horarioTmp varchar(20) default '';
@@ -98,6 +653,533 @@ BEGIN
 	drop table maestro;
 END$$
 
+CREATE DEFINER=`user2646055`@`localhost` PROCEDURE `stp_coursedetail`(IN  p_pk_course        INT,
+									OUT p_final_date       DATE,
+                                    OUT p_percent_complete DECIMAL(5,2),                                         
+                                    OUT p_status           INT,
+                                    OUT p_message          VARCHAR(100)
+                                    )
+BEGIN
+
+  -- Declare variables used in this function
+  DECLARE v_initial_date       INT;
+  DECLARE v_initial_date_desc  VARCHAR(10);  
+  DECLARE v_total_time         INT DEFAULT 0;    
+  DECLARE v_count_time         INT DEFAULT 0;      
+  DECLARE v_fk_bss_day         INT DEFAULT 0;
+  DECLARE v_class_day          VARCHAR(10);
+  DECLARE v_class_time         INT DEFAULT 0;
+  DECLARE v_monday_time        INT DEFAULT 0;  
+  DECLARE v_tuesday_time       INT DEFAULT 0;  
+  DECLARE v_wednesday_time     INT DEFAULT 0;
+  DECLARE v_thursday_time      INT DEFAULT 0;
+  DECLARE v_friday_time        INT DEFAULT 0;  
+  DECLARE v_saturday_time      INT DEFAULT 0;
+  DECLARE v_sunday_time        INT DEFAULT 0;
+  DECLARE no_more_rows         BOOLEAN;
+  DECLARE find_day             BOOLEAN DEFAULT FALSE;
+  DECLARE contador             int default 0;
+  DECLARE class_counter        int default 0;
+  DECLARE v_time_spent         int default 0;
+  DECLARE stringnada           VARCHAR(1000) DEFAULT '';
+  DECLARE exist_previus_class  BOOLEAN DEFAULT FALSE;
+  DECLARE v_percent_complete      DECIMAL(5,2) DEFAULT 0.0;
+  
+  
+  -- OBTENER DIA DE CURSO, TIEMPO DE CLASE, Y DESCRIPCION DE DIA
+  DECLARE cur_schedul_calendar 
+   CURSOR FOR
+           SELECT cs1.fk_bss_day, 
+                  TIME_TO_SEC( cs1.final_hour  ) - TIME_TO_SEC( cs1.initial_hour  ) AS class_time, 
+                  cb1.desc_day   
+             FROM tbl_e24_course_schedule  cs1
+             JOIN tbl_e24_cat_bss_day  cb1 
+               ON (cs1.fk_bss_day = cb1.pk_bss_day)
+            WHERE fk_course = p_pk_course;
+       
+   -- DECLARAR VARIABLE PARA ADMINISTRAR LOOP'S
+   DECLARE CONTINUE HANDLER FOR NOT FOUND 
+                 SET no_more_rows = TRUE;     
+        
+    
+            
+    -- DECLARACION PARA MANEJO DE ERRORES
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+      BEGIN
+                GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+                                            @errno    = MYSQL_ERRNO,
+                                            @text     = MESSAGE_TEXT;
+          SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
+          SET p_status = 1;
+         ROLLBACK; -- Si ocurre un error, se revierten los cambios
+      END;       
+      
+    -- OBTENER TIEMPO GASTADO DEL CURSO ( SIRVE PARA VALIDAR TAMBIEN)
+    SELECT SUM(TIME_TO_SEC( TEMP.duration  )) 
+      INTO v_time_spent
+      FROM (
+            SELECT c1.duration
+              FROM tbl_e24_assistance_record a1
+              JOIN tbl_e24_cat_level_detail c1 
+                ON a1.fk_level_detail = c1.pk_level_detail
+              JOIN tbl_e24_cat_status_class c2 
+                ON (a1.fk_status_class = c2.pk_status_class 
+                    AND  c2.is_reschedule_motive = 0)
+             WHERE fk_course = p_pk_course
+            GROUP BY a1.class_date , a1.fk_course,fk_client
+           )    AS TEMP; 
+      
+      -- SI NO EXISTEN CLASES, DEFINIR TIEMPO GASTADO = 0
+    IF (v_time_spent is null) THEN SET v_time_spent = 0; END IF;
+           
+        -- OBTENER EL TIEMPO TOTAL DEL CURSO
+        SELECT SUM(TIME_TO_SEC( l1.duration  ))
+          INTO v_total_time    
+          FROM tbl_e24_cat_level_detail l1 
+          JOIN tbl_e24_courses c2 
+               ON ( c2.fk_level = l1.fk_level  
+                     AND c2.pk_course = p_pk_course             
+                    )
+               AND l1.status = 1 ;
+                 
+         -- set stringnada =concat(stringnada, concat(' v_time_spent: ',  v_time_spent));        
+         -- set stringnada =concat(stringnada, concat(' v_total_time: ',  v_total_time));            
+         
+         
+        -- VALIDAR SI EXISTE CLASES "GASTADAS"
+        IF(v_time_spent > 0) THEN 
+        
+        --  DEFINIR VARIABLE DE CLASES PREVIAS EN TRUE
+        SET exist_previus_class = TRUE;
+      
+        -- OBTENER EL PORCENTAJE DE HORAS GASTADAS
+        SET v_percent_complete = ((v_time_spent /v_total_time) * 100);
+        
+              
+        -- RESTAR EL TIEMPO GASTADO AL TOTAL
+        SET v_total_time = v_total_time - v_time_spent;
+        
+        -- OBTENER EL ULIMO DIA DE CLASE, EN NUMERO Y DESCRIPCION (INGLES)              
+        SELECT TO_DAYS(MAX(a1.class_date)), 
+               DAYNAME(MAX(a1.class_date))
+          INTO v_initial_date,  
+               v_initial_date_desc 
+          FROM tbl_e24_assistance_record a1
+          JOIN tbl_e24_cat_status_class c2 
+            ON (a1.fk_status_class = c2.pk_status_class 
+                AND  c2.is_reschedule_motive = 0)     
+         WHERE fk_course = p_pk_course;
+    
+    
+        -- set stringnada = concat(stringnada, concat(' 2v_total_time: ',  v_total_time));        
+        -- set stringnada =concat(stringnada, concat(' 1v_initial_date: ',FROM_DAYS(v_initial_date)  )); 
+        -- set stringnada =concat(stringnada, concat(' 1v_initial_date_desc: ',  v_initial_date_desc));          
+   
+   -- SI NO HAY CLASES PREVIAS, OBTENER EL DIA INICIAL ORIGINAL      
+   ELSE  
+
+      SELECT  TO_DAYS(initial_date), 
+              DAYNAME(initial_date) 
+        INTO  v_initial_date,  
+              v_initial_date_desc 
+        FROM  tbl_e24_courses 
+       WHERE  pk_course = p_pk_course;
+     
+      -- set stringnada =concat(stringnada, concat(' v_initial_date: ',  v_initial_date)); 
+      -- set stringnada =concat(stringnada, concat(' v_initial_date_desc: ',  v_initial_date_desc)); 
+                                               
+   END IF;
+         
+  -- ABRIR CURSOR DE DIAS DE CALENDARIO
+   OPEN cur_schedul_calendar;
+
+  -- BARRER CURSOR PARA DARLE "PESO" A CADA DIA 
+  schedul_loop: LOOP
+    
+          FETCH cur_schedul_calendar 
+           INTO v_fk_bss_day,
+                v_class_time,
+                v_class_day;
+          
+          IF no_more_rows THEN
+                CLOSE cur_schedul_calendar;
+                LEAVE schedul_loop;
+          END IF;  
+            
+          -- set stringnada =concat(stringnada, concat(' v_fk_bss_day: ',  v_fk_bss_day));        
+          -- set stringnada =concat(stringnada, concat(' v_class_time: ',  v_class_time));        
+          -- set stringnada =concat(stringnada, concat(' v_class_day: ',  v_class_day));        
+                  
+          IF     ( 'MONDAY'    LIKE UPPER(v_class_day)) THEN  SET v_monday_time    = v_monday_time   + v_class_time; 
+          ELSEIF ( 'TUESDAY'   LIKE UPPER(v_class_day)) THEN  SET v_tuesday_time   = v_tuesday_time  + v_class_time;
+          ELSEIF ( 'WEDNESDAY' LIKE UPPER(v_class_day)) THEN  SET v_wednesday_time = v_wednesday_time+ v_class_time;
+          ELSEIF ( 'THURSDAY'  LIKE UPPER(v_class_day)) THEN  SET v_thursday_time  = v_thursday_time + v_class_time;
+          ELSEIF ( 'FRIDAY'    LIKE UPPER(v_class_day)) THEN  SET v_friday_time    = v_friday_time   + v_class_time;
+          ELSEIF ( 'SATURDAY'  LIKE UPPER(v_class_day)) THEN  SET v_saturday_time  = v_saturday_time + v_class_time;
+          ELSEIF ( 'SUNDAY'    LIKE UPPER(v_class_day)) THEN  SET v_sunday_time    = v_sunday_time   + v_class_time;
+          END IF;
+                                                      
+    END LOOP schedul_loop;  
+    
+    
+    
+    -- VALIDAR QUE DIA ES EL INICAL, ESTA ETAPA ES PARA "CONTAR" LA PRIMERA SEMANA 
+    BEGIN 
+        IF ( 'MONDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+            SET find_day      =  TRUE;
+            SET v_count_time  =  v_count_time + IF(exist_previus_class,0,v_monday_time);
+        END IF;
+      
+        IF ( 'TUESDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+            SET find_day      =  TRUE;
+            SET v_count_time  =  v_count_time + IF(exist_previus_class,0,v_tuesday_time);        
+        ELSEIF(find_day) THEN    
+             SET v_count_time  =  v_count_time + v_tuesday_time;   
+             SET v_initial_date = v_initial_date + 1;
+        END IF;    
+        
+        IF ( 'WEDNESDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+            SET find_day      =  TRUE;
+            SET v_count_time  =  v_count_time + IF(exist_previus_class,0,v_wednesday_time);        
+        ELSEIF(find_day) THEN    
+             SET v_count_time  =  v_count_time + v_wednesday_time;   
+             SET v_initial_date = v_initial_date + 1;
+        END IF; 
+        
+        IF ( 'THURSDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+            SET find_day      =  TRUE;
+            SET v_count_time  =  v_count_time + IF(exist_previus_class,0,v_thursday_time);        
+        ELSEIF(find_day) THEN    
+             SET v_count_time  =  v_count_time + v_thursday_time;   
+             SET v_initial_date = v_initial_date + 1;
+        END IF; 
+        
+        IF ( 'FRIDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+            SET find_day      =  TRUE;
+            SET v_count_time  =  v_count_time + IF(exist_previus_class,0,v_friday_time);        
+        ELSEIF(find_day) THEN    
+             SET v_count_time  =  v_count_time + v_friday_time;   
+             SET v_initial_date = v_initial_date + 1;
+        END IF; 
+        
+        IF ( 'SATURDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+            SET find_day      =  TRUE;
+            SET v_count_time  =  v_count_time + IF(exist_previus_class,0,v_saturday_time);        
+        ELSEIF(find_day) THEN    
+             SET v_count_time  =  v_count_time + v_saturday_time;   
+             SET v_initial_date = v_initial_date + 1;
+        END IF; 
+        
+        IF ( 'SUNDAY' LIKE UPPER(v_initial_date_desc)) THEN     
+            SET find_day      =  TRUE;
+            SET v_count_time  =  v_count_time + IF(exist_previus_class,0,v_sunday_time);        
+        ELSEIF(find_day) THEN    
+             SET v_count_time  =  v_count_time + v_sunday_time;   
+             SET v_initial_date = v_initial_date + 1;
+        END IF;     
+    END;        
+    -- set stringnada =concat(stringnada, concat(' v_count_time: ',  v_count_time));        
+    -- set stringnada =concat(stringnada, concat(' v_initial_date: ',  v_initial_date));          
+    -- set stringnada =concat(stringnada, concat('--- v_total_time: ',  v_total_time));        
+    -- set stringnada =concat(stringnada, concat('--- v_count_time: ',  v_count_time));
+  
+  -- CREAR CICLO Y RECORRER HASTA OBTENER REBASAR LAS HORAS DEL CURSO
+  -- SE VA SUMANDO UN DIA EN CADA DIA Y LAS HORAS CORRESPONDIENTES
+  counter_loop: LOOP
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;    
+    	SET v_count_time  = v_count_time + v_monday_time;
+      SET v_initial_date = v_initial_date + 1;
+      -- set contador = contador +1;
+
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;    
+    	SET v_count_time  = v_count_time + v_tuesday_time;
+      SET v_initial_date = v_initial_date + 1;
+      -- set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;    
+    	SET v_count_time  = v_count_time + v_wednesday_time;
+      SET v_initial_date = v_initial_date + 1;
+      -- set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;    
+    	SET v_count_time  = v_count_time + v_thursday_time;
+      SET v_initial_date = v_initial_date + 1;
+      -- set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;    
+    	SET v_count_time  = v_count_time + v_friday_time;
+      SET v_initial_date = v_initial_date + 1;
+      -- set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;    
+    	SET v_count_time  = v_count_time + v_saturday_time;
+      SET v_initial_date = v_initial_date + 1;
+      -- set contador = contador +1;
+    
+    IF  v_count_time  >= v_total_time THEN LEAVE counter_loop; END IF;    
+    	SET v_count_time  = v_count_time + v_sunday_time;
+      SET v_initial_date = v_initial_date + 1;   
+      -- set contador = contador +1;  
+  END LOOP counter_loop;
+
+  -- set stringnada = concat(stringnada, concat(' contador: ',  contador));  
+       
+  -- AGREGAR LOS VALORES A LAS VARIABLE DE SALIDA, LA FECHA SE TRANSFORMA EN UNA RACIONAL
+  -- set p_stringnada = stringnada;
+  SET p_final_date = FROM_DAYS(v_initial_date);
+  SET p_percent_complete = v_percent_complete;
+  SET p_status = 0;
+  SET p_message = 'Executed Successfully';
+END$$
+
+CREATE DEFINER=`user2646055`@`localhost` PROCEDURE `stp_courses`(IN  p_pk_course  INT,
+                                   IN  p_pk_client    INT,
+                                   IN  p_pk_teacher   INT,
+                                   IN  p_pk_student   INT,
+                                   OUT p_status       INT,
+                                   OUT p_message      VARCHAR(100))
+BEGIN
+	/* Inicia Area para declaracion de variables, a diferencia de oracle, 
+     aqui se declaran las expeciones */
+     
+    DECLARE v_pk_course, v_total_hours INT;
+    DECLARE v_initial_date DATE;
+    
+    DECLARE no_more_rows BOOLEAN;
+     -- Aqui se declaran los querys para obtener cursos, duracion y fecha de inicio
+     -- cursor de filtro por alumno
+    DECLARE  cur_student   CURSOR FOR
+          SELECT c1.pk_course,  
+                 l1.total_hours, 
+                 c1.initial_date 
+            FROM tbl_e24_courses    c1
+            JOIN tbl_e24_cat_levels l1  
+              ON (c1.fk_level = l1.pk_level )
+            JOIN tbl_e24_students_group sg1
+              ON (c1.fk_group IS NOT NULL 
+                  AND  c1.fk_group = sg1.fk_group  
+                  AND  sg1.pk_student_group = p_pk_student)  
+            WHERE  c1.status in (0,1);  
+     
+      -- cursor de filtro por lo demas
+    DECLARE  cur_others   CURSOR FOR        
+              SELECT c1.pk_course,  
+                     l1.total_hours, 
+                     c1.initial_date 
+                FROM tbl_e24_courses    c1
+                JOIN tbl_e24_cat_levels l1  
+                  ON (c1.fk_level = l1.pk_level )
+               WHERE ( c1.pk_course  = p_pk_course  or p_pk_course  is null)
+                 AND ( c1.fk_client  = p_pk_client  or p_pk_client  is null)
+                 AND ( c1.fk_teacher = p_pk_teacher or p_pk_teacher is null)
+                 AND c1.status in (0,1);            
+     
+     
+   
+    -- Declare 'handlers' for exceptions
+    DECLARE CONTINUE HANDLER FOR NOT FOUND 
+                 SET no_more_rows = TRUE;               
+               
+    -- Declaracion para atrapar los errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+      BEGIN
+                GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+                                      @errno    = MYSQL_ERRNO,
+                                      @text     = MESSAGE_TEXT;
+          SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
+          SET p_status = 1;
+         ROLLBACK; -- Si ocurre un error, se revierten los cambios
+      END;   
+   -- Para fines de prueba, descomentar la linea de abajo si se decea probar el manejo de errores
+   -- DROP TABLE test.no_such_tableS;
+   
+  /* Fin Area para declaracion de variables */
+      
+
+  /* Se debe considerar diferentes estatus para el curso
+  *  0 =  Inactivo   --> Cuando se da alta y no se ha asignado alumnos o no se ha dado niguna clase
+  *  1 =  Activo     --> Cuando se agregan los alumnos y se da la primera clase
+  *  2 =  Terminado  --> Una ves que el curso se termina se le pone este estatus.
+  *                      Para fines de busqueda estos no se consideran en esta consulta
+  */
+
+  -- Validar si se requiere filtrar por alumno
+  IF p_pk_student IS NOT NULL THEN
+  
+    OPEN cur_student;
+
+    student_loop: LOOP
+    FETCH cur_student 
+     INTO v_pk_course, 
+          v_total_hours,
+          v_initial_date;
+    
+    IF no_more_rows THEN
+          CLOSE cur_student;
+          LEAVE student_loop;
+    END IF;      
+      
+      
+      
+    
+    END LOOP student_loop;
+  
+    
+  -- De otra forma se filtra por curso, cliente ,  maestro o ninguno
+  ELSE
+   
+      OPEN cur_others;
+
+      others_loop: LOOP
+        FETCH cur_others 
+         INTO v_pk_course, 
+              v_total_hours,
+              v_initial_date;
+        
+        IF no_more_rows THEN
+              CLOSE cur_others;
+              LEAVE others_loop;
+        END IF;          
+  
+  
+      END LOOP others_loop;
+  
+  END IF;
+ 
+       SET p_status = 0;
+       SET p_message = 'Executed Successfully';
+END$$
+
+CREATE DEFINER=`user2646055`@`localhost` PROCEDURE `stp_courses_cursor`( IN  p_pk_course  INT,
+															IN  p_pk_client    INT,
+															IN  p_pk_teacher   INT,
+															IN  p_pk_student   INT,
+															OUT p_status       INT,
+															OUT p_message      VARCHAR(100))
+BEGIN
+	--  INICIA AREA DE DECLARACION DE VARIABLES
+    DECLARE v_pk_course, v_total_hours INT;
+    DECLARE v_initial_date DATE;    
+    DECLARE no_more_rows BOOLEAN;
+    
+    -- DECLARACION DE CURSORES SE OBTIENE ID CURSO, DIA INICIAL
+    -- CURSOR PARA ALUMNO
+    DECLARE  cur_student   CURSOR FOR
+          SELECT c1.pk_course,  
+                 c1.initial_date 
+            FROM tbl_e24_courses    c1
+            JOIN tbl_e24_students_group sg1
+              ON (c1.fk_group IS NOT NULL 
+                  AND  c1.fk_group = sg1.fk_group  
+                  AND  sg1.pk_student_group = p_pk_student)  
+            WHERE  c1.status in (0,1);  
+     
+    -- CURSOR PARA TODOS LOS DEMAS ROLES
+    DECLARE  cur_others   CURSOR FOR        
+              SELECT c1.pk_course,   
+                     c1.initial_date 
+                FROM tbl_e24_courses    c1
+               WHERE ( c1.pk_course  = p_pk_course  or p_pk_course  is null)
+                 AND ( c1.fk_client  = p_pk_client  or p_pk_client  is null)
+                 AND ( c1.fk_teacher = p_pk_teacher or p_pk_teacher is null)
+                 AND c1.status in (0,1);            
+     
+     
+   
+    -- DECLARACION PARA MANEJO DE FIN DE LOOP'S
+    DECLARE CONTINUE HANDLER FOR NOT FOUND 
+                 SET no_more_rows = TRUE;               
+               
+    -- DECLARACION PARA ATRAPAR ERRORES
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+      BEGIN
+                GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+                                      @errno    = MYSQL_ERRNO,
+                                      @text     = MESSAGE_TEXT;
+          SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
+          SET p_status = 1;
+          DROP TEMPORARY TABLE IF EXISTS tbl_courses_tmp;
+         ROLLBACK; -- Si ocurre un error, se revierten los cambios
+      END;   
+      
+    -- Para fines de prueba, descomentar la linea de abajo si se decea probar el manejo de errores
+    -- DROP TABLE test.no_such_tableS;
+           
+    /* Se debe considerar diferentes estatus para el curso
+    *  0 =  Inactivo   --> Cuando se da alta y no se ha asignado alumnos o no se ha dado niguna clase
+    *  1 =  Activo     --> Cuando se agregan los alumnos y se da la primera clase
+    *  2 =  Terminado  --> Una ves que el curso se termina se le pone este estatus.
+    *                      Para fines de busqueda estos no se consideran en esta consulta
+    */
+
+  DROP TEMPORARY TABLE IF EXISTS tbl_courses_tmp;
+  CREATE TEMPORARY TABLE tbl_courses_tmp (tmp_course int, tmp_initial_date date, tmp_final_date date, tmp_percent DECIMAL(5,2));
+
+
+  -- VALIDAR SI SE REQUIERE FILTRAR POR ALUMNO
+  IF p_pk_student IS NOT NULL THEN
+  
+    -- ABRIR CURSOR DE ALUMNOS
+    OPEN cur_student;
+
+    -- RECORRER CURSOR
+    student_loop: LOOP
+        FETCH cur_student 
+         INTO v_pk_course, 
+              v_initial_date;
+        
+        IF no_more_rows THEN
+              CLOSE cur_student;
+              LEAVE student_loop;
+        END IF;      
+        
+        CALL stp_coursedetail(v_pk_course, @date,@percent,@status,@msg);
+        
+        IF(@status = 0) THEN  
+           INSERT INTO tbl_courses_tmp VALUES (v_pk_course,v_initial_date,@date,@percent);           
+        END IF;
+        
+        
+    END LOOP student_loop;
+  
+  
+  -- SI NO SE FILTRA POR ALUMNO
+  ELSE
+      
+      -- ABRIR CURSOR DE ALUMNOS   
+      OPEN cur_others;
+      
+      -- RECORRER CURSOR
+      others_loop: LOOP
+        FETCH cur_others 
+         INTO v_pk_course, 
+              v_initial_date;
+        
+        IF no_more_rows THEN
+              CLOSE cur_others;
+              LEAVE others_loop;
+        END IF;          
+  
+        CALL stp_coursedetail(v_pk_course, @date,@percent,@status,@msg);
+        
+        IF(@status = 0) THEN  
+           INSERT INTO tbl_courses_tmp VALUES (v_pk_course,v_initial_date,@date,@percent);           
+        END IF;  
+  
+      END LOOP others_loop;
+  
+  END IF;
+   
+   SELECT tmp_course , tmp_initial_date , tmp_final_date , tmp_percent 
+   FROM tbl_courses_tmp;
+   
+   DROP TEMPORARY TABLE IF EXISTS tbl_courses_tmp;
+   
+   
+   SET p_status = 0;
+   SET p_message = 'Executed Successfully';
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -116,71 +1198,73 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_assistance_record` (
   `reschedule_date` date DEFAULT NULL,
   `reschedule_time` time DEFAULT NULL,
   `cancellation_reason` varchar(100) DEFAULT NULL,
+  `fk_level_detail` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`pk_assistance`),
   UNIQUE KEY `XPKe24_assistance_record` (`pk_assistance`,`fk_course`,`fk_student`,`fk_client`),
   KEY `fk_curse` (`fk_course`),
   KEY `fk_student` (`fk_student`),
   KEY `fk_client` (`fk_client`),
   KEY `XIF1e24_assistance_record` (`fk_course`,`fk_client`),
-  KEY `XIF3e24_assistance_record` (`fk_status_class`)
+  KEY `XIF3e24_assistance_record` (`fk_status_class`),
+  KEY `fk_level_detail` (`fk_level_detail`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=52 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_assistance_record`
 --
 
-INSERT INTO `tbl_e24_assistance_record` (`pk_assistance`, `class_date`, `fk_course`, `fk_client`, `fk_student`, `fk_status_class`, `reschedule_date`, `reschedule_time`, `cancellation_reason`) VALUES
-(1, '2013-12-20', 1, 1, 1, 19, NULL, NULL, NULL),
-(2, '2013-12-20', 1, 1, 2, 19, NULL, NULL, NULL),
-(3, '2013-12-20', 1, 1, 3, 19, NULL, NULL, NULL),
-(4, '2013-12-20', 1, 1, 4, 19, NULL, NULL, NULL),
-(5, '2013-12-20', 1, 1, 5, 19, NULL, NULL, NULL),
-(6, '2013-12-22', 1, 1, 1, 19, NULL, NULL, NULL),
-(7, '2013-12-22', 1, 1, 2, 19, NULL, NULL, NULL),
-(8, '2013-12-22', 1, 1, 3, 19, NULL, NULL, NULL),
-(9, '2013-12-22', 1, 1, 4, 19, NULL, NULL, NULL),
-(10, '2013-12-22', 1, 1, 5, 19, NULL, NULL, NULL),
-(11, '2013-12-24', 1, 1, 1, 20, NULL, NULL, NULL),
-(12, '2013-12-24', 1, 1, 2, 20, NULL, NULL, NULL),
-(13, '2013-12-24', 1, 1, 3, 20, NULL, NULL, NULL),
-(14, '2013-12-24', 1, 1, 4, 20, NULL, NULL, NULL),
-(15, '2013-12-24', 1, 1, 5, 20, NULL, NULL, NULL),
-(16, '2013-12-26', 1, 1, 1, 18, NULL, NULL, NULL),
-(17, '2013-12-26', 1, 1, 2, 19, NULL, NULL, NULL),
-(18, '2013-12-26', 1, 1, 3, 19, NULL, NULL, NULL),
-(19, '2013-12-26', 1, 1, 4, 19, NULL, NULL, NULL),
-(20, '2013-12-26', 1, 1, 5, 20, NULL, NULL, NULL),
-(21, '2013-12-28', 1, 1, 1, 21, NULL, NULL, NULL),
-(22, '2013-12-28', 1, 1, 2, 21, NULL, NULL, NULL),
-(23, '2013-12-28', 1, 1, 3, 21, NULL, NULL, NULL),
-(24, '2013-12-28', 1, 1, 4, 21, NULL, NULL, NULL),
-(25, '2013-12-28', 1, 1, 5, 21, NULL, NULL, NULL),
-(26, '2013-12-30', 1, 1, 1, 19, NULL, NULL, NULL),
-(27, '2013-12-30', 1, 1, 2, 19, NULL, NULL, NULL),
-(28, '2013-12-30', 1, 1, 3, 19, NULL, NULL, NULL),
-(29, '2013-12-30', 1, 1, 4, 19, NULL, NULL, NULL),
-(30, '2013-12-30', 1, 1, 5, 19, NULL, NULL, NULL),
-(31, '2014-01-11', 1, 1, 1, 19, NULL, NULL, NULL),
-(32, '2014-01-11', 1, 1, 2, 19, NULL, NULL, NULL),
-(33, '2014-01-11', 1, 1, 3, 19, NULL, NULL, NULL),
-(34, '2014-01-11', 1, 1, 4, 19, NULL, NULL, NULL),
-(35, '2014-01-11', 1, 1, 5, 19, NULL, NULL, NULL),
-(36, '2014-01-13', 1, 1, NULL, 14, '2014-01-14', '08:00:00', 'La empresa realizo inventario'),
-(37, '2014-01-14', 1, 1, 1, 19, NULL, NULL, NULL),
-(38, '2014-01-14', 1, 1, 2, 19, NULL, NULL, NULL),
-(39, '2014-01-14', 1, 1, 3, 19, NULL, NULL, NULL),
-(40, '2014-01-14', 1, 1, 4, 19, NULL, NULL, NULL),
-(41, '2014-01-14', 1, 1, 5, 19, NULL, NULL, NULL),
-(42, '2014-01-15', 1, 1, 1, 19, NULL, NULL, NULL),
-(43, '2014-01-15', 1, 1, 2, 19, NULL, NULL, NULL),
-(44, '2014-01-15', 1, 1, 3, 19, NULL, NULL, NULL),
-(45, '2014-01-15', 1, 1, 4, 19, NULL, NULL, NULL),
-(46, '2014-01-15', 1, 1, 5, 19, NULL, NULL, NULL),
-(47, '2014-01-17', 1, 1, 1, 19, NULL, NULL, NULL),
-(48, '2014-01-17', 1, 1, 2, 19, NULL, NULL, NULL),
-(49, '2014-01-17', 1, 1, 3, 19, NULL, NULL, NULL),
-(50, '2014-01-17', 1, 1, 4, 19, NULL, NULL, NULL),
-(51, '2014-01-17', 1, 1, 5, 19, NULL, NULL, NULL);
+INSERT INTO `tbl_e24_assistance_record` (`pk_assistance`, `class_date`, `fk_course`, `fk_client`, `fk_student`, `fk_status_class`, `reschedule_date`, `reschedule_time`, `cancellation_reason`, `fk_level_detail`) VALUES
+(1, '2013-12-20', 1, 1, 1, 19, NULL, NULL, NULL, 2),
+(2, '2013-12-20', 1, 1, 2, 19, NULL, NULL, NULL, 2),
+(3, '2013-12-20', 1, 1, 3, 19, NULL, NULL, NULL, 2),
+(4, '2013-12-20', 1, 1, 4, 19, NULL, NULL, NULL, 2),
+(5, '2013-12-20', 1, 1, 5, 19, NULL, NULL, NULL, 2),
+(6, '2013-12-22', 1, 1, 1, 19, NULL, NULL, NULL, 2),
+(7, '2013-12-22', 1, 1, 2, 19, NULL, NULL, NULL, 2),
+(8, '2013-12-22', 1, 1, 3, 19, NULL, NULL, NULL, 2),
+(9, '2013-12-22', 1, 1, 4, 19, NULL, NULL, NULL, 2),
+(10, '2013-12-22', 1, 1, 5, 19, NULL, NULL, NULL, 2),
+(11, '2013-12-24', 1, 1, 1, 20, NULL, NULL, NULL, 2),
+(12, '2013-12-24', 1, 1, 2, 20, NULL, NULL, NULL, 2),
+(13, '2013-12-24', 1, 1, 3, 20, NULL, NULL, NULL, 2),
+(14, '2013-12-24', 1, 1, 4, 20, NULL, NULL, NULL, 2),
+(15, '2013-12-24', 1, 1, 5, 20, NULL, NULL, NULL, 2),
+(16, '2013-12-26', 1, 1, 1, 18, NULL, NULL, NULL, 2),
+(17, '2013-12-26', 1, 1, 2, 19, NULL, NULL, NULL, 2),
+(18, '2013-12-26', 1, 1, 3, 19, NULL, NULL, NULL, 2),
+(19, '2013-12-26', 1, 1, 4, 19, NULL, NULL, NULL, 2),
+(20, '2013-12-26', 1, 1, 5, 20, NULL, NULL, NULL, 2),
+(21, '2013-12-28', 1, 1, 1, 21, NULL, NULL, NULL, 2),
+(22, '2013-12-28', 1, 1, 2, 21, NULL, NULL, NULL, 2),
+(23, '2013-12-28', 1, 1, 3, 21, NULL, NULL, NULL, 2),
+(24, '2013-12-28', 1, 1, 4, 21, NULL, NULL, NULL, 2),
+(25, '2013-12-28', 1, 1, 5, 21, NULL, NULL, NULL, 2),
+(26, '2013-12-30', 1, 1, 1, 19, NULL, NULL, NULL, 2),
+(27, '2013-12-30', 1, 1, 2, 19, NULL, NULL, NULL, 2),
+(28, '2013-12-30', 1, 1, 3, 19, NULL, NULL, NULL, 2),
+(29, '2013-12-30', 1, 1, 4, 19, NULL, NULL, NULL, 2),
+(30, '2013-12-30', 1, 1, 5, 19, NULL, NULL, NULL, 2),
+(31, '2014-01-11', 1, 1, 1, 19, NULL, NULL, NULL, 2),
+(32, '2014-01-11', 1, 1, 2, 19, NULL, NULL, NULL, 2),
+(33, '2014-01-11', 1, 1, 3, 19, NULL, NULL, NULL, 2),
+(34, '2014-01-11', 1, 1, 4, 19, NULL, NULL, NULL, 2),
+(35, '2014-01-11', 1, 1, 5, 19, NULL, NULL, NULL, 2),
+(36, '2014-01-13', 1, 1, NULL, 14, '2014-01-14', '08:00:00', 'La empresa realizo inventario', 2),
+(37, '2014-01-14', 1, 1, 1, 19, NULL, NULL, NULL, 2),
+(38, '2014-01-14', 1, 1, 2, 19, NULL, NULL, NULL, 2),
+(39, '2014-01-14', 1, 1, 3, 19, NULL, NULL, NULL, 2),
+(40, '2014-01-14', 1, 1, 4, 19, NULL, NULL, NULL, 2),
+(41, '2014-01-14', 1, 1, 5, 19, NULL, NULL, NULL, 2),
+(42, '2014-01-15', 1, 1, 1, 19, NULL, NULL, NULL, 2),
+(43, '2014-01-15', 1, 1, 2, 19, NULL, NULL, NULL, 2),
+(44, '2014-01-15', 1, 1, 3, 19, NULL, NULL, NULL, 2),
+(45, '2014-01-15', 1, 1, 4, 19, NULL, NULL, NULL, 2),
+(46, '2014-01-15', 1, 1, 5, 19, NULL, NULL, NULL, 2),
+(47, '2014-01-17', 1, 1, 1, 19, NULL, NULL, NULL, 2),
+(48, '2014-01-17', 1, 1, 2, 19, NULL, NULL, NULL, 2),
+(49, '2014-01-17', 1, 1, 3, 19, NULL, NULL, NULL, 2),
+(50, '2014-01-17', 1, 1, 4, 19, NULL, NULL, NULL, 2),
+(51, '2014-01-17', 1, 1, 5, 19, NULL, NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -233,19 +1317,19 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_cat_bss_day` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`pk_bss_day`),
   UNIQUE KEY `XPKe24_cat_bss_day` (`pk_bss_day`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_cat_bss_day`
 --
 
 INSERT INTO `tbl_e24_cat_bss_day` (`pk_bss_day`, `desc_day`, `initial_hour`, `final_hour`, `range_time`, `status`) VALUES
-(4, 'Lunes', '07:00:00', '20:00:00', '01:30:00', 1),
-(5, 'Martes', '07:00:00', '20:00:00', '01:30:00', 1),
-(6, 'Miercoles', '07:00:00', '20:00:00', '01:30:00', 1),
-(7, 'Jueves', '07:00:00', '20:00:00', '01:30:00', 1),
-(8, 'Viernes', '07:00:00', '20:00:00', '01:30:00', 1),
-(9, 'Sabado', '09:00:00', '13:00:00', '03:00:00', 1);
+(1, 'Monday', '07:00:00', '20:00:00', '01:30:00', 1),
+(2, 'Tuesday', '07:00:00', '20:00:00', '01:30:00', 1),
+(3, 'Wednesday', '07:00:00', '20:00:00', '01:30:00', 1),
+(4, 'Thursday', '07:00:00', '20:00:00', '01:30:00', 1),
+(5, 'Friday', '07:00:00', '20:00:00', '01:30:00', 1),
+(6, 'Saturday', '09:00:00', '13:00:00', '03:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -726,7 +1810,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
   KEY `XIF4e24_courses` (`fk_teacher`),
   KEY `XIF5e24_courses` (`fk_type_course`),
   KEY `fk_classrom_address` (`fk_classrom_address`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_courses`
@@ -739,15 +1823,12 @@ INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher
 (4, 3, 3, 4, 5, 4, 3, '2013-12-24', 'Curso vitro  2', NULL, 1),
 (5, 3, 2, 3, 4, NULL, 2, '2013-12-25', 'Curso particular  1', NULL, 0),
 (6, 3, 4, 4, 4, NULL, 4, '2013-12-25', 'Curso particular  2', NULL, 0),
-(7, 3, 3, 11, 4, 2, 3, '2014-04-24', 'Ejemplo Curso 08:00', '', 1),
-(8, 3, 1, 3, 4, 2, 1, '2014-04-16', 'Ejemplo curso con horario', '', 0),
 (9, 3, 4, 7, 4, 2, 4, '2014-05-08', 'Curso con horario', '', 1),
-(10, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(11, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(12, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(13, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 0),
 (14, 3, 7, 5, 4, 2, 6, '2014-05-13', 'Ejemplo Curso 10101', '', 1),
-(15, 3, 1, 12, 4, 2, 1, '2014-05-23', 'Ejemplo curso cemex', '', 1);
+(15, 3, 1, 12, 4, 2, 1, '2014-05-23', 'Ejemplo curso cemex', '', 1),
+(24, 3, 2, 10, 4, 1, 4, '2014-06-23', 'Ejemplo curso individual 2014-06-23', '', 1),
+(25, 3, 4, 9, 4, NULL, 4, '2014-06-30', 'Ejemplo curso individual 2014-06-30', '', 1),
+(26, 3, 1, 10, 5, 5, 1, '2014-06-30', 'Curso Grupal Grupo Nuevo Prueba', '', 1);
 
 -- --------------------------------------------------------
 
@@ -767,40 +1848,44 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_course_schedule` (
   KEY `fk_curse` (`fk_course`),
   KEY `fk_bss_day` (`fk_bss_day`),
   KEY `XIF2e24_curse_schedule` (`fk_course`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=69 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_course_schedule`
 --
 
 INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bss_day`, `initial_hour`, `final_hour`, `status`) VALUES
-(4, 2, 6, '08:00:00', '09:30:00', 1),
-(5, 2, 7, '08:00:00', '09:30:00', 1),
-(6, 2, 8, '08:00:00', '09:30:00', 1),
-(10, 4, 5, '08:00:00', '09:30:00', 1),
-(11, 4, 6, '08:00:00', '09:30:00', 1),
-(12, 4, 7, '08:00:00', '09:30:00', 1),
-(13, 5, 4, '08:00:00', '09:30:00', 1),
-(14, 5, 5, '08:00:00', '09:30:00', 1),
-(15, 5, 6, '08:00:00', '09:30:00', 1),
-(16, 5, 7, '08:00:00', '09:30:00', 1),
-(17, 5, 8, '08:00:00', '09:30:00', 1),
-(18, 6, 9, '08:00:00', '13:00:00', 1),
-(19, 8, 4, '08:00:00', '08:00:00', 1),
-(20, 8, 6, '09:00:00', '09:00:00', 1),
-(21, 8, 7, '09:00:00', '09:00:00', 1),
-(22, 8, 8, '08:00:00', '08:00:00', 1),
-(35, 9, 5, '11:00:00', '12:00:00', 1),
-(36, 14, 4, '10:00:00', '10:30:00', 1),
-(37, 14, 5, '10:00:00', '10:30:00', 1),
-(39, 15, 4, '10:00:00', '10:30:00', 1),
-(40, 3, 4, '08:00:00', '09:30:00', 1),
-(41, 3, 5, '08:00:00', '09:30:00', 1),
-(42, 3, 6, '08:00:00', '09:30:00', 1),
-(47, 1, 4, '08:00:00', '09:30:00', 1),
-(48, 1, 5, '10:00:00', '11:00:00', 1),
-(49, 1, 6, '08:00:00', '09:30:00', 1),
-(50, 1, 8, '08:00:00', '09:30:00', 1);
+(4, 2, 3, '08:00:00', '09:30:00', 1),
+(5, 2, 4, '08:00:00', '09:30:00', 1),
+(6, 2, 5, '08:00:00', '09:30:00', 1),
+(10, 4, 2, '08:00:00', '09:30:00', 1),
+(11, 4, 3, '08:00:00', '09:30:00', 1),
+(12, 4, 4, '08:00:00', '09:30:00', 1),
+(13, 5, 1, '08:00:00', '09:30:00', 1),
+(14, 5, 2, '08:00:00', '09:30:00', 1),
+(15, 5, 3, '08:00:00', '09:30:00', 1),
+(16, 5, 4, '08:00:00', '09:30:00', 1),
+(17, 5, 5, '08:00:00', '09:30:00', 1),
+(18, 6, 6, '08:00:00', '13:00:00', 1),
+(35, 9, 2, '11:00:00', '12:00:00', 1),
+(36, 14, 1, '10:00:00', '10:30:00', 1),
+(37, 14, 2, '10:00:00', '10:30:00', 1),
+(39, 15, 1, '10:00:00', '10:30:00', 1),
+(40, 3, 1, '08:00:00', '09:30:00', 1),
+(41, 3, 2, '08:00:00', '09:30:00', 1),
+(42, 3, 3, '08:00:00', '09:30:00', 1),
+(51, 1, 1, '08:00:00', '09:30:00', 1),
+(52, 1, 2, '10:00:00', '11:00:00', 1),
+(53, 1, 3, '08:00:00', '09:30:00', 1),
+(54, 1, 5, '08:00:00', '09:30:00', 1),
+(61, 24, 1, '10:00:00', '11:00:00', 1),
+(62, 24, 2, '10:00:00', '11:00:00', 1),
+(63, 25, 1, '10:00:00', '11:00:00', 1),
+(64, 25, 2, '11:00:00', '12:00:00', 1),
+(65, 25, 3, '11:00:00', '12:00:00', 1),
+(66, 26, 1, '09:00:00', '11:00:00', 1),
+(67, 26, 2, '10:00:00', '12:00:00', 1),
+(68, 26, 3, '10:00:00', '11:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -868,7 +1953,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_groups` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`pk_group`),
   UNIQUE KEY `XPKe24_goups` (`pk_group`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_groups`
@@ -878,7 +1963,9 @@ INSERT INTO `tbl_e24_groups` (`pk_group`, `desc_group`, `status`) VALUES
 (1, 'cemex-2014-1', 1),
 (2, 'cemex-2014-2', 1),
 (3, 'vitro-2014-1', 1),
-(4, 'vitro-2014-2', 1);
+(4, 'vitro-2014-2', 1),
+(5, 'Grupo Nuevo Prueba', 1),
+(6, 'Grupo Nuevo Prueba 2', 1);
 
 -- --------------------------------------------------------
 
@@ -931,14 +2018,14 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_students` (
   KEY `XIF1e24_students` (`fk_client`),
   KEY `fk_user` (`fk_user`),
   KEY `fk_state_dir` (`fk_state_dir`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_students`
 --
 
 INSERT INTO `tbl_e24_students` (`pk_student`, `fk_client`, `fk_user`, `name`, `email`, `neigborhod`, `county`, `phone`, `zipcode`, `birthdate`, `street`, `street_number`, `street_number_int`, `fk_state_dir`) VALUES
-(1, 1, 1, 'estudiante cemex 1 update', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 2212, 'b2', 31),
+(1, 1, 1, 'estudiante cemex 1 update', 'est.1.cemex@demo.com', 'centro 1', 'monterrey', '8180887259', '66579', '1984-10-21', 'del paseo 1', 222, 'b2', 31),
 (2, 1, 35, 'estudiante cemex 2', 'est.2.cemex@demo.com', 'centro 2', 'monterrey', '8180887254', '66579', '1984-06-21', 'del paseo 2', 2212, 'b2', 31),
 (3, 1, 36, 'estudiante cemex 3', 'est.3.cemex@demo.com', 'centro 3', 'monterrey', '8180887245', '66579', '1984-04-21', 'del paseo 3', 2212, 'b2', 31),
 (4, 1, 37, 'estudiante cemex 4', 'est.4.cemex@demo.com', 'centro 4', 'monterrey', '8180856759', '66579', '1984-01-21', 'del paseo 4', 2212, 'b2', 31),
@@ -950,7 +2037,11 @@ INSERT INTO `tbl_e24_students` (`pk_student`, `fk_client`, `fk_user`, `name`, `e
 (10, 3, 44, 'estudiante vitro 5', 'est.5.vitro@demo.com', 'centro 5', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
 (11, 2, 45, 'estudiante personal 1', 'est.1.personal@demo.com', 'centro 6', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
 (12, 4, 40, 'estudiante personal 2', 'est.2.personal@demo.com', 'centro 7', 'monterrey', '8133387259', '66579', '1984-02-20', 'del paseo 5', 2212, 'b2', 31),
-(13, 5, 21, 'Estudiante dos a', 'estudiante2@edu.com', 'Colonia estudiante 2', 'Monterrey', '3847563847', '34555', '2012-07-04', 'Calle estudiante 2', 123, '3c', 31);
+(13, 5, 21, 'Estudiante dos a', 'estudiante2@edu.com', 'Colonia estudiante 2', 'Monterrey', '3847563847', '34555', '2012-07-04', 'Calle estudiante 2', 123, '3c', 31),
+(15, 2, 46, 'particular demo 1 Upd', 'particular.demo.2@demo.com', 'No capturado', 'No capturado', '8144444444', '00000', '1980-01-01', 'No capturador', 0, '0', 31),
+(16, 4, 48, 'particular demo 2', 'particular.demo.2@demo.com', 'No capturado', 'No capturado', '8155555555', '00000', '1980-01-01', 'No capturador', 0, '0', 31),
+(17, 1, 52, 'Pedrito', 'pedrito@mail.com', 'Colonia de pedrito', 'Monterrey', '811191111', '64800', '1989-06-06', 'Calle de pedrito', 123, '', 31),
+(18, 1, 53, 'Juanito', 'juanito@email.com', 'Colonia Juanito', 'Monterrey', '818928192', '64800', '1986-03-05', 'Calle Juanito', 223, '', 31);
 
 -- --------------------------------------------------------
 
@@ -969,7 +2060,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_students_group` (
   KEY `XIF1e24_students_group` (`fk_group`),
   KEY `XIF2e24_students_group` (`fk_student`),
   KEY `fk_clients_pk_clients` (`fk_client`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_students_group`
@@ -985,7 +2076,9 @@ INSERT INTO `tbl_e24_students_group` (`fk_group`, `fk_student`, `status`, `fk_cl
 (2, 4, 1, 1, 7),
 (2, 5, 1, 1, 8),
 (3, 9, 1, 3, 9),
-(3, 10, 1, 3, 10);
+(3, 10, 1, 3, 10),
+(5, 17, 1, 1, 11),
+(5, 18, 1, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -1095,35 +2188,35 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_unavailable_schedule` (
 --
 
 INSERT INTO `tbl_e24_unavailable_schedule` (`pk_unavailable_schedule`, `fk_bss_day`, `fk_teacher`, `initial_hour`, `final_hour`, `status`) VALUES
-(9, 4, 4, '10:00:00', '11:00:00', 1),
-(10, 5, 4, '11:00:00', '13:00:00', 1),
-(11, 5, 4, '16:00:00', '17:00:00', 1),
-(12, 6, 4, '10:00:00', '11:00:00', 1),
-(13, 7, 4, '11:00:00', '13:00:00', 1),
-(14, 7, 4, '17:00:00', '18:00:00', 1),
-(15, 8, 4, '10:00:00', '11:00:00', 1),
-(16, 9, 4, '07:00:00', '10:00:00', 1),
-(124, 4, 11, '06:30:00', '08:00:00', 1),
-(125, 4, 11, '09:00:00', '10:30:00', 1),
-(126, 5, 11, '08:00:00', '09:30:00', 1),
-(127, 6, 11, '06:30:00', '08:00:00', 1),
-(128, 7, 11, '07:30:00', '09:00:00', 1),
-(129, 7, 11, '09:30:00', '11:00:00', 1),
-(130, 8, 11, '07:30:00', '10:00:00', 1),
-(131, 9, 11, '06:30:00', '08:30:00', 1),
-(132, 9, 11, '09:00:00', '10:00:00', 1),
-(145, 4, 3, '11:00:00', '13:00:00', 1),
-(146, 5, 3, '11:00:00', '13:00:00', 1),
-(147, 5, 3, '16:00:00', '17:00:00', 1),
-(148, 6, 3, '11:00:00', '13:00:00', 1),
-(149, 7, 3, '11:00:00', '13:00:00', 1),
-(150, 7, 3, '17:00:00', '18:00:00', 1),
-(151, 8, 3, '11:00:00', '13:00:00', 1),
-(152, 9, 3, '07:00:00', '13:00:00', 1),
-(157, 4, 12, '06:30:00', '07:30:00', 1),
-(158, 5, 12, '06:30:00', '07:30:00', 1),
-(159, 5, 12, '08:30:00', '10:00:00', 1),
-(160, 9, 12, '06:30:00', '09:00:00', 1);
+(9, 1, 4, '10:00:00', '11:00:00', 1),
+(10, 2, 4, '11:00:00', '13:00:00', 1),
+(11, 2, 4, '16:00:00', '17:00:00', 1),
+(12, 3, 4, '10:00:00', '11:00:00', 1),
+(13, 4, 4, '11:00:00', '13:00:00', 1),
+(14, 4, 4, '17:00:00', '18:00:00', 1),
+(15, 5, 4, '10:00:00', '11:00:00', 1),
+(16, 6, 4, '07:00:00', '10:00:00', 1),
+(124, 1, 11, '06:30:00', '08:00:00', 1),
+(125, 1, 11, '09:00:00', '10:30:00', 1),
+(126, 2, 11, '08:00:00', '09:30:00', 1),
+(127, 3, 11, '06:30:00', '08:00:00', 1),
+(128, 4, 11, '07:30:00', '09:00:00', 1),
+(129, 4, 11, '09:30:00', '11:00:00', 1),
+(130, 5, 11, '07:30:00', '10:00:00', 1),
+(131, 6, 11, '06:30:00', '08:30:00', 1),
+(132, 6, 11, '09:00:00', '10:00:00', 1),
+(145, 1, 3, '11:00:00', '13:00:00', 1),
+(146, 2, 3, '11:00:00', '13:00:00', 1),
+(147, 2, 3, '16:00:00', '17:00:00', 1),
+(148, 3, 3, '11:00:00', '13:00:00', 1),
+(149, 4, 3, '11:00:00', '13:00:00', 1),
+(150, 4, 3, '17:00:00', '18:00:00', 1),
+(151, 5, 3, '11:00:00', '13:00:00', 1),
+(152, 6, 3, '07:00:00', '13:00:00', 1),
+(157, 1, 12, '06:30:00', '07:30:00', 1),
+(158, 2, 12, '06:30:00', '07:30:00', 1),
+(159, 2, 12, '08:30:00', '10:00:00', 1),
+(160, 6, 12, '06:30:00', '09:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -1139,7 +2232,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_users` (
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`pk_user`),
   KEY `fk_role` (`fk_role`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=52 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=54 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_users`
@@ -1155,7 +2248,7 @@ INSERT INTO `tbl_e24_users` (`pk_user`, `fk_role`, `username`, `password`, `stat
 (13, 62, 'root', '$1$Ehc23$8H.PdjVFxuPyREmdOrav51', 1),
 (14, 59, 'maestro', '$1$Ehc23$cum98xoyTSVb7zExxVIOL1', 1),
 (15, 59, 'maestro0', '$1$Ehc23$Tzg5ASHfuP8ExFJq.Q2Q10', 1),
-(16, 59, 'maestro1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
+(16, 59, 'maestro 1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
 (17, 59, 'maestro1', '$1$Ehc23$1nWP/sp9NbBtAzSfGjVTg0', 1),
 (18, 59, 'maestro2', '$1$Ehc23$nHLoX3/Inrod6HYyuS7WE0', 1),
 (19, 59, 'maestro4', '$1$Ehc23$OoCVGQ9j2ngbnNsIwYtOj0', 1),
@@ -1179,7 +2272,9 @@ INSERT INTO `tbl_e24_users` (`pk_user`, `fk_role`, `username`, `password`, `stat
 (48, 60, 'cliente3', '$1$Ehc23$2UZxcYaBr5zHv8ficWaRT/', 1),
 (49, 60, 'cliente4', '$1$Ehc23$1A/K4d54vWMVw/x6/8A/T1', 1),
 (50, 60, 'cliente5', '$1$Ehc23$k1VFOz9tTpUA1v46noOUr.', 1),
-(51, 60, 'cliente6', '$1$Ehc23$eeNfspbl.mDkgX1xMf8fF1', 1);
+(51, 60, 'cliente6', '$1$Ehc23$eeNfspbl.mDkgX1xMf8fF1', 1),
+(52, 58, 'pedro', '$1$Ehc23$Um8lnDxx00S0lLEp/Q0t40', 1),
+(53, 58, 'juanito', '$1$Ehc23$ZI.4guALNJQwN6IHyOS7k0', 1);
 
 --
 -- Restricciones para tablas volcadas
@@ -1189,124 +2284,135 @@ INSERT INTO `tbl_e24_users` (`pk_user`, `fk_role`, `username`, `password`, `stat
 -- Filtros para la tabla `tbl_e24_assistance_record`
 --
 ALTER TABLE `tbl_e24_assistance_record`
+  ADD CONSTRAINT `AssisRecFkClient` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `AssisRecFkCourse` FOREIGN KEY (`fk_course`) REFERENCES `tbl_e24_courses` (`pk_course`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fkLevelDetPkLevelDet` FOREIGN KEY (`fk_level_detail`) REFERENCES `tbl_e24_cat_level_detail` (`pk_level_detail`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_assistance_pk_courses` FOREIGN KEY (`fk_course`, `fk_client`) REFERENCES `tbl_e24_courses` (`pk_course`, `fk_client`),
-  ADD CONSTRAINT `fk_assistance_pk_statusclass` FOREIGN KEY (`fk_status_class`) REFERENCES `tbl_e24_cat_status_class` (`pk_status_class`),
-  ADD CONSTRAINT `fk_assistance_pk_students` FOREIGN KEY (`fk_student`) REFERENCES `tbl_e24_students` (`pk_student`);
+  ADD CONSTRAINT `fk_assistance_pk_statusclass` FOREIGN KEY (`fk_status_class`) REFERENCES `tbl_e24_cat_status_class` (`pk_status_class`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_assistance_pk_students` FOREIGN KEY (`fk_student`) REFERENCES `tbl_e24_students` (`pk_student`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_billing_data`
 --
 ALTER TABLE `tbl_e24_billing_data`
-  ADD CONSTRAINT `fk_billingdata_pk_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`);
+  ADD CONSTRAINT `fk_billingdata_pk_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_cat_detail`
 --
 ALTER TABLE `tbl_e24_cat_detail`
-  ADD CONSTRAINT `fk_cat_detail_pk_cat_master` FOREIGN KEY (`fk_cat_master`) REFERENCES `tbl_e24_cat_master` (`pk_cat_master`);
+  ADD CONSTRAINT `fk_cat_detail_pk_cat_master` FOREIGN KEY (`fk_cat_master`) REFERENCES `tbl_e24_cat_master` (`pk_cat_master`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_cat_level_detail`
 --
 ALTER TABLE `tbl_e24_cat_level_detail`
-  ADD CONSTRAINT `fk_levelsdetail_pk_levels` FOREIGN KEY (`fk_level`) REFERENCES `tbl_e24_cat_levels` (`pk_level`);
+  ADD CONSTRAINT `fk_levelsdetail_pk_levels` FOREIGN KEY (`fk_level`) REFERENCES `tbl_e24_cat_levels` (`pk_level`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_cat_material`
 --
 ALTER TABLE `tbl_e24_cat_material`
-  ADD CONSTRAINT `fk_type_material_pk_cat_detail` FOREIGN KEY (`fk_type_material`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`);
+  ADD CONSTRAINT `fk_type_material_pk_cat_detail` FOREIGN KEY (`fk_type_material`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_cat_status_class`
 --
 ALTER TABLE `tbl_e24_cat_status_class`
-  ADD CONSTRAINT `fk_role_class_pk_cat_detail` FOREIGN KEY (`fk_role_class`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
-  ADD CONSTRAINT `fk_type_class_pk_cat_detail` FOREIGN KEY (`fk_type_class`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`);
+  ADD CONSTRAINT `fk_role_class_pk_cat_detail` FOREIGN KEY (`fk_role_class`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_type_class_pk_cat_detail` FOREIGN KEY (`fk_type_class`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_classroom_address`
 --
 ALTER TABLE `tbl_e24_classroom_address`
-  ADD CONSTRAINT `fk_classroom_pk_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`),
-  ADD CONSTRAINT `fk_state_dir_pk_cat_detail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`);
+  ADD CONSTRAINT `fk_classroom_pk_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_state_dir_pk_cat_detail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_clients`
 --
 ALTER TABLE `tbl_e24_clients`
-  ADD CONSTRAINT `fk_type_client_pk_cat_detail` FOREIGN KEY (`fk_type_client`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
-  ADD CONSTRAINT `fk_user_pk_user` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`);
+  ADD CONSTRAINT `fk_type_client_pk_cat_detail` FOREIGN KEY (`fk_type_client`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_user_pk_user` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_courses`
 --
 ALTER TABLE `tbl_e24_courses`
-  ADD CONSTRAINT `fk_curses_pk_catlevels` FOREIGN KEY (`fk_level`) REFERENCES `tbl_e24_cat_levels` (`pk_level`),
-  ADD CONSTRAINT `fk_curses_pk_classrrom_address` FOREIGN KEY (`fk_classrom_address`) REFERENCES `tbl_e24_classroom_address` (`pk_classroom_direction`),
-  ADD CONSTRAINT `fk_curses_pk_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`),
-  ADD CONSTRAINT `fk_curses_pk_groups` FOREIGN KEY (`fk_group`) REFERENCES `tbl_e24_groups` (`pk_group`),
-  ADD CONSTRAINT `fk_curses_pk_teachers` FOREIGN KEY (`fk_teacher`) REFERENCES `tbl_e24_teachers` (`pk_teacher`),
-  ADD CONSTRAINT `fk_type_course_pk_cat_detail` FOREIGN KEY (`fk_type_course`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`);
+  ADD CONSTRAINT `fk_curses_pk_catlevels` FOREIGN KEY (`fk_level`) REFERENCES `tbl_e24_cat_levels` (`pk_level`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_curses_pk_classrrom_address` FOREIGN KEY (`fk_classrom_address`) REFERENCES `tbl_e24_classroom_address` (`pk_classroom_direction`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_curses_pk_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_curses_pk_groups` FOREIGN KEY (`fk_group`) REFERENCES `tbl_e24_groups` (`pk_group`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_curses_pk_teachers` FOREIGN KEY (`fk_teacher`) REFERENCES `tbl_e24_teachers` (`pk_teacher`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_type_course_pk_cat_detail` FOREIGN KEY (`fk_type_course`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_course_schedule`
 --
 ALTER TABLE `tbl_e24_course_schedule`
-  ADD CONSTRAINT `fk_courseschedule_pk_bssday` FOREIGN KEY (`fk_bss_day`) REFERENCES `tbl_e24_cat_bss_day` (`pk_bss_day`),
-  ADD CONSTRAINT `fk_courseschedule_pk_courses` FOREIGN KEY (`fk_course`) REFERENCES `tbl_e24_courses` (`pk_course`);
+  ADD CONSTRAINT `fk_courseschedule_pk_bssday` FOREIGN KEY (`fk_bss_day`) REFERENCES `tbl_e24_cat_bss_day` (`pk_bss_day`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_courseschedule_pk_courses` FOREIGN KEY (`fk_course`) REFERENCES `tbl_e24_courses` (`pk_course`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_documents_teachers`
 --
 ALTER TABLE `tbl_e24_documents_teachers`
-  ADD CONSTRAINT `fk_docsteachers_pk_catdocs` FOREIGN KEY (`fk_document`) REFERENCES `tbl_e24_cat_documents` (`pk_document`),
-  ADD CONSTRAINT `fk_docsteachers_pk_teachers` FOREIGN KEY (`fk_teacher`) REFERENCES `tbl_e24_teachers` (`pk_teacher`);
+  ADD CONSTRAINT `fk_docsteachers_pk_catdocs` FOREIGN KEY (`fk_document`) REFERENCES `tbl_e24_cat_documents` (`pk_document`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_docsteachers_pk_teachers` FOREIGN KEY (`fk_teacher`) REFERENCES `tbl_e24_teachers` (`pk_teacher`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_material_level`
 --
 ALTER TABLE `tbl_e24_material_level`
-  ADD CONSTRAINT `fk_materiallevel_pk_catlevels` FOREIGN KEY (`fk_level`) REFERENCES `tbl_e24_cat_levels` (`pk_level`),
-  ADD CONSTRAINT `fk_materiallevel_pk_catmaterial` FOREIGN KEY (`fk_material`) REFERENCES `tbl_e24_cat_material` (`pk_material`);
+  ADD CONSTRAINT `fk_materiallevel_pk_catlevels` FOREIGN KEY (`fk_level`) REFERENCES `tbl_e24_cat_levels` (`pk_level`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_materiallevel_pk_catmaterial` FOREIGN KEY (`fk_material`) REFERENCES `tbl_e24_cat_material` (`pk_material`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_students`
 --
 ALTER TABLE `tbl_e24_students`
-  ADD CONSTRAINT `fkState_pkCatDetail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
-  ADD CONSTRAINT `fk_client_pk_client_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`),
-  ADD CONSTRAINT `fk_user_pk_user_students` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`);
+  ADD CONSTRAINT `fkState_pkCatDetail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_client_pk_client_clients` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_user_pk_user_students` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `tbl_e24_students_group`
+--
+ALTER TABLE `tbl_e24_students_group`
+  ADD CONSTRAINT `StudenGroupfkGroup` FOREIGN KEY (`fk_group`) REFERENCES `tbl_e24_groups` (`pk_group`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `StudenGroupFkStudent` FOREIGN KEY (`fk_student`) REFERENCES `tbl_e24_students` (`pk_student`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `StudentGroupFkClient` FOREIGN KEY (`fk_client`) REFERENCES `tbl_e24_clients` (`pk_client`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_teachers`
 --
 ALTER TABLE `tbl_e24_teachers`
-  ADD CONSTRAINT `fk_nationality_pk_cat_detail` FOREIGN KEY (`fk_nationality`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
-  ADD CONSTRAINT `fk_state_birth_pk_cat_detail` FOREIGN KEY (`fk_state_birth`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
-  ADD CONSTRAINT `fk_state_pk_cat_detail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
-  ADD CONSTRAINT `fk_status_documents_pk_cat_detail` FOREIGN KEY (`fk_status_document`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`),
-  ADD CONSTRAINT `fk_user_pk_catrates` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`);
+  ADD CONSTRAINT `fk_nationality_pk_cat_detail` FOREIGN KEY (`fk_nationality`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_state_birth_pk_cat_detail` FOREIGN KEY (`fk_state_birth`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_state_pk_cat_detail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_status_documents_pk_cat_detail` FOREIGN KEY (`fk_status_document`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_user_pk_catrates` FOREIGN KEY (`fk_user`) REFERENCES `tbl_e24_users` (`pk_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_unavailable_dates`
 --
 ALTER TABLE `tbl_e24_unavailable_dates`
-  ADD CONSTRAINT `fk_course_pk_course` FOREIGN KEY (`fk_course`) REFERENCES `tbl_e24_courses` (`pk_course`),
-  ADD CONSTRAINT `fk_unav_type_pk_detail` FOREIGN KEY (`fk_unavailability_type`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`);
+  ADD CONSTRAINT `fk_course_pk_course` FOREIGN KEY (`fk_course`) REFERENCES `tbl_e24_courses` (`pk_course`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_unav_type_pk_detail` FOREIGN KEY (`fk_unavailability_type`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_unavailable_schedule`
 --
 ALTER TABLE `tbl_e24_unavailable_schedule`
-  ADD CONSTRAINT `fk_unvschedule_pk_bssday` FOREIGN KEY (`fk_bss_day`) REFERENCES `tbl_e24_cat_bss_day` (`pk_bss_day`),
-  ADD CONSTRAINT `fk_unvschedule_pk_teachers` FOREIGN KEY (`fk_teacher`) REFERENCES `tbl_e24_teachers` (`pk_teacher`);
+  ADD CONSTRAINT `fk_unvschedule_pk_bssday` FOREIGN KEY (`fk_bss_day`) REFERENCES `tbl_e24_cat_bss_day` (`pk_bss_day`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_unvschedule_pk_teachers` FOREIGN KEY (`fk_teacher`) REFERENCES `tbl_e24_teachers` (`pk_teacher`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_e24_users`
 --
 ALTER TABLE `tbl_e24_users`
-  ADD CONSTRAINT `fk_role_user_pk_cat_detail` FOREIGN KEY (`fk_role`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`);
+  ADD CONSTRAINT `fk_role_user_pk_cat_detail` FOREIGN KEY (`fk_role`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

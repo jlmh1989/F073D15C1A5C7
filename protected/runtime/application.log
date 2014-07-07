@@ -8907,3 +8907,67 @@ Stack trace:
 #11 {main}
 REQUEST_URI=/e24sys/index.php?r=teachers/teachers
 ---
+2014/07/07 04:24:23 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:24:23 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:24:23 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:24:23 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:24:24 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:24:24 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:24:24 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:24:24 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:46:20 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:46:20 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:46:20 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:46:20 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:46:21 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:46:21 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:46:21 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 04:46:21 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)

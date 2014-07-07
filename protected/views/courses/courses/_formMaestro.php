@@ -20,12 +20,12 @@ Yii::app()->clientScript->registerScript('script',
     function cargarDatosCurso(idCurso){
         $(".datosCurso").css("visibility", "hidden");
         $(".meter").animate({
-            height: "45px"
+            height: "50px"
         }, 300);
-        if($("#div_curso_"+idCurso).height() <= 45){
+        if($("#div_curso_"+idCurso).height() <= 50){
             $("#datos_curso_"+idCurso).css("visibility", "");
             $("#div_curso_"+idCurso).animate({
-            height: "150px"
+            height: "160px"
             }, 300);
         }
     }
@@ -37,7 +37,7 @@ Yii::app()->clientScript->registerScript('script',
             dataType: "text"
          }).done(function( msg ) {
              $( "#tablaCursos" ).html(msg);
-             $(".meter > span").each(function() {
+             $(".meter > div > span").each(function() {
                 $(this)
                     .data("origWidth", $(this).width())
                     .width(0)
