@@ -137,15 +137,15 @@ class Courses extends CActiveRecord
             $criteria->distinct=true;
             $criteria->select = 't.*';
             if($pkType === constantes::CURSO_GRUPAL){
-                $criteria->join ='INNER JOIN TBL_E24_STUDENTS_GROUP ON t.PK_STUDENT = TBL_E24_STUDENTS_GROUP.FK_STUDENT '
-                            .'INNER JOIN TBL_E24_COURSES ON TBL_E24_STUDENTS_GROUP.FK_GROUP = TBL_E24_COURSES.FK_GROUP';
-                $criteria->addCondition('TBL_E24_STUDENTS_GROUP.FK_CLIENT = TBL_E24_COURSES.FK_CLIENT');
-                $criteria->addCondition('TBL_E24_STUDENTS_GROUP.STATUS = '.constantes::ACTIVO);
+                $criteria->join ='INNER JOIN tbl_e24_students_group ON t.PK_STUDENT = tbl_e24_students_group.FK_STUDENT '
+                            .'INNER JOIN tbl_e24_courses ON tbl_e24_students_group.FK_GROUP = tbl_e24_courses.FK_GROUP';
+                $criteria->addCondition('tbl_e24_students_group.FK_CLIENT = tbl_e24_courses.FK_CLIENT');
+                $criteria->addCondition('tbl_e24_students_group.STATUS = '.constantes::ACTIVO);
             }else{
-                $criteria->join = 'INNER JOIN TBL_E24_COURSES ON t.FK_CLIENT = TBL_E24_COURSES.FK_CLIENT';
-                $criteria->addCondition('t.FK_USER = (SELECT TBL_E24_CLIENTS.FK_USER FROM TBL_E24_CLIENTS WHERE TBL_E24_CLIENTS.PK_CLIENT = TBL_E24_COURSES.FK_CLIENT)');
+                $criteria->join = 'INNER JOIN tbl_e24_courses ON t.FK_CLIENT = tbl_e24_courses.FK_CLIENT';
+                $criteria->addCondition('t.FK_USER = (SELECT tbl_e24_clients.FK_USER FROM tbl_e24_clients WHERE tbl_e24_clients.PK_CLIENT = tbl_e24_courses.FK_CLIENT)');
             }
-            $criteria->addCondition('TBL_E24_COURSES.PK_COURSE = :value');
+            $criteria->addCondition('tbl_e24_courses.PK_COURSE = :value');
             $criteria->params = array(":value" => $pkCurso);    
             return Students::model()->findAll($criteria);
         }
