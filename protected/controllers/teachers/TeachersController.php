@@ -36,7 +36,7 @@ class TeachersController extends Controller
                         array('allow', // allow authenticated user to perform
 				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno','adminAlumnos',
                                                 'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario',
-                                                'jsonHorario'),
+                                                'jsonHorario','agregarAlumno','getAlumnosHtml','agregarAlumnoCurso'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -96,8 +96,42 @@ class TeachersController extends Controller
             $_SESSION['crearAlumno']['descCurso'] = $descCurso;
         }
         
+        public function actionAgregarAlumno(){
+            $this->render('agregarAlumno');
+        }
+        
+        public function actionAgregarAlumnoCurso(){
+            $pkEstudiante = Yii::app()->getRequest()->getParam("pkEstudiante");
+            $model = new StudentsGroup;
+            $model->fk_student = $pkEstudiante;
+            $model->fk_client = $_SESSION['crearAlumno']['pkCliente'];
+            $model->fk_group = $_SESSION['crearAlumno']['pkGrupo'];
+            $model->status = constantes::ACTIVO;
+            $model->save();
+        }
+        
+        public static function actionGetAlumnosHtml(){
+            $estudiantes = Students::getEstudiantes($_SESSION['crearAlumno']['pkCliente'], $_SESSION['crearAlumno']['pkGrupo']);
+            $i = 0;
+            $html = '';
+            foreach($estudiantes as $estudiante){
+                $html .= '<tr class="even_">';
+                if(($i % 2) === 0){
+                    $html .= '<tr class="odd_">';
+                }
+                $html .= '<td width="30px"><input id="CheckBoxGroupEst" name="CheckBoxGroupEst" type="checkbox" value="'.$estudiante->pk_student.'"></td>';
+                $html .= '<td>'.$estudiante->name.'</td>';
+                $html .= '<td>'.$estudiante->email.'</td>';
+                $html .= '<td>'.$estudiante->phone.'</td>';
+                $html .= '</tr>';
+                $i++;
+            }
+            echo $html;
+        }
+        
         public function actionAdminRedirectAlumnos(){
             $_SESSION['adminAlumno']['pkCurso'] = Yii::app()->getRequest()->getParam("pkCurso");
+            $_SESSION['adminAlumno']['pkCliete'] = Yii::app()->getRequest()->getParam("pkCliente");
             $_SESSION['adminAlumno']['descCurso'] = Yii::app()->getRequest()->getParam("descCurso");
             $_SESSION['adminAlumno']['source'] = 'curso';
         }
@@ -130,7 +164,11 @@ class TeachersController extends Controller
 	 */
 	public function actionDeleteStudent($id)
 	{
-            $model = Students::model()->findByPk($id)->delete();
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('t.fk_student='.$id);
+            $criteria->addCondition('t.fk_group='.$_SESSION['adminAlumno']['pkCurso']);
+            $criteria->addCondition('t.fk_client='.$_SESSION['adminAlumno']['pkCliete']);
+            StudentsGroup::model()->find($criteria)->delete();
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if(!isset($_GET['ajax']))
                     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('adminAlumnos'));

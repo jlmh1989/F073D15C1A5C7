@@ -255,7 +255,7 @@ class CoursesController extends Controller
             $modelEstudiante->phone = $modelCliente->contact_phone;
             $modelEstudiante->zipcode = '00000';
             $modelEstudiante->birthdate = '1980-01-01';
-            $modelEstudiante->street = 'No capturador';
+            $modelEstudiante->street = 'No capturado';
             $modelEstudiante->street_number = 0;
             $modelEstudiante->street_number_int = '0';
             $modelEstudiante->fk_state_dir = '31';

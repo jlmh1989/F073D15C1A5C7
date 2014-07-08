@@ -197,7 +197,7 @@ class Teachers extends CActiveRecord
                     if($infoBasica === false && $model->fk_type_course === constantes::CURSO_GRUPAL){
                         $botones = '<table>
                                 <tr>
-                                <td width="140px"><input class="botonCurso" type="button" value="Nuevo Alumno" onClick="agregarAlumno('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.',\''.$model->desc_curse.'\')"></td>
+                                <td width="140px"><input class="botonCurso" type="button" value="Agregar Alumno" onClick="agregarAlumno('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.',\''.$model->desc_curse.'\')"></td>
                                 <td width="140px"><input class="botonCurso" type="button" value="Admin Alumnos" onClick="adminAlumnos('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.',\''.$model->desc_curse.'\')"></td>
                                 <td></td>
                                 </tr>

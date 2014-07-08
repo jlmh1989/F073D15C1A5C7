@@ -185,7 +185,17 @@ class Students extends CActiveRecord
             return new CActiveDataProvider($this,array('criteria'=>$criteria, 'sort'=>$sort));
         }
         
-	/**
+        public static function getEstudiantes($pkCliente, $pkGrupo){
+            $criteria = new CDbCriteria;
+            $criteria->select = 't.*';
+            $criteria->addCondition('t.pk_student not in(select fk_student from tbl_e24_students_group where fk_client = '.$pkCliente.' and fk_group = '.$pkGrupo.')');
+            $criteria->addCondition('t.fk_client = :pkCliente');
+            $criteria->params = array(":pkCliente" => $pkCliente);  
+            return Students::model()->findAll($criteria);
+        }
+
+
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

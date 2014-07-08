@@ -1,6 +1,5 @@
 $(document).ready(function() {
    var $calendar = $('#calendar');
-   var id = 10;
    
     $.ajax({
         type: "POST",
@@ -34,44 +33,6 @@ $(document).ready(function() {
                        return calEvent.readOnly != true;
                     },
                     eventNew : function(calEvent, $event) {
-                       var $dialogContent = $("#event_edit_container");
-                       resetForm($dialogContent);
-                       var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
-                       var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
-                       var titleField = $dialogContent.find("input[name='title']");
-                       var bodyField = $dialogContent.find("textarea[name='body']");
-
-
-                       $dialogContent.dialog({
-                          modal: true,
-                          title: "Nuevo Evento",
-                          close: function() {
-                             $dialogContent.dialog("destroy");
-                             $dialogContent.hide();
-                             $('#calendar').weekCalendar("removeUnsavedEvents");
-                          },
-                          buttons: {
-                             guardar : function() {
-                                calEvent.id = id;
-                                id++;
-                                calEvent.start = new Date(startField.val());
-                                calEvent.end = new Date(endField.val());
-                                calEvent.title = titleField.val();
-                                calEvent.body = bodyField.val();
-
-                                $calendar.weekCalendar("removeUnsavedEvents");
-                                $calendar.weekCalendar("updateEvent", calEvent);
-                                $dialogContent.dialog("close");
-                             },
-                             cancelar : function() {
-                                $dialogContent.dialog("close");
-                             }
-                          }
-                       }).show();
-
-                       $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
-                       setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
-
                     },
                     eventDrop : function(calEvent, $event) {
                     },
@@ -120,7 +81,7 @@ $(document).ready(function() {
                        var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
                        $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
                        setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
-                       $(window).resize().resize(); //fixes a bug in modal overlay size ??
+                       $(window).resize().resize();
 
                     },
                     eventMouseover : function(calEvent, $event) {
@@ -166,11 +127,6 @@ $(document).ready(function() {
        return eventos;
    }
 
-
-   /*
-    * Sets up the start and end time fields in the calendar event
-    * form for editing based on the calendar event being edited
-    */
    function setupStartAndEndTimeFields($startTimeField, $endTimeField, calEvent, timeslotTimes) {
 
       for (var i = 0; i < timeslotTimes.length; i++) {
@@ -195,7 +151,6 @@ $(document).ready(function() {
    var $endTimeField = $("select[name='end']");
    var $endTimeOptions = $endTimeField.find("option");
 
-   //reduces the end time options to be only after the start time options.
    $("select[name='start']").change(function() {
       var startTime = $(this).find(":selected").val();
       var currentEndTime = $endTimeField.find("option:selected").val();
@@ -215,7 +170,6 @@ $(document).ready(function() {
       });
 
       if (!endTimeSelected) {
-         //automatically select an end date 2 slots away.
          $endTimeField.find("option:eq(1)").attr("selected", "selected");
       }
 

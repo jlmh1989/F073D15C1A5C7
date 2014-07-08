@@ -48,7 +48,7 @@ $this->menu = array(
             data : {pkCurso : pkCurso, pkCliente : pkCliente, pkGrupo : pkGrupo, descCurso: descCurso}
         })
         .done(function (msg){
-            $(location).attr("href","<?= Yii::app()->createUrl('students/students/create')?>");
+            $(location).attr("href","<?= Yii::app()->createUrl('teachers/teachers/agregarAlumno')?>");
         });
     }
     
