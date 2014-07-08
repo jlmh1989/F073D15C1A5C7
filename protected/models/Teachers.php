@@ -275,4 +275,25 @@ class Teachers extends CActiveRecord
             $result = $comand->query();
             return CHtml::listData($result,'pk_teacher','name');
         }
+        
+        public static function getJsonHorario($pkTeacher){
+            $comand = Yii::app()->db->createCommand('call stp_horario(:pkTeacher, @st, @stMsg)');
+            $comand->bindParam('pkTeacher', $pkTeacher);
+            $result = $comand->query();
+            $json = '[';
+            foreach ($result as $row){
+                $json .= '{"pk_curso" : '.$row['pk_curso'].',
+                            "desc_curso": "'.$row['desc_curso'].'",
+                            "anio": '.$row['anio'].',
+                            "mes": '.$row['mes'].',
+                            "dia": '.$row['dia'].',
+                            "hora_inicio": '.$row['hora_inicio'].',
+                            "minuto_inicio": '.$row['minuto_inicio'].',
+                            "hora_fin": '.$row['hora_fin'].',
+                            "minuto_fin": '.$row['minuto_fin'].'},';
+            }
+            $json = substr($json, 0, -1);
+            $json .= ']';
+            return $json;
+        }
 }

@@ -35,7 +35,8 @@ class TeachersController extends Controller
 			),
                         array('allow', // allow authenticated user to perform
 				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno','adminAlumnos',
-                                                'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario','a'),
+                                                'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario',
+                                                'jsonHorario'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -139,10 +140,10 @@ class TeachersController extends Controller
             $this->render('horario');
         }
         
-        public function actionA() {
-            echo '<pre>';
-            print_r(Courses::getFechaFInPorcentaje(1));
-            echo '</pre>';
+        public function actionJsonHorario() {
+            $pk_usuario = Yii::app()->user->getState("pk_user");
+            $model = Teachers::model()->find('fk_user=' . $pk_usuario);
+            echo Teachers::getJsonHorario($model->pk_teacher);
         }
 
         /**

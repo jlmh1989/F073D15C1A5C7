@@ -1,9 +1,10 @@
-<?php                                                                                                                                                                                                                                                                                                                                                                
+<?php        
 Yii::app()->clientScript->registerScript('helpers', '                                                           
     yii = {                                                                                                     
         urls: {                                                                                                 
             idDayMax: '.CJSON::encode(Yii::app()->createUrl('catalogs/catBssDay/getFinDiaSemana')).', 
             minMaxHr: '.CJSON::encode(Yii::app()->createUrl('catalogs/catBssHours/getMinMaxHour')).',
+            horario: '.CJSON::encode(Yii::app()->createUrl('teachers/teachers/jsonHorario')).',
             base: '.CJSON::encode(Yii::app()->baseUrl).'                                                        
         }                                                                                                       
     };                                                                                                          

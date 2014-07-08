@@ -110,12 +110,6 @@ $(document).ready(function() {
                                 $calendar.weekCalendar("updateEvent", calEvent);
                                 $dialogContent.dialog("close");
                              },
-                             /*
-                             "delete" : function() {
-                                $calendar.weekCalendar("removeEvent", calEvent.id);
-                                $dialogContent.dialog("close");
-                             },
-                              */
                              cancelar : function() {
                                 $dialogContent.dialog("close");
                              }
@@ -150,25 +144,26 @@ $(document).ready(function() {
    }
 
    function getEventData() {
-      var year = new Date().getFullYear();
-      var month = new Date().getMonth();
-      var day = new Date().getDate();
-      return {
-         events : [
-            {
-               "id":1,
-               "start": new Date(year, month, day - 2, 8),
-               "end": new Date(year, month, day - 2, 9, 30),
-               "title":"Test 1"
-            },
-            {
-               "id":2,
-               "start": new Date(year, month, day - 2, 12),
-               "end": new Date(year, month, day - 2, 13, 45),
-               "title":"Test 2"
-            },
-         ]
-      };
+      var eventos = {events: []};
+      $.ajax({
+        type: "POST",
+        async:false,    
+        cache:false,
+        url: yii.urls.horario,
+        dataType: "json",
+        success: function(data) {
+            var dataTam = data.length;
+            for(var i = 0; i < dataTam; i++){
+                var event = data[i];
+                eventos["events"].push({
+                    "id":i + 1,
+                    "start": new Date(event.anio, event.mes - 1, event.dia, event.hora_inicio, event.minuto_inicio),
+                    "end": new Date(event.anio, event.mes - 1, event.dia, event.hora_fin, event.minuto_fin),
+                    "title":event.desc_curso
+                });
+            }
+        }}); 
+       return eventos;
    }
 
 

@@ -8971,3 +8971,269 @@ in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
 in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/07 23:30:07 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:336
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#11 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#12 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario
+---
+2014/07/07 23:30:11 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?4')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?4')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?4
+---
+2014/07/07 23:30:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:31:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:31:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:31:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:31:27 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:336
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#11 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#12 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario
+---
+2014/07/07 23:31:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:32:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:32:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:32:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:32:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "jsonHorario?pkTeacher=4".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('jsonHorario?pkT...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('jsonHorario?pkT...')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/jsonHorario?pkTeacher=4
+---
+2014/07/07 23:33:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "view?id=1".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('view?id=1')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('view?id=1')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/view?id=1
+---
+2014/07/07 23:33:23 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php:182
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/auth/CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('view')
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#10 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#11 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/view
+---
+2014/07/07 23:33:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "view?id=1".' in /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(270): CController->missingAction('view?id=1')
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): CController->run('view?id=1')
+#2 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('teachers/teache...')
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CApplication->run()
+#5 {main}
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/view?id=1
+---
+2014/07/08 01:16:56 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:16:56 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:16:56 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:16:56 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:16:58 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:16:58 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:16:58 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:16:58 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:30:39 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:30:39 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:30:39 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:30:39 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:30:41 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:30:41 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:30:41 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:30:41 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:32:35 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:32:35 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:32:35 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:32:35 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:32:36 [warning] [application] Failed to set unsafe attribute "pk_course" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:32:36 [warning] [application] Failed to set unsafe attribute "fk_teacher" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:32:36 [warning] [application] Failed to set unsafe attribute "fk_classrom_address" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
+2014/07/08 01:32:36 [warning] [application] Failed to set unsafe attribute "status" of "CursoDatos".
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (102)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/courses/CoursesController.php (96)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)

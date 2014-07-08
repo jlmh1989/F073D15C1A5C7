@@ -1,10 +1,6 @@
--- Servidor: localhost
--- Tiempo de generación: 07-07-2014 a las 05:10:54
--- Versión del servidor: 5.6.16
--- Versión de PHP: 5.5.11
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -12,9 +8,14 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
+-- Base de datos: `e24db`
+--
+
+--
 -- Estructura de tabla para la tabla `tbl_e24_assistance_record`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_assistance_record`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_assistance_record` (
   `pk_assistance` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `class_date` date NOT NULL,
@@ -99,6 +100,7 @@ INSERT INTO `tbl_e24_assistance_record` (`pk_assistance`, `class_date`, `fk_cour
 -- Estructura de tabla para la tabla `tbl_e24_billing_data`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_billing_data`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_billing_data` (
   `pk_billing_data` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_client` int(10) unsigned NOT NULL,
@@ -135,6 +137,7 @@ INSERT INTO `tbl_e24_billing_data` (`pk_billing_data`, `fk_client`, `street`, `s
 -- Estructura de tabla para la tabla `tbl_e24_cat_bss_day`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_bss_day`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_bss_day` (
   `pk_bss_day` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `desc_day` varchar(50) NOT NULL,
@@ -164,6 +167,7 @@ INSERT INTO `tbl_e24_cat_bss_day` (`pk_bss_day`, `desc_day`, `initial_hour`, `fi
 -- Estructura de tabla para la tabla `tbl_e24_cat_bss_hours`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_bss_hours`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_bss_hours` (
   `pk_bss_hour` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `initial_hour` time NOT NULL,
@@ -217,6 +221,7 @@ INSERT INTO `tbl_e24_cat_bss_hours` (`pk_bss_hour`, `initial_hour`, `final_hour`
 -- Estructura de tabla para la tabla `tbl_e24_cat_detail`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_detail`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_detail` (
   `pk_cat_detail` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `desc_cat_detail_es` varchar(20) NOT NULL,
@@ -302,6 +307,7 @@ INSERT INTO `tbl_e24_cat_detail` (`pk_cat_detail`, `desc_cat_detail_es`, `desc_c
 -- Estructura de tabla para la tabla `tbl_e24_cat_documents`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_documents`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_documents` (
   `pk_document` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `desc_document` varchar(50) NOT NULL,
@@ -330,6 +336,7 @@ INSERT INTO `tbl_e24_cat_documents` (`pk_document`, `desc_document`, `status`) V
 -- Estructura de tabla para la tabla `tbl_e24_cat_levels`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_levels`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_levels` (
   `pk_level` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `desc_level` varchar(50) NOT NULL,
@@ -354,6 +361,7 @@ INSERT INTO `tbl_e24_cat_levels` (`pk_level`, `desc_level`, `fk_associated_book`
 -- Estructura de tabla para la tabla `tbl_e24_cat_level_detail`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_level_detail`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_level_detail` (
   `pk_level_detail` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_level` mediumint(8) unsigned NOT NULL,
@@ -413,6 +421,7 @@ INSERT INTO `tbl_e24_cat_level_detail` (`pk_level_detail`, `fk_level`, `topics`,
 -- Estructura de tabla para la tabla `tbl_e24_cat_master`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_master`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_master` (
   `pk_cat_master` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `desc_cat_master` varchar(20) NOT NULL,
@@ -442,6 +451,7 @@ INSERT INTO `tbl_e24_cat_master` (`pk_cat_master`, `desc_cat_master`, `status`) 
 -- Estructura de tabla para la tabla `tbl_e24_cat_material`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_material`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_material` (
   `pk_material` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `desc_material` varchar(50) NOT NULL,
@@ -465,6 +475,7 @@ INSERT INTO `tbl_e24_cat_material` (`pk_material`, `desc_material`, `fk_type_mat
 -- Estructura de tabla para la tabla `tbl_e24_cat_rates`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_rates`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_rates` (
   `pk_rate` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `desc_tarifa` varchar(50) NOT NULL,
@@ -487,6 +498,7 @@ INSERT INTO `tbl_e24_cat_rates` (`pk_rate`, `desc_tarifa`, `rate`) VALUES
 -- Estructura de tabla para la tabla `tbl_e24_cat_status_class`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_cat_status_class`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_cat_status_class` (
   `pk_status_class` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `desc_status_class` varchar(25) NOT NULL,
@@ -535,6 +547,7 @@ INSERT INTO `tbl_e24_cat_status_class` (`pk_status_class`, `desc_status_class`, 
 -- Estructura de tabla para la tabla `tbl_e24_classroom_address`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_classroom_address`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_classroom_address` (
   `pk_classroom_direction` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_client` int(10) unsigned NOT NULL,
@@ -576,6 +589,7 @@ INSERT INTO `tbl_e24_classroom_address` (`pk_classroom_direction`, `fk_client`, 
 -- Estructura de tabla para la tabla `tbl_e24_clients`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_clients`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_clients` (
   `pk_client` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_type_client` mediumint(8) unsigned NOT NULL,
@@ -617,6 +631,7 @@ INSERT INTO `tbl_e24_clients` (`pk_client`, `fk_type_client`, `fk_user`, `client
 -- Estructura de tabla para la tabla `tbl_e24_courses`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_courses`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
   `pk_course` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_level` mediumint(8) unsigned NOT NULL,
@@ -663,6 +678,7 @@ INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher
 -- Estructura de tabla para la tabla `tbl_e24_course_schedule`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_course_schedule`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_course_schedule` (
   `pk_course_schedule` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_course` int(10) unsigned NOT NULL,
@@ -675,7 +691,7 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_course_schedule` (
   KEY `fk_curse` (`fk_course`),
   KEY `fk_bss_day` (`fk_bss_day`),
   KEY `XIF2e24_curse_schedule` (`fk_course`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=69 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
 
 --
 -- Volcado de datos para la tabla `tbl_e24_course_schedule`
@@ -705,14 +721,15 @@ INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bs
 (52, 1, 2, '10:00:00', '11:00:00', 1),
 (53, 1, 3, '08:00:00', '09:30:00', 1),
 (54, 1, 5, '08:00:00', '09:30:00', 1),
-(61, 24, 1, '10:00:00', '11:00:00', 1),
-(62, 24, 2, '10:00:00', '11:00:00', 1),
 (63, 25, 1, '10:00:00', '11:00:00', 1),
 (64, 25, 2, '11:00:00', '12:00:00', 1),
 (65, 25, 3, '11:00:00', '12:00:00', 1),
-(66, 26, 1, '09:00:00', '11:00:00', 1),
-(67, 26, 2, '10:00:00', '12:00:00', 1),
-(68, 26, 3, '10:00:00', '11:00:00', 1);
+(69, 24, 1, '12:00:00', '13:00:00', 1),
+(70, 24, 2, '12:00:00', '13:00:00', 1),
+(71, 24, 4, '10:00:00', '11:00:00', 1),
+(72, 26, 1, '09:00:00', '11:00:00', 1),
+(73, 26, 2, '10:00:00', '11:30:00', 1),
+(74, 26, 3, '10:00:00', '11:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -720,6 +737,7 @@ INSERT INTO `tbl_e24_course_schedule` (`pk_course_schedule`, `fk_course`, `fk_bs
 -- Estructura de tabla para la tabla `tbl_e24_documents_teachers`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_documents_teachers`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_documents_teachers` (
   `fk_document` smallint(5) unsigned NOT NULL,
   `fk_teacher` mediumint(8) unsigned NOT NULL,
@@ -774,6 +792,7 @@ INSERT INTO `tbl_e24_documents_teachers` (`fk_document`, `fk_teacher`, `status`,
 -- Estructura de tabla para la tabla `tbl_e24_groups`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_groups`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_groups` (
   `pk_group` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `desc_group` varchar(100) NOT NULL,
@@ -800,6 +819,7 @@ INSERT INTO `tbl_e24_groups` (`pk_group`, `desc_group`, `status`) VALUES
 -- Estructura de tabla para la tabla `tbl_e24_material_level`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_material_level`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_material_level` (
   `fk_level` mediumint(8) unsigned NOT NULL,
   `fk_material` smallint(5) unsigned NOT NULL,
@@ -825,6 +845,7 @@ INSERT INTO `tbl_e24_material_level` (`fk_level`, `fk_material`, `status`, `pk_m
 -- Estructura de tabla para la tabla `tbl_e24_students`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_students`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_students` (
   `pk_student` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_client` int(10) unsigned NOT NULL,
@@ -876,6 +897,7 @@ INSERT INTO `tbl_e24_students` (`pk_student`, `fk_client`, `fk_user`, `name`, `e
 -- Estructura de tabla para la tabla `tbl_e24_students_group`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_students_group`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_students_group` (
   `fk_group` int(10) unsigned NOT NULL,
   `fk_student` int(10) unsigned NOT NULL,
@@ -913,6 +935,7 @@ INSERT INTO `tbl_e24_students_group` (`fk_group`, `fk_student`, `status`, `fk_cl
 -- Estructura de tabla para la tabla `tbl_e24_teachers`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_teachers`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_teachers` (
   `pk_teacher` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `fk_user` int(10) unsigned NOT NULL,
@@ -969,6 +992,7 @@ INSERT INTO `tbl_e24_teachers` (`pk_teacher`, `fk_user`, `name`, `street`, `stre
 -- Estructura de tabla para la tabla `tbl_e24_unavailable_dates`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_unavailable_dates`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_unavailable_dates` (
   `pk_unavailable_dates` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `initial_date` date NOT NULL,
@@ -997,6 +1021,7 @@ INSERT INTO `tbl_e24_unavailable_dates` (`pk_unavailable_dates`, `initial_date`,
 -- Estructura de tabla para la tabla `tbl_e24_unavailable_schedule`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_unavailable_schedule`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_unavailable_schedule` (
   `pk_unavailable_schedule` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_bss_day` tinyint(3) unsigned NOT NULL,
@@ -1051,6 +1076,7 @@ INSERT INTO `tbl_e24_unavailable_schedule` (`pk_unavailable_schedule`, `fk_bss_d
 -- Estructura de tabla para la tabla `tbl_e24_users`
 --
 
+DROP TABLE IF EXISTS `tbl_e24_users`;
 CREATE TABLE IF NOT EXISTS `tbl_e24_users` (
   `pk_user` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_role` mediumint(8) unsigned NOT NULL,
