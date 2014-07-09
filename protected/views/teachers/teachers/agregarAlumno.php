@@ -1,5 +1,10 @@
 <?php
 Yii::app()->clientScript->registerCoreScript('jquery');
+$baseUrl = Yii::app()->baseUrl; 
+$cs = Yii::app()->getClientScript();
+$cs->registerCssFile($baseUrl.'/js/jsNotifications/ext/jboesch-Gritter/css/jquery.gritter.css');
+$cs->registerScriptFile($baseUrl.'/js/jsNotifications/ext/jboesch-Gritter/js/jquery.gritter.min.js');
+$cs->registerScriptFile($baseUrl.'/js/jsNotifications/jsNotifications.js');
 $this->breadcrumbs = array(
     'Cursos' => array('teachers/teachers/cursos'),
     'Curso[' . $_SESSION['crearAlumno']['descCurso'] . ']',
@@ -11,6 +16,11 @@ $this->menu = array(
 );
 ?>
 <script>
+    var notificacion=new jsNotifications({
+        autoCloseTime : 4,
+        showAlerts: true,
+        title: "Portal English e24"
+    });
     function agregarAlumno(){
         if($('#CheckBoxGroupEst:checked').length > 0){
             $('#CheckBoxGroupEst:checked').each(function (){
@@ -22,9 +32,10 @@ $this->menu = array(
                     data : {pkEstudiante : this.value}
                 });
             });
+            notificacion.show('ok',$('#CheckBoxGroupEst:checked').length+' alumnos fueron agregados.');
             window.location = "<?= Yii::app()->createUrl('teachers/teachers/cursos')?>";
         }else{
-            alert("Seleccione al menos un estudiante.");
+            notificacion.show('error','Debe seleccionar al menos un alumno.');
         }
     }
     

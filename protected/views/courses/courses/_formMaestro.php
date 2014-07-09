@@ -68,8 +68,10 @@ Yii::app()->clientScript->registerScript('script',
         
         <tr>
             <td class="datos_td" width="240px"></td>
-		<td class="datos_td" width="150px" style="text-align: center"><?php echo $form->labelEx($model,'fk_teacher'); ?></td>
-                <td width="240px"><?php echo $form->dropDownList($model,'fk_teacher', Teachers::model()->getMaestrosDisponibleCurso('2-10:00-11:00,3-11:00-12:00,5-10:00-11:00,6-12:00-13:00'), 
+		<td class="datos_td" width="150px" style="text-align: center"><?php echo $form->labelEx($model,'fk_teacher'); ?></td>                
+                <td width="240px"><?php echo $form->dropDownList($model,'fk_teacher', Teachers::model()->getMaestrosDisponibleCurso(
+                                                                $_SESSION['horarioCurso']['horarioMsjStp'],
+                                                                 isset($_SESSION['curso']['curso']['pk_course']) ? $_SESSION['curso']['curso']['pk_course'] : NULL), 
                         array(
                         "tabindex" => "0",
                         "empty" => constantes::OPCION_COMBO,

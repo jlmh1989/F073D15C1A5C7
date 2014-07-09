@@ -1,6 +1,12 @@
 <?php
 /* @var $this CoursesController */
 /* @var $form CActiveForm */
+Yii::app()->clientScript->registerCoreScript('jquery');
+$baseUrl = Yii::app()->baseUrl; 
+$cs = Yii::app()->getClientScript();
+$cs->registerCssFile($baseUrl.'/js/jsNotifications/ext/jboesch-Gritter/css/jquery.gritter.css');
+$cs->registerScriptFile($baseUrl.'/js/jsNotifications/ext/jboesch-Gritter/js/jquery.gritter.min.js');
+$cs->registerScriptFile($baseUrl.'/js/jsNotifications/jsNotifications.js');
 $scriptGetHorarioHtml = '';
 if(isset($_SESSION['horarioCurso'])){
     $scriptGetHorarioHtml = '
@@ -31,6 +37,11 @@ Yii::app()->clientScript->registerScript('script',
         ,CClientScript::POS_READY);
 ?>
 <script type="text/javascript">
+    var notificacion=new jsNotifications({
+        autoCloseTime : 4,
+        showAlerts: true,
+        title: "Portal English e24"
+    });
     function eliminarHorario(bssDay, id){
         $.ajax({
             type: "POST",
@@ -83,7 +94,7 @@ Yii::app()->clientScript->registerScript('script',
                                 $("#dialog").dialog("close"); 
                             });
                         }else{
-                            $("#labelErrorHorario").html(json.mensaje);
+                            notificacion.show('error',json.mensaje);
                         }
                     });
                 },
@@ -103,10 +114,13 @@ Yii::app()->clientScript->registerScript('script',
              if(json.existe){
                  $("#courses-formHorario").submit();
              }else{
+                 notificacion.show('error','Ningun horario capturado.');
+                 /*
                  $('#error')
                     .show({duration: 0, queue: true})
                     .delay(3000)
                     .hide({duration: 0, queue: true});
+                 */
              }
          });
     }

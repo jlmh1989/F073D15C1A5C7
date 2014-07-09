@@ -269,9 +269,15 @@ class Teachers extends CActiveRecord
             return CHtml::listData(Teachers::model()->findAll($criteria),'pk_teacher','name');
         }
         
-        public function getMaestrosDisponibleCurso($horarioMsg){
-            $comand = Yii::app()->db->createCommand('CALL GetMaestrosDisponible(:horarioMsg)');
+        public function getMaestrosDisponibleCurso($horarioMsg, $pkCursoActual){
+            $comand = Yii::app()->db->createCommand('CALL GetMaestrosDisponible(:horarioMsg, :pkCursoActual)');
             $comand->bindParam('horarioMsg', $horarioMsg);
+            if($pkCursoActual !== NULL){
+                $comand->bindParam('pkCursoActual', $pkCursoActual);
+            }else{
+                $comand->bindValue('pkCursoActual', NULL);
+            }
+            
             $result = $comand->query();
             return CHtml::listData($result,'pk_teacher','name');
         }

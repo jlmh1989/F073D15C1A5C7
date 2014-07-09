@@ -132,6 +132,13 @@ class CoursesController extends Controller
         
         public function actionAsignarMaestro(){
             $model=new CursoMaestro;
+            $horarioMsj = '';
+            foreach ($_SESSION['horarioCurso'] as $key => $value) {
+                foreach ($value as $horas) {
+                    $horarioMsj .= $key . '-' . $horas['inicio'] . '-' . $horas['fin'] . ',';
+                }
+            }
+            $_SESSION['horarioCurso']['horarioMsjStp'] = substr($horarioMsj, 0, -1);
             if(isset($_SESSION['curso']['maestro'])){
                 $model->attributes=$_SESSION['curso']['maestro'];
             }
