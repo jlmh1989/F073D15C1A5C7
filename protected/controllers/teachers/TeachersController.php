@@ -36,7 +36,8 @@ class TeachersController extends Controller
                         array('allow', // allow authenticated user to perform
 				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno','adminAlumnos',
                                                 'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario',
-                                                'jsonHorario','agregarAlumno','getAlumnosHtml','agregarAlumnoCurso'),
+                                                'jsonHorario','agregarAlumno','getAlumnosHtml','agregarAlumnoCurso',
+                                                'getClassComment','setClassComment'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -182,6 +183,52 @@ class TeachersController extends Controller
             $pk_usuario = Yii::app()->user->getState("pk_user");
             $model = Teachers::model()->find('fk_user=' . $pk_usuario);
             echo Teachers::getJsonHorario($model->pk_teacher);
+        }
+        
+        public function actionGetClassComment(){
+            $pkCurso = Yii::app()->getRequest()->getParam("pkCurso");
+            $fecha = Yii::app()->getRequest()->getParam("fecha");
+            $horaIncio = Yii::app()->getRequest()->getParam("horaInicio");
+            $horaFin = Yii::app()->getRequest()->getParam("HoraFin");
+            $msjJson = '{';
+            
+            $criteria = new CDbCriteria;
+            $criteria->select = 'pk_class_comment,comment';
+            $criteria->addCondition('fk_course='.$pkCurso);
+            $criteria->addCondition('date="'.$fecha.'"');
+            $criteria->addCondition('initial_hour="'.$horaIncio.'"');
+            $criteria->addCondition('final_hour="'.$horaFin.'"');
+            $model = ClassComment::model()->find($criteria);
+            if($model !== NULL){
+                $msjJson .= '"exist":true,"pkClassComment":'.$model->pk_class_comment.',"comment":"'.$model->comment.'"';
+            }else{
+                $msjJson .= '"exist":false, "pkClassComment":"", "comment":""';
+            }
+            $msjJson .= '}';
+            echo $msjJson;
+        }
+        
+        public function actionSetClassComment(){
+            $pkClassComment = Yii::app()->getRequest()->getParam("pkClassComment");
+            $pkCurso = Yii::app()->getRequest()->getParam("pkCurso");
+            $fecha = Yii::app()->getRequest()->getParam("fecha");
+            $horaIncio = Yii::app()->getRequest()->getParam("horaInicio");
+            $horaFin = Yii::app()->getRequest()->getParam("HoraFin");
+            $comment = Yii::app()->getRequest()->getParam("comment");
+            $exist = Yii::app()->getRequest()->getParam("exist");
+            if($exist === "true"){
+                $model = ClassComment::model()->findByPk($pkClassComment);
+                $model->comment = $comment;
+                $model->save();
+            }else{
+                $model = new ClassComment;
+                $model->comment= $comment;
+                $model->date = $fecha;
+                $model->final_hour = $horaFin;
+                $model->fk_course = $pkCurso;
+                $model->initial_hour = $horaIncio;
+                $model->save();
+            }
         }
 
         /**

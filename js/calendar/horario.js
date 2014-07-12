@@ -43,13 +43,38 @@ $(document).ready(function() {
                        if (calEvent.readOnly) {
                           return;
                        }
-
+                       
                        var $dialogContent = $("#event_edit_container");
                        resetForm($dialogContent);
-                       var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
-                       var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
-                       var titleField = $dialogContent.find("input[name='title']").val(calEvent.title);
+                       $dialogContent.find("input[name='title']").val(calEvent.title);
                        var bodyField = $dialogContent.find("textarea[name='body']");
+                       
+                       var dateI = new Date(calEvent.start);
+                       var dateF = new Date(calEvent.end);
+                       var exist;
+                       var pkClassComment;
+                       
+                       var fecha = dateI.getFullYear()+"-"+(dateI.getMonth()+1)+"-"+dateI.getDate();
+                       var horaInicio = dateI.getHours()+":"+dateI.getMinutes()+":00";
+                       var horaFin = dateF.getHours()+":"+dateF.getMinutes()+":00";
+                       
+                       $.ajax({
+                        type: "POST",
+                        async:false,    
+                        cache:false,
+                        url: yii.urls.getClassComment,
+                        dataType: "json",
+                        data: { pkCurso: calEvent.pk_curso, 
+                                fecha : fecha,
+                                horaInicio : horaInicio,
+                                HoraFin : horaFin},
+                        success: function(data) {
+                            exist = data.exist;
+                            pkClassComment = data.pkClassComment;
+                            calEvent.body = data.comment;
+                        }}); 
+                       
+                       
                        bodyField.val(calEvent.body);
 
                        $dialogContent.dialog({
@@ -62,14 +87,28 @@ $(document).ready(function() {
                           },
                           buttons: {
                              guardar : function() {
-
-                                calEvent.start = new Date(startField.val());
-                                calEvent.end = new Date(endField.val());
-                                calEvent.title = titleField.val();
                                 calEvent.body = bodyField.val();
-
-                                $calendar.weekCalendar("updateEvent", calEvent);
-                                $dialogContent.dialog("close");
+                                
+                                $.ajax({
+                                    type: "POST",
+                                    async:false,    
+                                    cache:false,
+                                    url: yii.urls.setClassComment,
+                                    dataType: "text",
+                                    data: { pkCurso: calEvent.pk_curso, 
+                                            fecha : fecha,
+                                            horaInicio : horaInicio,
+                                            HoraFin : horaFin,
+                                            comment: calEvent.body,
+                                            exist: exist,
+                                            pkClassComment: pkClassComment},
+                                    success: function(data) {
+                                        $calendar.weekCalendar("updateEvent", calEvent);
+                                        $dialogContent.dialog("close");
+                                    },
+                                    error: function (data){
+                                        
+                                    }}); 
                              },
                              cancelar : function() {
                                 $dialogContent.dialog("close");
@@ -118,6 +157,7 @@ $(document).ready(function() {
                 var event = data[i];
                 eventos["events"].push({
                     "id":i + 1,
+                    "pk_curso":event.pk_curso,
                     "start": new Date(event.anio, event.mes - 1, event.dia, event.hora_inicio, event.minuto_inicio),
                     "end": new Date(event.anio, event.mes - 1, event.dia, event.hora_fin, event.minuto_fin),
                     "title":event.desc_curso

@@ -5,6 +5,8 @@ Yii::app()->clientScript->registerScript('helpers', '
             idDayMax: '.CJSON::encode(Yii::app()->createUrl('catalogs/catBssDay/getFinDiaSemana')).', 
             minMaxHr: '.CJSON::encode(Yii::app()->createUrl('catalogs/catBssHours/getMinMaxHour')).',
             horario: '.CJSON::encode(Yii::app()->createUrl('teachers/teachers/jsonHorario')).',
+            getClassComment: '.CJSON::encode(Yii::app()->createUrl('teachers/teachers/getClassComment')).',
+            setClassComment: '.CJSON::encode(Yii::app()->createUrl('teachers/teachers/setClassComment')).',
             base: '.CJSON::encode(Yii::app()->baseUrl).'                                                        
         }                                                                                                       
     };                                                                                                          
