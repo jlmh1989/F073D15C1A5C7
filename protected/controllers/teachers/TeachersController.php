@@ -37,7 +37,7 @@ class TeachersController extends Controller
 				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno','adminAlumnos',
                                                 'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario',
                                                 'jsonHorario','agregarAlumno','getAlumnosHtml','agregarAlumnoCurso',
-                                                'getClassComment','setClassComment'),
+                                                'getClassComment','setClassComment','setDatosAsistencia','asistencia'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -229,6 +229,17 @@ class TeachersController extends Controller
                 $model->initial_hour = $horaIncio;
                 $model->save();
             }
+        }
+        
+        public function actionSetDatosAsistencia(){
+            $_SESSION['asistencia']['pkCurso'] = Yii::app()->getRequest()->getParam("pkCurso");
+            $_SESSION['asistencia']['pkCliente'] = Yii::app()->getRequest()->getParam("pkCliente");
+            $_SESSION['asistencia']['pkTipoCurso'] = Yii::app()->getRequest()->getParam("pkTipoCurso");
+            $_SESSION['asistencia']['descCurso'] = Yii::app()->getRequest()->getParam("descCurso");
+        }
+        
+        public function actionAsistencia(){
+            $this->render('asistencia');
         }
 
         /**

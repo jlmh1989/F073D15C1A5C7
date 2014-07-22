@@ -199,6 +199,7 @@ class Teachers extends CActiveRecord
                                 <tr>
                                 <td width="140px"><input class="botonCurso" type="button" value="Agregar Alumno" onClick="agregarAlumno('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.',\''.$model->desc_curse.'\')"></td>
                                 <td width="140px"><input class="botonCurso" type="button" value="Admin Alumnos" onClick="adminAlumnos('.$model->pk_course.','.$model->fk_client.','.$model->fk_group.',\''.$model->desc_curse.'\')"></td>
+                                <td width="140px"><input class="botonCurso" type="button" value="Asistencia" onClick="capturarAsistencia('.$model->pk_course.',\''.$model->desc_curse.'\','.$model->fk_client.','.constantes::CURSO_GRUPAL.')"></td>
                                 <td></td>
                                 </tr>
                                 </table>';
@@ -207,6 +208,7 @@ class Teachers extends CActiveRecord
                                 <tr>
                                 <td width="140px"><input class="botonCurso" type="button" value="Ver Alumno" onClick="verAlumno('.$modelEstudiantes[0]->pk_student.',\''.$model->desc_curse.'\')"></td>
                                 <td width="140px"><input class="botonCurso" type="button" value="Editar Alumno" onClick="editarAlumno('.$modelEstudiantes[0]->pk_student.',\''.$model->desc_curse.'\')"></td>
+                                <td width="140px"><input class="botonCurso" type="button" value="Asistencia" onClick="capturarAsistencia('.$model->pk_course.',\''.$model->desc_curse.'\','.$model->fk_client.','.constantes::CURSO_INDIVIDUAL.')"></td>
                                 <td></td>
                                 </tr>
                                 </table>';

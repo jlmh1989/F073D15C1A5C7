@@ -81,6 +81,16 @@ $this->menu = array(
             $(location).attr("href","<?= Yii::app()->createUrl('students/students/update')?>&id="+pkStudent);
         });
     }
+    
+    function capturarAsistencia(pkCurso, descCurso, pkCliente, pkTipoCurso){
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('teachers/teachers/setDatosAsistencia')?>",
+            data: {pkCurso : pkCurso, descCurso : descCurso, pkCliente : pkCliente, pkTipoCurso : pkTipoCurso}
+        }).done(function (msg){
+            $(location).attr("href","<?= Yii::app()->createUrl('teachers/teachers/asistencia')?>");
+        });
+    }
 </script>
 
 <table class="zebra" align="center" width="60%" id="tablaCursos">

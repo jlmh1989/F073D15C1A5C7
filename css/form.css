@@ -507,3 +507,7 @@ div.nostripes > div.barra > span > span, div.nostripes > div.barra > span:after 
     -webkit-animation: none;
     background-image: none;
 }
+
+.imgAsistencia{
+    cursor: pointer;
+}
