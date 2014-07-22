@@ -586,6 +586,38 @@ INSERT INTO `tbl_e24_classroom_address` (`pk_classroom_direction`, `fk_client`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tbl_e24_class_comment`
+--
+
+DROP TABLE IF EXISTS `tbl_e24_class_comment`;
+CREATE TABLE IF NOT EXISTS `tbl_e24_class_comment` (
+  `pk_class_comment` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_course` int(10) unsigned NOT NULL,
+  `date` date NOT NULL,
+  `initial_hour` time NOT NULL,
+  `final_hour` time NOT NULL,
+  `comment` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`pk_class_comment`),
+  KEY `fk_course` (`fk_course`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Volcado de datos para la tabla `tbl_e24_class_comment`
+--
+
+INSERT INTO `tbl_e24_class_comment` (`pk_class_comment`, `fk_course`, `date`, `initial_hour`, `final_hour`, `comment`) VALUES
+(1, 1, '2014-02-28', '08:00:00', '09:30:00', 'Hola Ejemplo Actualizado, capturando nota de ejemplo'),
+(5, 1, '2014-02-26', '08:00:00', '09:30:00', 'Nota Nueva Actualizada'),
+(6, 26, '2014-07-14', '09:00:00', '11:00:00', 'Comentario Clase 14 jul 2014'),
+(7, 24, '2014-07-14', '12:00:00', '13:00:00', 'Comentario Clase 14 jul 2014 12pm'),
+(8, 24, '2014-07-15', '12:00:00', '13:00:00', 'Comentario Clase 15 jul 2014 12pm'),
+(9, 26, '2014-07-15', '10:00:00', '11:30:00', 'Comentario Clase 15 jul 2014'),
+(10, 26, '2014-07-16', '10:00:00', '11:00:00', 'Comentario Clase 16 jul 2014'),
+(11, 24, '2014-07-17', '10:00:00', '11:00:00', 'Comentario Clase 17 jul 2014');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tbl_e24_clients`
 --
 
@@ -659,10 +691,10 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_courses` (
 --
 
 INSERT INTO `tbl_e24_courses` (`pk_course`, `fk_level`, `fk_client`, `fk_teacher`, `fk_type_course`, `fk_group`, `fk_classrom_address`, `initial_date`, `desc_curse`, `other_level`, `status`) VALUES
-(1, 3, 1, 11, 5, 1, 1, '2013-12-20', 'Curso basico cemez 1', '', 1),
-(2, 3, 1, 4, 5, 2, 1, '2013-12-22', 'Curso basico cemez 2', NULL, 1),
-(3, 3, 3, 3, 5, 3, 3, '2013-12-23', 'Curso vitro  1', '', 1),
-(4, 3, 3, 4, 5, 4, 3, '2013-12-24', 'Curso vitro  2', NULL, 1),
+(1, 3, 1, 11, 5, 1, 1, '2013-12-20', 'Curso basico cemez 1', '', 0),
+(2, 3, 1, 4, 5, 2, 1, '2013-12-22', 'Curso basico cemez 2', NULL, 0),
+(3, 3, 3, 3, 5, 3, 3, '2013-12-23', 'Curso vitro  1', '', 0),
+(4, 3, 3, 4, 5, 4, 3, '2013-12-24', 'Curso vitro  2', NULL, 0),
 (5, 3, 2, 3, 4, NULL, 2, '2013-12-25', 'Curso particular  1', NULL, 0),
 (6, 3, 4, 4, 4, NULL, 4, '2013-12-25', 'Curso particular  2', NULL, 0),
 (9, 3, 4, 7, 4, 2, 4, '2014-05-08', 'Curso con horario', '', 1),
@@ -918,7 +950,6 @@ CREATE TABLE IF NOT EXISTS `tbl_e24_students_group` (
 INSERT INTO `tbl_e24_students_group` (`fk_group`, `fk_student`, `status`, `fk_client`, `pk_student_group`) VALUES
 (1, 1, 1, 1, 1),
 (1, 2, 1, 1, 2),
-(1, 3, 1, 1, 3),
 (1, 6, 1, 3, 4),
 (1, 7, 1, 3, 5),
 (1, 8, 1, 3, 6),
@@ -1183,6 +1214,12 @@ ALTER TABLE `tbl_e24_classroom_address`
   ADD CONSTRAINT `fk_state_dir_pk_cat_detail` FOREIGN KEY (`fk_state_dir`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `tbl_e24_class_comment`
+--
+ALTER TABLE `tbl_e24_class_comment`
+  ADD CONSTRAINT `fkCourseComment` FOREIGN KEY (`fk_course`) REFERENCES `tbl_e24_courses` (`pk_course`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `tbl_e24_clients`
 --
 ALTER TABLE `tbl_e24_clients`
@@ -1266,6 +1303,15 @@ ALTER TABLE `tbl_e24_unavailable_schedule`
 --
 ALTER TABLE `tbl_e24_users`
   ADD CONSTRAINT `fk_role_user_pk_cat_detail` FOREIGN KEY (`fk_role`) REFERENCES `tbl_e24_cat_detail` (`pk_cat_detail`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+DELIMITER $$
+--
+-- Eventos
+--
+DROP EVENT `VerificarCursoTerminado`$$
+CREATE DEFINER=`root`@`localhost` EVENT `VerificarCursoTerminado` ON SCHEDULE EVERY 1 DAY STARTS '2014-01-01 00:00:01' ON COMPLETION NOT PRESERVE ENABLE DO call stp_update_status_course(@status, @message)$$
+
+DELIMITER ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -1,10 +1,9 @@
-
 DELIMITER $$
 --
 -- Procedimientos
 --
 DROP PROCEDURE IF EXISTS `GetMaestrosDisponible`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMaestrosDisponible`(in horarioMsg text)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMaestrosDisponible`(in horarioMsg text, in pkCursoActual int)
 BEGIN
 	declare dia varchar(20) default '';
 	declare horarioTmp varchar(20) default '';
@@ -22,6 +21,10 @@ BEGIN
 											group by t.pk_teacher
 											order by count(t.pk_teacher) desc,
 											c.desc_curse desc;
+	declare curso_actual cursor for select cs.* from tbl_e24_courses c 
+											inner join tbl_e24_course_schedule cs on cs.fk_course = c.pk_course 
+											where c.status = 1
+											and c.pk_course <> if(pkCursoActual is not null, pkCursoActual, c.pk_course + 1);
 	declare continue handler for not found set i = 1;
 	create temporary table if not exists horario(pk_dia integer not null, 
 												 hora_inicio time not null, 
@@ -68,7 +71,18 @@ BEGIN
 				and us.fk_teacher = pk_maestro;
 		
 		if count_maestro_disp = 0 then
-			insert into maestro values(pk_maestro, nombre_maestro);
+			select count(*) into count_maestro_disp 
+					from tbl_e24_courses c 
+					inner join tbl_e24_course_schedule cs on cs.fk_course = c.pk_course 
+					inner join horario hr on hr.pk_dia = cs.fk_bss_day
+					where (hr.hora_inicio >= cs.initial_hour and hr.hora_inicio <= cs.final_hour) 
+						and (hr.hora_fin >= cs.initial_hour and hr.hora_fin <= cs.final_hour) 
+						and c.status = 1
+						and c.fk_teacher = pk_maestro
+						and c.pk_course <> if(pkCursoActual is not null, pkCursoActual, c.pk_course + 1);
+			if count_maestro_disp = 0 then
+				insert into maestro values(pk_maestro, nombre_maestro);
+			end if;	
 		end if;
 	end loop leer_maestro_cursor;
 	close maestro_cursor;
@@ -132,11 +146,10 @@ BEGIN
     -- DECLARACION PARA MANEJO DE ERRORES
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
       BEGIN
-                -- GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
-                --                            @errno    = MYSQL_ERRNO,
-                --                            @text     = MESSAGE_TEXT;
-          -- SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
-          set p_message = 'Ocurrio un error';
+                GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+                                            @errno    = MYSQL_ERRNO,
+                                            @text     = MESSAGE_TEXT;
+          SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
           SET p_status = 1;
          ROLLBACK; -- Si ocurre un error, se revierten los cambios
       END;       
@@ -411,11 +424,10 @@ BEGIN
     -- Declaracion para atrapar los errores
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
       BEGIN
-                -- GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
-                --                      @errno    = MYSQL_ERRNO,
-                --                      @text     = MESSAGE_TEXT;
-          -- SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
-          set p_message = 'Ocurrio un error';
+                GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+                                      @errno    = MYSQL_ERRNO,
+                                      @text     = MESSAGE_TEXT;
+          SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
           SET p_status = 1;
          ROLLBACK; -- Si ocurre un error, se revierten los cambios
       END;   
@@ -523,11 +535,10 @@ BEGIN
     -- DECLARACION PARA ATRAPAR ERRORES
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
       BEGIN
-                -- GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
-                --                      @errno    = MYSQL_ERRNO,
-                --                      @text     = MESSAGE_TEXT;
-          -- SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
-          set p_message = 'Ocurrio un error';
+                GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+                                      @errno    = MYSQL_ERRNO,
+                                      @text     = MESSAGE_TEXT;
+          SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
           SET p_status = 1;
           DROP TEMPORARY TABLE IF EXISTS tbl_courses_tmp;
          ROLLBACK; -- Si ocurre un error, se revierten los cambios
@@ -636,13 +647,13 @@ BEGIN
 			-- DECLARACION PARA ATRAPAR ERRORES
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
       BEGIN
-                -- GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
-                --                      @errno    = MYSQL_ERRNO,
-                --                      @text     = MESSAGE_TEXT;
-          -- SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
-          set p_message = 'Ocurrio un error';
+                GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+                                      @errno    = MYSQL_ERRNO,
+                                      @text     = MESSAGE_TEXT;
+          SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
           SET p_status = 1;
           DROP TEMPORARY TABLE IF EXISTS tbl_courses_tmp;
+		  DROP TEMPORARY TABLE IF EXISTS horario;
          ROLLBACK; -- Si ocurre un error, se revierten los cambios
       END;  
     
@@ -683,8 +694,53 @@ BEGIN
 			end while;
         END IF;
     END LOOP curso_loop;
+	SET p_message = "Proceso correcto";
+	SET p_status = 0;
 	select * from horario;
 	drop table horario;
+END$$
+
+DROP PROCEDURE IF EXISTS `stp_update_status_course`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `stp_update_status_course`(OUT p_status INT, OUT p_message varchar(100))
+BEGIN
+	DECLARE no_more_rows    BOOLEAN;
+	declare v_pkCurso 		integer default 0;
+	-- obtener los cursos activos
+	declare cur_curso cursor for select c.pk_course from tbl_e24_courses c where c.status = 1;
+	-- DECLARACION PARA MANEJO DE FIN DE LOOP'S
+    DECLARE CONTINUE HANDLER FOR NOT FOUND 
+                 SET no_more_rows = TRUE; 
+	-- DECLARACION PARA ATRAPAR ERRORES
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+      BEGIN
+		GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+								  @errno    = MYSQL_ERRNO,
+								  @text     = MESSAGE_TEXT;
+		SET p_message = CONCAT("ERROR ", @errno, " (", @sqlstate, "): ", @text);
+		SET p_status = 1;
+		ROLLBACK; -- Si ocurre un error, se revierten los cambios
+      END;  
+
+	-- comprobacion de cursos finalizados
+	-- ABRIR CURSOR DE CURSO
+    OPEN cur_curso;
+
+    -- RECORRER CURSOR
+    curso_loop: LOOP
+        FETCH cur_curso INTO v_pkCurso;
+        
+        IF no_more_rows THEN
+              CLOSE cur_curso;
+              LEAVE curso_loop;
+        END IF;  
+    
+		CALL stp_coursedetail(v_pkCurso, @fechaFin,@percent,@status,@msg);
+		if @status = 0 then
+			update tbl_e24_courses set status = 0 where now() > @fechaFin and pk_course = v_pkCurso;
+		end if;
+    END LOOP curso_loop;
+	SET p_message = "Proceso correcto.";
+	SET p_status = 0;
 END$$
 
 --
