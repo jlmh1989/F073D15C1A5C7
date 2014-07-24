@@ -28,7 +28,7 @@ class CatLevelsController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform
-				'actions'=>array('index','view','create','update','admin','delete'),
+				'actions'=>array('index','view','create','update','admin','delete','updateDetail'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
 			),
@@ -55,21 +55,27 @@ class CatLevelsController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new CatLevels;
+            $model=new CatLevels;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            // Uncomment the following line if AJAX validation is needed
+            // $this->performAjaxValidation($model);
 
-		if(isset($_POST['CatLevels']))
-		{
-			$model->attributes=$_POST['CatLevels'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_level));
-		}
+            if(isset($_POST['CatLevels']))
+            {
+                $model->attributes=$_POST['CatLevels'];
+                $model->status = constantes::ACTIVO;
+                if($model->save()){
+                    $_SESSION['CatLevels']['escenario'] = 0; // Nuevo
+                    $_SESSION['CatLevels']['pk_level'] = $model->pk_level;
+                    $_SESSION['CatLevels']['desc_level'] = $model->desc_level;
+                    $this->redirect(array('catalogs/catLevelDetail/create'));
+                    //$this->redirect(array('view','id'=>$model->pk_level));
+                }
+            }
 
-		$this->render('create',array(
-			'model'=>$model,
-		));
+            $this->render('create',array(
+                    'model'=>$model,
+            ));
 	}
 
 	/**
@@ -79,21 +85,29 @@ class CatLevelsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+            $model=$this->loadModel($id);
+            // Uncomment the following line if AJAX validation is needed
+            // $this->performAjaxValidation($model);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['CatLevels']))
-		{
-			$model->attributes=$_POST['CatLevels'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_level));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
+            if(isset($_POST['CatLevels']))
+            {
+                $model->attributes=$_POST['CatLevels'];
+                if($model->save()){
+                    $this->redirect(array('index'));
+                }
+            }
+            $this->render('update',array(
+                    'model'=>$model,
+            ));
+	}
+        
+        public function actionUpdateDetail($id)
+	{
+            $model=$this->loadModel($id);
+            $_SESSION['CatLevels']['escenario'] = 1; // Update
+            $_SESSION['CatLevels']['pk_level'] = $model->pk_level;
+            $_SESSION['CatLevels']['desc_level'] = $model->desc_level;
+            $this->redirect(array('catalogs/catLevelDetail/create'));
 	}
 
 	/**

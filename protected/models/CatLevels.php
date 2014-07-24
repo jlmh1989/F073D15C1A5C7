@@ -64,7 +64,7 @@ class CatLevels extends CActiveRecord
 		return array(
 			'pk_level' => 'Id',
 			'desc_level' => 'Descripci&oacute;n',
-			'fk_associated_book' => 'Fk Associated Book',
+			'fk_associated_book' => 'Libro Asociado',
 			'total_hours' => 'Total Horas',
 			'status' => 'Estatus',
 		);

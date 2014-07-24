@@ -3,7 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Cat Levels',
+	'Niveles',
 );
 
 $this->menu=array(
@@ -18,7 +18,6 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
         'columns'=> array(
-            'pk_level',
             'desc_level',
             'fk_associated_book',
             'total_hours',
@@ -28,7 +27,14 @@ $this->menu=array(
                 'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{update}',
-		),
+                'template'=>'{update} {detalle}',
+                'buttons'=>array(
+                    'detalle' => array(
+                        'label'=>'Ver Detalle',
+                        'url'=>'Yii::app()->createUrl("catalogs/catLevels/updateDetail", array("id"=>$data->pk_level))',
+                        'imageUrl'=>Yii::app()->baseUrl.'/images/detail.png',
+                    ),
+                ),
+            ),
         ),
 )); ?>

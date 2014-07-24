@@ -1,24 +1,23 @@
 <?php
 /* @var $this CatLevelDetailController */
 /* @var $model CatLevelDetail */
+/* @var $modelTbl CatLevelDetail */
 
 $this->breadcrumbs=array(
-	'Cat Level Details'=>array('index'),
-	'Create',
+	'Niveles'=>Yii::app()->createUrl("catalogs/catLevels/index"),
+	'Nivel['.$_SESSION['CatLevels']['desc_level'].']',
+        $_SESSION['CatLevels']['escenario'] == 0 ? 'Crear':'Actualizar'.' Detalle',
 );
+//$this->menu=array(
+//	array('label'=>'Crear Nivel Detalle', 'url'=>array('create')),
+//	array('label'=>'Ver Catálogo Nivel Detalle', 'url'=>array('index')),
+//);
 $this->menu=array(
-	array('label'=>'Crear Nivel Detalle', 'url'=>array('create')),
-	array('label'=>'Ver Catálogo Nivel Detalle', 'url'=>array('index')),
+	array('label'=>'Crear Nivel', 'url'=>Yii::app()->createUrl("catalogs/catLevels/create")),
+	array('label'=>'Ver Catálogo Nivel', 'url'=>Yii::app()->createUrl("catalogs/catLevels/index")),
 );
-/*
-$this->menu=array(
-	array('label'=>'List CatLevelDetail', 'url'=>array('index')),
-	array('label'=>'Manage CatLevelDetail', 'url'=>array('admin')),
-);
- * 
- */
 ?>
 
-<h1>Crear Detalle Nivel</h1>
+<h3><?= $_SESSION['CatLevels']['escenario'] == 0 ? 'Crear':'Actualizar' ?> Detalle para Nivel <?= $_SESSION['CatLevels']['desc_level'] ?></h3>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model,'modelTbl'=>$modelTbl)); ?>

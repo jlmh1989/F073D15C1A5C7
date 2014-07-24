@@ -22,6 +22,4 @@ $this->menu=array(
  */
 ?>
 
-<h1>Update CatLevels <?php echo $model->pk_level; ?></h1>
-
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

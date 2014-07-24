@@ -19,6 +19,4 @@ $this->menu=array(
  */
 ?>
 
-<h1>Crear Nivel</h1>
-
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -14,6 +14,9 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
+        <tr>
+            <th class="zebra_th" colspan="4" style="text-align: center"><?= $model->isNewRecord ? 'Crear Nuevo Nivel' : 'Actualizar Nivel - '.$model->desc_level ?></th>
+        </tr>
         <tr>    
             <td><?php echo $form->labelEx($model,'desc_level'); ?></td>
             <td width="250"><?php echo $form->textField($model,'desc_level',array('size'=>50,'maxlength'=>50)); ?>
@@ -28,15 +31,14 @@
             <td><?php echo $form->textField($model,'total_hours'); ?>
             <?php echo $form->error($model,'total_hours'); ?></td>
 
-            <td><?php echo $form->labelEx($model,'status'); ?></td>
-            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
-            <?php echo $form->error($model,'status'); ?></td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?></td>
             <td></td>
             <td></td>
             <td></td>
+            <td style="text-align: center"><?php echo CHtml::submitButton($model->isNewRecord ? 'Siguiente' : 'Guardar'); ?></td>
         </tr>
 <?php $this->endWidget(); ?>
 </table>

@@ -56,19 +56,26 @@ class CatLevelDetailController extends Controller
 	public function actionCreate()
 	{
 		$model=new CatLevelDetail;
-
+                $modelTbl=new CatLevelDetail('search');
+		$modelTbl->unsetAttributes();  // clear any default values
+                $modelTbl->fk_level = $_SESSION['CatLevels']['pk_level'];
+                $model->setEstatusValidacion(FALSE);
+                $model->fk_level = $_SESSION['CatLevels']['pk_level'];
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['CatLevelDetail']))
 		{
+                        $model->setEstatusValidacion(TRUE);
 			$model->attributes=$_POST['CatLevelDetail'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_level_detail));
+                        $model->status = constantes::ACTIVO;
+			if($model->save()){
+                            $this->redirect(array('create'));
+                        }
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model,'modelTbl'=>$modelTbl,
 		));
 	}
 
@@ -80,19 +87,23 @@ class CatLevelDetailController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+                $modelTbl=new CatLevelDetail('search');
+		$modelTbl->unsetAttributes();  // clear any default values
+                $modelTbl->fk_level = $_SESSION['CatLevels']['pk_level'];
+                $model->setEstatusValidacion(TRUE);
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['CatLevelDetail']))
 		{
 			$model->attributes=$_POST['CatLevelDetail'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_level_detail));
+			if($model->save()){
+				$this->redirect(array('create'));
+                        }
 		}
 
-		$this->render('update',array(
-			'model'=>$model,
+		$this->render('create',array(
+			'model'=>$model,'modelTbl'=>$modelTbl,
 		));
 	}
 

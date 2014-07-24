@@ -18,7 +18,18 @@
  */
 class CatLevelDetail extends CActiveRecord
 {
-	/**
+    private $estatusValidacion;
+
+    public function setEstatusValidacion($estatusValidacion){
+        $this->estatusValidacion = $estatusValidacion;
+    }
+    
+    public function getEstatusValidacion(){
+        return $this->estatusValidacion;
+    }
+
+
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -66,7 +77,7 @@ class CatLevelDetail extends CActiveRecord
 			'topics' => 'Tema',
 			'duration' => 'Duraci&oacute;n',
 			'unit' => 'Unidad',
-			'pages' => 'p&aacute;ginas',
+			'pages' => 'P&aacute;ginas',
 			'is_exam' => 'Es examen',
 			'status' => 'Estatus',
 		);

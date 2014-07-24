@@ -1,6 +1,7 @@
 <?php
 /* @var $this CatLevelDetailController */
 /* @var $model CatLevelDetail */
+/* @var $modelTbl CatLevelDetail */
 
 $this->breadcrumbs=array(
 	'Cat Level Details'=>array('index'),
@@ -24,4 +25,4 @@ $this->menu=array(
 
 <h1>Actualizar Nivel Detalle</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model,'modelTbl'=>$modelTbl)); ?>
