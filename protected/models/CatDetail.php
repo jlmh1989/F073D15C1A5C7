@@ -26,6 +26,15 @@
  */
 class CatDetail extends CActiveRecord
 {
+    private $estatusValidacion;
+
+    public function setEstatusValidacion($estatusValidacion){
+        $this->estatusValidacion = $estatusValidacion;
+    }
+    
+    public function getEstatusValidacion(){
+        return $this->estatusValidacion;
+    }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -110,7 +119,7 @@ class CatDetail extends CActiveRecord
 		$criteria->compare('desc_cat_detail_es',$this->desc_cat_detail_es,true);
 		$criteria->compare('desc_cat_detail_en',$this->desc_cat_detail_en,true);
 		$criteria->compare('status',$this->status);
-		$criteria->compare('fk_cat_master',$this->fk_cat_master);
+                $criteria->compare('fk_cat_master',$this->fk_cat_master);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

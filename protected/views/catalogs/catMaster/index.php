@@ -3,7 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Cat Masters',
+	'Catálogo Maestro',
 );
 
 $this->menu=array(
@@ -27,8 +27,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{update}',
-		),
+                'template'=>'{update} {detalle}',
+                'buttons'=>array(
+                    'detalle' => array(
+                        'label'=>'Ver Detalle',
+                        'url'=>'Yii::app()->createUrl("catalogs/catMaster/updateDetail", array("id"=>$data->pk_cat_master))',
+                        'imageUrl'=>Yii::app()->baseUrl.'/images/detail.png',
+                    ),
+                ),
+            ),
         ),
 ));
-?>

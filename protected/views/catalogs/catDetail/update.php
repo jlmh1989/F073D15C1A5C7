@@ -3,9 +3,9 @@
 /* @var $model CatDetail */
 
 $this->breadcrumbs=array(
-	'Cat Details'=>array('index'),
-	$model->pk_cat_detail=>array('view','id'=>$model->pk_cat_detail),
-	'Update',
+	'Catálogo Detalle'=>array('index'),
+	$model->desc_cat_detail_es=>array('view','id'=>$model->pk_cat_detail),
+	'Actualizar',
 );
 $this->menu=array(
 	array('label'=>'Crear Catálogo Detalle', 'url'=>array('create')),

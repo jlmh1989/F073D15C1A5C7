@@ -3,7 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Cat Details',
+	'Catálogo Detalle',
 );
 
 $this->menu=array(
@@ -31,7 +31,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
             array('name'=>'fk_cat_master',
                 'header'=>'Cat&aacute;logo Maestro',
                 'type'=>'raw',
-                'value'=>'$data->fkCatMaster->desc_cat_master'),
+                'filter'=>CHtml::listData(CatMaster::model()->findAll(), 'pk_cat_master' , 'desc_cat_master'),
+                'value'=>'CatMaster::model()->findByPk($data->fk_cat_master)->desc_cat_master'),
+                //'value'=>'$data->fkCatMaster->desc_cat_master'),
             array('name'=>'status',
                 'header'=>'Estatus',
                 'type'=>'raw',

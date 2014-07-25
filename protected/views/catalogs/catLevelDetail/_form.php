@@ -8,11 +8,7 @@ $cs = Yii::app()->getClientScript();
 $cs->registerCssFile($baseUrl.'/js/jsNotifications/ext/jboesch-Gritter/css/jquery.gritter.css');
 $cs->registerScriptFile($baseUrl.'/js/jsNotifications/ext/jboesch-Gritter/js/jquery.gritter.min.js');
 $cs->registerScriptFile($baseUrl.'/js/jsNotifications/jsNotifications.js');
-Yii::app()->clientScript->registerCoreScript('jquery.ui');
-Yii::app()->clientScript->registerCssFile(
-        Yii::app()->clientScript->getCoreScriptUrl().
-        '/jui/css/base/jquery-ui.css'
-);
+
 Yii::app()->clientScript->registerScript('script',
         $model->getEstatusValidacion() === FALSE ? '$("#form").hide();' : '$("#nuevo").hide();',
         CClientScript::POS_READY);
@@ -20,6 +16,12 @@ Yii::app()->clientScript->registerScript('script',
 <script>
     function nuevo(){
         $("#nuevo").hide();
+        $("#CatLevelDetail_duration").val('');
+        $("#CatLevelDetail_topics").val('');
+        $("#CatLevelDetail_unit").val('');
+        $("#CatLevelDetail_pages").val('');
+        $("#CatLevelDetail_is_exam").val('');
+        $("#CatLevelDetail_status").val('');
         $("#form").show('slow');
     }
     
@@ -39,7 +41,7 @@ Yii::app()->clientScript->registerScript('script',
 	'enableAjaxValidation'=>false,
 )); ?>
         <tr>
-            <th colspan="4" class="zebra_th" style="text-align: center">Nuevo Detalle Nivel</th>
+            <th colspan="4" class="zebra_th" style="text-align: center"><?= $model->isNewRecord ? 'Nuevo Detalle Nivel' : 'Editar Detalle Nivel' ?></th>
         </tr>
         <tr>
             <td><?php echo $form->labelEx($model,'fk_level'); ?></td>
@@ -78,6 +80,13 @@ Yii::app()->clientScript->registerScript('script',
             <td><?php echo $form->labelEx($model,'is_exam'); ?></td>
             <td><?php echo $form->dropDownList($model,'is_exam', constantes::getOpcionSiNo(), constantes::getOpcionCombo()); ?>
             <?php echo $form->error($model,'is_exam'); ?></td>
+        </tr>
+        <tr>
+            <td><?php echo $form->labelEx($model,'status'); ?></td>
+            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'status'); ?></td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
             <td><?php echo CHtml::submitButton('Guardar'); ?></td>

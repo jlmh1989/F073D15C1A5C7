@@ -56,14 +56,13 @@ class CatLevelsController extends Controller
 	public function actionCreate()
 	{
             $model=new CatLevels;
-
+            $model->status = constantes::ACTIVO;
             // Uncomment the following line if AJAX validation is needed
             // $this->performAjaxValidation($model);
 
             if(isset($_POST['CatLevels']))
             {
                 $model->attributes=$_POST['CatLevels'];
-                $model->status = constantes::ACTIVO;
                 if($model->save()){
                     $_SESSION['CatLevels']['escenario'] = 0; // Nuevo
                     $_SESSION['CatLevels']['pk_level'] = $model->pk_level;

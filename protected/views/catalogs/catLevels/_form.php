@@ -31,8 +31,9 @@
             <td><?php echo $form->textField($model,'total_hours'); ?>
             <?php echo $form->error($model,'total_hours'); ?></td>
 
-            <td></td>
-            <td></td>
+            <td style="visibility: <?= $model->isNewRecord ? 'hidden' : 'visible' ?>"><?php echo $form->labelEx($model,'status'); ?></td>
+            <td style="visibility: <?= $model->isNewRecord ? 'hidden' : 'visible' ?>"><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'status'); ?></td>
         </tr>
         <tr>
             <td></td>

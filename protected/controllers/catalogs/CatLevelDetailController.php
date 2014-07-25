@@ -56,6 +56,7 @@ class CatLevelDetailController extends Controller
 	public function actionCreate()
 	{
 		$model=new CatLevelDetail;
+                $model->status = constantes::ACTIVO;
                 $modelTbl=new CatLevelDetail('search');
 		$modelTbl->unsetAttributes();  // clear any default values
                 $modelTbl->fk_level = $_SESSION['CatLevels']['pk_level'];
@@ -68,7 +69,6 @@ class CatLevelDetailController extends Controller
 		{
                         $model->setEstatusValidacion(TRUE);
 			$model->attributes=$_POST['CatLevelDetail'];
-                        $model->status = constantes::ACTIVO;
 			if($model->save()){
                             $this->redirect(array('create'));
                         }

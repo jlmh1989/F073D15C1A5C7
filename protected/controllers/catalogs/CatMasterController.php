@@ -28,7 +28,7 @@ class CatMasterController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform
-				'actions'=>array('index','view','create','update','admin','delete'),
+				'actions'=>array('index','view','create','update','admin','delete','updateDetail'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
 			),
@@ -95,6 +95,14 @@ class CatMasterController extends Controller
 			'model'=>$model,
 		));
 	}
+        
+        public function actionUpdateDetail($id){
+            $model=$this->loadModel($id);
+            $_SESSION['CatMaster']['escenario'] = 1; // Update
+            $_SESSION['CatMaster']['pk_cat_master'] = $model->pk_cat_master;
+            $_SESSION['CatMaster']['desc_cat_master'] = $model->desc_cat_master;
+            $this->redirect(array('catalogs/catDetail/createByMaster'));
+        }
 
 	/**
 	 * Deletes a particular model.

@@ -3,8 +3,8 @@
 /* @var $model CatMaster */
 
 $this->breadcrumbs=array(
-	'Cat Masters'=>array('index'),
-	'Manage',
+	'Catálogo Maestro'=>array('index'),
+	'Administrar',
 );
 
 $this->menu=array(

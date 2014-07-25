@@ -3,8 +3,8 @@
 /* @var $model CatMaster */
 
 $this->breadcrumbs=array(
-	'Cat Masters'=>array('index'),
-	'Create',
+	'Catálogo Maestro'=>array('index'),
+	'Crear Nuevo',
 );
 $this->menu=array(
 	array('label'=>'Crear Catálogo General', 'url'=>array('create')),

@@ -3,8 +3,8 @@
 /* @var $model CatMaster */
 
 $this->breadcrumbs=array(
-	'Cat Masters'=>array('index'),
-	$model->pk_cat_master,
+	'Catálogo Maestro'=>array('index'),
+	$model->desc_cat_master,
 );
 
 $this->menu=array(

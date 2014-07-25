@@ -3,8 +3,8 @@
 /* @var $model CatDetail */
 
 $this->breadcrumbs=array(
-	'Cat Details'=>array('index'),
-	'Create',
+	'Catálogo Detalle'=>array('index'),
+	'Crear Nuevo',
 );
 $this->menu=array(
 	array('label'=>'Crear Catálogo Detalle', 'url'=>array('create')),
@@ -19,6 +19,6 @@ $this->menu=array(
  */
 ?>
 
-<h1>Create CatDetail</h1>
+<h1>Crear C&aacute;talogo Detalle</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

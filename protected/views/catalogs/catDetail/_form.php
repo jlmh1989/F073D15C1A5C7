@@ -14,33 +14,29 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
-
         <tr>
-	<div class="row">
-            <td><?php echo $form->labelEx($model,'desc_cat_detail_es'); ?></td>
-		<td width="240px"><?php echo $form->textField($model,'desc_cat_detail_es',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'desc_cat_detail_es'); ?></td>
-	</div>
-
-	<div class="row">
-            <td><?php echo $form->labelEx($model,'desc_cat_detail_en'); ?></td>
-		<td><?php echo $form->textField($model,'desc_cat_detail_en',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'desc_cat_detail_en'); ?></td>
-	</div>
+            <th class="zebra_th" style="text-align: center" colspan="4"><?= $model->isNewRecord ? 'Nuevo ' : 'Editar ' ?>C&aacute;talogo Detalle</th>
         </tr>
-        
         <tr>
-	<div class="row">
-            <td><?php echo $form->labelEx($model,'status'); ?></td>
-            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
-            <?php echo $form->error($model,'status'); ?></td>
-	</div>
-
-	<div class="row">
             <td><?php echo $form->labelEx($model,'fk_cat_master'); ?></td>
 		<td><?php echo $form->dropDownList($model,'fk_cat_master', CatMaster::model()->getCatMaster(), constantes::getOpcionCombo()); ?>
 		<?php echo $form->error($model,'fk_cat_master'); ?></td>
-	</div>
+            <td><?php echo $form->labelEx($model,'desc_cat_detail_es'); ?></td>
+		<td width="240px"><?php echo $form->textField($model,'desc_cat_detail_es',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->error($model,'desc_cat_detail_es'); ?></td>
+            
+        </tr>
+        
+        <tr>
+            <td><?php echo $form->labelEx($model,'desc_cat_detail_en'); ?></td>
+		<td><?php echo $form->textField($model,'desc_cat_detail_en',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->error($model,'desc_cat_detail_en'); ?></td>
+                
+            <td><?php echo $form->labelEx($model,'status'); ?></td>
+            <td><?php echo $form->dropDownList($model,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'status'); ?></td>
+
+            
         </tr>
         
         <tr>

@@ -3,9 +3,9 @@
 /* @var $model CatMaster */
 
 $this->breadcrumbs=array(
-	'Cat Masters'=>array('index'),
-	$model->pk_cat_master=>array('view','id'=>$model->pk_cat_master),
-	'Update',
+	'Catálogo Maestro'=>array('index'),
+	$model->desc_cat_master=>array('view','id'=>$model->pk_cat_master),
+	'Actualizar',
 );
 $this->menu=array(
 	array('label'=>'Crear Catálogo General', 'url'=>array('create')),

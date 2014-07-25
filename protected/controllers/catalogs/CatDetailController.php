@@ -28,7 +28,7 @@ class CatDetailController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform
-				'actions'=>array('index','view','create','update','admin','delete'),
+				'actions'=>array('index','view','create','update','admin','delete','createByMaster','updateByMaster'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
 			),
@@ -71,8 +71,51 @@ class CatDetailController extends Controller
 			'model'=>$model,
 		));
 	}
+        
+        public function actionCreateByMaster(){
+            $model=new CatDetail;
+            $modelTbl= new CatDetail('search');
+            $modelTbl->unsetAttributes();  // clear any default values
+            $modelTbl->fk_cat_master = $_SESSION['CatMaster']['pk_cat_master'];
+            $model->setEstatusValidacion(FALSE);
+            $model->fk_cat_master = $_SESSION['CatMaster']['pk_cat_master'];
+            $model->status = constantes::ACTIVO;
+            if(isset($_POST['CatDetail']))
+		{
+                    $model->setEstatusValidacion(TRUE);
+                    $model->attributes=$_POST['CatDetail'];
+                    if($model->save()){
+                        $this->redirect(array('createByMaster'));
+                    }
+		}
 
-	/**
+            $this->render('createByMaster',array(
+                    'model'=>$model,'modelTbl'=>$modelTbl,
+            ));
+        }
+        
+        public function actionUpdateByMaster($id){
+            $model=$this->loadModel($id);
+            $modelTbl= new CatDetail('search');
+            $modelTbl->unsetAttributes();  // clear any default values
+            $modelTbl->fk_cat_master = $_SESSION['CatMaster']['pk_cat_master'];
+            $model->setEstatusValidacion(TRUE);
+            $model->fk_cat_master = $_SESSION['CatMaster']['pk_cat_master'];
+            
+            if(isset($_POST['CatDetail']))
+		{
+                    $model->attributes=$_POST['CatDetail'];
+                    if($model->save()){
+                        $this->redirect(array('createByMaster'));
+                    }
+		}
+
+            $this->render('createByMaster',array(
+                    'model'=>$model,'modelTbl'=>$modelTbl,
+            ));
+        }
+
+        /**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
