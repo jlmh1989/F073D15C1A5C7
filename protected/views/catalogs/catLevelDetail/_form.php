@@ -53,7 +53,7 @@ Yii::app()->clientScript->registerScript('script',
             <?php echo $form->error($model,'fk_level'); ?></td>
 
             <td><?php echo $form->labelEx($model,'topics'); ?></td>
-            <td><?php echo $form->textField($model,'topics',array('size'=>60,'maxlength'=>100)); ?>
+            <td><?php echo $form->textArea($model,'topics',array('rows'=>4, 'maxlength'=>100, 'style' => 'resize: none')); ?>
             <?php echo $form->error($model,'topics'); ?></td>
         </tr>
         <tr>

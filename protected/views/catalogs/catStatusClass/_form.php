@@ -16,11 +16,11 @@
 )); ?>
         <tr>
             <td><?php echo $form->labelEx($model,'desc_status_class'); ?></td>
-            <td width="250"><?php echo $form->textField($model,'desc_status_class',array('size'=>25,'maxlength'=>25)); ?>
+            <td width="250"><?php echo $form->textField($model,'desc_status_class',array('maxlength'=>25)); ?>
             <?php echo $form->error($model,'desc_status_class'); ?></td>
 
             <td><?php echo $form->labelEx($model,'long_desc'); ?></td>
-            <td><?php echo $form->textField($model,'long_desc',array('size'=>60,'maxlength'=>200)); ?>
+            <td><?php echo $form->textArea($model,'long_desc',array('rows'=>4, 'maxlength'=>200, 'style' => 'resize: none')); ?>
             <?php echo $form->error($model,'long_desc'); ?></td>
         </tr>
         <tr>

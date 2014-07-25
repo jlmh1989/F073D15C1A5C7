@@ -13,7 +13,7 @@ $this->menu=array(
 ?>
 
 <h1>Cat&aacute;logo Tarifa</h1>
-
+ 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
