@@ -16,14 +16,20 @@ $this->menu=array(
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$model->search(),
-	'filter'=>$model,
+	//'filter'=>$model,
 	'columns'=> array(
-            'pk_material',
-            'desc_material',
-            array('name'=>'fk_type_material',
-                'header'=>'Tipo Material',
+            array('name'=>'fkCatLevels',
+                'header'=>'Nivel',
                 'type'=>'raw',
-                'value'=>'$data->fkTypeMaterial->desc_cat_detail_es'),
+                'value'=>'$data->fkCatLevels->desc_level'),
+            array('name'=>'fkCatMaterial',
+                'header'=>'Material',
+                'type'=>'raw',
+                'value'=>'$data->fkCatMaterial->desc_material'),
+            array('name'=>'status',
+                'header'=>'Estatus',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_status[$data->status]'),
             array(
                 'class'=>'CButtonColumn',
                 'template'=>'{update}',

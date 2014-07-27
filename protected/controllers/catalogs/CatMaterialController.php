@@ -55,21 +55,28 @@ class CatMaterialController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new CatMaterial;
+            $model=new CatMaterial;
+            $modelML = new MaterialLevel;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            if(isset($_POST['CatMaterial']))
+            {
+                $model->attributes=$_POST['CatMaterial'];
+                $modelML->attributes=$_POST['MaterialLevel'];
+                $modelML->fk_material = 0;
+                $validarML = $modelML->validate();
+                $validar = $model->validate() && $validarML;
+                if($validar){
+                    if($model->save()){
+                        $modelML->fk_material = $model->pk_material;
+                        $modelML->save();
+                        $this->redirect(array('index'));
+                    }
+                }                    
+            }
 
-		if(isset($_POST['CatMaterial']))
-		{
-			$model->attributes=$_POST['CatMaterial'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_material));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
+            $this->render('create',array(
+                    'model'=>$model, 'modelML'=>$modelML,
+            ));
 	}
 
 	/**
@@ -77,23 +84,27 @@ class CatMaterialController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
+	public function actionUpdate($id){
+            $model=$this->loadModel($id);
+            $modelML = MaterialLevel::model()->find('fk_material=?', array($model->pk_material));
+            
+            if(isset($_POST['CatMaterial'])){
+                $model->attributes=$_POST['CatMaterial'];
+                $modelML->attributes=$_POST['MaterialLevel'];
+                $validarML = $modelML->validate();
+                $validar = $model->validate() && $validarML;
+                if($validar){
+                    if($model->save()){
+                        $modelML->fk_material = $model->pk_material;
+                        $modelML->save();
+                        $this->redirect(array('index'));
+                    }
+                }  
+            }
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['CatMaterial']))
-		{
-			$model->attributes=$_POST['CatMaterial'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_material));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
+            $this->render('update',array(
+                    'model'=>$model, 'modelML'=>$modelML,
+            ));
 	}
 
 	/**
@@ -115,21 +126,30 @@ class CatMaterialController extends Controller
 	 */
 	public function actionIndex()
 	{
-                $model=new CatMaterial('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['CatMaterial']))
-			$model->attributes=$_GET['CatMaterial'];
+            $model=new MaterialLevel('search');
+            $model->unsetAttributes();  // clear any default values
+            if(isset($_GET['MaterialLevel']))
+                    $model->attributes=$_GET['MaterialLevel'];
 
-		$this->render('index',array(
-			'model'=>$model,
-		));
-                /*
-		$dataProvider=new CActiveDataProvider('CatMaterial');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-                 * 
-                 */
+            $this->render('index',array(
+                    'model'=>$model,
+            ));
+            /*
+            $model=new CatMaterial('search');
+            $model->unsetAttributes();  // clear any default values
+            if(isset($_GET['CatMaterial']))
+                    $model->attributes=$_GET['CatMaterial'];
+
+            $this->render('index',array(
+                    'model'=>$model,
+            ));
+
+            $dataProvider=new CActiveDataProvider('CatMaterial');
+            $this->render('index',array(
+                    'dataProvider'=>$dataProvider,
+            ));
+             * 
+             */
 	}
 
 	/**

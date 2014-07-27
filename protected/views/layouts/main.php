@@ -67,7 +67,7 @@
                                     array('label'=>'Niveles', 'url'=>array('/catalogs/catLevels')),
                                     //array('label'=>'Detalle de Niveles', 'url'=>array('/catalogs/catLevelDetail')),
                                     array('label'=>'Materiales', 'url'=>array('/catalogs/catMaterial')),
-                                    array('label'=>'Material por Nivel', 'url'=>array('/catalogs/materialLevel')),
+                                    //array('label'=>'Material por Nivel', 'url'=>array('/catalogs/materialLevel')),
                                     array('label'=>'Tarifas', 'url'=>array('/catalogs/catRates')),
                                     array('label'=>'Estatus de Clase', 'url'=>array('/catalogs/catStatusClass')),
                                     ),
