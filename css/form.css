@@ -508,6 +508,61 @@ div.nostripes > div.barra > span > span, div.nostripes > div.barra > span:after 
     background-image: none;
 }
 
-.imgAsistencia{
-    cursor: pointer;
+.DateLabel {
+    font-size: 11px;
+    width: 100%;
+    color: #555;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #e5e5e5;
+    -webkit-border-radius: 10px 10px 0 0;
+    -moz-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+}
+
+.Event{
+    height: 100px;
+    font-size: 14px;
+    padding: 4px;
+    text-align: center;
+    margin-bottom: 1px;
+    display: block;
+}
+
+.EventText{
+    padding-top: 5px;
+    font-weight: normal;
+    font-size: 10px;
+    text-transform: uppercase;
+    display: block;
+}
+
+.DateHeader{
+    width: 14%;
+    text-align: center;
+    background: #d4e2e4;
+    text-transform: uppercase;
+    padding: 8px 0 8px 0;
+}
+
+.DateHeader.first{
+    -webkit-border-radius: 10px 0 0 0;
+    -moz-border-radius: 10px 0 0 0;
+    border-radius: 10px 0 0 0;
+}
+
+.DateHeader.last{
+    -webkit-border-radius: 0 10px 0 0;
+    -moz-border-radius: 0 10px 0 0; 
+    border-radius: 0 10px 0 0;
+}
+
+.MonthlyCalendar{
+    border: 1px;
+    border-style:solid;
+    border-color: #d4e2e4;
+    -webkit-border-radius: 11px 11px 0 0;
+    -moz-border-radius: 11px 11px 0 0; 
+    border-radius: 11px 11px 0 0;
 }

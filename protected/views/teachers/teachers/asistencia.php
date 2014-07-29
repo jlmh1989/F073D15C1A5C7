@@ -25,18 +25,84 @@ Yii::app()->clientScript->registerScript('script',
         alert("Siguiente");
     }
 </script>
-<table class="zebra" id="tablaAsistencias">
-    <thead>
+<table class="calendarioMes">
+    <thead id="CalendarHead">
         <tr>
-            <th class="zebra_th" colspan="3" style="text-align: center; cursor: default">Asistencias - <?= $_SESSION['asistencia']['descCurso'] ?></th>
-        </tr>
-        <tr>
-            <th style="text-align: center; cursor: default">Alumnos</th>
-            <th style="text-align: center; cursor: default" width="160px"><img src="images/previous.png" width="11px" height="11px" class="imgAsistencia" onclick="atrasFecha()" /> <span id="fechaInicio"></span></th>
-            <th style="text-align: center; cursor: default" width="160px"><span id="fechaFin"></span> <img src="images/next.png" width="11px" height="11px" class="imgAsistencia" onclick="siguienteFecha()" /> </th>
+            <td style="text-align: left; "><span style="cursor: pointer" onclick="atrasFecha()">< ANTERIOR</span></td>
+            <td style="text-align: center; font-weight: bold">AGOSTO 2014</td>
+            <td style="text-align: right;"><span style=" cursor: pointer" onclick="siguienteFecha()">SIGUIENTE ></span></td>
         </tr>
     </thead>
-    <tbody>
-        
+</table>
+<table class="MonthlyCalendar">
+    <thead class="CalendarHead">
+        <tr>
+            <th class="DateHeader first">LUN</th>
+            <th class="DateHeader">MAR</th>
+            <th class="DateHeader">MI&Eacute;</th>
+            <th class="DateHeader">JUE</th>
+            <th class="DateHeader">VIE</th>
+            <th class="DateHeader">S&Aacute;B</th>
+            <th class="DateHeader last">DOM</th>
+        </tr>
+    </thead>
+    <tbody class="CalendarBody">
+        <?php
+        for ($i = 0; $i < 5; $i++){
+        ?>
+        <tr class="WeekRow">
+            <td>
+                <div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
+                    <div class="DateLabel">4 AGO 2014</div>
+                    <div class="Event normal" style="cursor: pointer;">
+                        <span class="EventText">Cancelada fuera de tiempo</span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
+                    <div class="DateLabel">4 AGO 2014</div>
+                    <div class="Event normal">
+                        <span class="EventText"></span>
+                    </div>
+                </div>
+            </td>
+            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
+                    <div class="DateLabel">4 AGO 2014</div>
+                    <div class="Event normal">
+                        <span class="EventText"></span>
+                    </div>
+                </div></td>
+            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
+                    <div class="DateLabel">4 AGO 2014</div>
+                    <div class="Event normal">
+                        <span class="EventText"></span>
+                    </div>
+                </div></td>
+            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
+                    <div class="DateLabel">4 AGO 2014</div>
+                    <div class="Event normal">
+                        <span class="EventText"></span>
+                    </div>
+                </div></td>
+            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
+                    <div class="DateLabel">4 AGO 2014</div>
+                    <div class="Event normal">
+                        <span class="EventText"></span>
+                    </div>
+                </div></td>
+            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
+                    <div class="DateLabel">4 AGO 2014</div>
+                    <div class="Event normal">
+                        <span class="EventText"></span>
+                    </div>
+                </div></td>
+        </tr>
+        <?php } ?>
     </tbody>
 </table>
+<?php
+$timestamp;
+$dw = date( "w");
+echo $dw;
+?>
