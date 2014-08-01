@@ -37,7 +37,8 @@ class TeachersController extends Controller
 				'actions'=>array('perfil','updateProfile','alumnos','cursos','crearAlumno','adminAlumnos',
                                                 'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario',
                                                 'jsonHorario','agregarAlumno','getAlumnosHtml','agregarAlumnoCurso',
-                                                'getClassComment','setClassComment','setDatosAsistencia','asistencia'),
+                                                'getClassComment','setClassComment','setDatosAsistencia','asistencia',
+                                                'getCursoCalendario'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -236,6 +237,7 @@ class TeachersController extends Controller
             $_SESSION['asistencia']['pkCliente'] = Yii::app()->getRequest()->getParam("pkCliente");
             $_SESSION['asistencia']['pkTipoCurso'] = Yii::app()->getRequest()->getParam("pkTipoCurso");
             $_SESSION['asistencia']['descCurso'] = Yii::app()->getRequest()->getParam("descCurso");
+            $_SESSION['asistencia']['pkMaestro'] = Yii::app()->getRequest()->getParam("pkMaestro");
         }
         
         public function actionAsistencia(){
@@ -619,4 +621,80 @@ class TeachersController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+        public function actionGetCursoCalendario() {
+            $html = '';
+            $mesArray = array(1 => "ENE", 2 => "FEB", 3 => "MAR", 4 => "ABR", 5 => "MAY", 6 => "JUN",
+                              7 => "JUL", 8 => "AGO", 9 => "SEP", 10 => "OCT", 11 => "NOV", 12 => "DIC");
+            $mesDescArray = array(1 => "ENERO", 2 => "FEBRERO", 3 => "MARZO", 4 => "ABRIL", 5 => "MAYO", 6 => "JUNIO",
+                              7 => "JULIO", 8 => "AGOSTO", 9 => "SEPTIEMBRE", 10 => "OCTUBRE", 11 => "NOVIEMBRE", 12 => "DICIEMBRE");
+            $diffMes = Yii::app()->getRequest()->getParam("diffMes");
+
+            $comand = Yii::app()->db->createCommand('call stp_horario(:pkTeacher, :pkCurso, @st, @stMsg)');
+            $comand->bindParam('pkTeacher', $_SESSION['asistencia']['pkMaestro']);
+            $comand->bindParam('pkCurso', $_SESSION['asistencia']['pkCurso']);
+            $result = $comand->query();
+            
+            $fechaTmp = date('d-m-Y');
+            $diaActual = date('j', strtotime($fechaTmp));
+            $mesActual = date('m', strtotime($fechaTmp));
+            $anioActual = date('Y', strtotime($fechaTmp));
+            $fecha = '01-'.date('m', strtotime($fechaTmp)).'-'.date('Y', strtotime($fechaTmp));
+            $fecha = date('d-m-Y', strtotime($diffMes." months", strtotime($fecha)));
+            $diaTotal = date('t', strtotime($fecha));
+            $idFechaInicio = date('w', strtotime($fecha)); // 0 -> dom ... 6 -> Sab
+            $contDias = 0;
+            for ($i = 0; $i < 5; $i++) {
+                $html .= '<tr class="WeekRow">';
+                if($i === 0){
+                    for($j = 0; $j < 7; $j++){
+                        if($j >= ($idFechaInicio - 1)){
+                            $fechaActual = date('d-m-Y', strtotime("+".$contDias." day", strtotime($fecha)));
+                            $cssDay = 'DayMonth '; 
+                            if(($diaActual === date('j', strtotime($fechaActual))) && 
+                                    ($mesActual === date('m', strtotime($fechaActual))) && 
+                                    ($anioActual === date('Y', strtotime($fechaActual)))){
+                                $cssDay .= 'now';
+                            }
+                            $contDias++;
+                            $html .=    '<td>
+                                            <div class="'.$cssDay.'">
+                                                <div class="DateLabel">'.date('j', strtotime($fechaActual)).' '.$mesArray[date('n', strtotime($fechaActual))].' '.date('Y', strtotime($fechaActual)).'</div>
+                                                <div class="Event normal" style="cursor: pointer;">
+                                                    <span class="EventText"></span>
+                                                </div>
+                                            </div>
+                                        </td>';
+                        }else{
+                            $html .= '<td></td>';
+                        }
+                    }
+                }else{
+                    for($j = 0; $j < 7; $j++){
+                        if($contDias < $diaTotal){
+                            $fechaActual = date('d-m-Y', strtotime("+".$contDias." day", strtotime($fecha)));
+                            $cssDay = 'DayMonth '; 
+                            if(($diaActual === date('j', strtotime($fechaActual))) && 
+                                    ($mesActual === date('m', strtotime($fechaActual))) && 
+                                    ($anioActual === date('Y', strtotime($fechaActual)))){
+                                $cssDay .= 'now';
+                            }
+                            $contDias++;
+                            $html .=    '<td>
+                                            <div class="'.$cssDay.'">
+                                                <div class="DateLabel">'.date('j', strtotime($fechaActual)).' '.$mesArray[date('n', strtotime($fechaActual))].' '.date('Y', strtotime($fechaActual)).'</div>
+                                                <div class="Event normal" style="cursor: pointer;">
+                                                    <span class="EventText"></span>
+                                                </div>
+                                            </div>
+                                        </td>';
+                        }else{
+                            $html .= '<td></td>';
+                        }
+                    }
+                }
+            }
+            $html .= "</tr>";
+            echo $html.'@'.$mesDescArray[date('n', strtotime($fecha))].' '.date('Y', strtotime($fecha));
+        }
 }

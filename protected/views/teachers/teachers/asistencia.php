@@ -11,30 +11,62 @@ $this->menu = array(
 
 Yii::app()->clientScript->registerScript('script',
         '
-            $("#fechaFin").text("26 Feb 2014 ");
-            $("#fechaInicio").text(" 24 Feb 2014");
+        $.ajax({
+            url: "'.Yii::app()->createUrl("teachers/teachers/getCursoCalendario").'", 
+            dataType: "text",
+            data: { diffMes: 0},
+         }).done(function( msg ) {
+            if(msg !== ""){
+                var arrayMsg = msg.split("@");
+                $("#tablaCursoMes tbody").html(arrayMsg[0]);
+                $("#tituloTabla").html("ASISTENCIA - "+arrayMsg[1]);
+            }
+         });
         '
         ,CClientScript::POS_READY);
 ?>
 <script>
+    var diffMes = 0;
     function atrasFecha(){
-        alert("Atras");
+        diffMes--;
+        $.ajax({
+            url: "<?= Yii::app()->createUrl('teachers/teachers/getCursoCalendario'); ?>", 
+            dataType: "text",
+            data: { diffMes: diffMes},
+         }).done(function( msg ) {
+            if(msg !== ""){
+                var arrayMsg = msg.split("@");
+                $("#tablaCursoMes tbody").html(arrayMsg[0]);
+                $("#tituloTabla").html("ASISTENCIA - "+arrayMsg[1]);
+            }
+         });
     }
     
     function siguienteFecha(){
-        alert("Siguiente");
+        diffMes++;
+        $.ajax({
+            url: "<?= Yii::app()->createUrl('teachers/teachers/getCursoCalendario'); ?>", 
+            dataType: "text",
+            data: { diffMes: diffMes},
+         }).done(function( msg ) {
+            if(msg !== ""){
+                var arrayMsg = msg.split("@");
+                $("#tablaCursoMes tbody").html(arrayMsg[0]);
+                $("#tituloTabla").html("ASISTENCIA - "+arrayMsg[1]);
+            }
+         });
     }
 </script>
 <table class="calendarioMes">
     <thead id="CalendarHead">
         <tr>
             <td style="text-align: left; "><span style="cursor: pointer" onclick="atrasFecha()">< ANTERIOR</span></td>
-            <td style="text-align: center; font-weight: bold">AGOSTO 2014</td>
+            <td style="text-align: center; font-weight: bold"><span id="tituloTabla"></span></td>
             <td style="text-align: right;"><span style=" cursor: pointer" onclick="siguienteFecha()">SIGUIENTE ></span></td>
         </tr>
     </thead>
 </table>
-<table class="MonthlyCalendar">
+<table class="MonthlyCalendar" id="tablaCursoMes">
     <thead class="CalendarHead">
         <tr>
             <th class="DateHeader first">LUN</th>
@@ -47,62 +79,5 @@ Yii::app()->clientScript->registerScript('script',
         </tr>
     </thead>
     <tbody class="CalendarBody">
-        <?php
-        for ($i = 0; $i < 5; $i++){
-        ?>
-        <tr class="WeekRow">
-            <td>
-                <div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
-                    <div class="DateLabel">4 AGO 2014</div>
-                    <div class="Event normal" style="cursor: pointer;">
-                        <span class="EventText">Cancelada fuera de tiempo</span>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
-                    <div class="DateLabel">4 AGO 2014</div>
-                    <div class="Event normal">
-                        <span class="EventText"></span>
-                    </div>
-                </div>
-            </td>
-            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
-                    <div class="DateLabel">4 AGO 2014</div>
-                    <div class="Event normal">
-                        <span class="EventText"></span>
-                    </div>
-                </div></td>
-            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
-                    <div class="DateLabel">4 AGO 2014</div>
-                    <div class="Event normal">
-                        <span class="EventText"></span>
-                    </div>
-                </div></td>
-            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
-                    <div class="DateLabel">4 AGO 2014</div>
-                    <div class="Event normal">
-                        <span class="EventText"></span>
-                    </div>
-                </div></td>
-            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
-                    <div class="DateLabel">4 AGO 2014</div>
-                    <div class="Event normal">
-                        <span class="EventText"></span>
-                    </div>
-                </div></td>
-            <td><div style="position:relative;height:90px;background: #EFEFEF;border-radius: 10px;">
-                    <div class="DateLabel">4 AGO 2014</div>
-                    <div class="Event normal">
-                        <span class="EventText"></span>
-                    </div>
-                </div></td>
-        </tr>
-        <?php } ?>
     </tbody>
 </table>
-<?php
-$timestamp;
-$dw = date( "w");
-echo $dw;
-?>

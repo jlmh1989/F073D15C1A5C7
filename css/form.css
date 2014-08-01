@@ -566,3 +566,14 @@ div.nostripes > div.barra > span > span, div.nostripes > div.barra > span:after 
     -moz-border-radius: 11px 11px 0 0; 
     border-radius: 11px 11px 0 0;
 }
+
+.DayMonth{
+    position: relative;
+    height: 90px;
+    background: #EFEFEF;
+    border-radius: 10px;
+}
+
+.DayMonth.now {
+    background: #d4e2e4;
+}

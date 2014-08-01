@@ -82,11 +82,11 @@ $this->menu = array(
         });
     }
     
-    function capturarAsistencia(pkCurso, descCurso, pkCliente, pkTipoCurso){
+    function capturarAsistencia(pkMaestro, pkCurso, descCurso, pkCliente, pkTipoCurso){
         $.ajax({
             type: "POST",
             url: "<?= Yii::app()->createUrl('teachers/teachers/setDatosAsistencia')?>",
-            data: {pkCurso : pkCurso, descCurso : descCurso, pkCliente : pkCliente, pkTipoCurso : pkTipoCurso}
+            data: {pkMaestro : pkMaestro ,pkCurso : pkCurso, descCurso : descCurso, pkCliente : pkCliente, pkTipoCurso : pkTipoCurso}
         }).done(function (msg){
             $(location).attr("href","<?= Yii::app()->createUrl('teachers/teachers/asistencia')?>");
         });
