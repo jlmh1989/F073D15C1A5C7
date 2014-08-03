@@ -117,8 +117,22 @@ class AssistanceRecord extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function getEstatusAsistencia($pkCurso, $pkCliente, $pkEstudiante, $fecha){
+            $criteria=new CDbCriteria;
+            $criteria->addCondition('fk_client='.$pkCliente);
+            $criteria->addCondition('fk_course='.$pkCurso);
+            $criteria->addCondition('class_date="'.$fecha.'"');
+            if($pkEstudiante != NULL){
+                $criteria->addCondition('fk_student='.$pkEstudiante);
+            }else{
+                $criteria->addCondition('fk_student is null');
+            }
+            $model = AssistanceRecord::model()->find($criteria);
+            return $model;
+        }
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

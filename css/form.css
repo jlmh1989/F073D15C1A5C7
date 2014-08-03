@@ -538,6 +538,18 @@ div.nostripes > div.barra > span > span, div.nostripes > div.barra > span:after 
     display: block;
 }
 
+.EventText.inactivo{
+    color: #B9B9B9;
+}
+
+.EventText.capturado{
+    color: #13932F;
+}
+
+.EventText.nocapturado{
+    color: #932013;
+}
+
 .DateHeader{
     width: 14%;
     text-align: center;

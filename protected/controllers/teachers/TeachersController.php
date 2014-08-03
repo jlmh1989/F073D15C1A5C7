@@ -634,34 +634,66 @@ class TeachersController extends Controller
             $comand->bindParam('pkTeacher', $_SESSION['asistencia']['pkMaestro']);
             $comand->bindParam('pkCurso', $_SESSION['asistencia']['pkCurso']);
             $result = $comand->query();
+            Yii::app()->db->setActive(false);
+            $fechaHorarioArray = array();
+            foreach ($result as $row){
+                $fechaHorarioArray[] = $row['dia'].'-'.$row['mes'].'-'.$row['anio'];
+                /*
+                $json .= '{"pk_curso" : '.$row['pk_curso'].',
+                            "desc_curso": "'.$row['desc_curso'].'",
+                            "anio": '.$row['anio'].',
+                            "mes": '.$row['mes'].',
+                            "dia": '.$row['dia'].',
+                            "hora_inicio": '.$row['hora_inicio'].',
+                            "minuto_inicio": '.$row['minuto_inicio'].',
+                            "hora_fin": '.$row['hora_fin'].',
+                            "minuto_fin": '.$row['minuto_fin'].'},';
+                 * 
+                 */
+            }
             
-            $fechaTmp = date('d-m-Y');
+            $fechaTmp = date('j-n-Y');
             $diaActual = date('j', strtotime($fechaTmp));
-            $mesActual = date('m', strtotime($fechaTmp));
+            $mesActual = date('n', strtotime($fechaTmp));
             $anioActual = date('Y', strtotime($fechaTmp));
-            $fecha = '01-'.date('m', strtotime($fechaTmp)).'-'.date('Y', strtotime($fechaTmp));
-            $fecha = date('d-m-Y', strtotime($diffMes." months", strtotime($fecha)));
+            $fecha = '1-'.date('n', strtotime($fechaTmp)).'-'.date('Y', strtotime($fechaTmp));
+            $fecha = date('j-n-Y', strtotime($diffMes." months", strtotime($fecha)));
             $diaTotal = date('t', strtotime($fecha));
             $idFechaInicio = date('w', strtotime($fecha)); // 0 -> dom ... 6 -> Sab
             $contDias = 0;
+            $textEvento = '';
             for ($i = 0; $i < 5; $i++) {
                 $html .= '<tr class="WeekRow">';
                 if($i === 0){
                     for($j = 0; $j < 7; $j++){
                         if($j >= ($idFechaInicio - 1)){
-                            $fechaActual = date('d-m-Y', strtotime("+".$contDias." day", strtotime($fecha)));
+                            $fechaActual = date('j-n-Y', strtotime("+".$contDias." day", strtotime($fecha)));
                             $cssDay = 'DayMonth '; 
-                            if(($diaActual === date('j', strtotime($fechaActual))) && 
-                                    ($mesActual === date('m', strtotime($fechaActual))) && 
-                                    ($anioActual === date('Y', strtotime($fechaActual)))){
+                            if(strtotime($diaActual.'-'.$mesActual.'-'.$anioActual) === strtotime($fechaActual)){
                                 $cssDay .= 'now';
+                            }
+                            $textEvento = '';
+                            $cssCursor = 'default';
+                            $cssEventText = 'EventText inactivo';
+                            if(in_array($fechaActual, $fechaHorarioArray)){
+                                $textEvento = 'ASISTENCIA NO CAPTURADA';
+                                if(strtotime($diaActual.'-'.$mesActual.'-'.$anioActual) >= strtotime($fechaActual)){
+                                    $estatusClase = AssistanceRecord::model()->getEstatusAsistencia($_SESSION['asistencia']['pkCurso'], $_SESSION['asistencia']['pkCliente'], NULL, date('Y-m-d', strtotime($fechaActual)));
+                                    if($estatusClase != NULL){
+                                        $textEvento = $estatusClase->fkStatusClass->desc_status_class;
+                                        $cssEventText = 'EventText capturado';
+                                    }else{
+                                        $cssEventText = 'EventText nocapturado';
+                                    }
+                                    $cssCursor = 'pointer';
+                                }
                             }
                             $contDias++;
                             $html .=    '<td>
                                             <div class="'.$cssDay.'">
                                                 <div class="DateLabel">'.date('j', strtotime($fechaActual)).' '.$mesArray[date('n', strtotime($fechaActual))].' '.date('Y', strtotime($fechaActual)).'</div>
-                                                <div class="Event normal" style="cursor: pointer;">
-                                                    <span class="EventText"></span>
+                                                <div class="Event normal" style="cursor: '.$cssCursor.';">
+                                                    <span class="'.$cssEventText.'">'.$textEvento.'</span>
                                                 </div>
                                             </div>
                                         </td>';
@@ -672,19 +704,33 @@ class TeachersController extends Controller
                 }else{
                     for($j = 0; $j < 7; $j++){
                         if($contDias < $diaTotal){
-                            $fechaActual = date('d-m-Y', strtotime("+".$contDias." day", strtotime($fecha)));
+                            $fechaActual = date('j-n-Y', strtotime("+".$contDias." day", strtotime($fecha)));
                             $cssDay = 'DayMonth '; 
-                            if(($diaActual === date('j', strtotime($fechaActual))) && 
-                                    ($mesActual === date('m', strtotime($fechaActual))) && 
-                                    ($anioActual === date('Y', strtotime($fechaActual)))){
+                            if(strtotime($diaActual.'-'.$mesActual.'-'.$anioActual) === strtotime($fechaActual)){
                                 $cssDay .= 'now';
+                            }
+                            $textEvento = '';
+                            $cssCursor = 'default';
+                            $cssEventText = 'EventText inactivo';
+                            if(in_array($fechaActual, $fechaHorarioArray)){
+                                $textEvento = 'ASISTENCIA NO CAPTURADA';
+                                if(strtotime($diaActual.'-'.$mesActual.'-'.$anioActual) >= strtotime($fechaActual)){
+                                    $estatusClase = AssistanceRecord::model()->getEstatusAsistencia($_SESSION['asistencia']['pkCurso'], $_SESSION['asistencia']['pkCliente'], NULL, date('Y-m-d', strtotime($fechaActual)));
+                                    if($estatusClase != NULL){
+                                        $textEvento = $estatusClase->fkStatusClass->desc_status_class;
+                                        $cssEventText = 'EventText capturado';
+                                    }else{
+                                        $cssEventText = 'EventText nocapturado';
+                                    }
+                                    $cssCursor = 'pointer';
+                                }
                             }
                             $contDias++;
                             $html .=    '<td>
                                             <div class="'.$cssDay.'">
                                                 <div class="DateLabel">'.date('j', strtotime($fechaActual)).' '.$mesArray[date('n', strtotime($fechaActual))].' '.date('Y', strtotime($fechaActual)).'</div>
-                                                <div class="Event normal" style="cursor: pointer;">
-                                                    <span class="EventText"></span>
+                                                <div class="Event normal" style="cursor: '.$cssCursor.';">
+                                                    <span class="'.$cssEventText.'">'.$textEvento.'</span>
                                                 </div>
                                             </div>
                                         </td>';

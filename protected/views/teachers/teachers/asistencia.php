@@ -14,6 +14,7 @@ Yii::app()->clientScript->registerScript('script',
         $.ajax({
             url: "'.Yii::app()->createUrl("teachers/teachers/getCursoCalendario").'", 
             dataType: "text",
+            async: true,
             data: { diffMes: 0},
          }).done(function( msg ) {
             if(msg !== ""){
@@ -32,6 +33,7 @@ Yii::app()->clientScript->registerScript('script',
         $.ajax({
             url: "<?= Yii::app()->createUrl('teachers/teachers/getCursoCalendario'); ?>", 
             dataType: "text",
+            async: true,
             data: { diffMes: diffMes},
          }).done(function( msg ) {
             if(msg !== ""){
@@ -47,6 +49,7 @@ Yii::app()->clientScript->registerScript('script',
         $.ajax({
             url: "<?= Yii::app()->createUrl('teachers/teachers/getCursoCalendario'); ?>", 
             dataType: "text",
+            async: true,
             data: { diffMes: diffMes},
          }).done(function( msg ) {
             if(msg !== ""){
