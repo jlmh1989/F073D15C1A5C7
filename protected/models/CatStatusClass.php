@@ -102,6 +102,14 @@ class CatStatusClass extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function getCatStatusClassListData($pkTipoCurso)
+        {
+            $criteria=new CDbCriteria;
+            $criteria-> select='pk_status_class,desc_status_class';
+            $criteria->addCondition('fk_type_class='.$pkTipoCurso);
+            return CHtml::listData(CatStatusClass::model()->findAll($criteria),'pk_status_class','desc_status_class');
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.

@@ -8,9 +8,50 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array('label' => 'Cursos', 'url' => Yii::app()->createUrl("teachers/teachers/cursos")),
 );
-
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
+Yii::app()->clientScript->registerCssFile(
+        Yii::app()->clientScript->getCoreScriptUrl().
+        '/jui/css/base/jquery-ui.css'
+);
 Yii::app()->clientScript->registerScript('script',
         '
+        $("#trRecalendarizar").hide();
+        $("#trCancelacionLbl").hide();
+        $("#trCancelacionTxt").hide();
+        $("#dialogAsistencia").dialog({
+            autoOpen: false,
+            modal: true,
+            dialogClass: "no-close",
+            resizable: false,
+            draggable: false,
+            width : "auto",
+            height : "auto",
+            buttons:{
+                "Guardar": function(){
+                    $("#dialogAsistencia").dialog("close");
+                },
+                "Cancelar": function(){
+                    $("#dialogAsistencia").dialog("close");
+                }
+            }
+        }).css("font-size", "13px");
+        $(".ui-dialog-titlebar").hide();
+
+        $("#estatusClase").change(function() {
+            if((this.value == '.constantes::CLASE_RECALENDARIZADO_GRP.') || (this.value == '.constantes::CLASE_RECALENDARIZADO_IND.')){
+                $("#trRecalendarizar").show();
+            }else{
+                $("#trRecalendarizar").hide();
+            }
+            if((this.value == '.constantes::CLASE_CANCELADA_GRP.') || (this.value == '.constantes::CLASE_CANCELADA_IND.')){
+                $("#trCancelacionLbl").show();
+                $("#trCancelacionTxt").show();
+            }else{
+                $("#trCancelacionLbl").hide();
+                $("#trCancelacionTxt").hide();
+            }
+        });
+
         $.ajax({
             url: "'.Yii::app()->createUrl("teachers/teachers/getCursoCalendario").'", 
             dataType: "text",
@@ -59,6 +100,33 @@ Yii::app()->clientScript->registerScript('script',
             }
          });
     }
+    
+    function capturarAsistencia(esNuevo, pkAsistencia, fkStatusClase, fechaRecandelarizado, horaRecalendarizado, razonCancelacion, fkNivelDetalle){
+        $("#trRecalendarizar").hide();
+        $("#trCancelacionLbl").hide();
+        $("#trCancelacionTxt").hide();
+        if(esNuevo === 1){
+            $("#estatusClase").val(0);
+            $("#detalleNivel").val(0);
+            $("#razonCancelacion").val("");
+        }else{
+            $("#estatusClase").val(fkStatusClase);
+            $("#detalleNivel").val(fkNivelDetalle);
+            $("#razonCancelacion").val(razonCancelacion);
+            $("#fechaRecalendarizar").val(fechaRecandelarizado);
+            $("#horaRecalendarizar").val(horaRecalendarizado);
+            
+            if((fkStatusClase === <?= constantes::CLASE_CANCELADA_GRP ?>) || (fkStatusClase === <?= constantes::CLASE_CANCELADA_IND ?>)){
+                $("#trCancelacionLbl").show();
+                $("#trCancelacionTxt").show();
+            }
+            
+            if((fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_GRP ?>) || (fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_IND ?>)){
+                $("#trRecalendarizar").show();
+            }
+        }
+        $("#dialogAsistencia").dialog("open");
+    }
 </script>
 <table class="calendarioMes">
     <thead id="CalendarHead">
@@ -84,3 +152,71 @@ Yii::app()->clientScript->registerScript('script',
     <tbody class="CalendarBody">
     </tbody>
 </table>
+
+<div id="dialogAsistencia" title="Capturar Asistencia" class="ui-widget">
+    <table class="ui-widget ui-widget-content">
+        <tr class="ui-widget-header ">
+          <th colspan="4" style="text-align:center">Asistencia Clase</th>
+        </tr>
+      <tr>
+        <td>Estatus</td>
+        <td><?php echo CHtml::dropDownList('estatusClase', '', CatStatusClass::model()->getCatStatusClassListData($_SESSION['asistencia']['pkTipoCurso']), 
+                    array(
+                        "tabindex" => "0",
+                        "empty" => constantes::OPCION_COMBO)
+                    ); ?></td>
+        <td>Detalle Nivel</td>
+        <td><?php echo CHtml::dropDownList('detalleNivel', '', CatLevelDetail::model()->getCatLevelDetailsListData($_SESSION['asistencia']['pkNivel']), 
+                    array(
+                        "tabindex" => "0",
+                        "empty" => constantes::OPCION_COMBO)
+                    ); ?></td>
+      </tr>
+      <tr id="trRecalendarizar">
+         <td>fecha</td>
+        <td><?php
+                  $this->widget('zii.widgets.jui.CJuiDatePicker',
+                          array('attribute'=>'initial_date',
+                                'name'=>'fechaRecalendarizar',
+                                'options' => array(
+                                      'mode'=>'focus',
+                                      'dateFormat'=> constantes::FORMATO_FECHA,
+                                      'showAnim' => 'slideDown',
+                                      'minDate'=>0,
+                                ),
+                                'htmlOptions'=>array('size'=>20,'class'=>'date', //'value'=>date("d F, Y")
+                                ),
+                          )); 
+              ?></td>
+        <td>Hora</td>
+        <td><?php $this->widget('CMaskedTextField', array(
+                              'name'=>'horaRecalendarizar',
+                              'value' => '00:00',
+                              'mask' => '99:99',
+                              'htmlOptions' => array('size' => 5)
+                              )
+                          ); ?></td>
+      </tr>
+      <tr id="trCancelacionLbl">
+          <td colspan="4">Raz&oacute;n cancelaci&oacute;n</td>
+      </tr>
+      <tr id="trCancelacionTxt">
+          <td colspan="4"><?php echo CHtml::textArea('razonCancelacion','',array('rows'=>2,'maxlength'=>100, 'style' => 'resize: none; width : 100%')); ?></td>
+      </tr>
+    </table>
+    
+    <table class="ui-widget ui-widget-content" id="tablaAlumnos">
+        <tr class="ui-widget-header ">
+          <th colspan="4" style="text-align:center">Asistencia Alumnos</th>
+        </tr>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>

@@ -238,6 +238,7 @@ class TeachersController extends Controller
             $_SESSION['asistencia']['pkTipoCurso'] = Yii::app()->getRequest()->getParam("pkTipoCurso");
             $_SESSION['asistencia']['descCurso'] = Yii::app()->getRequest()->getParam("descCurso");
             $_SESSION['asistencia']['pkMaestro'] = Yii::app()->getRequest()->getParam("pkMaestro");
+            $_SESSION['asistencia']['pkNivel'] = Yii::app()->getRequest()->getParam("pkNivel");
         }
         
         public function actionAsistencia(){
@@ -712,6 +713,7 @@ class TeachersController extends Controller
                             $textEvento = '';
                             $cssCursor = 'default';
                             $cssEventText = 'EventText inactivo';
+                            $actionEvent = '';
                             if(in_array($fechaActual, $fechaHorarioArray)){
                                 $textEvento = 'ASISTENCIA NO CAPTURADA';
                                 if(strtotime($diaActual.'-'.$mesActual.'-'.$anioActual) >= strtotime($fechaActual)){
@@ -719,8 +721,11 @@ class TeachersController extends Controller
                                     if($estatusClase != NULL){
                                         $textEvento = $estatusClase->fkStatusClass->desc_status_class;
                                         $cssEventText = 'EventText capturado';
+                                        $fkLevel = $estatusClase->fk_level_detail == null ? 0 : $estatusClase->fk_level_detail;
+                                        $actionEvent = 'onclick="capturarAsistencia(0,'.$estatusClase->pk_assistance.','.$estatusClase->fk_status_class.',\''.$estatusClase->reschedule_date.'\',\''.$estatusClase->reschedule_time.'\',\''.$estatusClase->cancellation_reason.'\','.$fkLevel.')"';
                                     }else{
                                         $cssEventText = 'EventText nocapturado';
+                                        $actionEvent = 'onclick="capturarAsistencia(1,0,0,0,0,0,0)"';
                                     }
                                     $cssCursor = 'pointer';
                                 }
@@ -729,7 +734,7 @@ class TeachersController extends Controller
                             $html .=    '<td>
                                             <div class="'.$cssDay.'">
                                                 <div class="DateLabel">'.date('j', strtotime($fechaActual)).' '.$mesArray[date('n', strtotime($fechaActual))].' '.date('Y', strtotime($fechaActual)).'</div>
-                                                <div class="Event normal" style="cursor: '.$cssCursor.';">
+                                                <div class="Event normal" style="cursor: '.$cssCursor.';" '.$actionEvent.'>
                                                     <span class="'.$cssEventText.'">'.$textEvento.'</span>
                                                 </div>
                                             </div>

@@ -10,6 +10,10 @@ class constantes{
     const OPCION_COMBO = "Seleccione una opci&oacute;n";
     public static $opcion_si_no = array(1=>'SI',0=>'NO');
     public static $opcion_status = array(1=>'ACTIVO',0=>'INACTIVO');
+    const CLASE_RECALENDARIZADO_IND = "5";
+    const CLASE_CANCELADA_IND = "9";
+    const CLASE_RECALENDARIZADO_GRP = "14";
+    const CLASE_CANCELADA_GRP = "18";
     const LANG = "es";
     const ROL_ESTUDIANTE = "58";
     const ROL_MAESTRO = "59";

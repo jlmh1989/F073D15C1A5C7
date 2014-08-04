@@ -3504,3 +3504,25 @@ Stack trace:
 #19 {main}
 REQUEST_URI=/e24sys/index.php?r=teachers/teachers/getCursoCalendario&diffMes=-1
 ---
+2014/08/03 16:31:35 [error] [php] Undefined variable: model (/Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/teachers/teachers/asistencia.php:133)
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(869): TeachersController->renderFile()
+#1 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(782): TeachersController->renderPartial()
+#2 /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php(245): TeachersController->render()
+#3 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/actions/CInlineAction.php(49): TeachersController->actionAsistencia()
+#4 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(308): CInlineAction->runWithParams()
+#5 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(133): TeachersController->runAction()
+#6 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#7 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(1145): CAccessControlFilter->filter()
+#8 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CInlineFilter.php(58): TeachersController->filterAccessControl()
+#9 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/filters/CFilterChain.php(130): CInlineFilter->filter()
+#10 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(291): CFilterChain->run()
+#11 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CController.php(265): TeachersController->runActionWithFilters()
+#12 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(282): TeachersController->run()
+#13 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#14 /Applications/XAMPP/xamppfiles/htdocs/yii/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#15 /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php(12): CWebApplication->run()
+REQUEST_URI=/e24sys/index.php?r=teachers/teachers/asistencia
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/views/teachers/teachers/asistencia.php (133)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/protected/controllers/teachers/TeachersController.php (245)
+in /Applications/XAMPP/xamppfiles/htdocs/e24sys/index.php (12)
