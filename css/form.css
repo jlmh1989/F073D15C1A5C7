@@ -533,7 +533,7 @@ div.nostripes > div.barra > span > span, div.nostripes > div.barra > span:after 
 .EventText{
     padding-top: 5px;
     font-weight: normal;
-    font-size: 10px;
+    font-size: 8px;
     text-transform: uppercase;
     display: block;
 }

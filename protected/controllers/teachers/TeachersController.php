@@ -38,7 +38,7 @@ class TeachersController extends Controller
                                                 'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario',
                                                 'jsonHorario','agregarAlumno','getAlumnosHtml','agregarAlumnoCurso',
                                                 'getClassComment','setClassComment','setDatosAsistencia','asistencia',
-                                                'getCursoCalendario'),
+                                                'getCursoCalendario','guardarAsistenciaClase'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -623,6 +623,28 @@ class TeachersController extends Controller
 		}
 	}
         
+        public function actionGuardarAsistenciaClase(){
+            $_SESSION['asistencia']['pkCurso'];
+            $_SESSION['asistencia']['pkCliente'];
+            $_SESSION['asistencia']['pkTipoCurso'];
+            $_SESSION['asistencia']['descCurso'];
+            $_SESSION['asistencia']['pkMaestro'];
+            $_SESSION['asistencia']['pkNivel'];
+            $esNuevo = Yii::app()->getRequest()->getParam("esNuevo");
+            $pkAsistencia = Yii::app()->getRequest()->getParam("pkAsistencia");
+            $fechaClase = Yii::app()->getRequest()->getParam("fechaClase");
+            $fkStatusClase = Yii::app()->getRequest()->getParam("fkStatusClase");
+            $fechaRecalendar = Yii::app()->getRequest()->getParam("fechaRecalendar");
+            $horaRecalendar = Yii::app()->getRequest()->getParam("horaRecalendar");
+            $razonCancelacion = Yii::app()->getRequest()->getParam("razonCancelacion");
+            $fkLevelDetalle = Yii::app()->getRequest()->getParam("fkLevelDetalle");
+            $model = new AssistanceRecord();
+            
+        }
+        
+        /**
+         * genera el calendario para captura de asistencia
+         */
         public function actionGetCursoCalendario() {
             $html = '';
             $mesArray = array(1 => "ENE", 2 => "FEB", 3 => "MAR", 4 => "ABR", 5 => "MAY", 6 => "JUN",
@@ -639,18 +661,6 @@ class TeachersController extends Controller
             $fechaHorarioArray = array();
             foreach ($result as $row){
                 $fechaHorarioArray[] = $row['dia'].'-'.$row['mes'].'-'.$row['anio'];
-                /*
-                $json .= '{"pk_curso" : '.$row['pk_curso'].',
-                            "desc_curso": "'.$row['desc_curso'].'",
-                            "anio": '.$row['anio'].',
-                            "mes": '.$row['mes'].',
-                            "dia": '.$row['dia'].',
-                            "hora_inicio": '.$row['hora_inicio'].',
-                            "minuto_inicio": '.$row['minuto_inicio'].',
-                            "hora_fin": '.$row['hora_fin'].',
-                            "minuto_fin": '.$row['minuto_fin'].'},';
-                 * 
-                 */
             }
             
             $fechaTmp = date('j-n-Y');
@@ -676,6 +686,7 @@ class TeachersController extends Controller
                             $textEvento = '';
                             $cssCursor = 'default';
                             $cssEventText = 'EventText inactivo';
+                            $actionEvent = '';
                             if(in_array($fechaActual, $fechaHorarioArray)){
                                 $textEvento = 'ASISTENCIA NO CAPTURADA';
                                 if(strtotime($diaActual.'-'.$mesActual.'-'.$anioActual) >= strtotime($fechaActual)){
@@ -683,8 +694,12 @@ class TeachersController extends Controller
                                     if($estatusClase != NULL){
                                         $textEvento = $estatusClase->fkStatusClass->desc_status_class;
                                         $cssEventText = 'EventText capturado';
+                                        $fkLevel = $estatusClase->fk_level_detail == null ? 0 : $estatusClase->fk_level_detail;
+                                        $horaReprog = ($estatusClase->reschedule_time != NULL) && ($estatusClase->reschedule_time != "") ? substr($estatusClase->reschedule_time, 0, -3) : "";
+                                        $actionEvent = 'onclick="capturarAsistencia(0,\''.date('Y', strtotime($fechaActual)).'-'.date('n', strtotime($fechaActual)).'-'.date('j', strtotime($fechaActual)).'\','.$estatusClase->pk_assistance.','.$estatusClase->fk_status_class.',\''.$estatusClase->reschedule_date.'\',\''.$horaReprog.'\',\''.$estatusClase->cancellation_reason.'\','.$fkLevel.')"';
                                     }else{
                                         $cssEventText = 'EventText nocapturado';
+                                        $actionEvent = 'onclick="capturarAsistencia(1,\''.date('Y', strtotime($fechaActual)).'-'.date('n', strtotime($fechaActual)).'-'.date('j', strtotime($fechaActual)).'\',0,0,0,0,0,0)"';
                                     }
                                     $cssCursor = 'pointer';
                                 }
@@ -693,7 +708,7 @@ class TeachersController extends Controller
                             $html .=    '<td>
                                             <div class="'.$cssDay.'">
                                                 <div class="DateLabel">'.date('j', strtotime($fechaActual)).' '.$mesArray[date('n', strtotime($fechaActual))].' '.date('Y', strtotime($fechaActual)).'</div>
-                                                <div class="Event normal" style="cursor: '.$cssCursor.';">
+                                                <div class="Event normal" style="cursor: '.$cssCursor.';" '.$actionEvent.'>
                                                     <span class="'.$cssEventText.'">'.$textEvento.'</span>
                                                 </div>
                                             </div>
@@ -722,10 +737,11 @@ class TeachersController extends Controller
                                         $textEvento = $estatusClase->fkStatusClass->desc_status_class;
                                         $cssEventText = 'EventText capturado';
                                         $fkLevel = $estatusClase->fk_level_detail == null ? 0 : $estatusClase->fk_level_detail;
-                                        $actionEvent = 'onclick="capturarAsistencia(0,'.$estatusClase->pk_assistance.','.$estatusClase->fk_status_class.',\''.$estatusClase->reschedule_date.'\',\''.$estatusClase->reschedule_time.'\',\''.$estatusClase->cancellation_reason.'\','.$fkLevel.')"';
+                                        $horaReprog = ($estatusClase->reschedule_time != NULL) && ($estatusClase->reschedule_time != "") ? substr($estatusClase->reschedule_time, 0, -3) : "";
+                                        $actionEvent = 'onclick="capturarAsistencia(0,\''.date('Y', strtotime($fechaActual)).'-'.date('n', strtotime($fechaActual)).'-'.date('j', strtotime($fechaActual)).'\','.$estatusClase->pk_assistance.','.$estatusClase->fk_status_class.',\''.$estatusClase->reschedule_date.'\',\''.$horaReprog.'\',\''.$estatusClase->cancellation_reason.'\','.$fkLevel.')"';
                                     }else{
                                         $cssEventText = 'EventText nocapturado';
-                                        $actionEvent = 'onclick="capturarAsistencia(1,0,0,0,0,0,0)"';
+                                        $actionEvent = 'onclick="capturarAsistencia(1,\''.date('Y', strtotime($fechaActual)).'-'.date('n', strtotime($fechaActual)).'-'.date('j', strtotime($fechaActual)).'\',0,0,0,0,0,0)"';
                                     }
                                     $cssCursor = 'pointer';
                                 }
