@@ -16,7 +16,7 @@ p {
 	font-size: 1em;	
 }
 
-#event_edit_container, #about {
+#event_edit_container, #dialogOpcion, #dialogAsistencia, #about {
 	display: none;
 }
 

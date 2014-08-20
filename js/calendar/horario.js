@@ -27,10 +27,10 @@ $(document).ready(function() {
                        }
                     },
                     draggable : function(calEvent, $event) {
-                       return calEvent.readOnly != true;
+                       return calEvent.readOnly !== true;
                     },
                     resizable : function(calEvent, $event) {
-                       return calEvent.readOnly != true;
+                       return calEvent.readOnly !== true;
                     },
                     eventNew : function(calEvent, $event) {
                     },
@@ -44,84 +44,135 @@ $(document).ready(function() {
                           return;
                        }
                        
-                       var $dialogContent = $("#event_edit_container");
-                       resetForm($dialogContent);
-                       $dialogContent.find("input[name='title']").val(calEvent.title);
-                       var bodyField = $dialogContent.find("textarea[name='body']");
-                       
-                       var dateI = new Date(calEvent.start);
-                       var dateF = new Date(calEvent.end);
-                       var exist;
-                       var pkClassComment;
-                       
-                       var fecha = dateI.getFullYear()+"-"+(dateI.getMonth()+1)+"-"+dateI.getDate();
-                       var horaInicio = dateI.getHours()+":"+dateI.getMinutes()+":00";
-                       var horaFin = dateF.getHours()+":"+dateF.getMinutes()+":00";
-                       
-                       $.ajax({
-                        type: "POST",
-                        async:false,    
-                        cache:false,
-                        url: yii.urls.getClassComment,
-                        dataType: "json",
-                        data: { pkCurso: calEvent.pk_curso, 
-                                fecha : fecha,
-                                horaInicio : horaInicio,
-                                HoraFin : horaFin},
-                        success: function(data) {
-                            exist = data.exist;
-                            pkClassComment = data.pkClassComment;
-                            calEvent.body = data.comment;
-                        }}); 
-                       
-                       
-                       bodyField.val(calEvent.body);
-
-                       $dialogContent.dialog({
-                          modal: true,
-                          title: "Editar - " + calEvent.title,
+                       var $dialogOpcion =  $("#dialogOpcion");
+                       $dialogOpcion.dialog({
+                           modal: true,
+                           title: "Opcion",
                           close: function() {
-                             $dialogContent.dialog("destroy");
-                             $dialogContent.hide();
-                             $('#calendar').weekCalendar("removeUnsavedEvents");
+                             $dialogOpcion.dialog("destroy");
+                             $dialogOpcion.hide();
                           },
                           buttons: {
-                             guardar : function() {
-                                calEvent.body = bodyField.val();
-                                
+                              //capturar Nota
+                             "Nota" : function() {
+                                $dialogOpcion.dialog("close");
+                                var $dialogContent = $("#event_edit_container");
+                                resetForm($dialogContent);
+                                $dialogContent.find("input[name='title']").val(calEvent.title);
+                                var bodyField = $dialogContent.find("textarea[name='body']");
+
+                                var dateI = new Date(calEvent.start);
+                                var dateF = new Date(calEvent.end);
+                                var exist;
+                                var pkClassComment;
+
+                                var fecha = dateI.getFullYear()+"-"+(dateI.getMonth()+1)+"-"+dateI.getDate();
+                                var horaInicio = dateI.getHours()+":"+dateI.getMinutes()+":00";
+                                var horaFin = dateF.getHours()+":"+dateF.getMinutes()+":00";
+
                                 $.ajax({
-                                    type: "POST",
-                                    async:false,    
-                                    cache:false,
-                                    url: yii.urls.setClassComment,
-                                    dataType: "text",
-                                    data: { pkCurso: calEvent.pk_curso, 
-                                            fecha : fecha,
-                                            horaInicio : horaInicio,
-                                            HoraFin : horaFin,
-                                            comment: calEvent.body,
-                                            exist: exist,
-                                            pkClassComment: pkClassComment},
-                                    success: function(data) {
-                                        $calendar.weekCalendar("updateEvent", calEvent);
-                                        $dialogContent.dialog("close");
-                                    },
-                                    error: function (data){
-                                        
-                                    }}); 
+                                 type: "POST",
+                                 async:false,    
+                                 cache:false,
+                                 url: yii.urls.getClassComment,
+                                 dataType: "json",
+                                 data: { pkCurso: calEvent.pk_curso, 
+                                         fecha : fecha,
+                                         horaInicio : horaInicio,
+                                         HoraFin : horaFin},
+                                 success: function(data) {
+                                     exist = data.exist;
+                                     pkClassComment = data.pkClassComment;
+                                     calEvent.body = data.comment;
+                                 }}); 
+
+
+                                bodyField.val(calEvent.body);
+
+                                $dialogContent.dialog({
+                                   modal: true,
+                                   title: "Editar - " + calEvent.title,
+                                   close: function() {
+                                      $dialogContent.dialog("destroy");
+                                      $dialogContent.hide();
+                                      $('#calendar').weekCalendar("removeUnsavedEvents");
+                                   },
+                                   buttons: {
+                                      guardar : function() {
+                                         calEvent.body = bodyField.val();
+
+                                         $.ajax({
+                                             type: "POST",
+                                             async:false,    
+                                             cache:false,
+                                             url: yii.urls.setClassComment,
+                                             dataType: "text",
+                                             data: { pkCurso: calEvent.pk_curso, 
+                                                     fecha : fecha,
+                                                     horaInicio : horaInicio,
+                                                     HoraFin : horaFin,
+                                                     comment: calEvent.body,
+                                                     exist: exist,
+                                                     pkClassComment: pkClassComment},
+                                             success: function(data) {
+                                                 $calendar.weekCalendar("updateEvent", calEvent);
+                                                 $dialogContent.dialog("close");
+                                             },
+                                             error: function (data){
+
+                                             }}); 
+                                      },
+                                      cancelar : function() {
+                                         $dialogContent.dialog("close");
+                                      }
+                                   }
+                                }).show();
+
+                                var startField = $dialogContent.find(".start");
+                                var endField = $dialogContent.find(".end");
+                                $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
+                                setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
+                                $(window).resize().resize();
                              },
-                             cancelar : function() {
-                                $dialogContent.dialog("close");
+                             "Asistencia" : function() {
+                                 //Capturar Asistencia
+                                 /*
+                                 $.ajax({
+                                    type: "POST",
+                                    url: "<?= Yii::app()->createUrl('teachers/teachers/setDatosAsistencia')?>",
+                                    data: {pkMaestro : pkMaestro ,pkCurso : pkCurso, descCurso : descCurso, pkCliente : pkCliente, pkTipoCurso : pkTipoCurso, pkNivel : pkNivel}
+                                }).done(function (msg){
+                                    $dialogOpcion.dialog("close");
+                                    
+                                });*/
+                                $("#trRecalendarizar").hide();
+                                $("#trCancelacionLbl").hide();
+                                $("#trCancelacionTxt").hide();
+                                $dialogOpcion.dialog("close");
+                                var $dialogAsistencia =  $("#dialogAsistencia");
+                                $dialogAsistencia.dialog({
+                                    modal: true,
+                                    resizable: false,
+                                    draggable: false,
+                                    width : "auto",
+                                    height : "auto",
+                                    close: function() {
+                                      $dialogAsistencia.dialog("destroy");
+                                      $dialogAsistencia.hide();
+                                    },
+                                    buttons:{
+                                        "Guardar": function(){
+                                            $dialogAsistencia.dialog("close");
+                                        },
+                                        "Cancelar": function(){
+                                            $dialogAsistencia.dialog("close");
+                                        }
+                                    }
+                                }).show(); 
+                                $(".ui-dialog-titlebar").hide();
                              }
                           }
                        }).show();
-
-                       var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
-                       var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
-                       $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
-                       setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
-                       $(window).resize().resize();
-
                     },
                     eventMouseover : function(calEvent, $event) {
                     },
@@ -172,20 +223,15 @@ $(document).ready(function() {
       for (var i = 0; i < timeslotTimes.length; i++) {
          var startTime = timeslotTimes[i].start;
          var endTime = timeslotTimes[i].end;
-         var startSelected = "";
          if (startTime.getTime() === calEvent.start.getTime()) {
-            startSelected = "selected=\"selected\"";
+            $startTimeField.text(timeslotTimes[i].startFormatted);
          }
-         var endSelected = "";
+         
          if (endTime.getTime() === calEvent.end.getTime()) {
-            endSelected = "selected=\"selected\"";
+            $endTimeField.text(timeslotTimes[i].endFormatted);
          }
-         $startTimeField.append("<option value=\"" + startTime + "\" " + startSelected + ">" + timeslotTimes[i].startFormatted + "</option>");
-         $endTimeField.append("<option value=\"" + endTime + "\" " + endSelected + ">" + timeslotTimes[i].endFormatted + "</option>");
-
       }
       $endTimeOptions = $endTimeField.find("option");
-      $startTimeField.trigger("change");
    }
 
    var $endTimeField = $("select[name='end']");

@@ -134,6 +134,9 @@ class CoursesController extends Controller
             $model=new CursoMaestro;
             $horarioMsj = '';
             foreach ($_SESSION['horarioCurso'] as $key => $value) {
+                if(!is_array($value)){
+                    continue;
+                }
                 foreach ($value as $horas) {
                     $horarioMsj .= $key . '-' . $horas['inicio'] . '-' . $horas['fin'] . ',';
                 }
