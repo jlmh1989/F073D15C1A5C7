@@ -448,6 +448,9 @@ class CoursesController extends Controller
          */
         private function guardarHorario($fkCourse){
             foreach ($_SESSION['horarioCurso'] as $keyBssDay => $arrayBssDay) {
+                if(!is_array($arrayBssDay)){
+                    continue;
+                }
                 foreach ($arrayBssDay as $keyHorario => $arrayHorario) {
                     $modelCS = new CourseSchedule();
                     $modelCS->status = constantes::ACTIVO;
