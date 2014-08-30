@@ -16,7 +16,9 @@
 	'enableAjaxValidation'=>false,
 )); ?>
         <tr>
-            <th class="zebra_th" style="text-align: center" colspan="4">CREAR MATERIAL</th>
+            <th class="zebra_th" style="text-align: center" colspan="4">
+            <?= $model->isNewRecord ? 'CREAR MATERIAL' : 'ACTUALIZAR MATERIAL' ?>   
+            </th>
         </tr>
         <tr>
             <td><?php echo $form->labelEx($modelML,'fk_level'); ?></td>

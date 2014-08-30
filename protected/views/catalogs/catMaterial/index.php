@@ -1,5 +1,5 @@
 <?php
-/* @var $this CatMaterialController */
+/* @var $this MaterialsViewController */
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
@@ -18,18 +18,12 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	//'filter'=>$model,
 	'columns'=> array(
-            array('name'=>'fkCatLevels',
-                'header'=>'Nivel',
-                'type'=>'raw',
-                'value'=>'$data->fkCatLevels->desc_level'),
-            array('name'=>'fkCatMaterial',
-                'header'=>'Material',
-                'type'=>'raw',
-                'value'=>'$data->fkCatMaterial->desc_material'),
-            array('name'=>'status',
-                'header'=>'Estatus',
-                'type'=>'raw',
-                'value'=>'constantes::$opcion_status[$data->status]'),
+            'pk_material',
+            'desc_material',
+            'desc_cat_detail_es',
+            'total_stock',
+            'actual_stock',
+            'desc_level',
             array(
                 'class'=>'CButtonColumn',
                 'template'=>'{update}',

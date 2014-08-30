@@ -20,6 +20,6 @@ $this->menu=array(
  */
 ?>
 
-<h1>Crear Material</h1>
+<!-- h1>Crear Material</h1 -->
 
 <?php $this->renderPartial('_form', array('model'=>$model, 'modelML'=>$modelML)); ?>

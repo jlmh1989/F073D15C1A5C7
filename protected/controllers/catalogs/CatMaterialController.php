@@ -126,10 +126,10 @@ class CatMaterialController extends Controller
 	 */
 	public function actionIndex()
 	{
-            $model=new MaterialLevel('search');
+            $model=new MaterialsView('search');
             $model->unsetAttributes();  // clear any default values
-            if(isset($_GET['MaterialLevel']))
-                    $model->attributes=$_GET['MaterialLevel'];
+            if(isset($_GET['MaterialsView']))
+                    $model->attributes=$_GET['MaterialsView'];
 
             $this->render('index',array(
                     'model'=>$model,
