@@ -111,6 +111,7 @@ Yii::app()->clientScript->registerScript('script',
          });
     }
     
+    /*
     function capturarAsistencia(esNuevo, fechaClase, pkAsistencia, fkStatusClase, fechaRecandelarizado, horaRecalendarizado, razonCancelacion, fkNivelDetalle){
         $("#trRecalendarizar").hide();
         $("#trCancelacionLbl").hide();
@@ -141,6 +142,7 @@ Yii::app()->clientScript->registerScript('script',
         $("#dialogAsistencia").dialog("open");
     }
     
+    /*
     function guardarAssistencia(){
         var fkStatusClase = parseInt($("#estatusClase").val());
         if($("#estatusClase").val() === ""){
@@ -196,6 +198,7 @@ Yii::app()->clientScript->registerScript('script',
              });
          });
     }
+    */
 </script>
 <table class="calendarioMes">
     <thead id="CalendarHead">

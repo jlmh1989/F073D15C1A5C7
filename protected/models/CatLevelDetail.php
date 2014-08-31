@@ -119,7 +119,9 @@ class CatLevelDetail extends CActiveRecord
         {
             $criteria=new CDbCriteria;
             $criteria-> select='pk_level_detail,topics';
-            $criteria->addCondition('fk_level='.$pkLevel);
+            if($pkLevel != NULL){
+                $criteria->addCondition('fk_level='.$pkLevel);
+            }
             return CHtml::listData(CatLevelDetail::model()->findAll($criteria),'pk_level_detail','topics');
         }
 

@@ -107,7 +107,9 @@ class CatStatusClass extends CActiveRecord
         {
             $criteria=new CDbCriteria;
             $criteria-> select='pk_status_class,desc_status_class';
-            $criteria->addCondition('fk_type_class='.$pkTipoCurso);
+            if($pkTipoCurso != NULL){
+                $criteria->addCondition('fk_type_class='.$pkTipoCurso);
+            }
             return CHtml::listData(CatStatusClass::model()->findAll($criteria),'pk_status_class','desc_status_class');
         }
 

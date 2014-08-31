@@ -247,7 +247,7 @@ class Teachers extends CActiveRecord
                                 '.$model->fkClassromAddress->fkStateDir->desc_cat_detail_es.'</td>
                             </tr>
                             <tr>
-                            <td style="font-weight: bold;"># Estudientes:</td>
+                            <td style="font-weight: bold;"># Estudiantes:</td>
                             <td>'.count($modelEstudiantes).'</td>'.
                             $nombreGrupo.'    
                             </tr>
@@ -291,7 +291,11 @@ class Teachers extends CActiveRecord
             $result = $comand->query();
             $json = '[';
             foreach ($result as $row){
-                $json .= '{"pk_curso" : '.$row['pk_curso'].',
+                $json .=  '{"pk_curso" : '.$row['pk_curso'].',
+                            "pk_maestro" : '.$row['pk_maestro'].',
+                            "pk_cliente" : '.$row['pk_cliente'].',
+                            "pk_tipoCurso" : '.$row['pk_tipoCurso'].',
+                            "pk_nivel" : '.$row['pk_nivel'].',
                             "desc_curso": "'.$row['desc_curso'].'",
                             "anio": '.$row['anio'].',
                             "mes": '.$row['mes'].',

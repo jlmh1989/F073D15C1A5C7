@@ -38,7 +38,8 @@ class TeachersController extends Controller
                                                 'adminRedirectAlumnos','deleteStudent','verAlumno','editarAlumno','horario',
                                                 'jsonHorario','agregarAlumno','getAlumnosHtml','agregarAlumnoCurso',
                                                 'getClassComment','setClassComment','setDatosAsistencia','asistencia',
-                                                'getCursoCalendario','guardarAsistenciaClase'),
+                                                'getCursoCalendario','guardarAsistenciaClase','getEstatusAsistencia',
+                                                'getListaEstatus','getListaDetalleNivel'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -239,9 +240,55 @@ class TeachersController extends Controller
             $_SESSION['asistencia']['descCurso'] = Yii::app()->getRequest()->getParam("descCurso");
             $_SESSION['asistencia']['pkMaestro'] = Yii::app()->getRequest()->getParam("pkMaestro");
             $_SESSION['asistencia']['pkNivel'] = Yii::app()->getRequest()->getParam("pkNivel");
+            $_SESSION['asistencia']['fechaCurso'] = Yii::app()->getRequest()->getParam("fechaCurso");
+        }
+        
+        public function actionGetEstatusAsistencia(){
+            $fechaCurso = $_SESSION['asistencia']['fechaCurso'];
+            $estatusClase = AssistanceRecord::model()->getEstatusAsistencia($_SESSION['asistencia']['pkCurso'], $_SESSION['asistencia']['pkCliente'], NULL, $fechaCurso);
+            $msje = '{';
+            if($estatusClase != NULL){
+                $hora = ($estatusClase->reschedule_time != NULL) && ($estatusClase->reschedule_time != "") ? substr($estatusClase->reschedule_time, 0, -3) : '';
+                $fkLevel = $estatusClase->fk_level_detail == null ? 0 : $estatusClase->fk_level_detail;
+                $msje .='"estatus":true,
+                        "fechaCurso":"'.$fechaCurso.'",
+                        "fk_level_detail":'.$fkLevel.',
+                        "reschedule_time":"'.$hora.'",
+                        "pk_assistance":'.$estatusClase->pk_assistance.',
+                        "fk_status_class":'.$estatusClase->fk_status_class.',
+                        "reschedule_date":"'.$estatusClase->reschedule_date.'",
+                        "cancellation_reason":"'.$estatusClase->cancellation_reason.'"';
+            }else{
+                $msje .= '"estatus":false';
+            }
+            $msje .= '}';
+            echo $msje;
+        }
+        
+        public function actionGetListaEstatus(){
+            $estatus = CatStatusClass::model()->getCatStatusClassListData(isset($_SESSION['asistencia']['pkTipoCurso']) ? $_SESSION['asistencia']['pkTipoCurso'] : NULL);
+            $msje = '[';
+            foreach ($estatus as $key => $value) {
+                $msje .= '{"id":'.$key.',"valor":"'.$value.'"},';
+            }
+            $msje = substr($msje, 0, -1);
+            $msje .= ']';
+            echo $msje;
+        }
+        
+        public function actionGetListaDetalleNivel(){
+            $detalle = CatLevelDetail::model()->getCatLevelDetailsListData(isset($_SESSION['asistencia']['pkNivel']) ? $_SESSION['asistencia']['pkNivel'] : NULL);
+            $msje = '[';
+            foreach ($detalle as $key => $value) {
+                $msje .= '{"id":'.$key.',"valor":"'.$value.'"},';
+            }
+            $msje = substr($msje, 0, -1);
+            $msje .= ']';
+            echo $msje;
         }
         
         public function actionAsistencia(){
+            //$this->renderPartial('capturarAsistencia');
             $this->render('asistencia');
         }
 
@@ -630,16 +677,32 @@ class TeachersController extends Controller
             $_SESSION['asistencia']['descCurso'];
             $_SESSION['asistencia']['pkMaestro'];
             $_SESSION['asistencia']['pkNivel'];
-            $esNuevo = Yii::app()->getRequest()->getParam("esNuevo");
+            $esNuevo = intval(Yii::app()->getRequest()->getParam("esNuevo"));
             $pkAsistencia = Yii::app()->getRequest()->getParam("pkAsistencia");
             $fechaClase = Yii::app()->getRequest()->getParam("fechaClase");
-            $fkStatusClase = Yii::app()->getRequest()->getParam("fkStatusClase");
+            $fkStatusClase = intval(Yii::app()->getRequest()->getParam("fkStatusClase"));
             $fechaRecalendar = Yii::app()->getRequest()->getParam("fechaRecalendar");
             $horaRecalendar = Yii::app()->getRequest()->getParam("horaRecalendar");
             $razonCancelacion = Yii::app()->getRequest()->getParam("razonCancelacion");
-            $fkLevelDetalle = Yii::app()->getRequest()->getParam("fkLevelDetalle");
+            $fkLevelDetalle = intval(Yii::app()->getRequest()->getParam("fkLevelDetalle"));
             $model = new AssistanceRecord();
-            
+            if($esNuevo !== 1){
+                $model=AssistanceRecord::model()->findByPk($pkAsistencia);
+		if($model===null){
+                    throw new CHttpException(404,'Fallo al cargar datos asistencia.');
+                }
+            }
+            $model->cancellation_reason = $razonCancelacion;
+            $model->class_date = $fechaClase;
+            $model->fk_course = $_SESSION['asistencia']['pkCurso'];
+            $model->fk_client = $_SESSION['asistencia']['pkCliente'];
+            $model->fk_status_class = $fkStatusClase;
+            $model->reschedule_date = $fechaRecalendar;
+            $model->reschedule_time = $horaRecalendar;
+            $model->fk_level_detail = $fkLevelDetalle == 0 ? NULL : $fkLevelDetalle;
+            if(!$model->save()){
+                throw new CHttpException(404,'Fallo al guardar registro asistencia.');
+            }
         }
         
         /**
