@@ -1,7 +1,9 @@
 <?php
+
 /* @var $this CatMaterialController */
 /* @var $model CatMaterial */
 /* @var $modelML CatMaterial */
+/* @var $dataProviderMD CatMaterialDetail */
 /* @var $form CActiveForm */
 ?>
 
@@ -45,6 +47,29 @@
             <td></td>
             <td></td>
         </tr>
+        
+        
+
+        
 <?php $this->endWidget(); ?>
+     
+        
+        
+        
     </table>
 </div><!-- form -->
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+        'id'=>'cat-material-detail-grid',
+        'dataProvider'=>$dataProviderMD,
+        //'filter'=>$modelMD,
+        'columns'=>array(
+                'pk_material_detail',
+                'material_code',
+                'comment',
+                'availability',
+                'fk_cat_material',
+                //array(
+                //        'class'=>'CButtonColumn',
+                //),
+        ),
+)); ?>       

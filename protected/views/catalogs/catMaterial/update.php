@@ -2,6 +2,7 @@
 /* @var $this CatMaterialController */
 /* @var $model CatMaterial */
 /* @var $modelML CatMaterial */
+/* @var $dataProviderMD CatMaterialDetail */
 
 $this->breadcrumbs=array(
 	'Cat Materials'=>array('index'),
@@ -25,4 +26,4 @@ $this->menu=array(
 
 <!--h1>Actualizar Material</h1 -->
 
-<?php $this->renderPartial('_form', array('model'=>$model, 'modelML'=>$modelML)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model, 'modelML'=>$modelML, 'dataProviderMD'=>$dataProviderMD)); ?>

@@ -88,9 +88,17 @@ class CatMaterialController extends Controller
             $model=$this->loadModel($id);
             $modelML = MaterialLevel::model()->find('fk_material=?', array($model->pk_material));
             
+            $criteria=new CDbCriteria;
+	    $criteria->compare('fk_cat_material',$model->pk_material);            
+            $dataProviderMD = new CActiveDataProvider('CatMaterialDetail', array(
+                                                                'criteria'=>$criteria,
+                                                                ));
+           
+            
             if(isset($_POST['CatMaterial'])){
                 $model->attributes=$_POST['CatMaterial'];
                 $modelML->attributes=$_POST['MaterialLevel'];
+                //$modelMD->attributes=$_POST['CatMaterialDetail'];
                 $validarML = $modelML->validate();
                 $validar = $model->validate() && $validarML;
                 if($validar){
@@ -103,8 +111,14 @@ class CatMaterialController extends Controller
             }
 
             $this->render('update',array(
-                    'model'=>$model, 'modelML'=>$modelML,
+                    'model'=>$model, 'modelML'=>$modelML,'dataProviderMD'=>$dataProviderMD,
             ));
+            
+            
+            
+
+		        
+            
 	}
 
 	/**
