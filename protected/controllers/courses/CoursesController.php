@@ -303,7 +303,7 @@ class CoursesController extends Controller
         }
         
         public function actionValidarHorario(){
-            if(isset($_SESSION['horarioCurso'])){
+            if(isset($_SESSION['horarioCurso']) && (count($_SESSION['horarioCurso']) > 0)){
                 echo '{"existe":true}';
             }else{
                 echo '{"existe":false}';
@@ -361,6 +361,9 @@ class CoursesController extends Controller
             $css = '';
             ksort($_SESSION['horarioCurso']);
             foreach ($_SESSION['horarioCurso'] as $keyBssDay => $arrayBssDay) {
+                if(!is_array($arrayBssDay)){
+                    continue;
+                }
                 foreach ($arrayBssDay as $keyHorario => $arrayHorario) {
                     if(($i % 2) === 0){
                         $css = 'odd_';
