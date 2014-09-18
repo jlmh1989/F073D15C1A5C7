@@ -107,4 +107,19 @@ class CatMaterialDetail extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public function getListMaterialDetail($pkLevel, $pkMaterialDetalle){
+            $criteria = new CDbCriteria;
+            $criteria->select = 't.pk_material_detail, t.material_code, tbl_e24_cat_material.desc_material';
+            //concat(t.material_code, \' - \' ,tbl_e24_cat_material.desc_material) as descripcion
+            $criteria->join = 'inner join tbl_e24_cat_material on
+                               t.fk_cat_material = tbl_e24_cat_material.pk_material inner join tbl_e24_material_level on
+                               tbl_e24_cat_material.pk_material = tbl_e24_material_level.fk_material';
+            $criteria->addCondition('tbl_e24_material_level.fk_level = '.$pkLevel);
+            $criteria->addCondition('t.availability = '.constantes::ACTIVO);
+            if($pkMaterialDetalle != NULL && $pkMaterialDetalle != ''){
+                $criteria->addCondition('t.pk_material_detail = '.$pkMaterialDetalle, 'OR');
+            }
+            return CHtml::listData(CatMaterialDetail::model()->findAll($criteria),'pk_material_detail','material_code');
+        }
 }

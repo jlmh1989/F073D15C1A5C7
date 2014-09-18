@@ -34,7 +34,7 @@ class LoanMaterial extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fk_course, fk_teacher, fk_material_detail, pick_date', 'required'),
+			array('fk_teacher, fk_material_detail, pick_date', 'required'),
 			array('fk_teacher', 'numerical', 'integerOnly'=>true),
 			array('fk_course, fk_material_detail', 'length', 'max'=>10),
 			array('comment', 'length', 'max'=>300),
@@ -67,10 +67,10 @@ class LoanMaterial extends CActiveRecord
 			'pk_loan_material' => 'Pk Loan Material',
 			'fk_course' => 'Fk Course',
 			'fk_teacher' => 'Fk Teacher',
-			'fk_material_detail' => 'Fk Material Detail',
-			'pick_date' => 'Pick Date',
-			'drop_date' => 'Drop Date',
-			'comment' => 'Comment',
+			'fk_material_detail' => 'Material',
+			'pick_date' => 'Fecha préstamo',
+			'drop_date' => 'Fecha entrega',
+			'comment' => 'Comentario del préstamo',
 		);
 	}
 
@@ -114,5 +114,5 @@ class LoanMaterial extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
+	}        
 }

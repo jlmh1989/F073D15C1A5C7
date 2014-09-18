@@ -1,6 +1,6 @@
 <?php
 /* @var $this CoursesController */
-/* @var $model ClassroomAddress */
+/* @var $model LoanMaterial */
 $msj = 'Crear';
 if($_SESSION['curso']['curso']['operacion'] === 'update'){
     $msj = 'Modificar';
@@ -11,7 +11,6 @@ $this->breadcrumbs=array(
         $msj.'[Horario]',
         $msj.'[Maestro]',
         $msj.'[Material]',
-        $msj.'[Direccion]',
 );
 $this->menu=array(
 	array('label'=>'Dar de Alta Curso', 'url'=>array('create')),
@@ -20,4 +19,4 @@ $this->menu=array(
 );
 ?>
 
-<?php $this->renderPartial('_formDireccion',array('model'=>$model)); ?>
+<?php $this->renderPartial('_formMaterial',array('model'=>$model)); ?>

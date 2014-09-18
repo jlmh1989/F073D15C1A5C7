@@ -33,7 +33,8 @@ class CoursesController extends Controller
                                     'agregarHorario','eliminarHorario','getHorarioHtml',
                                     'createHorario','createDatos','asignarMaestro','asignarDireccion',
                                     'getDomicilioHtml','getDomicilioJson','guardarDireccion','getCursosHtml',
-                                    'cancelarDireccion','guardarCursoBD','validarHorario','editarDireccion'),
+                                    'cancelarDireccion','guardarCursoBD','validarHorario','editarDireccion',
+                                    'asignarMaterial','test'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR'
                                              .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
@@ -91,6 +92,11 @@ class CoursesController extends Controller
                 $_SESSION['curso']['curso']['fk_type_orig'] = $modelC->fk_type_course;
                 $_SESSION['curso']['curso']['operacion'] = 'update';
                 $_SESSION['curso']['datos'] = $model->attributes;
+                $modelLM = LoanMaterial::model()->find("fk_course=?", array($id));
+                if($modelLM != NULL){
+                    $_SESSION['curso']['LoanMaterial'] = $modelLM->attributes;
+                    $_SESSION['curso']['Material']['fk_material_detail_ant'] = $_SESSION['curso']['LoanMaterial']['fk_material_detail'];
+                }
                 $_SESSION['curso']['maestro']['fk_teacher'] = $modelC->fk_teacher;
                 $_SESSION['curso']['direccion'] = ClassroomAddress::model()->findByPk($modelC->fk_classrom_address);
                 $this->actionCreateDatos();
@@ -119,7 +125,6 @@ class CoursesController extends Controller
                 ));
             }
         }
-        
         
         public function actionCreateHorario(){                    
             if(isset($_POST['bssDay']))
@@ -154,7 +159,7 @@ class CoursesController extends Controller
                     if(!isset($_SESSION['curso']['direccion'])){
                         $_SESSION['curso']['direccion'] = ClassroomAddress::model()->getClassroomAddress($_SESSION['curso']['datos']['fk_client'], constantes::ACTIVO, false);
                     }
-                    $this->actionAsignarDireccion();
+                    $this->actionAsignarMaterial();
                 }else{
                     $this->render('createMaestro',array(
                     'model'=>$model,
@@ -165,6 +170,37 @@ class CoursesController extends Controller
                         'model'=>$model,
                 ));
             }
+        }
+        
+        public function actionAsignarMaterial(){
+            $model = new LoanMaterial;
+            $model->fk_teacher = $_SESSION['curso']['maestro']['fk_teacher'];
+            if(isset($_SESSION['curso']['LoanMaterial'])){
+                $model->attributes=$_SESSION['curso']['LoanMaterial'];
+                if(isset($_SESSION['curso']['LoanMaterial']['pk_loan_material']) && $_SESSION['curso']['LoanMaterial']['pk_loan_material'] != ''){
+                    $model->pk_loan_material = $_SESSION['curso']['LoanMaterial']['pk_loan_material'];
+                }
+            }
+            if(isset($_POST['LoanMaterial'])){
+                $model->attributes=$_POST['LoanMaterial'];
+                if($model->validate()){
+                    $_SESSION['curso']['LoanMaterial'] = $_POST['LoanMaterial'];
+                    $_SESSION['curso']['Material']['fk_material_detail_ant'] = $model->fk_material_detail;
+                    $this->actionAsignarDireccion();
+                }else{
+                    $this->render('createMaterial',array(
+                    'model'=>$model,
+                    ));
+                }
+            }else{
+                $this->render('createMaterial', array('model'=>$model));
+            }
+        }
+        
+        public function actionTest(){
+            echo '<pre>';
+            print_r($_SESSION['curso']['LoanMaterial']);
+            echo '</pre>';
         }
         
         public function actionAsignarDireccion(){
@@ -208,6 +244,7 @@ class CoursesController extends Controller
                 }
                 if($model->save()){
                     $this->guardarHorario($model->pk_course);
+                    $this->guardarAsignacionMaterial($model->pk_course, $_SESSION['curso']['LoanMaterial']);
                     if($model->fk_type_course === constantes::CURSO_INDIVIDUAL){
                         //si el curso el indivudual, crear alumno con los datos del cliente
                         $this->guardarEstudiante($model->fk_client);
@@ -245,6 +282,7 @@ class CoursesController extends Controller
                             $criteria->addCondition('fk_user='.$_SESSION['curso']['curso']['fk_client_orig']['fk_user']);
                             Students::model()->deleteAll($criteria);
                         }
+                        $this->guardarAsignacionMaterial($model->pk_course, $_SESSION['curso']['LoanMaterial']);
                         $this->deleteHorarioBD($model->pk_course);
                         $this->guardarHorario($model->pk_course);
                 }
@@ -271,7 +309,33 @@ class CoursesController extends Controller
             $modelEstudiante->fk_state_dir = '31';
             $modelEstudiante->save();
         }
-
+        
+        private function guardarAsignacionMaterial($fkCurso, $loadMaterial){
+            $model = NULL;
+            if(isset($loadMaterial['pk_loan_material']) && $loadMaterial['pk_loan_material'] != ''){
+                $model = LoanMaterial::model()->findByPk($loadMaterial['pk_loan_material']);
+            }else{
+                $model = new LoanMaterial();
+                $model->fk_course = $fkCurso;
+            }
+            $model->comment = $loadMaterial['comment'];
+            $model->fk_material_detail = $loadMaterial['fk_material_detail'];
+            $model->fk_teacher = $loadMaterial['fk_teacher'];
+            $model->pick_date = $loadMaterial['pick_date'];
+            $model->save();
+            
+            //Se cambia a no disponible el material
+            $modelCMD = CatMaterialDetail::model()->findByPk($model->fk_material_detail);
+            $modelCMD->availability = constantes::INACTIVO;
+            $modelCMD->save();
+            
+            //Se comprueba si se modifico el material para cambiar a disponible el anterior
+            if($loadMaterial['fk_material_detail'] != $_SESSION['curso']['Material']['fk_material_detail_ant']){
+                $modelCMD = CatMaterialDetail::model()->findByPk($_SESSION['curso']['Material']['fk_material_detail_ant']);
+                $modelCMD->availability = constantes::ACTIVO;
+                $modelCMD->save();
+            }
+        }
 
         public function actionGuardarDireccion(){
             $_SESSION['curso']['nuevo'] = 1;
