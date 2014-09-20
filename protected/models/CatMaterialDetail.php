@@ -121,7 +121,6 @@ class CatMaterialDetail extends CActiveRecord
             if($pkMaterialDetalle != NULL && $pkMaterialDetalle != ''){
                 $criteria->addCondition('t.pk_material_detail = '.$pkMaterialDetalle, 'OR');
             }
-            //return CatMaterialDetail::model()->findAll($criteria);
             $models = CatMaterialDetail::model()->findAll($criteria);
             $data = array();
             foreach ($models as $model) {
