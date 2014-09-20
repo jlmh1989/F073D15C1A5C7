@@ -199,7 +199,7 @@ class CoursesController extends Controller
         
         public function actionTest(){
             echo '<pre>';
-            print_r($_SESSION['curso']['LoanMaterial']);
+            print_r(CatMaterialDetail::model()->getListMaterialDetail(3, 1));
             echo '</pre>';
         }
         

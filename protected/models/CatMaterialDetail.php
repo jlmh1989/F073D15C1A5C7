@@ -110,7 +110,8 @@ class CatMaterialDetail extends CActiveRecord
         
         public function getListMaterialDetail($pkLevel, $pkMaterialDetalle){
             $criteria = new CDbCriteria;
-            $criteria->select = 't.pk_material_detail, t.material_code, tbl_e24_cat_material.desc_material';
+            $criteria->with = array("fkCatMaterial");
+            $criteria->select = 't.pk_material_detail, t.material_code';
             //concat(t.material_code, \' - \' ,tbl_e24_cat_material.desc_material) as descripcion
             $criteria->join = 'inner join tbl_e24_cat_material on
                                t.fk_cat_material = tbl_e24_cat_material.pk_material inner join tbl_e24_material_level on
@@ -120,6 +121,12 @@ class CatMaterialDetail extends CActiveRecord
             if($pkMaterialDetalle != NULL && $pkMaterialDetalle != ''){
                 $criteria->addCondition('t.pk_material_detail = '.$pkMaterialDetalle, 'OR');
             }
-            return CHtml::listData(CatMaterialDetail::model()->findAll($criteria),'pk_material_detail','material_code');
+            //return CatMaterialDetail::model()->findAll($criteria);
+            $models = CatMaterialDetail::model()->findAll($criteria);
+            $data = array();
+            foreach ($models as $model) {
+                $data[$model->pk_material_detail] = '['.$model->material_code.']  '.$model->fkCatMaterial->desc_material;
+            }
+            return $data;
         }
 }
