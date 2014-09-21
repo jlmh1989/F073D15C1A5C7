@@ -122,10 +122,27 @@ class CatMaterialDetailController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('CatMaterialDetail');
+		/*$dataProvider=new CActiveDataProvider('CatMaterialDetail');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		));*/
+		$model=new CatMaterialDetail('search');
+                $model->unsetAttributes();  // clear any default values   
+                $model->fk_cat_material = $_SESSION['CatMaterial']['pk_cat_master'];
+		  /*          
+                $criteria=new CDbCriteria;
+                $criteria->compare('fk_cat_material',$_SESSION['CatMaterial']['pk_cat_master']);            
+                $model = new CActiveDataProvider('CatMaterialDetail', array(
+                                                                    'criteria'=>$criteria,
+                                                                    ));                
+                */
+                
+		if(isset($_GET['CatMaterialDetail']))
+			$model->attributes=$_GET['CatMaterialDetail'];
+
+		$this->render('index',array(
+			'model'=>$model,
+		));            
 	}
 
 	/**

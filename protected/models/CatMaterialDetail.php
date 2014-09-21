@@ -61,10 +61,10 @@ class CatMaterialDetail extends CActiveRecord
 	{
 		return array(
 			'pk_material_detail' => 'ID',
-			'material_code' => 'Material Code',
-			'comment' => 'Comment',
-			'availability' => 'Availability',
-			'fk_cat_material' => 'Fk Cat Material',
+			'material_code' => 'Codigo',
+			'comment' => 'Comentario',
+			'availability' => 'Estado',
+			'fk_cat_material' => 'Material',
 		);
 	}
 

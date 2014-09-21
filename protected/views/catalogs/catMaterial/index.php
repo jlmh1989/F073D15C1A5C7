@@ -26,7 +26,14 @@ $this->menu=array(
             'desc_level',
             array(
                 'class'=>'CButtonColumn',
-                'template'=>'{update}',
+                'template'=>'{update} {detalle}',             
+                'buttons'=>array(
+                    'detalle' => array(
+                        'label'=>'Ver Detalle',
+                        'url'=>'Yii::app()->createUrl("catalogs/catMaterial/updateDetail", array("id"=>$data->pk_material))',
+                        'imageUrl'=>Yii::app()->baseUrl.'/images/detail.png',
+                    ),
+                ),                
 		),
         ),
 )); ?>

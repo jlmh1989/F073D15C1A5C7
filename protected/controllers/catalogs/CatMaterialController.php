@@ -28,7 +28,7 @@ class CatMaterialController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform
-				'actions'=>array('index','view','create','update','admin','delete'),
+				'actions'=>array('index','view','create','update','admin','delete','updateDetail'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
 			),
@@ -113,12 +113,7 @@ class CatMaterialController extends Controller
             $this->render('update',array(
                     'model'=>$model, 'modelML'=>$modelML,'dataProviderMD'=>$dataProviderMD,
             ));
-            
-            
-            
-
-		        
-            
+ 
 	}
 
 	/**
@@ -208,4 +203,13 @@ class CatMaterialController extends Controller
 			Yii::app()->end();
 		}
 	}
+        
+        
+        public function actionUpdateDetail($id){
+            $model=$this->loadModel($id);
+            //$_SESSION['CatMaterial']['escenario'] = 1; // Update
+            $_SESSION['CatMaterial']['pk_cat_master'] = $model->pk_material;
+            //$_SESSION['CatMaterial']['desc_cat_master'] = $model->desc_cat_master;
+            $this->redirect(array('catalogs/catMaterialDetail/index'));
+        }        
 }
