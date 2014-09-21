@@ -49,12 +49,20 @@
                             'activateParents' => true,
                             'items'=>array(
                             	array('label'=>'Home', 'url'=>array('/site/index')),
+                                array('label'=>'Empleados','url'=>array('/clients/clients')),
                                 array('label'=>'Clientes','url'=>array('/clients/clients')),
-                                array('label'=>'Cursos','url'=>array('/courses/courses')),
-                                array('label'=>'Grupos','url'=>array('/students/groups')),
+                                //array('label'=>'Cursos','url'=>array('/courses/courses')),
+                                array(
+                                'label'=>'Cursos',
+                                'url'=>array('/courses/courses'),
+                                'items'=>array(
+                                    array('label'=>'Grupos', 'url'=>array('/students/groups')),
+                                    ),
+                                ),
+                                //array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
                                 array( 'label'=>'Maestros', 'url'=>array('/teachers/teachers')),
-                                array('label'=>'Material', 'url'=>array('#')),
+                                //array('label'=>'Material', 'url'=>array('#')),
                                 array(
                                 'label'=>'Catálogos',
                                 'url'=>array('#'),
@@ -81,12 +89,13 @@
                             'activateParents' => true,
                             'items'=>array(
                             	array('label'=>'Home', 'url'=>array('/site/index')),
+                                array('label'=>'Empleados','url'=>array('/clients/clients')),
                                 array('label'=>'Clientes','url'=>array('/clients/clients')),
                                 array('label'=>'Cursos','url'=>array('/courses/courses')),
                                 array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
                                 array('label'=>'Maestros', 'url'=>array('/teachers/teachers')),
-                                array('label'=>'Material', 'url'=>array('#')),
+                                //array('label'=>'Material', 'url'=>array('#')),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'))
                             ),
                         ));                     

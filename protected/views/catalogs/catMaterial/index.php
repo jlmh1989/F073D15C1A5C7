@@ -3,7 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Cat Materials',
+	'Catálogo Material',
 );
 
 $this->menu=array(

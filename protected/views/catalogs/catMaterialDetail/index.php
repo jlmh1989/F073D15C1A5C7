@@ -3,12 +3,13 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Cat Material Details',
+        'Catálogo Material'=>array("catalogs/catMaterial/index"),
+	'Material Detalle',
 );
 
 $this->menu=array(
-	array('label'=>'Create CatMaterialDetail', 'url'=>array('create')),
-	array('label'=>'Manage CatMaterialDetail', 'url'=>array('admin')),
+	array('label'=>'Crear Material Detalle', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Material', 'url'=>Yii::app()->createUrl("catalogs/catMaterial/index")),
 );
 ?>
 
