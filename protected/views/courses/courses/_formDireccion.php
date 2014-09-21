@@ -38,7 +38,7 @@ Yii::app()->clientScript->registerScript('script',
         $(".mapa_div").hide();
         
         $("#irAtras").click(function(){
-            $(location).attr("href","'.Yii::app()->createUrl('courses/courses/asignarMaestro').'");
+            $(location).attr("href","'.Yii::app()->createUrl('courses/courses/asignarMaterial').'");
         });
         
         '.$ajaxDom.
