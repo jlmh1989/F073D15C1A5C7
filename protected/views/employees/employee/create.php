@@ -8,11 +8,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Employees', 'url'=>array('index')),
-	array('label'=>'Manage Employees', 'url'=>array('admin')),
+	array('label'=>'Empleados', 'url'=>array('index')),
+	array('label'=>'Alta empleado', 'url'=>array('create')),
 );
 ?>
 
-<h1>Create Employees</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+
+<?php $this->renderPartial('_form', array('model'=>$model,'modelUser'=>$modelUser)); ?>

@@ -63,19 +63,39 @@ class EmployeeController extends Controller
 	public function actionCreate()
 	{
 		$model=new Employees;
-
+                $modelUser = new Users();
+                
+                
+                
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Employees']))
 		{
+                    
 			$model->attributes=$_POST['Employees'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_employee));
+                        $modelUser->attributes=$_POST['Users'];
+                        $validUser = $modelUser->validate();
+                        $validate = $model->validate() && $validUser;                        
+                        
+                        if($validate){
+                        $modelUser->status=  constantes::ACTIVO;
+                        $modelUser->fk_role=(int)constantes::ROL_ADMINISTRADOR;
+                        $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);   
+                            if($modelUser->save()){
+                            $model->fk_user=$modelUser->pk_user;
+                                if($model->save()){                               
+                                        $this->redirect(array('view','id'=>$model->pk_employee));                                
+                                }                           
+                            }                        
+                        
+                        }
+                                  
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+                        'modelUser'=>$modelUser,
 		));
 	}
 
@@ -87,19 +107,35 @@ class EmployeeController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+                $modelUser = $this->loadModelUser($model->fk_user);
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Employees']))
 		{
 			$model->attributes=$_POST['Employees'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_employee));
+                        $modelUser->attributes=$_POST['Users'];
+                        $validUser = $modelUser->validate();
+                        $validate = $model->validate() && $validUser;
+                        
+                         if($validate)
+                         {
+                            if(Users::cambiarPassword($modelUser->pk_user, $modelUser->password) === TRUE){
+                            $modelUser->password = crypt($modelUser->password, constantes::PATRON_PASS);
+                            }
+                            if($modelUser->save())
+                            {
+                            $model->save();
+                            $this->redirect(array('view','id'=>$model->pk_student));
+                            }                             
+                             
+                         }
+                           
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
+                        'modelUser'=>$modelUser,
 		));
 	}
 
@@ -121,11 +157,22 @@ class EmployeeController extends Controller
 	 * Lists all models.
 	 */
 	public function actionIndex()
-	{
+	{    /*
 		$dataProvider=new CActiveDataProvider('Employees');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
+               */ 
+		$model=new Employees('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Employees']))
+			$model->attributes=$_GET['Employees'];
+
+		$this->render('admin',array(
+			'model'=>$model,
+		));                
+                
+                
 	}
 
 	/**
@@ -170,4 +217,11 @@ class EmployeeController extends Controller
 			Yii::app()->end();
 		}
 	}
+        public function loadModelUser($id)
+	{
+		$model=Users::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}        
 }

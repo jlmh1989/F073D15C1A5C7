@@ -41,7 +41,7 @@ class Employees extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fk_user, name, neigborhod, county, phone, zipcode, birthdate, street, street_number, fk_state_dir, entrance_date', 'required'),
+			array(' name, neigborhod, county, phone, zipcode, birthdate, street, street_number, fk_state_dir, entrance_date', 'required'),
 			array('street_number, fk_state_dir', 'numerical', 'integerOnly'=>true),
 			array('fk_user', 'length', 'max'=>10),
 			array('name, email, neigborhod, county, street', 'length', 'max'=>100),
@@ -72,20 +72,20 @@ class Employees extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pk_employee' => 'Pk Employee',
-			'fk_user' => 'Fk User',
-			'name' => 'Name',
+			'pk_employee' => 'Empleado',
+			'fk_user' => 'Usuario',
+			'name' => 'Nombre',
 			'email' => 'Email',
-			'neigborhod' => 'Neigborhod',
-			'county' => 'County',
-			'phone' => 'Phone',
-			'zipcode' => 'Zipcode',
-			'birthdate' => 'Birthdate',
-			'street' => 'Street',
-			'street_number' => 'Street Number',
-			'street_number_int' => 'Street Number Int',
-			'fk_state_dir' => 'Fk State Dir',
-			'entrance_date' => 'Entrance Date',
+			'neigborhod' => 'Colonia',
+			'county' => 'Municipio',
+			'phone' => 'Telefono',
+			'zipcode' => 'Codigo Postal',
+			'birthdate' => 'Fecha Nacimiento',
+			'street' => 'Calle',
+			'street_number' => 'Numero',
+			'street_number_int' => 'Numero Int',
+			'fk_state_dir' => 'Estado',
+			'entrance_date' => 'Fecha Entrada',
 		);
 	}
 

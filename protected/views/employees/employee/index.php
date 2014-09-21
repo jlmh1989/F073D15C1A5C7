@@ -6,15 +6,19 @@ $this->breadcrumbs=array(
 	'Employees',
 );
 
+
 $this->menu=array(
-	array('label'=>'Create Employees', 'url'=>array('create')),
-	array('label'=>'Manage Employees', 'url'=>array('admin')),
+	array('label'=>'Empleados', 'url'=>array('index')),
+	array('label'=>'Alta Empleado', 'url'=>array('create')),
 );
 ?>
 
-<h1>Employees</h1>
+<h1>Empleados</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php 
+
+$this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
-)); ?>
+)); 
+?>
