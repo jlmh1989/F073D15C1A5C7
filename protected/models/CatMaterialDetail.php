@@ -31,7 +31,7 @@ class CatMaterialDetail extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('pk_material_detail, fk_cat_material', 'required'),
+			array('fk_cat_material', 'required'),
 			array('availability, fk_cat_material', 'numerical', 'integerOnly'=>true),
 			array('pk_material_detail', 'length', 'max'=>10),
 			array('material_code', 'length', 'max'=>45),
@@ -61,7 +61,7 @@ class CatMaterialDetail extends CActiveRecord
 	{
 		return array(
 			'pk_material_detail' => 'ID',
-			'material_code' => 'Codigo',
+			'material_code' => 'Código',
 			'comment' => 'Comentario',
 			'availability' => 'Estado',
 			'fk_cat_material' => 'Material',

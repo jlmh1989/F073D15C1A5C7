@@ -47,18 +47,13 @@
             <td></td>
             <td></td>
         </tr>
-        
-        
-
-        
 <?php $this->endWidget(); ?>
-     
-        
-        
-        
     </table>
 </div><!-- form -->
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+
+<?php 
+if(!$model->isNewRecord){
+    $this->widget('zii.widgets.grid.CGridView', array(
         'id'=>'cat-material-detail-grid',
         'dataProvider'=>$dataProviderMD,
         //'filter'=>$modelMD,
@@ -72,4 +67,5 @@
                 //        'class'=>'CButtonColumn',
                 //),
         ),
-)); ?>       
+    ));
+}

@@ -13,7 +13,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Detalle de Materiales</h1>
+<h2>Detalle de Materiales - <?= $_SESSION['CatMaterial']['desc_material'] ?></h2>
 
 <!-- ?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
@@ -28,10 +28,12 @@ $this->menu=array(
 		'pk_material_detail',
 		'material_code',
 		'comment',
-		'availability',
-		
+		array('name'=>'availability',
+                    'type'=>'raw',
+                    'value'=>'constantes::$opcion_estado_material[$data->availability]'),
 		array(
-			'class'=>'CButtonColumn',
+                    'class'=>'CButtonColumn',
+                    'template'=>'{update} {delete}',  	
 		),
 	),
 )); ?>
