@@ -209,7 +209,7 @@ class CatMaterialController extends Controller
             $model=$this->loadModel($id);
             //$_SESSION['CatMaterial']['escenario'] = 1; // Update
             $_SESSION['CatMaterial']['pk_cat_master'] = $model->pk_material;
-            //$_SESSION['CatMaterial']['desc_cat_master'] = $model->desc_cat_master;
+            $_SESSION['CatMaterial']['desc_material'] = $model->desc_material;
             $this->redirect(array('catalogs/catMaterialDetail/index'));
         }        
 }

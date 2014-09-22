@@ -1,5 +1,5 @@
 ALTER TABLE `e24db`.`tbl_e24_cat_material_detail` 
-CHANGE COLUMN `pk_material_detail` `pk_material_detail` INT(10) UNSIGNED NOT NULL COMMENT 'Campo indice de la tabla' ;
+CHANGE COLUMN `pk_material_detail` `pk_material_detail` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Campo indice de la tabla' ;
 
 
 

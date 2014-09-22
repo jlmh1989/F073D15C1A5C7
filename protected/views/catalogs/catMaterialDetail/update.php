@@ -3,19 +3,15 @@
 /* @var $model CatMaterialDetail */
 
 $this->breadcrumbs=array(
-	'Cat Material Details'=>array('index'),
-	$model->pk_material_detail=>array('view','id'=>$model->pk_material_detail),
-	'Update',
+	 'Catálogo Material'=>array("catalogs/catMaterial/index"),
+	'Material Detalle'=>array("index"),
+	'Actualizar['.$model->pk_material_detail.']',
 );
 
 $this->menu=array(
-	array('label'=>'List CatMaterialDetail', 'url'=>array('index')),
-	array('label'=>'Create CatMaterialDetail', 'url'=>array('create')),
-	array('label'=>'View CatMaterialDetail', 'url'=>array('view', 'id'=>$model->pk_material_detail)),
-	array('label'=>'Manage CatMaterialDetail', 'url'=>array('admin')),
+        array('label'=>'Crear Material Detalle', 'url'=>array('create')),
+	array('label'=>'Ver Catálogo Material Detalle', 'url'=>array('index')),
 );
 ?>
-
-<h1>Update CatMaterialDetail <?php echo $model->pk_material_detail; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

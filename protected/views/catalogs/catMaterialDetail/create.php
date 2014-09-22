@@ -3,16 +3,14 @@
 /* @var $model CatMaterialDetail */
 
 $this->breadcrumbs=array(
-	'Cat Material Details'=>array('index'),
-	'Create',
+	'Catálogo Material'=>array("catalogs/catMaterial/index"),
+	'Material Detalle'=>array("index"),
+	'Crear',
 );
 
 $this->menu=array(
-	array('label'=>'List CatMaterialDetail', 'url'=>array('index')),
-	array('label'=>'Manage CatMaterialDetail', 'url'=>array('admin')),
+	array('label'=>'Ver Catálogo Material Detalle', 'url'=>array('index')),
 );
 ?>
-
-<h1>Create CatMaterialDetail</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

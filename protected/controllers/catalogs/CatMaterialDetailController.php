@@ -28,16 +28,8 @@ class CatMaterialDetailController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'actions'=>array('index','view','create','update','admin','delete'),
+				'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -63,15 +55,16 @@ class CatMaterialDetailController extends Controller
 	public function actionCreate()
 	{
 		$model=new CatMaterialDetail;
-
+                
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['CatMaterialDetail']))
 		{
 			$model->attributes=$_POST['CatMaterialDetail'];
+                        $model->fk_cat_material = $_SESSION['CatMaterial']['pk_cat_master'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_material_detail));
+				$this->redirect(array('index'));
 		}
 
 		$this->render('create',array(
@@ -95,7 +88,7 @@ class CatMaterialDetailController extends Controller
 		{
 			$model->attributes=$_POST['CatMaterialDetail'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->pk_material_detail));
+				$this->redirect(array('index'));
 		}
 
 		$this->render('update',array(
