@@ -34,6 +34,6 @@ SELECT cm1.pk_material,
        mlv1.desc_level
 FROM tbl_e24_cat_material  cm1
 JOIN tbl_e24_cat_detail cd1 ON (cm1.fk_type_material = cd1.pk_cat_detail )
-JOIN tbl_e24_material_detail_view1 mdv1 ON (cm1.pk_material = mdv1.fk_cat_material ) 
+LEFT JOIN tbl_e24_material_detail_view1 mdv1 ON (cm1.pk_material = mdv1.fk_cat_material ) 
 LEFT JOIN tbl_e24_material_detail_view2 mdv2 ON (cm1.pk_material = mdv2.fk_cat_material) 
 JOIN tbl_e24_material_level_view1  mlv1 ON (cm1.pk_material = mlv1.fk_material ) ;
