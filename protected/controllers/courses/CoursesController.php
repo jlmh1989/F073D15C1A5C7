@@ -34,7 +34,7 @@ class CoursesController extends Controller
                                     'createHorario','createDatos','asignarMaestro','asignarDireccion',
                                     'getDomicilioHtml','getDomicilioJson','guardarDireccion','getCursosHtml',
                                     'cancelarDireccion','guardarCursoBD','validarHorario','editarDireccion',
-                                    'asignarMaterial','test'),
+                                    'asignarMaterial','getCatMaterialDetail','getFechaPrestamoMaterial','test'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR'
                                              .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
@@ -183,9 +183,8 @@ class CoursesController extends Controller
             }
             if(isset($_POST['LoanMaterial'])){
                 $model->attributes=$_POST['LoanMaterial'];
+                $_SESSION['curso']['LoanMaterial'] = $_POST['LoanMaterial'];
                 if($model->validate()){
-                    $_SESSION['curso']['LoanMaterial'] = $_POST['LoanMaterial'];
-                    $_SESSION['curso']['Material']['fk_material_detail_ant'] = $model->fk_material_detail;
                     $this->actionAsignarDireccion();
                 }else{
                     $this->render('createMaterial',array(
@@ -199,8 +198,16 @@ class CoursesController extends Controller
         
         public function actionTest(){
             echo '<pre>';
-            print_r(CatMaterialDetail::model()->getListMaterialDetail(3, 1));
+            print_r($_SESSION['curso']['LoanMaterial']);
             echo '</pre>';
+            echo $_SESSION['curso']['LoanMaterial']['fk_material_detail'];
+            echo '<br>';
+            echo $_SESSION['curso']['Material']['fk_material_detail_ant'];
+            if($_SESSION['curso']['LoanMaterial']['fk_material_detail'] != $_SESSION['curso']['Material']['fk_material_detail_ant']){
+                echo '<br>No mat prestado';
+            }else{
+                echo '<br>Mat prestado';
+            }
         }
         
         public function actionAsignarDireccion(){
@@ -324,16 +331,19 @@ class CoursesController extends Controller
             $model->pick_date = $loadMaterial['pick_date'];
             $model->save();
             
-            //Se cambia a no disponible el material
-            $modelCMD = CatMaterialDetail::model()->findByPk($model->fk_material_detail);
-            $modelCMD->availability = constantes::INACTIVO;
-            $modelCMD->save();
-            
-            //Se comprueba si se modifico el material para cambiar a disponible el anterior
-            if($loadMaterial['fk_material_detail'] != $_SESSION['curso']['Material']['fk_material_detail_ant']){
-                $modelCMD = CatMaterialDetail::model()->findByPk($_SESSION['curso']['Material']['fk_material_detail_ant']);
-                $modelCMD->availability = constantes::ACTIVO;
+            //se verifica si el material aun no se encuentra prestado
+            if(!isset($loadMaterial['tieneMaterial'])){
+                //Se cambia a no disponible el material
+                $modelCMD = CatMaterialDetail::model()->findByPk($model->fk_material_detail);
+                $modelCMD->availability = constantes::INACTIVO;
                 $modelCMD->save();
+            
+                //Se comprueba si se modifico el material para cambiar a disponible el anterior
+                if($loadMaterial['fk_material_detail'] != $_SESSION['curso']['Material']['fk_material_detail_ant']){
+                    $modelCMD = CatMaterialDetail::model()->findByPk($_SESSION['curso']['Material']['fk_material_detail_ant']);
+                    $modelCMD->availability = constantes::ACTIVO;
+                    $modelCMD->save();
+                }
             }
         }
 
@@ -418,6 +428,20 @@ class CoursesController extends Controller
             return TRUE;
         }
         
+        public function actionGetCatMaterialDetail(){
+            $pkMaestro = Yii::app()->getRequest()->getParam("pkMaestro");
+            $pkLevel = (isset($_SESSION['curso']['datos']['fk_level'])) ? $_SESSION['curso']['datos']['fk_level'] : '';
+            $pkMaterialDetalle = Yii::app()->getRequest()->getParam("pkMaterialDetail");
+            $catMetDet = CatMaterialDetail::model()->getListMaterialDetail($pkLevel, $pkMaterialDetalle, $pkMaestro);
+            echo json_encode($catMetDet);
+        }
+        
+        public function actionGetFechaPrestamoMaterial(){
+            $pkMaestro = Yii::app()->getRequest()->getParam("pkMaestro");
+            $pkMaterialDetalle = Yii::app()->getRequest()->getParam("pkMaterialDetail");
+            echo LoanMaterial::model()->getFechaPrestamo($pkMaestro, $pkMaterialDetalle);
+        }
+
         public function actionGetHorarioHtml(){
             $html = '';
             $dias = CatBssDay::model()->getCatBssDayListData(constantes::ACTIVO);

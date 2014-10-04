@@ -114,5 +114,14 @@ class LoanMaterial extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}        
+	}   
+        
+        public function getFechaPrestamo($pkMaestro, $pkMaterialDetalle){
+            $criteria = new CDbCriteria;
+            $criteria->select = 't.pick_date';
+            $criteria->addCondition('t.fk_teacher='.$pkMaestro);
+            $criteria->addCondition('t.fk_material_detail='.$pkMaterialDetalle);
+            $model = LoanMaterial::model()->find($criteria);
+            return $model != NULL ? $model->pick_date : '';
+        }
 }

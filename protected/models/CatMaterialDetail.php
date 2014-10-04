@@ -108,18 +108,23 @@ class CatMaterialDetail extends CActiveRecord
 		return parent::model($className);
 	}
         
-        public function getListMaterialDetail($pkLevel, $pkMaterialDetalle){
+        public function getListMaterialDetail($pkLevel, $pkMaterialDetalle, $pkMaestro = NULL){
             $criteria = new CDbCriteria;
             $criteria->with = array("fkCatMaterial");
             $criteria->select = 't.pk_material_detail, t.material_code';
-            //concat(t.material_code, \' - \' ,tbl_e24_cat_material.desc_material) as descripcion
             $criteria->join = 'inner join tbl_e24_cat_material on
                                t.fk_cat_material = tbl_e24_cat_material.pk_material inner join tbl_e24_material_level on
                                tbl_e24_cat_material.pk_material = tbl_e24_material_level.fk_material';
             $criteria->addCondition('tbl_e24_material_level.fk_level = '.$pkLevel);
-            $criteria->addCondition('t.availability = '.constantes::ACTIVO);
-            if($pkMaterialDetalle != NULL && $pkMaterialDetalle != ''){
-                $criteria->addCondition('t.pk_material_detail = '.$pkMaterialDetalle, 'OR');
+            if($pkMaestro != NULL && $pkMaestro != ''){
+                $criteria->join.= ' inner join tbl_e24_loan_material on tbl_e24_loan_material.fk_material_detail = t.pk_material_detail ';
+                $criteria->addCondition('tbl_e24_loan_material.fk_teacher = '.$pkMaestro);
+                $criteria->addCondition('tbl_e24_loan_material.drop_date is null');
+            }else{
+                $criteria->addCondition('t.availability = '.constantes::ACTIVO);
+                if($pkMaterialDetalle != NULL && $pkMaterialDetalle != ''){
+                    $criteria->addCondition('t.pk_material_detail = '.$pkMaterialDetalle, 'OR');
+                }
             }
             $models = CatMaterialDetail::model()->findAll($criteria);
             $data = array();

@@ -2,13 +2,76 @@
 /* @var $this CoursesController */
 /* @var $model LoanMaterial */
 /* @var $form CActiveForm */
+$tieneMaterial = 0;
+if(isset($_SESSION['curso']['LoanMaterial']['tieneMaterial']) && ($_SESSION['curso']['LoanMaterial']['tieneMaterial'] == 1)){
+    $tieneMaterial = true;
+}
 Yii::app()->clientScript->registerScript('script',
         '
         $("#irAtras").click(function(){
             $(location).attr("href","'.Yii::app()->createUrl('courses/courses/asignarMaestro').'");
         });
-        '); 
+        $(function () {
+            if('.$tieneMaterial.' == true){
+                $("#LoanMaterial_tieneMaterial").prop("checked", true);
+                $("#LoanMaterial_tieneMaterial").change();
+            }
+        });
+        ',CClientScript::POS_READY); 
 ?>
+
+<script>
+    function validarPrestamoExistente(){
+        var pkMaestro = '';
+        var fkMaterialDetalle = '<?= $model->fk_material_detail != NULL ? $model->fk_material_detail : '-1' ?>';
+        var opcion = '';
+        $("#LoanMaterial_fk_material_detail").empty();
+        $("#LoanMaterial_pick_date").prop('readonly', false);
+        if($("#LoanMaterial_tieneMaterial").is(':checked')) {  
+            pkMaestro = '<?= $_SESSION['curso']['maestro']['fk_teacher'] ?>';
+            $("#LoanMaterial_pick_date").prop('readonly', true);
+            $.ajax({
+                type: "POST",
+                url: "<?= Yii::app()->createUrl('courses/courses/getFechaPrestamoMaterial');?>",
+                data: { pkMaestro: pkMaestro, pkMaterialDetail: fkMaterialDetalle},
+                dataType: "text"
+            }).done(function( msg ) {
+                $("#LoanMaterial_pick_date").val(msg);
+            });
+        }
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('courses/courses/getCatMaterialDetail');?>",
+            data: { pkMaestro: pkMaestro, pkMaterialDetail: fkMaterialDetalle},
+            dataType: "text"
+        }).done(function( msg ) {
+            var json = $.parseJSON(msg);
+            $("#LoanMaterial_fk_material_detail").append("<option value=''>Seleccione una opción</option>");
+            $.each(json, function(key, value){
+                opcion = "<option value='"+key+"'>"+value+"</option>";
+                if(fkMaterialDetalle == key){
+                    opcion = "<option value='"+key+"' selected='selected'>"+value+"</option>";
+                }
+                $("#LoanMaterial_fk_material_detail").append(opcion);
+            });
+        });
+    }
+    
+    function cargarFechaPrestamo(){
+        if($("#LoanMaterial_tieneMaterial").is(':checked')) {  
+            pkMaestro = '<?= $_SESSION['curso']['maestro']['fk_teacher'] ?>';
+            fkMaterialDetalle = $("#LoanMaterial_fk_material_detail").val();
+            $.ajax({
+                type: "POST",
+                url: "<?= Yii::app()->createUrl('courses/courses/getFechaPrestamoMaterial');?>",
+                data: { pkMaestro: pkMaestro, pkMaterialDetail: fkMaterialDetalle},
+                dataType: "text"
+            }).done(function( msg ) {
+                $("#LoanMaterial_pick_date").val(msg);
+            });
+        }
+    }
+</script>
 
 <div class="form">
     <table class="zebra">
@@ -29,10 +92,22 @@ Yii::app()->clientScript->registerScript('script',
         </tr>
         
         <tr>
+            <td colspan="4">
+                <table>
+                    <tr>
+                        <td width="25x"><input type="checkbox" name="LoanMaterial[tieneMaterial]" id="LoanMaterial_tieneMaterial" value="1" onchange="validarPrestamoExistente()"></td>
+                        <td><label for="tieneMaterial">El maestro ya tiene material prestado.</label></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
             <td><?php echo $form->labelEx($model, 'fk_material_detail'); ?></td>
             <td><?php echo $form->dropDownList($model,'fk_material_detail', CatMaterialDetail::model()->getListMaterialDetail((isset($_SESSION['curso']['datos']['fk_level'])) ? $_SESSION['curso']['datos']['fk_level'] : '', $model->fk_material_detail), 
                         array(
                         "tabindex" => "0",
+                        "onChange"=>"javascript:cargarFechaPrestamo();",
                         "empty" => constantes::OPCION_COMBO)
                     );?>
             <?php echo $form->error($model,'fk_material_detail'); ?></td>
@@ -40,7 +115,7 @@ Yii::app()->clientScript->registerScript('script',
             <td><?php
                     $this->widget('zii.widgets.jui.CJuiDatePicker',
                             array('attribute'=>'pick_date',
-                                  'name'=>'pick_date',
+                                  'name'=>'LoanMaterial[pick_date]',
                                   'model'=>$model,
                                   'options' => array(
                                         'mode'=>'focus',
