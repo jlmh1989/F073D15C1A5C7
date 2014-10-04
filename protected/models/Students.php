@@ -44,7 +44,7 @@ class Students extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fk_client, name, neigborhod, county, phone, zipcode, birthdate, street, street_number, fk_state_dir', 'required'),
+			array('fk_client, name, phone, birthdate', 'required'),
 			array('street_number, fk_state_dir', 'numerical', 'integerOnly'=>true),
 			array('fk_client', 'length', 'max'=>10),
 			array('name, email, neigborhod, county, street', 'length', 'max'=>100),
