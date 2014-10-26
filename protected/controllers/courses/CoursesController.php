@@ -34,7 +34,8 @@ class CoursesController extends Controller
                                     'createHorario','createDatos','asignarMaestro','asignarDireccion',
                                     'getDomicilioHtml','getDomicilioJson','guardarDireccion','getCursosHtml',
                                     'cancelarDireccion','guardarCursoBD','validarHorario','editarDireccion',
-                                    'asignarMaterial','getCatMaterialDetail','getFechaPrestamoMaterial','test'),
+                                    'asignarMaterial','getCatMaterialDetail','getFechaPrestamoMaterial',
+                                    'progreso','test'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR'
                                              .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 				//'users'=>array('@'),
@@ -339,10 +340,12 @@ class CoursesController extends Controller
                 $modelCMD->save();
             
                 //Se comprueba si se modifico el material para cambiar a disponible el anterior
-                if($loadMaterial['fk_material_detail'] != $_SESSION['curso']['Material']['fk_material_detail_ant']){
-                    $modelCMD = CatMaterialDetail::model()->findByPk($_SESSION['curso']['Material']['fk_material_detail_ant']);
-                    $modelCMD->availability = constantes::ACTIVO;
-                    $modelCMD->save();
+                if(isset($_SESSION['curso']['Material'])){
+                    if($loadMaterial['fk_material_detail'] != $_SESSION['curso']['Material']['fk_material_detail_ant']){
+                        $modelCMD = CatMaterialDetail::model()->findByPk($_SESSION['curso']['Material']['fk_material_detail_ant']);
+                        $modelCMD->availability = constantes::ACTIVO;
+                        $modelCMD->save();
+                    }
                 }
             }
         }
@@ -610,6 +613,17 @@ class CoursesController extends Controller
 			'model'=>$model,
 		));
 	}
+        
+        public function actionProgreso(){
+            $model=new Courses('search');
+            $model->unsetAttributes();  // clear any default values
+            if(isset($_GET['Courses']))
+                    $model->attributes=$_GET['Courses'];
+
+            $this->render('progreso',array(
+                    'model'=>$model,
+            ));
+        }
         
         public function actionInactivos(){
             $model=new Courses('search');

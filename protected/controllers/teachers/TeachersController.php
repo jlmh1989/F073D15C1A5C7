@@ -39,7 +39,7 @@ class TeachersController extends Controller
                                                 'jsonHorario','agregarAlumno','getAlumnosHtml','agregarAlumnoCurso',
                                                 'getClassComment','setClassComment','setDatosAsistencia','asistencia',
                                                 'getCursoCalendario','guardarAsistenciaClase','getEstatusAsistencia',
-                                                'getListaEstatus','getListaDetalleNivel'),
+                                                'getListaEstatus','getListaDetalleNivel','getHtmlEstudiantesCurso'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO',
 				//'users'=>array('@'),
 			),
@@ -266,7 +266,7 @@ class TeachersController extends Controller
         }
         
         public function actionGetListaEstatus(){
-            $estatus = CatStatusClass::model()->getCatStatusClassListData(isset($_SESSION['asistencia']['pkTipoCurso']) ? $_SESSION['asistencia']['pkTipoCurso'] : NULL);
+            $estatus = CatStatusClass::model()->getCatStatusClassListData(isset($_SESSION['asistencia']['pkTipoCurso']) ? $_SESSION['asistencia']['pkTipoCurso'] : NULL, true);
             $msje = '[';
             foreach ($estatus as $key => $value) {
                 $msje .= '{"id":'.$key.',"valor":"'.$value.'"},';
@@ -285,6 +285,47 @@ class TeachersController extends Controller
             $msje = substr($msje, 0, -1);
             $msje .= ']';
             echo $msje;
+        }
+        
+        public function actionGetHtmlEstudiantesCurso(){
+            $html = '';
+            $option = '<option value="">Seleccione una opción</option>';
+            $pkCurso = $_SESSION['asistencia']['pkCurso'];
+            $pkType = $_SESSION['asistencia']['pkTipoCurso'];
+            $estudiantes = Courses::model()->getEstudiantes($pkCurso, $pkType);
+            $estatus = CatStatusClass::model()->getCatStatusClassListData(isset($_SESSION['asistencia']['pkTipoCurso']) ? $_SESSION['asistencia']['pkTipoCurso'] : NULL, false);
+            foreach ($estatus as $key => $value) {
+                $option .= '<option value="'.$key.'">'.$value.'</option>';
+            }
+            $class = "";
+            $i = 0;
+            $fechaCurso = $_SESSION['asistencia']['fechaCurso'];
+            foreach ($estudiantes as $estudiante) {
+                if(($i % 2) == 0){
+                    $class = "odd_";
+                }else{
+                    $class = "even_";
+                }
+                $i++;
+                $estatusClase = AssistanceRecord::model()->getEstatusAsistencia($_SESSION['asistencia']['pkCurso'], $_SESSION['asistencia']['pkCliente'], $estudiante->pk_student, $fechaCurso);
+                if($estatusClase != NULL){
+                    $option = '<option value="">Seleccione una opción</option>';
+                    foreach ($estatus as $key => $value) {
+                        if($estatusClase->fk_status_class == $key){
+                            $option .= '<option value="'.$key.'" selected>'.$value.'</option>';
+                        }else{
+                            $option .= '<option value="'.$key.'">'.$value.'</option>';
+                        }
+                    }
+                }
+                $html .= '<tr class="'.$class.'">
+                            <td style="font-size: smaller"><b>Nombre:</b></td>
+                            <td style="font-size: smaller">'.$estudiante->name.'</td>
+                            <td style="font-size: smaller"><b>Estatus:</b></td>
+                            <td style="font-size: smaller"><select tabindex="0" name="'.$estudiante->pk_student.'" id="'.$estudiante->pk_student.'">'.$option.'</select></td>
+                        </tr>';
+            }
+            echo $html;
         }
         
         public function actionAsistencia(){
@@ -678,20 +719,28 @@ class TeachersController extends Controller
             $_SESSION['asistencia']['pkMaestro'];
             $_SESSION['asistencia']['pkNivel'];
             $esNuevo = intval(Yii::app()->getRequest()->getParam("esNuevo"));
+            $nivelClase = intval(Yii::app()->getRequest()->getParam("nivelClase"));
             $pkAsistencia = Yii::app()->getRequest()->getParam("pkAsistencia");
             $fechaClase = Yii::app()->getRequest()->getParam("fechaClase");
             $fkStatusClase = intval(Yii::app()->getRequest()->getParam("fkStatusClase"));
+            $fkEstudiante = intval(Yii::app()->getRequest()->getParam("fkEstudiante"));
             $fechaRecalendar = Yii::app()->getRequest()->getParam("fechaRecalendar");
             $horaRecalendar = Yii::app()->getRequest()->getParam("horaRecalendar");
             $razonCancelacion = Yii::app()->getRequest()->getParam("razonCancelacion");
             $fkLevelDetalle = intval(Yii::app()->getRequest()->getParam("fkLevelDetalle"));
+            
             $model = new AssistanceRecord();
-            if($esNuevo !== 1){
-                $model=AssistanceRecord::model()->findByPk($pkAsistencia);
-		if($model===null){
-                    throw new CHttpException(404,'Fallo al cargar datos asistencia.');
-                }
+            if($nivelClase === 1){
+                $fkEstudiante = NULL;
             }
+            $estatus = AssistanceRecord::model()->getEstatusAsistencia($_SESSION['asistencia']['pkCurso'], $_SESSION['asistencia']['pkCliente'], $fkEstudiante, $fechaClase);
+            if($estatus != NULL){
+                $model = $estatus;
+            }
+            if($nivelClase === 0){
+                $model->fk_student = $fkEstudiante;
+            }
+            
             $model->cancellation_reason = $razonCancelacion;
             $model->class_date = $fechaClase;
             $model->fk_course = $_SESSION['asistencia']['pkCurso'];

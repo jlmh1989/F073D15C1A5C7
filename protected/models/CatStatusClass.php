@@ -103,12 +103,17 @@ class CatStatusClass extends CActiveRecord
 		));
 	}
         
-        public function getCatStatusClassListData($pkTipoCurso)
+        public function getCatStatusClassListData($pkTipoCurso, $esMaestro = false)
         {
             $criteria=new CDbCriteria;
             $criteria-> select='pk_status_class,desc_status_class';
             if($pkTipoCurso != NULL){
                 $criteria->addCondition('fk_type_class='.$pkTipoCurso);
+            }
+            if($esMaestro === true){
+                $criteria->addCondition('fk_role_class='.constantes::ROL_CLASE_MAESTRO);
+            }else{
+                $criteria->addCondition('fk_role_class='.constantes::ROL_CLASE_ESTUDIANTE);
             }
             return CHtml::listData(CatStatusClass::model()->findAll($criteria),'pk_status_class','desc_status_class');
         }

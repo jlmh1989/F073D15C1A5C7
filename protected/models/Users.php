@@ -107,9 +107,11 @@ class Users extends CActiveRecord
         }
         
         public function usernameDisponible($attribute,$params){
-            $user = Users::model()->find("username=?", array($this->username));
-            if(isset($user)){
-                $this->addError($attribute,'Nombre de Usuario no disponible.');
+            if($this->isNewRecord){
+                $user = Users::model()->find("username=?", array($this->username));
+                if(isset($user)){
+                    $this->addError($attribute,'Nombre de Usuario no disponible.');
+                }
             }
         }
 

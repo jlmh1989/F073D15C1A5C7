@@ -10,9 +10,9 @@ $this->menu=array(
 	array('label'=>'Dar de Alta Curso', 'url'=>array('create')),
 	array('label'=>'Cursos Activos', 'url'=>array('index')),
         array('label'=>'Cursos Inactivos', 'url'=>array('inactivos')),
+        array('label'=>'Ver Progreso', 'url'=>array('progreso')),
 );
 ?>
-
 <center><strong>Cursos Activos</strong></center>
 
 <?php
@@ -31,13 +31,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'header'=>'Tipo Curso',
                 'type'=>'raw',
                 'value'=>'$data->fkTypeCourse->desc_cat_detail_es'),
-            /*
-            array('name'=>'fk_group',
-                'header'=>'Grupo',
-                'type'=>'raw',
-                'value'=>'$data->fkGroup->desc_group'),
-             * 
-             */
             'fkGroup.desc_group',
             'initial_date',
             'desc_curse',
@@ -49,4 +42,3 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
         ),
 ));
-?>

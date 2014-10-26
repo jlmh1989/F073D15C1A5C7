@@ -13,8 +13,12 @@ class constantes{
     public static $opcion_estado_material = array(1=>'DISPONIBLE',0=>'PRESTADO');
     const CLASE_RECALENDARIZADO_IND = "5";
     const CLASE_CANCELADA_IND = "9";
+    const CLASE_CANCELADA_A_TIEMPO_IDN = "3";
+    const CLASE_CANCELADA_F_TIEMPO_IDN = "4";
     const CLASE_RECALENDARIZADO_GRP = "14";
     const CLASE_CANCELADA_GRP = "18";
+    const CLASE_CANCELADA_A_TIEMPO_GRP = "12";
+    const CLASE_CANCELADA_F_TIEMPO_GRP = "13";
     const LANG = "es";
     const ROL_ESTUDIANTE = "58";
     const ROL_MAESTRO = "59";
@@ -32,6 +36,8 @@ class constantes{
     const PATRON_PASS = '$1$Ehc23$09P';
     const CURSO_GRUPAL = "5";
     const CURSO_INDIVIDUAL = "4";
+    const ROL_CLASE_ESTUDIANTE = "7";
+    const ROL_CLASE_MAESTRO = "6";
 
     public static function getOpcionCombo() {
         return self::$opcion;

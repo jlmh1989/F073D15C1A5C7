@@ -30,10 +30,11 @@ Yii::app()->clientScript->registerScript('helpers', '
             getEstatusAsistencia: '.CJSON::encode(Yii::app()->createUrl('teachers/teachers/getEstatusAsistencia')).',
             getListaEstatus: '.CJSON::encode(Yii::app()->createUrl('teachers/teachers/getListaEstatus')).',
             getListaDetalleNivel: '.CJSON::encode(Yii::app()->createUrl('teachers/teachers/getListaDetalleNivel')).',
+            getHtmlEstudiantes: '.CJSON::encode(Yii::app()->createUrl('teachers/teachers/getHtmlEstudiantesCurso')).',
             base: '.CJSON::encode(Yii::app()->baseUrl).'                                                        
         }                                                                                                       
     };                                                                                                          
-    ',CClientScript::POS_HEAD);                                                                                                             
+    ',CClientScript::POS_HEAD);
 
 $this->breadcrumbs = array(
     'Cursos'=>array('cursos'),
@@ -71,12 +72,12 @@ $this->menu = array(
         $("#trCancelacionTxt").hide();
         
         $("#estatusClase").change(function() {
-            if((this.value == <?=constantes::CLASE_RECALENDARIZADO_GRP?>) || (this.value == <?=constantes::CLASE_RECALENDARIZADO_IND?>)){
+            if(validarRecalendarizarEstatus(this.value)){
                 $("#trRecalendarizar").show();
             }else{
                 $("#trRecalendarizar").hide();
             }
-            if((this.value == <?=constantes::CLASE_CANCELADA_GRP?>) || (this.value == <?=constantes::CLASE_CANCELADA_IND?>)){
+            if(validarCancelacionEstatus(this.value)){
                 $("#trCancelacionLbl").show();
                 $("#trCancelacionTxt").show();
             }else{
@@ -88,7 +89,7 @@ $this->menu = array(
     
     function validarFecha(){
         var fkStatusClase = parseInt($("#estatusClase").val());
-        if((fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_GRP ?>) || (fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_IND ?>)){
+        if(validarRecalendarizarEstatus(fkStatusClase)){
             var fechaVal = $("#fechaRecalendarizar").val();
             if(!isDate(fechaVal)){
                 $("#fechaRecalendarizar").focus();
@@ -106,7 +107,7 @@ $this->menu = array(
     
     function validarHora(){
         var fkStatusClase = parseInt($("#estatusClase").val());
-        if((fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_GRP ?>) || (fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_IND ?>)){
+        if(validarRecalendarizarEstatus(fkStatusClase)){
             var horaVal = $("#horaRecalendarizar").val();
             if(!isHour(horaVal)){
                 $("#horaRecalendarizar").focus();
@@ -181,28 +182,59 @@ $this->menu = array(
             $("#fechaRecalendarizar").val(fechaRecandelarizado);
             $("#horaRecalendarizar").val(horaRecalendarizado);
             $("#pkAsistencia").val(pkAsistencia);
-            if((fkStatusClase === <?= constantes::CLASE_CANCELADA_GRP ?>) || (fkStatusClase === <?= constantes::CLASE_CANCELADA_IND ?>)){
+            if(validarCancelacionEstatus(fkStatusClase)){
                 $("#trCancelacionLbl").show();
                 $("#trCancelacionTxt").show();
             }
 
-            if((fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_GRP ?>) || (fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_IND ?>)){
+            if(validarRecalendarizarEstatus(fkStatusClase)){
                 $("#trRecalendarizar").show();
             }
         }
     }
     
+    function validarTipoEstatus(value){
+        if(validarCancelacionEstatus(value)){
+            $("#listaEstudiantes").hide();
+        }else{
+            $("#listaEstudiantes").show();
+        }
+    }
+    
+    function validarCancelacionEstatus(value){
+        if((value == <?=  constantes::CLASE_CANCELADA_GRP ?>) || 
+           (value == <?=  constantes::CLASE_CANCELADA_IND ?>) ||
+           (value == <?=  constantes::CLASE_CANCELADA_A_TIEMPO_IDN ?>) || 
+           (value == <?=  constantes::CLASE_CANCELADA_F_TIEMPO_IDN ?>) ||
+           (value == <?=  constantes::CLASE_CANCELADA_A_TIEMPO_GRP ?>) || 
+           (value == <?=  constantes::CLASE_CANCELADA_A_TIEMPO_GRP ?>) ||
+           (value == <?=  constantes::CLASE_RECALENDARIZADO_GRP ?>) ||
+           (value == <?=  constantes::CLASE_RECALENDARIZADO_IND ?>)){
+            return true;
+        }
+        return false;
+    }
+    
+    function validarRecalendarizarEstatus(value){
+       if((value == <?= constantes::CLASE_RECALENDARIZADO_GRP ?>) || 
+          (value == <?= constantes::CLASE_RECALENDARIZADO_IND ?>)){
+            return true;
+        }
+        return false;
+    }
+    
     function guardarAssistencia(){
         var fkStatusClase = parseInt($("#estatusClase").val());
         if($("#estatusClase").val() === ""){
+            notificacion.show('error','Seleccionar estatus de la clase.');
             return false;
         }
-        if((fkStatusClase === <?= constantes::CLASE_CANCELADA_GRP ?>) || (fkStatusClase === <?= constantes::CLASE_CANCELADA_IND ?>)){
+        if(validarCancelacionEstatus(fkStatusClase)){
             if($("#razonCancelacion").val().trim().length <= 0){
                 notificacion.show('error','Capturar razón de cancelación.');
                 return false;
             }
-        }else if((fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_GRP ?>) || (fkStatusClase === <?= constantes::CLASE_RECALENDARIZADO_IND ?>)){
+        }else if(validarRecalendarizarEstatus(fkStatusClase)){
             if(!validarFecha()){
                 return false;
             }
@@ -216,7 +248,22 @@ $this->menu = array(
             esNuevo = 1;
         }
         var exito = false;
-        
+        var asisAlumno = [];
+        var validaAsisAlumno = true;
+        if(!validarCancelacionEstatus(fkStatusClase) && !(validarRecalendarizarEstatus(fkStatusClase))){
+            $("#listaEstudiantes tbody tr").each(function(index, element){
+                var elemento = $(this).find('select');
+                elemento = elemento[0];
+                var statusClase = elemento.options[elemento.selectedIndex].value;
+                var pkAlumno = elemento.id;
+                if(statusClase == ""){
+                    notificacion.show('error','Seleccione asistencia para alumno.');
+                    validaAsisAlumno = false;
+                    return false;
+                }
+                asisAlumno.push({pkEstudiante: pkAlumno, pkEstatus: statusClase});
+            });
+        }
         $.ajax({
             type: "POST",
             url: "<?= Yii::app()->createUrl('teachers/teachers/guardarAsistenciaClase'); ?>", 
@@ -224,6 +271,7 @@ $this->menu = array(
             async:false,    
             cache:false,
             data: { esNuevo: esNuevo, 
+                    nivelClase: 1,
                     pkAsistencia : $("#pkAsistencia").val(), 
                     fechaClase : $("#fechaClase").val(),
                     fkStatusClase : fkStatusClase,
@@ -233,14 +281,44 @@ $this->menu = array(
                     fkLevelDetalle : $("#detalleNivel").val()
                 },
             success: function(data) {
-                    notificacion.show('ok','Asistencia guardado correctamente.');
-                    exito = true;
-                },
+                if(!validarCancelacionEstatus(fkStatusClase) && !(validarRecalendarizarEstatus(fkStatusClase))){
+                    if(validaAsisAlumno){
+                        for(i = 0; i < asisAlumno.length; i++){
+                            $.ajax({
+                                type: "POST",
+                                url: "<?= Yii::app()->createUrl('teachers/teachers/guardarAsistenciaClase'); ?>", 
+                                dataType: "text",
+                                async:false,    
+                                cache:false,
+                                data: { esNuevo: 1, 
+                                        nivelClase: 0,
+                                        pkAsistencia : 0, 
+                                        fechaClase : $("#fechaClase").val(),
+                                        fkStatusClase : asisAlumno[i].pkEstatus,
+                                        fkEstudiante: asisAlumno[i].pkEstudiante,
+                                        fechaRecalendar : $("#fechaRecalendarizar").val(),
+                                        horaRecalendar : $("#horaRecalendarizar").val(),
+                                        razonCancelacion : $("#razonCancelacion").val(),
+                                        fkLevelDetalle : $("#detalleNivel").val()
+                                    },
+                                success: function(data) {
+                                    },
+                                error: function(data){
+                                    notificacion.show('error','Error al guardar asistencia de alumnos.');
+                                    return false;
+                                }
+                            });
+                        }
+                    }
+                }
+                notificacion.show('ok','Asistencia guardado correctamente.');
+                exito = true;
+            },
             error: function(data){
                 notificacion.show('error','Error al guardar asistencia.');
             }
-        })
-         
+        });
+        
         return exito;
     }
 </script>
@@ -279,63 +357,40 @@ $this->menu = array(
     <div id="asistencia">
         <input type="hidden" id="pkAsistencia">
         <input type="hidden" id="fechaClase">
-        <table>
-            <tr class="ui-widget-header ">
-              <th colspan="4" style="text-align:center">Asistencia Clase</th>
+        <table class="zebra">
+            <tr>
+                <th colspan="4" style="text-align:center"  class="zebra_th"><b>Asistencia por Clase</b></th>
             </tr>
-          <tr>
-            <td>Estatus</td>
-            <td style="padding-left: 5px"><select tabindex="0" name="estatusClase" id="estatusClase"></select>
-                <?php 
-                /*
-                echo CHtml::dropDownList('estatusClase', '', CatStatusClass::model()->getCatStatusClassListData(isset($_SESSION['asistencia']['pkTipoCurso']) ? $_SESSION['asistencia']['pkTipoCurso'] : NULL), 
-                        array(
-                            "tabindex" => "0",
-                            "empty" => constantes::OPCION_COMBO)
-                        ); 
-                */
-                ?></td>
-            <td style="padding-left: 25px">Detalle Nivel</td>
-            <td style="padding-left: 5px"><select tabindex="0" name="detalleNivel" id="detalleNivel"></select>
-                <?php 
-                /*
-                echo CHtml::dropDownList('detalleNivel', '', CatLevelDetail::model()->getCatLevelDetailsListData(isset($_SESSION['asistencia']['pkNivel']) ? $_SESSION['asistencia']['pkNivel'] : NULL), 
-                        array(
-                            "tabindex" => "0",
-                            "empty" => constantes::OPCION_COMBO)
-                        ); 
-                */
-                ?>
-            </td>
-          </tr>
-          <tr id="trRecalendarizar">
+            <tr class="odd_">
+                <td style="font-size: smaller"><b>Estatus</b></td>
+                <td style="padding-left: 5px;"><select tabindex="0" name="estatusClase" id="estatusClase" onchange="validarTipoEstatus(this.value)"></select></td>
+                <td style="padding-left: 25px;font-size: smaller"><b>Detalle Nivel</b></td>
+                <td style="padding-left: 5px"><select tabindex="0" name="detalleNivel" id="detalleNivel"></select></td>
+            </tr>
+            <tr id="trRecalendarizar" class="even_">
              <td>Fecha</td>
              <td style="padding-left: 5px"><input type="text" id="fechaRecalendarizar" maxlength="10" placeholder="yyyy-mm-dd"/></td>
-            <td style="padding-left: 25px">Hora</td>
+             <td style="padding-left: 25px;font-size: smaller"><b>Hora</b></td>
             <td style="padding-left: 5px"><input type="text" id="horaRecalendarizar" maxlength="5" placeholder="hh:mm"/></td>
           </tr>
-          <tr id="trCancelacionLbl">
-              <td colspan="4">Raz&oacute;n cancelaci&oacute;n</td>
+          <tr id="trCancelacionLbl" class="even_">
+              <td colspan="4" style="font-size: smaller"><b>Raz&oacute;n cancelaci&oacute;n</b></td>
           </tr>
-          <tr id="trCancelacionTxt">
+          <tr id="trCancelacionTxt" class="even_">
               <td colspan="4"><?php echo CHtml::textArea('razonCancelacion','',array('rows'=>2,'maxlength'=>100, 'style' => 'resize: none; width : 100%')); ?></td>
           </tr>
         </table>
         <br>
-        <!--
-        <table id="tablaAlumnos">
-            <tr class="ui-widget-header ">
-              <th colspan="4" style="text-align:center">Asistencia Alumnos</th>
-            </tr>
-            <tbody>
+        <div id="listaEstudiantes">
+            <table id="tablaAlumnos" class="zebra">
+                <thead>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <th colspan="4" style="text-align:center" class="zebra_th"><b>Asistencia por Alumno</b></th>
                 </tr>
-            </tbody>
-        </table>
-        -->
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

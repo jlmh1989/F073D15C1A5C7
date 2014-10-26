@@ -82,7 +82,7 @@ $(document).ready(function() {
 
                         bodyField.val(calEvent.body);
                         
-                        /* Establecer valores para captura de asistencia */
+                        /* Establecer valores en la SESSION para captura de asistencia */
                         $.ajax({
                             type: "POST",
                             async:false,    
@@ -103,9 +103,7 @@ $(document).ready(function() {
                             }
                         });
                         
-                        /* Validar asistencia al inicio */
-                        
-                        
+                        /*Cargar catalogos*/
                         $.ajax({
                             type: "POST",
                             async:false,
@@ -142,6 +140,22 @@ $(document).ready(function() {
                             }
                         });
                         
+                        /* Cargar alumnos */
+                        $.ajax({
+                            type: "POST",
+                            async:false,
+                            cache:false,
+                            url: yii.urls.getHtmlEstudiantes,
+                            dataType: "text",
+                            success: function(data) {
+                                $("#tablaAlumnos tbody").html(data);
+                            },
+                            error : function(data){
+                                notificacion.show('error','Error al cargar lista de estudiantes.');
+                            }
+                        });
+                        
+                        /* Validar estatus asistencia al inicio */
                         $.ajax({
                             type: "POST",
                             async:false,

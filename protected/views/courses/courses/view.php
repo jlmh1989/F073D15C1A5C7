@@ -10,6 +10,7 @@ $this->menu=array(
 	array('label'=>'Dar de Alta Curso', 'url'=>array('create')),
 	array('label'=>'Cursos Activos', 'url'=>array('index')),
         array('label'=>'Cursos Inactivos', 'url'=>array('inactivos')),
+        array('label'=>'Ver Progreso', 'url'=>array('progreso')),
 );
 /*
 $this->menu=array(
