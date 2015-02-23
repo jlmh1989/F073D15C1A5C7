@@ -19,7 +19,10 @@ $this->menu=array(
 	'filter'=>$model,
         'columns'=> array(
             'desc_level',
-            'fk_associated_book',
+            array('name'=>'fk_associated_book',
+                'header'=>'Libro Asociado',
+                'type'=>'raw',
+                'value'=>'$data->fkCatMaterial->desc_material'),
             'total_hours',
             array('name'=>'status',
                 'header'=>'Estatus',

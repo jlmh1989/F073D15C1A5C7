@@ -11,6 +11,7 @@
  * @property integer $status
  *
  * The followings are the available model relations:
+ * @property CatMaterial $fkCatMaterial
  * @property CatLevelDetail[] $catLevelDetails
  * @property Courses[] $courses
  * @property CatMaterial[] $tblE24CatMaterials
@@ -50,6 +51,7 @@ class CatLevels extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                        'fkCatMaterial'=> array(self::BELONGS_TO, 'CatMaterial', 'fk_associated_book'),
 			'catLevelDetails' => array(self::HAS_MANY, 'CatLevelDetail', 'fk_level'),
 			'courses' => array(self::HAS_MANY, 'Courses', 'fk_level'),
 			'tblE24CatMaterials' => array(self::MANY_MANY, 'CatMaterial', 'tbl_e24_material_level(fk_level, fk_material)'),

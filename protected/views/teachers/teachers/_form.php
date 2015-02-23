@@ -126,17 +126,13 @@ if($model->pk_teacher == null){
             <th id="user_th" colspan="4" class="zebra_th" style="text-align: center">DATOS DE USUARIO</th>
         </tr>
         <tr>
-            <div class="row">
                 <td class="user"><?php echo $form->labelEx($modelUser,'username'); ?></td>
 		<td class="user"><?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>100, 'readonly'=>$readOnly)); ?>
 		<?php echo $form->error($modelUser,'username'); ?></td>
-	</div>
 
-	<div class="row">
             <td class="user"><?php echo $form->labelEx($modelUser,'password'); ?></td>
 		<td class="user"><?php echo $form->passwordField($modelUser,'password',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($modelUser,'password'); ?></td>
-	</div>
         </tr>
         <?php 
         }
@@ -145,8 +141,6 @@ if($model->pk_teacher == null){
              <th id="maestro_th" colspan="4" style="text-align: center">DATOS DEL MAESTRO</th>
         </tr>
     <tr>
-    <div class="row">
-        
         <td class="maestro_td"><?php echo $form->labelEx($model, 'name'); ?></td>
         <td class="maestro_td" width="270px"><?php echo $form->textField($model, 'name', array('size' => 60, 'maxlength' => 100)); ?>
         <?php echo $form->error($model, 'name'); ?></td>
@@ -161,9 +155,7 @@ if($model->pk_teacher == null){
                                 'htmlOptions' => array('size' => 10, 'placeholder' => 'AAAA-MM-DD')
                                 )
                             ); ?>
-        <?php echo $form->error($model, 'birthdate'); ?></td>
-        
-    </div>
+        <?php echo $form->error($model, 'birthdate'); ?></td>   
     </tr>
     
     <tr>
@@ -193,33 +185,26 @@ if($model->pk_teacher == null){
     </tr>
     
     <tr>
-    <div class="row">
         <td class="maestro_td"><?php echo $form->labelEx($model, 'fk_education'); ?></td>
         <td class="maestro_td"><?php echo $form->dropDownList($model,'fk_education',  CatDetail::model()->getCatDetailsOptions(constantesCatalogos::ESCOLARIDAD,constantes::LANG), constantes::getOpcionCombo()); ?>
         <?php echo $form->error($model, 'fk_education'); ?></td>
-    </div>
-    <div class="row">
+    
         <td class="maestro_td"><?php echo $form->labelEx($model, 'fk_status_document'); ?> </td>
         <td class="maestro_td"><?php echo $form->dropDownList($model,'fk_status_document',  CatDetail::model()->getCatDetailsOptions(constantesCatalogos::ESTATUS_PAPELERIA,constantes::LANG), constantes::getOpcionCombo()); ?>
-        <?php echo $form->error($model, 'fk_status_document'); ?></td>
-    </div>
+        <?php echo $form->error($model, 'fk_status_document'); ?></td>    
     </tr>
     
-    <tr>
-    <div class="row">
+    <tr>    
         <td class="maestro_td"><?php echo $form->labelEx($model, 'phone'); ?></td>
         <td class="maestro_td"><?php echo $form->textField($model, 'phone', array('size' => 15, 'maxlength' => 15)); ?>
         <?php echo $form->error($model, 'phone'); ?></td>
         
         <td class="maestro_td"><?php echo $form->labelEx($model, 'cellphone'); ?></td>
         <td class="maestro_td"><?php echo $form->textField($model, 'cellphone', array('size' => 15, 'maxlength' => 15)); ?>
-        <?php echo $form->error($model, 'cellphone'); ?></td>
-    </div>
+        <?php echo $form->error($model, 'cellphone'); ?></td>    
     </tr>
     
     <tr>
-    <div class="row">
-        
         <td class="maestro_td"><?php echo $form->labelEx($model, 'entrance_score'); ?></td>
         <td class="maestro_td"><?php echo $form->textField($model, 'entrance_score'); ?>
         <?php echo $form->error($model, 'entrance_score'); ?></td>
@@ -227,11 +212,9 @@ if($model->pk_teacher == null){
         <td class="maestro_td"><?php echo $form->labelEx($model, 'rate'); ?></td>
         <td class="maestro_td"><?php echo $form->textField($model, 'rate'); ?>
         <?php echo $form->error($model, 'rate'); ?></td>
-    </div>
     </tr>
     
     <tr>
-    <div class="row">
         <td class="maestro_td"><?php echo $form->labelEx($model, 'spesification'); ?></td>
         <td class="maestro_td"><?php echo $form->textArea($model, 'spesification', array('size' => 60, 'maxlength' => 100)); ?>
         <?php echo $form->error($model, 'spesification'); ?></td>
@@ -239,7 +222,6 @@ if($model->pk_teacher == null){
         <td class="maestro_td"><?php echo $form->labelEx($model, 'comments'); ?></td>
         <td class="maestro_td"><?php echo $form->textArea($model, 'comments', array('size' => 60, 'maxlength' => 300)); ?>
         <?php echo $form->error($model, 'comments'); ?>  </td>
-    </div>
     </tr>
     
     <tr>
@@ -247,8 +229,6 @@ if($model->pk_teacher == null){
     </tr>
     
     <tr>
-    <div class="row">
-        
         <td class="domicilio_td"><?php echo $form->labelEx($model, 'street'); ?></td>
         <td class="domicilio_td"><?php echo $form->textField($model, 'street', array('size' => 60, 'maxlength' => 100)); ?>
         <?php echo $form->error($model, 'street'); ?></td>
@@ -258,12 +238,9 @@ if($model->pk_teacher == null){
             <td class="domicilio_td"><?php echo $form->textField($model, 'street_numer'); ?>
             <?php echo $form->error($model, 'street_numer'); ?></td>
         
-    </div>
     </tr>
     
     <tr>
-    <div class="row">
-        
         <td class="domicilio_td"><?php echo $form->labelEx($model, 'street_number_int'); ?></td>
         <td class="domicilio_td"><?php echo $form->textField($model, 'street_number_int', array('size' => 5, 'maxlength' => 5)); ?>
         <?php echo $form->error($model, 'street_number_int'); ?></td>
@@ -273,13 +250,9 @@ if($model->pk_teacher == null){
         <td class="domicilio_td"><?php echo $form->labelEx($model, 'neighborhood'); ?></td>
         <td class="domicilio_td"><?php echo $form->textField($model, 'neighborhood', array('size' => 60, 'maxlength' => 100)); ?>
         <?php echo $form->error($model, 'neighborhood'); ?></td>
-        
-    </div>
     </tr>
     
     <tr>
-    <div class="row">
-        
         <td class="domicilio_td"><?php echo $form->labelEx($model, 'fk_state_dir'); ?></td>
         <td class="domicilio_td"><?php echo $form->dropDownList($model,'fk_state_dir',  CatDetail::model()->getCatDetailsOptions(constantesCatalogos::ESTADO,  constantes::LANG), constantes::getOpcionCombo()); ?>
         <?php echo $form->error($model, 'fk_state_dir'); ?></td>
@@ -287,41 +260,33 @@ if($model->pk_teacher == null){
           <td class="domicilio_td"><?php echo $form->labelEx($model, 'county'); ?></td>
         <td class="domicilio_td"><?php echo $form->textField($model, 'county', array('size' => 60, 'maxlength' => 100)); ?>
         <?php echo $form->error($model, 'county'); ?></td>
-    </div>
     </tr>
     
     <tr>
-    <div class="row">
-        
         <td class="domicilio_td"><?php echo $form->labelEx($model, 'zipcode'); ?></td>
         <td class="domicilio_td"><?php echo $form->textField($model, 'zipcode', array('size' => 5, 'maxlength' => 5)); ?>
         <?php echo $form->error($model, 'zipcode'); ?></td>
-        
-    </div>
     </tr>
     
-    <tr>
+    </table>
+    <table class="zebra">
+        <tr>
         <th id="papeleria_th" colspan="4" style="text-align: center">PAPELER&Iacute;A QUE ENTREG&Oacute;</th>
-    </tr>
-    <div class="row">
+        </tr>
+        <tr>
+            <td class="papeleria_td">
+                <div class="checkboxgroup">
         <?php echo CHtml::activeCheckBoxList($modelCD, 'desc_document', CatDocuments::model()->getCatDocumentsActivo(), 
-        array("separator" => "",'template'=>'<tr><td class="papeleria_td" align="right">{input}</td><td class="papeleria_td">{label}</td></tr>')); ?>
-        
+        array('separator' => '','labelOptions'=>array('style'=>'display:inline'),'template'=>'<div>{input}{label}</div>', 'container'=>'')); ?>                
     </div>
-    <tr>
-        
+            </td>
+        </tr>
+    </table>
+    <table class="zebra">
     <tr>
         <th id="horario_th" colspan="4" style="text-align: center">HORARIO NO DISPONIBLE</th>
     </tr>
-    
-    <div class="row">
-        <td class="horario_td"></td>
-        <td class="horario_td"></td>
-        <td class="horario_td"></td>
-        <td class="horario_td"></td>
-    </div>
-    </tr>
-    <tr>
+    </table>
         <!-- Horario -->
         <table class="horario_td">
             <tr>
@@ -346,18 +311,14 @@ if($model->pk_teacher == null){
              }
             ?>
         </table>
-    </tr>
-    <tr>
+    
     <div class="row buttons">
         <td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?></td>
         <td></td>
         <td></td>
         <td></td>
     </div>
-    </tr>
-
 <?php $this->endWidget(); ?>
-</table>
 </div><!-- form -->
 <?php
 if($model->pk_teacher != null && $_SESSION['inactivoUSTam'] > 0){
