@@ -51,7 +51,6 @@
                             	array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Empleados','url'=>array('/employees/employee')),
                                 array('label'=>'Clientes','url'=>array('/clients/clients')),
-                                //array('label'=>'Cursos','url'=>array('/courses/courses')),
                                 array(
                                 'label'=>'Cursos',
                                 'url'=>array('/courses/courses'),
@@ -59,10 +58,14 @@
                                     array('label'=>'Grupos', 'url'=>array('/students/groups')),
                                     ),
                                 ),
-                                //array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
-                                array( 'label'=>'Maestros', 'url'=>array('/teachers/teachers')),
-                                //array('label'=>'Material', 'url'=>array('#')),
+                                array(
+                                'label'=>'Maestros',
+                                'url'=>array('/teachers/teachers'),
+                                'items'=>array(
+                                    array('label'=>'Materiales Prestados', 'url'=>array('/teachers/loanMaterial')),
+                                    ),
+                                ),
                                 array(
                                 'label'=>'Catálogos',
                                 'url'=>array('#'),
@@ -95,7 +98,6 @@
                                 array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
                                 array('label'=>'Maestros', 'url'=>array('/teachers/teachers')),
-                                //array('label'=>'Material', 'url'=>array('#')),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'))
                             ),
                         ));                     
@@ -118,7 +120,7 @@
                                 array('label'=>'Home', 'url'=>array('/site/index')),
                                 array('label'=>'Cursos','url'=>array('teachers/teachers/cursos')),
                                 array('label'=>'Alumnos','url'=>array('/teachers/teachers/alumnos')),
-                                array('label'=>'Materiales', 'url'=>array('#')),
+                                array('label'=>'Materiales', 'url'=>array('/teachers/loanMaterial')),
                                 array('label'=>'Perfil', 'url'=>array('/teachers/teachers/perfil')),
                                 array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout')),
                                 ),

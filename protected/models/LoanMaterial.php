@@ -14,6 +14,7 @@
  *
  * The followings are the available model relations:
  * @property Courses $fkCourse
+ * @property CatMaterialDetail $fkCatMaterialDetail
  * @property Teachers $fkTeacher
  */
 class LoanMaterial extends CActiveRecord
@@ -41,7 +42,7 @@ class LoanMaterial extends CActiveRecord
 			array('drop_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('pk_loan_material, fk_course, fk_teacher, fk_material_detail, pick_date, drop_date, comment', 'safe', 'on'=>'search'),
+			array('fk_course, fk_material_detail, pick_date, drop_date, comment', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +56,7 @@ class LoanMaterial extends CActiveRecord
 		return array(
 			'fkCourse' => array(self::BELONGS_TO, 'Courses', 'fk_course'),
 			'fkTeacher' => array(self::BELONGS_TO, 'Teachers', 'fk_teacher'),
+                        'fkCatMaterialDetail' => array(self::BELONGS_TO, 'CatMaterialDetail', 'fk_material_detail'),
 		);
 	}
 
@@ -104,8 +106,25 @@ class LoanMaterial extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function searchByTeacher()
+	{
+            $criteria=new CDbCriteria;
+            $criteria->compare('fk_teacher',$this->fk_teacher);               
+            return new CActiveDataProvider($this, array(
+                    'criteria'=>$criteria,
+            ));
+	}
+        
+        public static function getLoadMaterial($pkTeacher){
+            $criteria = new CDbCriteria;
+            $criteria->select = 't.*';
+            $criteria->addCondition('t.fk_teacher = :pkTeacher');
+            $criteria->params = array(":pkTeacher" => $pkTeacher);  
+            return LoanMaterial::model()->findAll($criteria);
+        }
 
-	/**
+        /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.

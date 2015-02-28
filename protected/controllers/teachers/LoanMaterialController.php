@@ -28,16 +28,9 @@ class LoanMaterialController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'actions'=>array('index','view', 'create','update','admin','delete'),
+				'expression'=>  'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO'
+                                                .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -118,14 +111,57 @@ class LoanMaterialController extends Controller
 	}
 
 	/**
-	 * Lists all models.
+	 * Listar materiales prestados.
 	 */
 	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('LoanMaterial');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+	{            
+            $model=new LoanMaterial('searchByTeacher');  
+            
+            if(Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO){
+                $pk_usuario = Yii::app()->user->getState("pk_user");
+                $modelT = Teachers::model()->find('fk_user='.$pk_usuario);
+                $model->fk_teacher = $modelT->pk_teacher;
+            }
+            
+            $data = $model->searchByTeacher()->getData();
+            $fkMaterialArray = array();
+            foreach ($data as $key => $value) {
+                $infoCurso = Courses::getFechaFInPorcentaje($value->fk_course);
+                //Se suma 15 dias apartir de la fecha de terminacion del curso
+                $data[$key]->drop_date = date('Y-m-d', strtotime($infoCurso['tmp_final_date']. ' + 15 days'));
+                $fkMaterialArray[] = $value->fk_material_detail;
+            }            
+            
+            $arrayRepetitivo = array_count_values($fkMaterialArray);            
+            foreach ($arrayRepetitivo as $key => $cont) {
+                if($cont > 1){
+                    //Buscar fecha mayor para un material de cursos diferentes
+                    $esPrimerRegistro = TRUE;
+                    foreach ($data as $pk => $value) {
+                        if($value->fk_material_detail == $key){
+                            if($esPrimerRegistro){
+                                $fechaMayor = $value->drop_date;
+                                $esPrimerRegistro = FALSE;
+                            }else{
+                                $datetime1 = new DateTime($fechaMayor);
+                                $datetime2 = new DateTime($value->drop_date);
+                                if($datetime2 > $datetime1){
+                                    $fechaMayor = $value->drop_date;
+                                }
+                            }
+                            $data[$pk]->drop_date = $fechaMayor;
+                        }
+                    }
+                }
+            }
+            
+            $dataProvider = new CActiveDataProvider('LoanMaterial', array(
+                'data'=>$data,
+            ));
+            
+            $this->render('index',array(
+                    'data'=>$dataProvider
+            ));
 	}
 
 	/**
