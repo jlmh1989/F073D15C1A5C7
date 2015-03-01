@@ -2,7 +2,8 @@
 /* @var $this LoanMaterialController */
 /* @var $dataProvider CActiveDataProvider */
 $titulo = 'Materiales asignados.';
-if(Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA){
+if((Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA) ||
+        (Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR)){
     $this->breadcrumbs=array(
             'Materiales prestados',
     );
@@ -17,7 +18,8 @@ if(Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA){
 <h1><?= $titulo ?></h1>
 
 <?php 
-if(Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA){
+if((Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA) ||
+        (Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR)){
     $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$data,
         'columns'=> array(

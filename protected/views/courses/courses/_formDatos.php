@@ -68,7 +68,8 @@
                                         'mode'=>'focus',
                                         'dateFormat'=> constantes::FORMATO_FECHA,
                                         'showAnim' => 'slideDown',
-                                        'minDate'=>0,
+                                        //Se quita restriccion de fecha anterior al dia actual, para dar alta curso
+                                        //'minDate'=>0,
                                   ),
                                   'htmlOptions'=>array('size'=>20,'class'=>'date', //'value'=>date("d F, Y")
                                   ),

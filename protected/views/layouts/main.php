@@ -97,7 +97,13 @@
                                 array('label'=>'Cursos','url'=>array('/courses/courses')),
                                 array('label'=>'Grupos','url'=>array('/students/groups')),
                                 array('label'=>'Alumnos','url'=>array('/students/students')),
-                                array('label'=>'Maestros', 'url'=>array('/teachers/teachers')),
+                                array(
+                                'label'=>'Maestros',
+                                'url'=>array('/teachers/teachers'),
+                                'items'=>array(
+                                    array('label'=>'Materiales Prestados', 'url'=>array('/teachers/loanMaterial')),
+                                    ),
+                                ),                                  
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'))
                             ),
                         ));                     

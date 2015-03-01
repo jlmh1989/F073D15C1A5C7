@@ -30,7 +30,8 @@ class LoanMaterialController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view', 'create','update','admin','delete'),
 				'expression'=>  'Yii::app()->user->getState("rol") === constantes::ROL_MAESTRO'
-                                                .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
+                                                .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA'
+                                                .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR',
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
