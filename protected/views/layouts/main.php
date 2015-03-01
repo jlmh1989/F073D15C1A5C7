@@ -92,7 +92,7 @@
                             'activateParents' => true,
                             'items'=>array(
                             	array('label'=>'Home', 'url'=>array('/site/index')),
-                                array('label'=>'Empleados','url'=>array('/clients/clients')),
+                                array('label'=>'Empleados','url'=>array('/employees/employee')),
                                 array('label'=>'Clientes','url'=>array('/clients/clients')),
                                 array('label'=>'Cursos','url'=>array('/courses/courses')),
                                 array('label'=>'Grupos','url'=>array('/students/groups')),
