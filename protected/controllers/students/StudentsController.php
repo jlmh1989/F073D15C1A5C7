@@ -28,7 +28,7 @@ class StudentsController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform
-				'actions'=>array('index','view','create','update','admin','delete','crearPdf'),
+				'actions'=>array('index','inactivos','view','create','update','admin','delete','crearPdf'),
                                 'expression'=>'Yii::app()->user->getState("rol") === constantes::ROL_ADMINISTRADOR'
                                              .'|| Yii::app()->user->getState("rol") === constantes::ROL_ADMIN_SISTEMA',
 			),
@@ -254,19 +254,77 @@ class StudentsController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-	/**
-	 * Lists all models.
-	 */
 	public function actionIndex()
 	{
-		$model=new Students('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Students']))
-			$model->attributes=$_GET['Students'];
+            /*
+            $model=new Students('search');
+            $model->unsetAttributes();  // clear any default values
+            if(isset($_GET['Students']))
+                    $model->attributes=$_GET['Students'];
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+            $this->render('admin',array(
+                    'model'=>$model,
+            ));
+            */
+            $modelGrp = new Students('searchByActiveGroup');
+            $modelGrp->unsetAttributes();
+            $modelInd = new Students('searchByActiveIndiv');
+            $modelInd->unsetAttributes();
+            if(isset($_GET['Students'])){
+                $modelGrp->attributes=$_GET['Students'];
+                $modelInd->attributes=$_GET['Students'];
+            }
+            $dataGrp = $modelGrp->searchByActiveGroup()->getData();
+            $dataInd = $modelInd->searchByActiveIndiv()->getData();
+            $data = array_merge($dataGrp, $dataInd);            
+            $dataProvider = new CActiveDataProvider('Students', array(
+                'data'=>$data,
+                'totalItemCount' => count($data)
+            ));
+            $this->render('admin',array(
+                    'data'=>$dataProvider,
+                    'model'=>$modelGrp
+            ));
+	}
+        
+        public function actionInactivos()
+	{
+            $modelGrpA = new Students('searchByActiveGroup');
+            $modelGrpA->unsetAttributes();
+            $modelIndA = new Students('searchByActiveIndiv');
+            $modelIndA->unsetAttributes();
+            $model = new Students('search');
+            $model->unsetAttributes();
+            if(isset($_GET['Students'])){
+                $modelGrpA->attributes=$_GET['Students'];
+                $modelIndA->attributes=$_GET['Students'];
+                $model->attributes=$_GET['Students'];
+            }
+            $dataGrpA = $modelGrpA->searchByActiveGroup()->getData();
+            $dataIndA = $modelIndA->searchByActiveIndiv()->getData();
+            
+            $dataI = $model->search()->getData();            
+            $dataA = array_merge($dataGrpA, $dataIndA);
+            
+            foreach ($dataI as $key => $value) {
+                foreach ($dataA as $valueA) {
+                    if($value->pk_student == $valueA->pk_student){
+                        unset($dataI[$key]);
+                        break;
+                    }
+                }
+            }
+            
+            $data = array_values($dataI);
+            
+            $dataProvider = new CActiveDataProvider('Students', array(
+                'data'=>$data,
+                'totalItemCount' => count($data)
+            ));
+            $this->render('inactivos',array(
+                    'data'=>$dataProvider,
+                    'model'=>$model
+            ));
 	}
 
 	/**

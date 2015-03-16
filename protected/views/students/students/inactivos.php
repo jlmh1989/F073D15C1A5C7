@@ -13,12 +13,11 @@ $this->menu=array(
 );
 ?>
 
-<center><strong>Estudiantes Activos</strong></center>
+<center><strong>Estudiantes Inactivos</strong></center>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'students-grid',
         'dataProvider'=>$data,
-	//'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
 		'name',

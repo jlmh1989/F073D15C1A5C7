@@ -111,7 +111,8 @@ class Students extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                $criteria->distinct=true;
+                $criteria->select = 't.*';
 		$criteria->compare('pk_student',$this->pk_student,true);
 		$criteria->compare('fk_client',$this->fk_client,true);
 		$criteria->compare('name',$this->name,true);
@@ -139,9 +140,95 @@ class Students extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
                         'sort'=>$sort,
+                        'pagination'=>false,
 		));
 	}
         
+        public function searchByActiveGroup(){
+            $criteria = new CDbCriteria;
+            $criteria->distinct=true;
+            $criteria->select = 't.*';
+            $criteria->join ='INNER JOIN tbl_e24_students_group ON t.PK_STUDENT = tbl_e24_students_group.FK_STUDENT '
+                            .'INNER JOIN tbl_e24_courses ON tbl_e24_students_group.FK_GROUP = tbl_e24_courses.FK_GROUP';
+            $criteria->addCondition('tbl_e24_students_group.FK_CLIENT = tbl_e24_courses.FK_CLIENT');
+            $criteria->addCondition('tbl_e24_students_group.STATUS = '.constantes::ACTIVO);
+            $criteria->addCondition('tbl_e24_courses.STATUS = '.constantes::ACTIVO);
+            $criteria->compare('pk_student',$this->pk_student,true);
+            $criteria->compare('fk_client',$this->fk_client,true);
+            $criteria->compare('name',$this->name,true);
+            $sort = new CSort();
+            $sort->attributes = array(
+                'name'=>array(
+                    'asc'=>'name',
+                    'desc'=>'name desc',
+                ),
+            );
+            return new CActiveDataProvider($this,array('criteria'=>$criteria, 'sort'=>$sort, 'pagination'=>false));
+        }
+        
+        public function searchByInactiveGroup(){
+            $criteria = new CDbCriteria;
+            $criteria->distinct=true;
+            $criteria->select = 't.*';
+            $criteria->join ='INNER JOIN tbl_e24_students_group ON t.PK_STUDENT = tbl_e24_students_group.FK_STUDENT '
+                            .'INNER JOIN tbl_e24_courses ON tbl_e24_students_group.FK_GROUP = tbl_e24_courses.FK_GROUP';
+            $criteria->addCondition('tbl_e24_students_group.FK_CLIENT = tbl_e24_courses.FK_CLIENT');
+            $criteria->addCondition('tbl_e24_students_group.STATUS = '.constantes::INACTIVO);
+            $criteria->addCondition('tbl_e24_courses.STATUS = '.constantes::INACTIVO, 'OR');
+            $criteria->compare('pk_student',$this->pk_student,true);
+            $criteria->compare('fk_client',$this->fk_client,true);
+            $criteria->compare('name',$this->name,true);
+            $sort = new CSort();
+            $sort->attributes = array(
+                'name'=>array(
+                    'asc'=>'name',
+                    'desc'=>'name desc',
+                ),
+            );
+            return new CActiveDataProvider($this,array('criteria'=>$criteria, 'sort'=>$sort, 'pagination'=>false,));
+        }
+        
+        public function searchByActiveIndiv(){
+            $criteria = new CDbCriteria;
+            $criteria->distinct=true;
+            $criteria->select = 't.*';
+            $criteria->join = 'INNER JOIN tbl_e24_courses ON t.FK_CLIENT = tbl_e24_courses.FK_CLIENT';
+            $criteria->addCondition('t.FK_USER = (SELECT tbl_e24_clients.FK_USER FROM tbl_e24_clients WHERE tbl_e24_clients.PK_CLIENT = tbl_e24_courses.FK_CLIENT)');
+            $criteria->addCondition('tbl_e24_courses.STATUS = '.constantes::ACTIVO);
+            $criteria->compare('pk_student',$this->pk_student,true);
+            $criteria->compare('fk_client',$this->fk_client,true);
+            $criteria->compare('name',$this->name,true);
+            $sort = new CSort();
+            $sort->attributes = array(
+                'name'=>array(
+                    'asc'=>'name',
+                    'desc'=>'name desc',
+                ),
+            );
+            return new CActiveDataProvider($this,array('criteria'=>$criteria, 'sort'=>$sort,'pagination'=>false,));
+        }
+        
+        public function searchByInactiveIndiv(){
+            $criteria = new CDbCriteria;
+            $criteria->distinct=true;
+            $criteria->select = 't.*';
+            $criteria->join = 'INNER JOIN tbl_e24_courses ON t.FK_CLIENT = tbl_e24_courses.FK_CLIENT';
+            $criteria->addCondition('t.FK_USER = (SELECT tbl_e24_clients.FK_USER FROM tbl_e24_clients WHERE tbl_e24_clients.PK_CLIENT = tbl_e24_courses.FK_CLIENT)');
+            $criteria->addCondition('tbl_e24_courses.STATUS = '.constantes::INACTIVO);
+            $criteria->compare('pk_student',$this->pk_student,true);
+            $criteria->compare('fk_client',$this->fk_client,true);
+            $criteria->compare('name',$this->name,true);
+            $sort = new CSort();
+            $sort->attributes = array(
+                'name'=>array(
+                    'asc'=>'name',
+                    'desc'=>'name desc',
+                ),
+            );
+            return new CActiveDataProvider($this,array('criteria'=>$criteria, 'sort'=>$sort,'pagination'=>false,));
+        }
+
+
         public function searchByTeacher()
 	{
             $pk_usuario = Yii::app()->user->getState("pk_user");
