@@ -2,6 +2,7 @@
 /* @var $this CatLevelDetailController */
 /* @var $model CatLevelDetail */
 /* @var $modelTbl CatLevelDetail */
+/* @var $modelML MaterialLevel */
 
 $this->breadcrumbs=array(
 	'Niveles'=>Yii::app()->createUrl("catalogs/catLevels/index"),
@@ -20,4 +21,4 @@ $this->menu=array(
 
 <h3><?= $_SESSION['CatLevels']['escenario'] == 0 ? 'Crear':'Actualizar' ?> Detalle para Nivel <?= $_SESSION['CatLevels']['desc_level'] ?></h3>
 
-<?php $this->renderPartial('_form', array('model'=>$model,'modelTbl'=>$modelTbl)); ?>
+<?php $this->renderPartial('_form', array('model'=>$model,'modelTbl'=>$modelTbl,'modelML'=>$modelML)); ?>

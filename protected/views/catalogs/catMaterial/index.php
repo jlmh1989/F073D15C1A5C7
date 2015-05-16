@@ -23,7 +23,6 @@ $this->menu=array(
             'desc_cat_detail_es',
             'total_stock',
             'actual_stock',
-            'desc_level',
             array(
                 'class'=>'CButtonColumn',
                 'template'=>'{update} {detalle}',             

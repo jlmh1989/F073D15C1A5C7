@@ -56,26 +56,26 @@ class CatMaterialController extends Controller
 	public function actionCreate()
 	{
             $model=new CatMaterial;
-            $modelML = new MaterialLevel;
+            //$modelML = new MaterialLevel;
 
             if(isset($_POST['CatMaterial']))
             {
                 $model->attributes=$_POST['CatMaterial'];
-                $modelML->attributes=$_POST['MaterialLevel'];
-                $modelML->fk_material = 0;
-                $validarML = $modelML->validate();
-                $validar = $model->validate() && $validarML;
+                //$modelML->attributes=$_POST['MaterialLevel'];
+                //$modelML->fk_material = 0;
+                //$validarML = $modelML->validate();
+                $validar = $model->validate();
                 if($validar){
                     if($model->save()){
-                        $modelML->fk_material = $model->pk_material;
-                        $modelML->save();
+                        //$modelML->fk_material = $model->pk_material;
+                        //$modelML->save();
                         $this->redirect(array('index'));
                     }
                 }                    
             }
 
             $this->render('create',array(
-                    'model'=>$model, 'modelML'=>$modelML,
+                    'model'=>$model,
             ));
 	}
 
@@ -143,22 +143,6 @@ class CatMaterialController extends Controller
             $this->render('index',array(
                     'model'=>$model,
             ));
-            /*
-            $model=new CatMaterial('search');
-            $model->unsetAttributes();  // clear any default values
-            if(isset($_GET['CatMaterial']))
-                    $model->attributes=$_GET['CatMaterial'];
-
-            $this->render('index',array(
-                    'model'=>$model,
-            ));
-
-            $dataProvider=new CActiveDataProvider('CatMaterial');
-            $this->render('index',array(
-                    'dataProvider'=>$dataProvider,
-            ));
-             * 
-             */
 	}
 
 	/**

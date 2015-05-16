@@ -62,6 +62,8 @@ class CatLevelDetailController extends Controller
                 $modelTbl->fk_level = $_SESSION['CatLevels']['pk_level'];
                 $model->setEstatusValidacion(FALSE);
                 $model->fk_level = $_SESSION['CatLevels']['pk_level'];
+                $modelML = new MaterialLevel('search');
+                $modelML->fk_level = $_SESSION['CatLevels']['pk_level'];
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -75,7 +77,7 @@ class CatLevelDetailController extends Controller
 		}
 
 		$this->render('create',array(
-			'model'=>$model,'modelTbl'=>$modelTbl,
+			'model'=>$model,'modelTbl'=>$modelTbl,'modelML'=>$modelML
 		));
 	}
 

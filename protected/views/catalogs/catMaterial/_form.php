@@ -2,7 +2,7 @@
 
 /* @var $this CatMaterialController */
 /* @var $model CatMaterial */
-/* @var $modelML CatMaterial */
+/* @var $modelML MaterialLevel */
 /* @var $dataProviderMD CatMaterialDetail */
 /* @var $form CActiveForm */
 ?>
@@ -23,9 +23,14 @@
             </th>
         </tr>
         <tr>
-            <td><?php echo $form->labelEx($modelML,'fk_level'); ?></td>
-            <td><?php echo $form->dropDownList($modelML,'fk_level', CatLevels::model()->getCatLevels(), constantes::getOpcionCombo()); ?>
-            <?php echo $form->error($modelML,'fk_level'); ?></td>
+            <!--
+            <td><?php //echo $form->labelEx($modelML,'fk_level'); ?></td>
+            <td><?php //echo $form->dropDownList($modelML,'fk_level', CatLevels::model()->getCatLevels(), constantes::getOpcionCombo()); ?>
+            <?php //echo $form->error($modelML,'fk_level'); ?></td>
+            -->
+            <td><?php echo $form->labelEx($model,'fk_type_material'); ?></td>
+            <td><?php echo $form->dropDownList($model,'fk_type_material', CatDetail::model()->getCatDetailsOptions(constantesCatalogos::TIPOS_MATERIAL, constantes::LANG), constantes::getOpcionCombo()); ?>
+            <?php echo $form->error($model,'fk_type_material'); ?></td>
             
             <td><?php echo $form->labelEx($model,'desc_material'); ?></td>
             <td width="250"><?php echo $form->textField($model,'desc_material',array('size'=>50,'maxlength'=>50)); ?>
@@ -33,13 +38,11 @@
 
         </tr>
         <tr>
-            <td><?php echo $form->labelEx($model,'fk_type_material'); ?></td>
-            <td><?php echo $form->dropDownList($model,'fk_type_material', CatDetail::model()->getCatDetailsOptions(constantesCatalogos::TIPOS_MATERIAL, constantes::LANG), constantes::getOpcionCombo()); ?>
-            <?php echo $form->error($model,'fk_type_material'); ?></td>
-            
-            <td><?php echo $form->labelEx($modelML,'status'); ?></td>
-            <td><?php echo $form->dropDownList($modelML,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
-            <?php echo $form->error($modelML,'status'); ?></td>
+            <!--
+            <td><?php //echo $form->labelEx($modelML,'status'); ?></td>
+            <td><?php //echo $form->dropDownList($modelML,'status', constantes::getOpcionStatus(), constantes::getOpcionCombo()); ?>
+            <?php //echo $form->error($modelML,'status'); ?></td>
+            -->
         </tr>
         <tr>
             <td><?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?></td>

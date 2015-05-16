@@ -10,7 +10,6 @@
  * @property string $desc_cat_detail_es
  * @property string $total_stock
  * @property string $actual_stock
- * @property string $desc_level
  */
 class MaterialsView extends CActiveRecord
 {
@@ -30,14 +29,14 @@ class MaterialsView extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('desc_material, fk_type_material, desc_cat_detail_es, desc_level', 'required'),
+			array('desc_material, fk_type_material, desc_cat_detail_es', 'required'),
 			array('pk_material, fk_type_material', 'numerical', 'integerOnly'=>true),
-			array('desc_material, desc_level', 'length', 'max'=>50),
+			array('desc_material', 'length', 'max'=>50),
 			array('desc_cat_detail_es', 'length', 'max'=>20),
 			array('total_stock, actual_stock', 'length', 'max'=>21),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('pk_material, desc_material, fk_type_material, desc_cat_detail_es, total_stock, actual_stock, desc_level', 'safe', 'on'=>'search'),
+			array('pk_material, desc_material, fk_type_material, desc_cat_detail_es, total_stock, actual_stock', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,7 +63,6 @@ class MaterialsView extends CActiveRecord
 			'desc_cat_detail_es' => 'Tipo',
 			'total_stock' => 'Existencia',
 			'actual_stock' => 'Disponible',
-			'desc_level' => 'Nivel',
 		);
 	}
 
@@ -92,7 +90,6 @@ class MaterialsView extends CActiveRecord
 		$criteria->compare('desc_cat_detail_es',$this->desc_cat_detail_es,true);
 		$criteria->compare('total_stock',$this->total_stock,true);
 		$criteria->compare('actual_stock',$this->actual_stock,true);
-		$criteria->compare('desc_level',$this->desc_level,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

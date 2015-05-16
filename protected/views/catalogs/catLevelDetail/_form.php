@@ -2,6 +2,7 @@
 /* @var $this CatLevelDetailController */
 /* @var $model CatLevelDetail */
 /* @var $modelTbl CatLevelDetail */
+/* @var $modelML MaterialLevel */
 /* @var $form CActiveForm */
 $baseUrl = Yii::app()->baseUrl; 
 $cs = Yii::app()->getClientScript();
@@ -118,5 +119,21 @@ Yii::app()->clientScript->registerScript('script',
                 'class'=>'CButtonColumn',
                 'template'=>'{update}',
 		),
+        ),
+));?>
+
+<br>
+<h3>Materiales asociados</h3>
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'dataProvider'=>$modelML->search(),
+	'columns'=> array(
+            array('name'=>'fk_material',
+                'header'=>'Libros',
+                'type'=>'raw',
+                'value'=>'$data->fkCatMaterial->desc_material'),            
+            array('name'=>'status',
+                'header'=>'Estatus',
+                'type'=>'raw',
+                'value'=>'constantes::$opcion_status[$data->status]'),
         ),
 ));?>

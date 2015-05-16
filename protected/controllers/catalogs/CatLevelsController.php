@@ -56,6 +56,7 @@ class CatLevelsController extends Controller
 	public function actionCreate()
 	{
             $model=new CatLevels;
+            $modelML = new MaterialLevel;
             $model->status = constantes::ACTIVO;
             // Uncomment the following line if AJAX validation is needed
             // $this->performAjaxValidation($model);
@@ -67,8 +68,15 @@ class CatLevelsController extends Controller
                     $_SESSION['CatLevels']['escenario'] = 0; // Nuevo
                     $_SESSION['CatLevels']['pk_level'] = $model->pk_level;
                     $_SESSION['CatLevels']['desc_level'] = $model->desc_level;
-                    $this->redirect(array('catalogs/catLevelDetail/create'));
-                    //$this->redirect(array('view','id'=>$model->pk_level));
+                    
+                    $modelML->status = constantes::ACTIVO;
+                    $modelML->fk_level = $model->pk_level;
+                    $modelML->fk_material = $model->fk_associated_book;
+                    
+                    if($modelML->save()){
+                        $this->redirect(array('catalogs/catLevelDetail/create'));
+                        //$this->redirect(array('view','id'=>$model->pk_level));
+                    }                    
                 }
             }
 
@@ -135,14 +143,7 @@ class CatLevelsController extends Controller
 
 		$this->render('index',array(
 			'model'=>$model,
-		));
-                /*
-		$dataProvider=new CActiveDataProvider('CatLevels');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-                 * 
-                 */
+		));                
 	}
 
 	/**

@@ -23,7 +23,7 @@
             <?php echo $form->error($model,'desc_level'); ?></td>
 
             <td><?php echo $form->labelEx($model,'fk_associated_book'); ?></td>
-            <td><?php echo $form->textField($model,'fk_associated_book'); ?>
+            <td><?php echo $form->dropDownList($model,'fk_associated_book', CatMaterial::model()->getCatMaterial(), constantes::getOpcionCombo()); ?>
             <?php echo $form->error($model,'fk_associated_book'); ?></td>
         </tr>
         <tr>
